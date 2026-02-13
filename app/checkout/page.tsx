@@ -1196,17 +1196,6 @@ export default function CheckoutPage() {
                   </div>
                 </div>
               </div>
-              <div className="mt-4 pt-4 border-t border-gray-200">
-                <a
-                  href="https://share.google/kCQYHyMGyamt5M1yj"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 text-sm text-gray-600 hover:text-gray-900"
-                >
-                  <Image src="/Google-Review-Emblem.png" alt="Google" width={56} height={18} className="h-4 w-auto" />
-                  <span>Leave a review</span>
-                </a>
-              </div>
             </div>
           </div>
         </div>

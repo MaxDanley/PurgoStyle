@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
@@ -51,9 +52,26 @@ export default function RootLayout({
     <html lang="en">
       <head />
       <body className={inter.className}>
+        <Script
+          id="merchantWidgetScript"
+          src="https://www.gstatic.com/shopping/merchant/merchantwidget.js"
+          strategy="lazyOnload"
+          onLoad={() => {
+            if (typeof window !== "undefined" && (window as unknown as { merchantwidget?: { start: (o: object) => void } }).merchantwidget) {
+              (window as unknown as { merchantwidget: { start: (o: object) => void } }).merchantwidget.start({
+                merchant_id: 5685077232,
+                position: "BOTTOM_RIGHT",
+                region: "US",
+              });
+            }
+          }}
+        />
         <SessionProvider>
           <Toaster position="top-center" />
           <div id="page-content-wrapper" className="bg-white min-h-screen">
+            <div className="bg-black text-white text-center py-2.5 px-4 text-xs font-medium uppercase tracking-widest">
+              Free shipping on orders over $50
+            </div>
             <Navbar />
             <main className="min-h-screen">
               {children}

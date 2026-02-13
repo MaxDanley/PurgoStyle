@@ -13,20 +13,7 @@ import StructuredData from "@/components/StructuredData";
 import { trackPageView, trackViewItem, trackAddToCart } from "@/lib/analytics";
 import { usePathname } from "next/navigation";
 import { ChevronLeftIcon, ChevronRightIcon, ExclamationTriangleIcon } from "@heroicons/react/24/outline";
-import { StarIcon } from "@heroicons/react/24/solid";
 import { getFeaturedImage } from "@/lib/products";
-
-function getProductSocialProof(slug: string) {
-  let hash = 0;
-  for (let i = 0; i < slug.length; i++) {
-    hash = (hash << 5) - hash + slug.charCodeAt(i);
-    hash = hash & hash;
-  }
-  const seed = Math.abs(hash);
-  const orders = 3000 + (seed % 2001);
-  const rating = (4.6 + ((seed % 4) * 0.1)).toFixed(1);
-  return { orders, rating };
-}
 
 interface ProductDetailClientProps {
   product: any;
@@ -321,20 +308,6 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
                   )}
                 </div>
               )}
-              {/* Social proof: stars + rating + orders */}
-              {(() => {
-                const { orders, rating } = getProductSocialProof(slug);
-                return (
-                  <div className="mt-3 flex items-center gap-1.5 text-amber-500">
-                    {[1, 2, 3, 4, 5].map((i) => (
-                      <StarIcon key={i} className="w-5 h-5" aria-hidden />
-                    ))}
-                    <span className="text-gray-600 text-sm ml-0.5">
-                      Rated {rating} | {orders.toLocaleString()}+ Orders
-                    </span>
-                  </div>
-                );
-              })()}
             </div>
 
             {/* Product Info */}
@@ -419,28 +392,6 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
                     })()}
                   </div>
                 )}
-              </div>
-
-              {/* Reviews Section - Google only */}
-              <div className="flex items-center justify-between mb-6">
-                <span className="font-medium text-gray-900 text-sm">Reviews</span>
-                <a 
-                  href="https://share.google/kCQYHyMGyamt5M1yj" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-xs bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 px-3 py-1.5 rounded-md font-medium transition-colors flex items-center gap-2 shadow-sm"
-                >
-                  <Image 
-                    src="/google_g_icon_download.png" 
-                    alt="Google" 
-                    width={16} 
-                    height={16} 
-                    className="w-4 h-4 object-contain"
-                    priority={false}
-                    quality={90}
-                  />
-                  Google Reviews
-                </a>
               </div>
 
               {/* Variant Selection */}

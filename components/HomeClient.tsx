@@ -85,10 +85,10 @@ export default function HomeClient({ featuredProducts: initialProducts }: HomeCl
 
   return (
     <div className="min-h-screen bg-white w-full">
-      {/* Hero Section */}
-      <section className="relative w-full overflow-hidden">
-        {/* Hero Background Image - Full Width, Scaled Down */}
-        <div className="relative w-full h-[50vh] md:h-[60vh] lg:h-[65vh] z-0">
+      {/* Hero Section - Centered layout like reference */}
+      <section className="relative w-full overflow-hidden min-h-[55vh] md:min-h-[65vh] lg:min-h-[70vh]">
+        {/* Background image */}
+        <div className="absolute inset-0 z-0">
           <Image
             src="/hero_image.png"
             alt="Purgo Style Labs"
@@ -98,57 +98,56 @@ export default function HomeClient({ featuredProducts: initialProducts }: HomeCl
             quality={95}
             sizes="100vw"
           />
+          {/* Gradient overlay: darker at top for contrast */}
+          <div
+            className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/40"
+            aria-hidden
+          />
         </div>
 
-        <div className="container-custom relative z-10 -mt-[50vh] md:-mt-[60vh] lg:-mt-[65vh] pt-16 md:pt-32 pb-20 md:pb-32">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 w-full items-start">
-            {/* Left Content - Upper Left Aligned */}
-            <div className="text-left space-y-6 md:space-y-8 max-w-lg relative z-20">
-              <h1 className={`text-3xl sm:text-5xl md:text-8xl font-bold leading-tight ${archivoBlack.className}`}>
-                <span 
-                  className="block text-white animate-[slideUp_0.8s_ease-out] tracking-tight"
-                  style={{ 
-                    textShadow: '0 2px 20px rgba(0,0,0,0.4), 0 0 40px rgba(0,0,0,0.2)',
-                    animation: 'slideUp 0.8s ease-out forwards',
-                    letterSpacing: '-0.02em'
-                  }}
-                >
-                  Purgo Style Labs
-                </span>
-                <span 
-                  className="block text-white text-base sm:text-xl md:text-3xl font-normal mt-3 md:mt-4 tracking-wide"
-                  style={{ textShadow: '0 2px 12px rgba(0,0,0,0.5), 0 0 24px rgba(0,0,0,0.25)' }}
-                >
-                  Arizona activewear & premium tees
-                </span>
-              </h1>
-
-              <div>
-                <Link 
-                  href="/products" 
-                  className="inline-flex items-center justify-center gap-3 bg-cyan-500 hover:bg-cyan-600 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-colors shadow-lg shadow-cyan-500/25"
-                  onClick={() => {
-                    trackEvent('cta_click', {
-                      cta_text: 'Shop Now',
-                      cta_location: 'hero',
-                      page_type: 'home',
-                    });
-                  }}
-                  aria-label="Shop"
-                >
-                  Shop Now
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </Link>
-              </div>
-            </div>
-
-            {/* Spacer column for layout on desktop */}
-            <div className="hidden lg:block" aria-hidden="true"></div>
+        {/* Centered content at bottom */}
+        <div className="relative z-10 flex flex-col items-center justify-end min-h-[55vh] md:min-h-[65vh] lg:min-h-[70vh] pb-16 md:pb-24 pt-24 px-4 text-center">
+          <span
+            className="text-white text-xs md:text-sm uppercase tracking-[0.25em] md:tracking-[0.35em] font-medium mb-2"
+            style={{ textShadow: "0 1px 8px rgba(0,0,0,0.5)" }}
+          >
+            Arizona activewear
+          </span>
+          <h1
+            className={`text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white uppercase tracking-tight ${archivoBlack.className}`}
+            style={{
+              textShadow: "0 2px 24px rgba(0,0,0,0.4), 0 0 48px rgba(0,0,0,0.2)",
+            }}
+          >
+            Purgo Style Labs
+          </h1>
+          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mt-8">
+            <Link
+              href="/products"
+              onClick={() => {
+                trackEvent("cta_click", {
+                  cta_text: "Shop Now",
+                  cta_location: "hero",
+                  page_type: "home",
+                });
+              }}
+              className="inline-flex items-center justify-center gap-2 bg-white/20 backdrop-blur-sm border border-white/40 hover:bg-white/30 text-white px-8 py-3.5 rounded-lg font-semibold text-sm uppercase tracking-wider transition-colors"
+              aria-label="Shop now"
+            >
+              Shop Now
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Link>
+            <Link
+              href="/about"
+              className="inline-flex items-center justify-center gap-2 bg-white/20 backdrop-blur-sm border border-white/40 hover:bg-white/30 text-white px-8 py-3.5 rounded-lg font-semibold text-sm uppercase tracking-wider transition-colors"
+              aria-label="Our story"
+            >
+              View Story
+            </Link>
           </div>
         </div>
-
       </section>
 
       {/* Featured Products */}
@@ -161,24 +160,6 @@ export default function HomeClient({ featuredProducts: initialProducts }: HomeCl
           }}></div>
         </div>
         <div className="container-custom relative z-10">
-          {/* Reviews - Mobile Only (Google only) */}
-          <div className="flex flex-row items-center justify-center gap-3 mb-8 lg:hidden">
-            <a 
-              href="https://share.google/kCQYHyMGyamt5M1yj" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="bg-white text-gray-900 rounded-xl px-3 py-2 border border-gray-200 hover:border-gray-300 transition-all inline-flex items-center gap-2 shadow-xl"
-            >
-              <Image 
-                src="/Google-Review-Emblem.png" 
-                alt="Google Reviews" 
-                width={72}
-                height={24}
-                className="h-6 w-auto"
-              />
-            </a>
-          </div>
-          
           <div className="text-center mb-16">
             <span className="text-cyan-600 font-semibold text-sm uppercase tracking-wider">Premium Quality</span>
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mt-4 mb-6">
