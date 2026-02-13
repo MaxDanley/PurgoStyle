@@ -137,7 +137,6 @@ export default function AdminDashboard() {
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<string[]>(["PENDING", "PROCESSING", "SHIPPED", "REFUNDED"]);
   const [isFilterDropdownOpen, setIsFilterDropdownOpen] = useState(false);
-  const [isDownloadingSquareReport, setIsDownloadingSquareReport] = useState(false);
 
   // Profit analytics time filter: day = today, week = this week, month = this month, custom = date range
   const [profitTimeFilter, setProfitTimeFilter] = useState<"all" | "day" | "week" | "month" | "custom">("all");
@@ -305,32 +304,6 @@ export default function AdminDashboard() {
       toast.error("Failed to load statistics");
     } finally {
       setIsLoading(false);
-    }
-  };
-
-  const downloadSquareOrdersAndPriceList = async () => {
-    setIsDownloadingSquareReport(true);
-    try {
-      const response = await fetch("/api/admin/square-orders-price-list");
-      if (!response.ok) throw new Error("Export failed");
-      const blob = await response.blob();
-      const disposition = response.headers.get("Content-Disposition");
-      const match = disposition?.match(/filename="?([^";\n]+)"?/);
-      const filename = match ? match[1].trim() : `square-orders-and-prices-${new Date().toISOString().slice(0, 10)}.csv`;
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-      toast.success("Download started");
-    } catch (error) {
-      console.error("Download Square report error:", error);
-      toast.error("Failed to download report");
-    } finally {
-      setIsDownloadingSquareReport(false);
     }
   };
 
@@ -1796,16 +1769,8 @@ export default function AdminDashboard() {
         {activeTab === "orders" && (
           <div className="space-y-6">
             <div className="card p-6">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+              <div className="mb-6">
                 <h2 className="text-2xl font-bold text-gray-900">Order Management</h2>
-                <button
-                  type="button"
-                  onClick={downloadSquareOrdersAndPriceList}
-                  disabled={isDownloadingSquareReport}
-                  className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {isDownloadingSquareReport ? "Preparing…" : "Download Square orders & price list (CSV)"}
-                </button>
               </div>
               
               {/* Search and Filter Controls */}
@@ -2353,7 +2318,7 @@ export default function AdminDashboard() {
                 <div>
                   <h3 className="text-2xl font-bold text-gray-900">Order #{selectedOrder.orderNumber}</h3>
                   <p className="text-sm text-gray-500 mt-1">
-                    Placed on {new Date(selectedOrder.createdAt).toLocaleString()}
+                    Placed on {new Date(selectedOrder.createdAt).toLocaleDateString()}
                   </p>
                 </div>
                 <button
