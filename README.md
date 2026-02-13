@@ -117,3 +117,23 @@ Never commit this value or expose it in the browser.
 
 - Set all required (and any optional) env vars in your hosting dashboard (e.g. Vercel).
 - Ensure `NEXT_PUBLIC_BASE_URL` and `NEXTAUTH_URL` match your production URL.
+
+### If you get 404 on the root URL (https://www.purgostyle.com/)
+
+1. **Vercel → Project Settings → General**
+   - **Root Directory** must be empty (or `.`). If it points to a subfolder, the app will not see `app/page.tsx` and `/` will 404.
+
+2. **Vercel → Project Settings → Build & Development**
+   - **Framework Preset:** Next.js.
+   - **Build Command:** `npm run build` (or leave default).
+   - **Output Directory:** leave **empty** (Next.js uses `.next`; do not set e.g. `out` unless you use static export).
+
+3. **Redeploy with cache cleared**
+   - Deployments → … on latest deployment → **Redeploy**.
+   - Enable **Clear Build Cache** (or “Redeploy with empty cache”) so Vercel doesn’t reuse an old build that might have failed or cached a 404.
+
+4. **Confirm the deployment succeeded**
+   - Open the latest deployment and check that the status is **Ready** (not Building or Error). If the build failed, fix the build logs; a failed build can leave the site on a previous state that showed 404.
+
+5. **Domain**
+   - Ensure **www.purgostyle.com** (and purgostyle.com if used) is assigned to this project and points to the deployment you expect.
