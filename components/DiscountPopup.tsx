@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { trackNewsletterSignup, trackEvent } from "@/lib/analytics";
 
-const DISCOUNT_POPUP_KEY = "purgolabs_discount_popup_seen";
+const DISCOUNT_POPUP_KEY = "summersteeze_discount_popup_seen";
 
 interface DiscountPopupProps {
   showAfterAgeVerification?: boolean;
@@ -24,7 +24,7 @@ export default function DiscountPopup({ showAfterAgeVerification = false }: Disc
       if (showAfterAgeVerification) {
         // Wait for age verification to complete, then show after 5 seconds
         const checkAgeVerification = setInterval(() => {
-          const ageVerified = localStorage.getItem("purgolabs_age_verified");
+          const ageVerified = localStorage.getItem("summersteeze_age_verified");
           if (ageVerified === "true") {
             clearInterval(checkAgeVerification);
             // Show popup 5 seconds after age verification

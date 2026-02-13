@@ -40,7 +40,7 @@ export default function HomeClient({ featuredProducts: initialProducts }: HomeCl
   // Track page view
   useEffect(() => {
     if (pathname) {
-      trackPageView(window.location.href, 'Home - Purgo Style Labs', {
+      trackPageView(window.location.href, 'Home - Summer Steeze', {
         page_type: 'home',
         page_section: 'landing',
       });
@@ -91,7 +91,7 @@ export default function HomeClient({ featuredProducts: initialProducts }: HomeCl
         <div className="absolute inset-0 z-0">
           <Image
             src="/hero_image.png"
-            alt="Purgo Style Labs"
+            alt="Summer Steeze"
             fill
             className="object-cover"
             priority
@@ -119,7 +119,7 @@ export default function HomeClient({ featuredProducts: initialProducts }: HomeCl
               textShadow: "0 2px 24px rgba(0,0,0,0.4), 0 0 48px rgba(0,0,0,0.2)",
             }}
           >
-            Purgo Style Labs
+            Summer Steeze
           </h1>
           <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mt-8">
             <Link
@@ -155,13 +155,13 @@ export default function HomeClient({ featuredProducts: initialProducts }: HomeCl
         {/* Subtle background pattern */}
         <div className="absolute inset-0 opacity-5">
           <div className="absolute inset-0" style={{
-            backgroundImage: 'radial-gradient(circle, #06b6d4 1px, transparent 1px)',
+            backgroundImage: 'radial-gradient(circle, #f27e56 1px, transparent 1px)',
             backgroundSize: '50px 50px'
           }}></div>
         </div>
         <div className="container-custom relative z-10">
           <div className="text-center mb-16">
-            <span className="text-cyan-600 font-semibold text-sm uppercase tracking-wider">Premium Quality</span>
+            <span className="text-brand-600 font-semibold text-sm uppercase tracking-wider">Premium Quality</span>
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mt-4 mb-6">
               Featured Products
             </h2>
@@ -194,7 +194,7 @@ export default function HomeClient({ featuredProducts: initialProducts }: HomeCl
         <div className="container-custom">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
             <div className="text-center group scroll-animate opacity-0" data-direction="slide-left">
-              <div className="w-20 h-20 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-cyan-500/50">
+              <div className="w-20 h-20 bg-gradient-to-br from-brand-500 to-brand-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-brand-500/50">
                 <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
@@ -208,7 +208,7 @@ export default function HomeClient({ featuredProducts: initialProducts }: HomeCl
             </div>
 
             <div className="text-center group scroll-animate opacity-0" data-direction="zoom-in">
-              <div className="w-20 h-20 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-cyan-500/50">
+              <div className="w-20 h-20 bg-gradient-to-br from-brand-500 to-brand-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-brand-500/50">
                 <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
@@ -222,7 +222,7 @@ export default function HomeClient({ featuredProducts: initialProducts }: HomeCl
             </div>
 
             <div className="text-center group scroll-animate opacity-0" data-direction="slide-right">
-              <div className="w-20 h-20 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-cyan-500/50">
+              <div className="w-20 h-20 bg-gradient-to-br from-brand-500 to-brand-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-brand-500/50">
                 <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                 </svg>
@@ -244,14 +244,14 @@ export default function HomeClient({ featuredProducts: initialProducts }: HomeCl
           <div className="glass rounded-3xl p-12 md:p-16">
             <div className="max-w-3xl mx-auto text-center">
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-                Welcome to <span className="gradient-text">Purgo Style Labs</span>
+                Welcome to <span className="gradient-text">Summer Steeze</span>
               </h2>
               <p className="text-xl text-gray-700 mb-6">
-                Your trusted source for <span className="text-cyan-600 font-semibold">Arizona activewear & premium tees</span>
+                Your trusted source for <span className="text-brand-600 font-semibold">Arizona activewear & premium tees</span>
               </p>
               <p className="text-gray-600 mb-8">
                 We are dedicated to quality apparel—premium tees, sweatshirts, and activewear. 
-                Latin for purify: quality you can feel. Every piece is made with care for 
+                Quality you can feel. Every piece is made with care for 
                 style and comfort.
               </p>
               <Link href="/about" className="btn-secondary inline-flex items-center gap-2">
@@ -268,10 +268,10 @@ export default function HomeClient({ featuredProducts: initialProducts }: HomeCl
       {/* SEO Content Sections - Expandable */}
       <section className="py-20 bg-gray-50">
         <div className="container-custom max-w-4xl">
-          <Accordion title="Learn More About Purgo Style Labs">
+          <Accordion title="Learn More About Summer Steeze">
             <div className="prose prose-lg max-w-none text-gray-700">
               <p className="mb-4">
-                Purgo Style Labs is an Arizona-based activewear and apparel brand. Our name comes from the Latin word for purify—we focus on quality you can feel in every tee, sweatshirt, and piece of activewear we make.
+                Summer Steeze is an Arizona-based activewear and apparel brand. We focus on quality you can feel in every tee, sweatshirt, and piece of activewear we make.
               </p>
               <p className="mb-4">
                 We believe in simple, well-made clothing that holds up to your lifestyle. Every product is designed with attention to fit, fabric, and durability so you get pieces you’ll actually want to wear again and again.
@@ -305,15 +305,15 @@ export default function HomeClient({ featuredProducts: initialProducts }: HomeCl
         data={{
           "@context": "https://schema.org",
           "@type": "Organization",
-          name: "Purgo Style Labs",
-          legalName: "Purgo Style Labs",
-          url: "https://www.purgostyle.com",
-          logo: "https://www.purgostyle.com/logo-small-copy.png",
-          description: "Purgo Style Labs – Arizona activewear and premium tees. Quality you can feel.",
+          name: "Summer Steeze",
+          legalName: "Summer Steeze",
+          url: "https://www.summersteeze.com",
+          logo: "https://www.summersteeze.com/STEEZ.png",
+          description: "Summer Steeze – Arizona activewear and premium tees. Quality you can feel.",
           contactPoint: {
             "@type": "ContactPoint",
             contactType: "Customer Service",
-            email: "hello@purgostyle.com",
+            email: "hello@summersteeze.com",
             availableLanguage: "English",
             areaServed: "US",
           },
@@ -325,8 +325,8 @@ export default function HomeClient({ featuredProducts: initialProducts }: HomeCl
             timeZone: "America/Phoenix",
           },
           sameAs: [
-            "https://www.instagram.com/purgo_labs/",
-            "https://x.com/PurgoLabs",
+            "https://www.instagram.com/summersteeze/",
+            "https://x.com/SummerSteeze",
             "https://www.facebook.com/profile.php?id=61587658187619",
           ],
         }}
@@ -335,12 +335,12 @@ export default function HomeClient({ featuredProducts: initialProducts }: HomeCl
         data={{
           "@context": "https://schema.org",
           "@type": "LocalBusiness",
-          "@id": "https://www.purgostyle.com",
-          name: "Purgo Style Labs",
-          legalName: "Purgo Style Labs",
-          image: "https://www.purgostyle.com/logo-small-copy.png",
-          url: "https://www.purgostyle.com",
-          email: "hello@purgostyle.com",
+          "@id": "https://www.summersteeze.com",
+          name: "Summer Steeze",
+          legalName: "Summer Steeze",
+          image: "https://www.summersteeze.com/STEEZ.png",
+          url: "https://www.summersteeze.com",
+          email: "hello@summersteeze.com",
           openingHoursSpecification: [
             {
               "@type": "OpeningHoursSpecification",
@@ -360,11 +360,11 @@ export default function HomeClient({ featuredProducts: initialProducts }: HomeCl
         data={{
           "@context": "https://schema.org",
           "@type": "WebSite",
-          name: "Purgo Style Labs",
-          url: "https://www.purgostyle.com",
+          name: "Summer Steeze",
+          url: "https://www.summersteeze.com",
           potentialAction: {
             "@type": "SearchAction",
-            target: "https://www.purgostyle.com/products?search={search_term_string}",
+            target: "https://www.summersteeze.com/products?search={search_term_string}",
             "query-input": "required name=search_term_string",
           },
         }}
@@ -374,10 +374,10 @@ export default function HomeClient({ featuredProducts: initialProducts }: HomeCl
           "@context": "https://schema.org",
           "@type": "ItemList",
           itemListElement: [
-            { "@type": "ListItem", position: 1, name: "Products", url: "https://www.purgostyle.com/products" },
-            { "@type": "ListItem", position: 2, name: "About", url: "https://www.purgostyle.com/about" },
-            { "@type": "ListItem", position: 3, name: "Contact", url: "https://www.purgostyle.com/contact" },
-            { "@type": "ListItem", position: 4, name: "Blog", url: "https://www.purgostyle.com/blog" },
+            { "@type": "ListItem", position: 1, name: "Products", url: "https://www.summersteeze.com/products" },
+            { "@type": "ListItem", position: 2, name: "About", url: "https://www.summersteeze.com/about" },
+            { "@type": "ListItem", position: 3, name: "Contact", url: "https://www.summersteeze.com/contact" },
+            { "@type": "ListItem", position: 4, name: "Blog", url: "https://www.summersteeze.com/blog" },
           ],
         }}
       />

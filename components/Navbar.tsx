@@ -99,7 +99,7 @@ export default function Navbar() {
         <div className="mb-8">
           <button
             onClick={() => setIsMenuOpen(false)}
-            className="text-white hover:text-cyan-400 transition-colors"
+            className="text-white hover:text-brand-400 transition-colors"
             aria-label="Close menu"
           >
             <svg
@@ -122,7 +122,7 @@ export default function Navbar() {
         <div className="flex flex-col items-end space-y-6 w-full">
           <Link
             href="/products"
-            className="text-white hover:text-cyan-400 font-bold text-xl transition-colors uppercase tracking-widest"
+            className="text-white hover:text-brand-400 font-bold text-xl transition-colors uppercase tracking-widest"
             onClick={() => setIsMenuOpen(false)}
             aria-label="Shop"
           >
@@ -130,21 +130,21 @@ export default function Navbar() {
           </Link>
           <Link
             href="/about"
-            className="text-white hover:text-cyan-400 font-bold text-xl transition-colors uppercase tracking-widest"
+            className="text-white hover:text-brand-400 font-bold text-xl transition-colors uppercase tracking-widest"
             onClick={() => setIsMenuOpen(false)}
           >
             About
           </Link>
           <Link
             href="/track-order"
-            className="text-white hover:text-cyan-400 font-bold text-xl transition-colors uppercase tracking-widest"
+            className="text-white hover:text-brand-400 font-bold text-xl transition-colors uppercase tracking-widest"
             onClick={() => setIsMenuOpen(false)}
           >
             Track Order
           </Link>
           <Link
             href="/contact"
-            className="text-white hover:text-cyan-400 font-bold text-xl transition-colors uppercase tracking-widest"
+            className="text-white hover:text-brand-400 font-bold text-xl transition-colors uppercase tracking-widest"
             onClick={() => setIsMenuOpen(false)}
           >
             Contact
@@ -154,7 +154,7 @@ export default function Navbar() {
           {isAdmin && (
             <Link
               href="/admin"
-              className="text-white hover:text-cyan-400 font-bold text-xl transition-colors border border-purple-500/50 bg-purple-500/20 px-6 py-2 rounded uppercase tracking-widest"
+              className="text-white hover:text-brand-400 font-bold text-xl transition-colors border border-purple-500/50 bg-purple-500/20 px-6 py-2 rounded uppercase tracking-widest"
               onClick={() => setIsMenuOpen(false)}
             >
               Admin
@@ -174,8 +174,8 @@ export default function Navbar() {
             {/* Logo */}
             <Link href="/" className="flex items-center">
               <Image
-                src="/logo-small-copy.png"
-                alt="Purgo Style"
+                src="/STEEZ.png"
+                alt="Summer Steeze"
                 width={60}
                 height={60}
                 className="w-16 h-16"
@@ -186,18 +186,18 @@ export default function Navbar() {
             <div className="hidden md:flex items-center space-x-8 bg-[#0b1726]/50 border border-white/10 rounded-2xl px-6 py-2 shadow-lg">
               <Link
                 href="/products"
-                className="text-white hover:text-cyan-400 font-medium transition-colors"
+                className="text-white hover:text-brand-400 font-medium transition-colors"
                 aria-label="Shop"
               >
                 Shop
               </Link>
-              <Link href="/about" className="text-white hover:text-cyan-400 font-medium transition-colors">
+              <Link href="/about" className="text-white hover:text-brand-400 font-medium transition-colors">
                 About
               </Link>
-              <Link href="/track-order" className="text-white hover:text-cyan-400 font-medium transition-colors">
+              <Link href="/track-order" className="text-white hover:text-brand-400 font-medium transition-colors">
                 Track Order
               </Link>
-              <Link href="/contact" className="text-white hover:text-cyan-400 font-medium transition-colors">
+              <Link href="/contact" className="text-white hover:text-brand-400 font-medium transition-colors">
                 Contact
               </Link>
               
@@ -205,7 +205,7 @@ export default function Navbar() {
               {isAdmin && (
                 <Link
                   href="/admin"
-                  className="text-white hover:text-cyan-400 font-medium transition-colors px-3 py-1 rounded-lg bg-purple-600/30 border border-purple-400/50 hover:bg-purple-600/50"
+                  className="text-white hover:text-brand-400 font-medium transition-colors px-3 py-1 rounded-lg bg-purple-600/30 border border-purple-400/50 hover:bg-purple-600/50"
                 >
                   Admin
                 </Link>
@@ -271,7 +271,7 @@ export default function Navbar() {
                     />
                   </svg>
                   {itemCount > 0 && (
-                    <span className="absolute -top-1 -right-1 bg-cyan-500 text-white text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center shadow-md">
+                    <span className="absolute -top-1 -right-1 bg-brand-500 text-white text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center shadow-md">
                       {itemCount}
                     </span>
                   )}
@@ -281,7 +281,7 @@ export default function Navbar() {
               {/* Mobile Icons */}
               <button
                 onClick={() => setIsSearchOpen(true)}
-                className="md:hidden text-gray-700 hover:text-cyan-600 transition-colors"
+                className="md:hidden text-gray-700 hover:text-brand-600 transition-colors"
                 aria-label="Search products"
               >
                 <svg
@@ -300,7 +300,7 @@ export default function Navbar() {
               </button>
               <Link
                 href="/account"
-                className="md:hidden text-gray-700 hover:text-cyan-600 transition-colors"
+                className="md:hidden text-gray-700 hover:text-brand-600 transition-colors"
               >
                 <svg
                   className="w-6 h-6"
@@ -318,7 +318,7 @@ export default function Navbar() {
               </Link>
               <Link
                 href="/cart"
-                className="md:hidden relative text-gray-700 hover:text-cyan-600 transition-colors"
+                className="md:hidden relative text-gray-700 hover:text-brand-600 transition-colors"
               >
                 <svg
                   className="w-6 h-6"
@@ -334,7 +334,7 @@ export default function Navbar() {
                   />
                 </svg>
                 {itemCount > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-cyan-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center shadow-lg shadow-cyan-500/50">
+                  <span className="absolute -top-2 -right-2 bg-brand-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center shadow-lg shadow-brand-500/50">
                     {itemCount}
                   </span>
                 )}
@@ -342,7 +342,7 @@ export default function Navbar() {
               
               {/* Mobile Menu Button */}
               <button
-                className="md:hidden text-gray-700 hover:text-cyan-600"
+                className="md:hidden text-gray-700 hover:text-brand-600"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
                 <svg

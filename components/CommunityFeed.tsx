@@ -70,7 +70,7 @@ export default function CommunityFeed({ productKeywords }: CommunityFeedProps) {
     return (
       <div className="flex items-center justify-center py-20">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-600 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-600 mx-auto mb-4"></div>
           <p className="text-gray-600">Loading community posts...</p>
         </div>
       </div>
@@ -109,11 +109,11 @@ export default function CommunityFeed({ productKeywords }: CommunityFeedProps) {
         </svg>
         <h3 className="text-xl font-semibold text-gray-900 mb-2">No Posts Found</h3>
         <p className="text-gray-600 mb-6">
-          We're gathering the latest community discussions about Purgo Style Labs and our tees.
+          We're gathering the latest community discussions about Summer Steeze and our tees.
         </p>
         <Link
           href="/products"
-          className="inline-block px-6 py-3 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 transition-colors font-medium"
+          className="inline-block px-6 py-3 bg-brand-600 text-white rounded-lg hover:bg-brand-700 transition-colors font-medium"
         >
           Explore Our Products
         </Link>
@@ -153,7 +153,7 @@ export default function CommunityFeed({ productKeywords }: CommunityFeedProps) {
                     className="rounded-full"
                   />
                 ) : (
-                  <div className="w-10 h-10 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-full flex items-center justify-center text-white font-semibold">
+                  <div className="w-10 h-10 bg-gradient-to-br from-brand-400 to-brand-600 rounded-full flex items-center justify-center text-white font-semibold">
                     {post.author.charAt(0).toUpperCase()}
                   </div>
                 )}
@@ -237,7 +237,7 @@ export default function CommunityFeed({ productKeywords }: CommunityFeedProps) {
                 <p className="text-xs text-gray-500 mb-2">Related Product:</p>
                 <Link
                   href={`/products/${post.relatedProduct.toLowerCase().replace(/\s+/g, "-")}`}
-                  className="inline-flex items-center text-sm text-cyan-600 hover:text-cyan-700 font-medium"
+                  className="inline-flex items-center text-sm text-brand-600 hover:text-brand-700 font-medium"
                 >
                   Learn more about {post.relatedProduct}
                   <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -253,7 +253,7 @@ export default function CommunityFeed({ productKeywords }: CommunityFeedProps) {
                 href={post.url}
                 target="_blank"
                 rel="noopener noreferrer nofollow"
-                className="text-sm text-gray-600 hover:text-cyan-600 transition-colors flex items-center gap-1"
+                className="text-sm text-gray-600 hover:text-brand-600 transition-colors flex items-center gap-1"
                 itemProp="url"
               >
                 View original post
@@ -267,18 +267,18 @@ export default function CommunityFeed({ productKeywords }: CommunityFeedProps) {
       </div>
 
       {/* CTA Section */}
-      <div className="mt-12 bg-gradient-to-br from-cyan-50 to-blue-50 rounded-xl p-8 text-center border border-cyan-200">
+      <div className="mt-12 bg-gradient-to-br from-brand-50 to-brand-50 rounded-xl p-8 text-center border border-brand-200">
         <h3 className="text-2xl font-bold text-gray-900 mb-3">
           Shop our tees &amp; activewear
         </h3>
         <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-          Join customers who trust Purgo Style Labs for quality activewear and apparel. 
+          Join customers who trust Summer Steeze for quality activewear and apparel. 
           Browse our complete catalog of premium research-grade compounds.
         </p>
         <div className="flex flex-wrap justify-center gap-4">
           <Link
             href="/products"
-            className="px-6 py-3 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 transition-colors font-medium"
+            className="px-6 py-3 bg-brand-600 text-white rounded-lg hover:bg-brand-700 transition-colors font-medium"
           >
             View All Products
           </Link>

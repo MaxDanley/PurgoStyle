@@ -7,7 +7,7 @@ export default function DisclaimerPage() {
         <div className="prose prose-lg max-w-none">
           <h2>About Our Products</h2>
           <p>
-            Purgo Style Labs sells Arizona activewear, premium tees, sweatshirts, and apparel. Our products
+            Summer Steeze sells Arizona activewear, premium tees, sweatshirts, and apparel. Our products
             are intended for personal wear and gifting. We focus on quality fabrics and construction.
           </p>
 
@@ -15,7 +15,7 @@ export default function DisclaimerPage() {
           <p>
             Product photos and descriptions are representative. Slight variations in color or fit may occur.
             Follow care instructions on the label to maintain quality. If you have sizing or care questions,
-            contact hello@purgostyle.com.
+            contact hello@summersteeze.com.
           </p>
 
           <h2>Orders &amp; Returns</h2>
@@ -27,12 +27,12 @@ export default function DisclaimerPage() {
 
           <h2>Contact</h2>
           <p>
-            For questions about orders, sizing, or our tees, contact hello@purgostyle.com.
+            For questions about orders, sizing, or our tees, contact hello@summersteeze.com.
           </p>
 
           <div className="bg-gray-50 border border-gray-200 rounded-lg p-6 mt-8">
             <p className="text-gray-800 font-semibold">
-              By purchasing from Purgo Style Labs, you agree to our Terms of Service and this disclaimer.
+              By purchasing from Summer Steeze, you agree to our Terms of Service and this disclaimer.
             </p>
           </div>
 

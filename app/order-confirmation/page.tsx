@@ -71,7 +71,7 @@ function OrderConfirmationContent() {
   // Track page view
   useEffect(() => {
     if (pathname) {
-      trackPageView(window.location.href, 'Order Confirmation - Purgo Style Labs', {
+      trackPageView(window.location.href, 'Order Confirmation - Summer Steeze', {
         page_type: 'order_confirmation',
       });
     }
@@ -81,7 +81,7 @@ function OrderConfirmationContent() {
     // Clear any saved checkout draft once an order is confirmed
     if (typeof window !== "undefined") {
       try {
-        window.localStorage.removeItem("purgolabs_checkout_v1");
+        window.localStorage.removeItem("summersteeze_checkout_v1");
       } catch {
         // ignore
       }

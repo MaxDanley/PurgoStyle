@@ -160,7 +160,7 @@ export default function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
             <div className="px-4 md:px-8">
               {isLoading ? (
                 <div className="text-center py-8">
-                  <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-cyan-500"></div>
+                  <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-brand-500"></div>
                 </div>
               ) : products.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -173,7 +173,7 @@ export default function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                     >
                       <div className="bg-gray-50 rounded-lg overflow-hidden hover:shadow-lg transition-all duration-300 border border-gray-100">
                         <div className="relative h-48 bg-gray-100 overflow-hidden">
-                          <div className="absolute top-2 left-2 z-10 bg-cyan-500 text-white px-3 py-1 rounded-md font-bold text-xs shadow-md">
+                          <div className="absolute top-2 left-2 z-10 bg-brand-500 text-white px-3 py-1 rounded-md font-bold text-xs shadow-md">
                             SALE!
                           </div>
                           
@@ -186,11 +186,11 @@ export default function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                         </div>
 
                         <div className="p-4">
-                          <h3 className="text-lg font-semibold text-gray-900 mb-1 group-hover:text-cyan-600 transition-colors line-clamp-2">
+                          <h3 className="text-lg font-semibold text-gray-900 mb-1 group-hover:text-brand-600 transition-colors line-clamp-2">
                             {product.name}
                           </h3>
                           <p className="text-sm text-gray-600 mb-2">{product.category}</p>
-                          <p className="text-xl font-bold text-cyan-600">
+                          <p className="text-xl font-bold text-brand-600">
                             {priceDisplay(product)}
                           </p>
                         </div>

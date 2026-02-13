@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 
-const AGE_VERIFICATION_KEY = "purgolabs_age_verified";
+const AGE_VERIFICATION_KEY = "summersteeze_age_verified";
 
 export default function AgeVerificationModal() {
   const [showModal, setShowModal] = useState(false);

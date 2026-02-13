@@ -105,7 +105,7 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
   // Track page view and product view
   useEffect(() => {
     if (product && selectedVariant && pathname) {
-      trackPageView(window.location.href, `${product.name} - Purgo Style Labs`, {
+      trackPageView(window.location.href, `${product.name} - Summer Steeze`, {
         page_type: 'product',
         product_id: product.id,
         product_name: product.name,
@@ -518,7 +518,7 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
                   )}
                 </div>
                 <div className="text-sm text-gray-600">
-                  <span className="text-cyan-400 font-semibold">FREE</span> shipping to {shippingLocation ?? "your state"}
+                  <span className="text-brand-400 font-semibold">FREE</span> shipping to {shippingLocation ?? "your state"}
                 </div>
               </div>
             </div>
@@ -623,9 +623,9 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
             "@context": "https://schema.org",
             "@type": "BreadcrumbList",
             itemListElement: [
-              { "@type": "ListItem", position: 1, name: "Home", item: "https://www.purgostyle.com/" },
-              { "@type": "ListItem", position: 2, name: "Products", item: "https://www.purgostyle.com/products" },
-              { "@type": "ListItem", position: 3, name: product.name, item: `https://www.purgostyle.com/products/${product.slug}` },
+              { "@type": "ListItem", position: 1, name: "Home", item: "https://www.summersteeze.com/" },
+              { "@type": "ListItem", position: 2, name: "Products", item: "https://www.summersteeze.com/products" },
+              { "@type": "ListItem", position: 3, name: product.name, item: `https://www.summersteeze.com/products/${product.slug}` },
             ],
           }}
         />
@@ -640,16 +640,16 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
               "@type": "Product",
               name: product.name,
               description: product.description,
-              image: `https://www.purgostyle.com${product.image}`,
+              image: `https://www.summersteeze.com${product.image}`,
               brand: {
                 "@type": "Brand",
-                name: "Purgo Style Labs",
+                name: "Summer Steeze",
               },
               sku: selectedVariant.sku,
               mpn: selectedVariant.sku,
               offers: {
                 "@type": "Offer",
-                url: `https://www.purgostyle.com/products/${product.slug}`,
+                url: `https://www.summersteeze.com/products/${product.slug}`,
                 priceCurrency: "USD",
                 price: selectedVariant.price.toFixed(2),
                 priceValidUntil: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // Valid for 1 year
@@ -659,7 +659,7 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
                 itemCondition: "https://schema.org/NewCondition",
                 seller: {
                   "@type": "Organization",
-                  name: "Purgo Style Labs",
+                  name: "Summer Steeze",
                 },
               },
             }}
@@ -935,7 +935,7 @@ function RelatedProductsList({ currentProductId, currentCategory }: { currentPro
                 onClick={() => setCurrentIndex(idx)}
                 className={`h-2 rounded-full transition-all ${
                   idx === currentIndex
-                    ? 'w-8 bg-cyan-600'
+                    ? 'w-8 bg-brand-600'
                     : 'w-2 bg-gray-300'
                 }`}
                 aria-label={`Go to slide ${idx + 1}`}

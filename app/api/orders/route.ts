@@ -21,8 +21,8 @@ export async function POST(req: Request) {
 
     // Retrieve attribution data from cookies
     const cookieStore = await cookies();
-    const attributionCookie = cookieStore.get("purgo_attribution");
-    const initialReferrerCookie = cookieStore.get("purgo_initial_referrer");
+    const attributionCookie = cookieStore.get("summersteeze_attribution");
+    const initialReferrerCookie = cookieStore.get("summersteeze_initial_referrer");
     
     let attributionData: any = {};
     if (attributionCookie) {

@@ -20,7 +20,7 @@ export default function BlogMarkdown({ content, articleImages = [] }: BlogMarkdo
     // Links first so they work inside headers (replace [text](url) everywhere)
     html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/gim, (_match, text, url) => {
       const isExternal = url.startsWith("http");
-      return `<a href="${url}" ${isExternal ? 'target="_blank" rel="noopener noreferrer"' : ""} class="text-cyan-600 hover:text-cyan-700 underline">${text}</a>`;
+      return `<a href="${url}" ${isExternal ? 'target="_blank" rel="noopener noreferrer"' : ""} class="text-brand-600 hover:text-brand-700 underline">${text}</a>`;
     });
 
     // Headers (process inner content for any remaining markdown; #### supported)

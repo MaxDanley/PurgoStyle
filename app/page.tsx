@@ -5,16 +5,16 @@ import HomeClient from "@/components/HomeClient";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Purgo Style | Arizona Activewear & Premium Tees",
-  description: "Purgo Style – Arizona-based activewear and tees. Latin for purify. Premium tees and hoodies. Shop now.",
-  keywords: "Purgo Style, Arizona activewear, t-shirts, hoodies, apparel, Purgo",
+  title: "Summer Steeze | Arizona Activewear & Premium Tees",
+  description: "Summer Steeze – Arizona-based activewear and tees. Premium tees and hoodies. Shop now.",
+  keywords: "Summer Steeze, Arizona activewear, t-shirts, hoodies, apparel",
   openGraph: {
-    title: "Purgo Style - Arizona Activewear & Tees",
+    title: "Summer Steeze - Arizona Activewear & Tees",
     description: "Premium tees and activewear from Arizona.",
     type: "website",
-    url: "https://www.purgostyle.com",
+    url: "https://www.summersteeze.com",
   },
-  alternates: { canonical: "https://www.purgostyle.com" },
+  alternates: { canonical: "https://www.summersteeze.com" },
 };
 
 export default function Home() {

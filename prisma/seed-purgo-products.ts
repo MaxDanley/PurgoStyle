@@ -1,5 +1,5 @@
 /**
- * Seed script: 10 Purgo Style Labs products with S/M/L variants.
+ * Seed script: 10 Summer Steeze products with S/M/L variants.
  * Prices: T-Shirts $100, Hoodies $250, Sweatpants $125, Shell Jacket $350.
  * Run: npx ts-node --compiler-options '{"module":"CommonJS"}' prisma/seed-purgo-products.ts
  * Or: npx tsx prisma/seed-purgo-products.ts
@@ -9,7 +9,7 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-const IMAGE_BASE = "/PURGO STYLE LABS";
+const IMAGE_BASE = "/PURGO STYLE LABS (1)";
 
 const PRODUCTS = [
   {
@@ -18,14 +18,14 @@ const PRODUCTS = [
     category: "Jackets",
     price: 350,
     image: `${IMAGE_BASE}/black_shell_cover_longsleave.png`,
-    description: `Introducing the Purgo Style Labs Shell Jacket in Black. Crafted from lightweight shell fabric, this jacket features a full zip closure with an elasticated hem for a clean, contemporary silhouette. The chest displays the Purgo Style Labs wordmark in a subtle tonal print, with additional branding to the left cuff. The jacket delivers a relaxed, oversized fit with a stand collar and side pockets.
+    description: `Introducing the Summer Steeze Shell Jacket in Black. Crafted from lightweight shell fabric, this jacket features a full zip closure with an elasticated hem for a clean, contemporary silhouette. The chest displays the Summer Steeze wordmark in a subtle tonal print, with additional branding to the left cuff. The jacket delivers a relaxed, oversized fit with a stand collar and side pockets.
 
-Purgo Style Labs Shell Jacket
+Summer Steeze Shell Jacket
 Black
 Oversized Fit
 Full Zip Closure
 Elasticated Hem
-Purgo Style Labs Chest Branding
+Summer Steeze Chest Branding
 Cuff Branding Detail
 
 Composition: 100% Nylon`,
@@ -37,9 +37,9 @@ Composition: 100% Nylon`,
     category: "Sweatpants",
     price: 125,
     image: `${IMAGE_BASE}/black_sweatpants_plain.png`,
-    description: `Introducing the Purgo Style Labs Essential Sweatpants in Black. Built from heavyweight brushed fleece, these sweatpants feature an elasticated waistband with contrast white drawcords and elasticated cuffs at the ankle for a relaxed yet structured look. A small woven label sits at the left hip. Designed for everyday comfort with a wide, straight leg silhouette.
+    description: `Introducing the Summer Steeze Essential Sweatpants in Black. Built from heavyweight brushed fleece, these sweatpants feature an elasticated waistband with contrast white drawcords and elasticated cuffs at the ankle for a relaxed yet structured look. A small woven label sits at the left hip. Designed for everyday comfort with a wide, straight leg silhouette.
 
-Purgo Style Labs Essential Sweatpants
+Summer Steeze Essential Sweatpants
 Black
 Relaxed Fit
 Heavyweight Fleece
@@ -56,9 +56,9 @@ Composition: 100% Cotton`,
     category: "Hoodies",
     price: 250,
     image: `${IMAGE_BASE}/black_sweatshirt_logo.png`,
-    description: `Introducing the Purgo Style Labs Logo Hoodie in Black. Constructed from premium heavyweight fleece, this hoodie features a boxy, cropped oversized silhouette with a kangaroo pocket and the Purgo Style Labs wordmark printed across the chest. Additional branding sits on the hood and at the lower left cuff. Finished with a woven tab on the pocket and metal eyelets at the hood.
+    description: `Introducing the Summer Steeze Logo Hoodie in Black. Constructed from premium heavyweight fleece, this hoodie features a boxy, cropped oversized silhouette with a kangaroo pocket and the Summer Steeze wordmark printed across the chest. Additional branding sits on the hood and at the lower left cuff. Finished with a woven tab on the pocket and metal eyelets at the hood.
 
-Purgo Style Labs Logo Hoodie
+Summer Steeze Logo Hoodie
 Black
 Oversized Cropped Fit
 Heavyweight Fleece
@@ -75,9 +75,9 @@ Composition: 100% Cotton`,
     category: "T-Shirts",
     price: 100,
     image: `${IMAGE_BASE}/black_tshirt_logo_back.png`,
-    description: `Introducing the Purgo Style Labs Logo T-Shirt in Washed Black — back view. Cut from premium heavyweight cotton with a vintage washed finish, this t-shirt features the Purgo Style Labs wordmark and infinity symbol on the upper back in a sky blue print. The oversized, boxy fit drops at the shoulder for a relaxed silhouette.
+    description: `Introducing the Summer Steeze Logo T-Shirt in Washed Black — back view. Cut from premium heavyweight cotton with a vintage washed finish, this t-shirt features the Summer Steeze wordmark and infinity symbol on the upper back in a sky blue print. The oversized, boxy fit drops at the shoulder for a relaxed silhouette.
 
-Purgo Style Labs Logo T-Shirt
+Summer Steeze Logo T-Shirt
 Washed Black
 Oversized Fit
 Sky Blue Back Print
@@ -93,9 +93,9 @@ Composition: 100% Cotton`,
     category: "T-Shirts",
     price: 100,
     image: `${IMAGE_BASE}/black_tshirt_logo_front.png`,
-    description: `Introducing the Purgo Style Labs Logo T-Shirt in Black — front view. Crafted from premium heavyweight cotton, this t-shirt showcases the Purgo Style Labs wordmark and infinity symbol to the left chest in sky blue. The oversized, boxy fit features a ribbed crew neck and a woven label at the hem. A small branded tag sits at the left sleeve.
+    description: `Introducing the Summer Steeze Logo T-Shirt in Black — front view. Crafted from premium heavyweight cotton, this t-shirt showcases the Summer Steeze wordmark and infinity symbol to the left chest in sky blue. The oversized, boxy fit features a ribbed crew neck and a woven label at the hem. A small branded tag sits at the left sleeve.
 
-Purgo Style Labs Logo T-Shirt
+Summer Steeze Logo T-Shirt
 Black
 Oversized Fit
 Sky Blue Chest Print
@@ -112,9 +112,9 @@ Composition: 100% Cotton`,
     category: "T-Shirts",
     price: 100,
     image: `${IMAGE_BASE}/Plain_white_tshirt_purgo_blue.png`,
-    description: `Introducing the Purgo Style Labs Essentials T-Shirt in White. Made from premium heavyweight cotton, this minimal t-shirt features the Purgo Style Labs infinity symbol in sky blue on the right chest for a clean, understated look. The oversized boxy fit sits with a ribbed crew neck and a woven label at the lower hem.
+    description: `Introducing the Summer Steeze Essentials T-Shirt in White. Made from premium heavyweight cotton, this minimal t-shirt features the Summer Steeze infinity symbol in sky blue on the right chest for a clean, understated look. The oversized boxy fit sits with a ribbed crew neck and a woven label at the lower hem.
 
-Purgo Style Labs Essentials T-Shirt
+Summer Steeze Essentials T-Shirt
 White
 Oversized Fit
 Sky Blue Infinity Symbol
@@ -130,9 +130,9 @@ Composition: 100% Cotton`,
     category: "T-Shirts",
     price: 100,
     image: `${IMAGE_BASE}/tan_tshirt_logo_front.png`,
-    description: `Introducing the Purgo Style Labs Logo T-Shirt in Sand. Cut from premium heavyweight cotton, this t-shirt features the Purgo Style Labs wordmark and infinity symbol centered on the chest in sky blue. The relaxed, boxy oversized fit includes a ribbed crew neck, a branded tag at the left sleeve, and a woven label at the hem.
+    description: `Introducing the Summer Steeze Logo T-Shirt in Sand. Cut from premium heavyweight cotton, this t-shirt features the Summer Steeze wordmark and infinity symbol centered on the chest in sky blue. The relaxed, boxy oversized fit includes a ribbed crew neck, a branded tag at the left sleeve, and a woven label at the hem.
 
-Purgo Style Labs Logo T-Shirt
+Summer Steeze Logo T-Shirt
 Sand
 Oversized Fit
 Sky Blue Chest Print
@@ -148,9 +148,9 @@ Composition: 100% Cotton`,
     category: "Sweatpants",
     price: 125,
     image: `${IMAGE_BASE}/white_sweatpants_plain.png`,
-    description: `Introducing the Purgo Style Labs Essential Sweatpants in Oatmeal Marl. Built from heavyweight brushed fleece, these sweatpants feature an elasticated waistband with tonal drawcords and elasticated cuffs at the ankle. A small woven label sits at the left hip. Designed with a wide, relaxed leg for effortless everyday wear.
+    description: `Introducing the Summer Steeze Essential Sweatpants in Oatmeal Marl. Built from heavyweight brushed fleece, these sweatpants feature an elasticated waistband with tonal drawcords and elasticated cuffs at the ankle. A small woven label sits at the left hip. Designed with a wide, relaxed leg for effortless everyday wear.
 
-Purgo Style Labs Essential Sweatpants
+Summer Steeze Essential Sweatpants
 Oatmeal Marl
 Relaxed Fit
 Heavyweight Fleece
@@ -167,9 +167,9 @@ Composition: 100% Cotton`,
     category: "Hoodies",
     price: 250,
     image: `${IMAGE_BASE}/white_sweatshirt_plain.png`,
-    description: `Introducing the Purgo Style Labs Logo Hoodie in Oatmeal Marl. Constructed from premium heavyweight fleece, this hoodie features a boxy, cropped oversized silhouette with a kangaroo pocket and the Purgo Style Labs wordmark with infinity symbol in sky blue across the chest. Finished with metal eyelets at the hood and a woven tab on the pocket.
+    description: `Introducing the Summer Steeze Logo Hoodie in Oatmeal Marl. Constructed from premium heavyweight fleece, this hoodie features a boxy, cropped oversized silhouette with a kangaroo pocket and the Summer Steeze wordmark with infinity symbol in sky blue across the chest. Finished with metal eyelets at the hood and a woven tab on the pocket.
 
-Purgo Style Labs Logo Hoodie
+Summer Steeze Logo Hoodie
 Oatmeal Marl
 Oversized Cropped Fit
 Heavyweight Fleece
@@ -186,9 +186,9 @@ Composition: 100% Cotton`,
     category: "T-Shirts",
     price: 100,
     image: `${IMAGE_BASE}/white_tshirt_logo_back.png`,
-    description: `Introducing the Purgo Style Labs Logo T-Shirt in White — back view. Crafted from premium heavyweight cotton, this t-shirt features the Purgo Style Labs wordmark and infinity symbol centered on the upper back in sky blue. The oversized, boxy fit delivers a relaxed, contemporary silhouette.
+    description: `Introducing the Summer Steeze Logo T-Shirt in White — back view. Crafted from premium heavyweight cotton, this t-shirt features the Summer Steeze wordmark and infinity symbol centered on the upper back in sky blue. The oversized, boxy fit delivers a relaxed, contemporary silhouette.
 
-Purgo Style Labs Logo T-Shirt
+Summer Steeze Logo T-Shirt
 White
 Oversized Fit
 Sky Blue Back Print
@@ -202,7 +202,7 @@ Composition: 100% Cotton`,
 const SIZES = ["S", "M", "L"];
 
 async function main() {
-  console.log("Seeding 10 Purgo Style Labs products with S/M/L variants...\n");
+  console.log("Seeding 10 Summer Steeze products with S/M/L variants...\n");
 
   for (const p of PRODUCTS) {
     const existing = await prisma.product.findUnique({ where: { slug: p.slug } });

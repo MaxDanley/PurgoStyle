@@ -143,7 +143,7 @@ export default function TrackOrderPage() {
                 id="orderNumber"
                 value={orderNumber}
                 onChange={(e) => setOrderNumber(e.target.value)}
-                    className="block w-full px-4 py-3.5 pl-11 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 focus:bg-white transition-all duration-200 ease-in-out placeholder-gray-400"
+                    className="block w-full px-4 py-3.5 pl-11 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 focus:bg-white transition-all duration-200 ease-in-out placeholder-gray-400"
                 placeholder="e.g., PURGO-123456"
                 required
               />
@@ -165,7 +165,7 @@ export default function TrackOrderPage() {
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                    className="block w-full px-4 py-3.5 pl-11 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 focus:bg-white transition-all duration-200 ease-in-out placeholder-gray-400"
+                    className="block w-full px-4 py-3.5 pl-11 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 focus:bg-white transition-all duration-200 ease-in-out placeholder-gray-400"
                 placeholder="email@example.com"
                 required
               />
@@ -188,7 +188,7 @@ export default function TrackOrderPage() {
             <button
               type="submit"
               disabled={loading}
-                className="w-full flex justify-center items-center py-4 px-6 border border-transparent rounded-xl shadow-lg text-lg font-bold text-white bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 transform transition-all duration-200 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                className="w-full flex justify-center items-center py-4 px-6 border border-transparent rounded-xl shadow-lg text-lg font-bold text-white bg-gradient-to-r from-brand-500 to-blue-600 hover:from-brand-600 hover:to-brand-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500 transform transition-all duration-200 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
             >
                 {loading ? (
                   <>
@@ -335,7 +335,7 @@ export default function TrackOrderPage() {
                         href={`https://tools.usps.com/go/TrackConfirmAction?tLabels=${order.trackingNumber}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                        className="inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                       >
                         Track on USPS
                       </a>
@@ -351,7 +351,7 @@ export default function TrackOrderPage() {
                     {order.statusHistory.map((history, index) => (
                         <div key={index} className="relative">
                           <div className={`absolute -left-[21px] top-1 h-3 w-3 rounded-full border-2 border-white ring-2 ring-gray-200 ${
-                            index === 0 ? "bg-cyan-500 ring-cyan-500" : "bg-gray-300"
+                            index === 0 ? "bg-brand-500 ring-brand-500" : "bg-gray-300"
                           }`}></div>
                           <div>
                             <p className="text-sm text-gray-500 mb-1">{formatDate(history.createdAt)}</p>

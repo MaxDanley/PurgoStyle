@@ -1,4 +1,4 @@
--- Purgo Style: full Prisma schema as SQL for an empty Supabase DB.
+-- Summer Steeze: full Prisma schema as SQL for an empty Supabase DB.
 -- Run once in Supabase Dashboard → SQL Editor → New query → paste & Run.
 -- Generated with: npx prisma migrate diff --from-empty --to-schema-datamodel prisma/schema.prisma --script
 --

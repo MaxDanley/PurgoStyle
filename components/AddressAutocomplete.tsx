@@ -137,7 +137,7 @@ export default function AddressAutocomplete({
         `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&addressdetails=1&limit=5&countrycodes=us`,
         {
           headers: {
-            "User-Agent": "PurgoLabs/1.0", // Required by Nominatim
+            "User-Agent": "SummerSteeze/1.0", // Required by Nominatim
           },
         }
       );

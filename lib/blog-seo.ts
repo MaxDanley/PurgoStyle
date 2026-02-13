@@ -24,7 +24,7 @@ export function generateStructuredData(
   featuredImage?: string,
   articleImages?: string[]
 ): object {
-  const url = `https://www.purgostyle.com/blog/${slug}`;
+  const url = `https://www.summersteeze.com/blog/${slug}`;
   
   // Generate ImageObject for featured image
   const imageObjects: any[] = [];
@@ -39,10 +39,10 @@ export function generateStructuredData(
       "caption": imageAlt,
       "description": imageAlt,
       "name": title,
-      "license": "https://www.purgostyle.com",
+      "license": "https://www.summersteeze.com",
       "creator": {
         "@type": "Organization",
-        "name": "Purgo Style Labs"
+        "name": "Summer Steeze"
       }
     });
   }
@@ -64,16 +64,16 @@ export function generateStructuredData(
         "caption": imageAlt,
         "description": imageAlt,
         "name": sectionTitle || `${title} - Image ${index + 1}`,
-        "license": "https://www.purgostyle.com",
+        "license": "https://www.summersteeze.com",
         "creator": {
           "@type": "Organization",
-          "name": "Purgo Style Labs"
+          "name": "Summer Steeze"
         }
       });
     });
   }
   
-  const baseImage = featuredImage || "https://www.purgostyle.com/logo-small-copy.png";
+  const baseImage = featuredImage || "https://www.summersteeze.com/STEEZ.png";
   
   return {
     "@context": "https://schema.org",
@@ -85,15 +85,15 @@ export function generateStructuredData(
     "dateModified": publishedAt.toISOString(),
     "author": {
       "@type": "Organization",
-      "name": "Purgo Style Labs",
-      "url": "https://www.purgostyle.com"
+      "name": "Summer Steeze",
+      "url": "https://www.summersteeze.com"
     },
     "publisher": {
       "@type": "Organization",
-      "name": "Purgo Style Labs",
+      "name": "Summer Steeze",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://www.purgostyle.com/logo-small-copy.png",
+        "url": "https://www.summersteeze.com/STEEZ.png",
         "width": 512,
         "height": 512
       }
@@ -130,7 +130,7 @@ export function generateImageAltText(title: string, content: string): string {
   }
   
   // Add context
-  altText += " - Purgo Style Labs";
+  altText += " - Summer Steeze";
   
   return altText;
 }
@@ -302,19 +302,19 @@ export function generateBreadcrumbStructuredData(slug: string, title: string): o
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https://www.purgostyle.com"
+        "item": "https://www.summersteeze.com"
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": "Blog",
-        "item": "https://www.purgostyle.com/blog"
+        "item": "https://www.summersteeze.com/blog"
       },
       {
         "@type": "ListItem",
         "position": 3,
         "name": title,
-        "item": `https://www.purgostyle.com/blog/${slug}`
+        "item": `https://www.summersteeze.com/blog/${slug}`
       }
     ]
   };
@@ -327,7 +327,7 @@ export function generateBreadcrumbStructuredData(slug: string, title: string): o
 export function markdownLinksToHtml(text: string): string {
   return text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_match, linkText, url) => {
     const isExternal = url.startsWith("http");
-    return `<a href="${url}" ${isExternal ? 'target="_blank" rel="noopener noreferrer"' : ""} class="text-cyan-600 hover:text-cyan-700 underline">${linkText}</a>`;
+    return `<a href="${url}" ${isExternal ? 'target="_blank" rel="noopener noreferrer"' : ""} class="text-brand-600 hover:text-brand-700 underline">${linkText}</a>`;
   });
 }
 
@@ -413,9 +413,9 @@ export function generatePSEOPageBreadcrumb(type: 'compare' | 'peptides', slug: s
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.purgostyle.com" },
-      { "@type": "ListItem", "position": 2, "name": sectionName, "item": `https://www.purgostyle.com${basePath}` },
-      { "@type": "ListItem", "position": 3, "name": title, "item": `https://www.purgostyle.com${basePath}/${slug}` }
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.summersteeze.com" },
+      { "@type": "ListItem", "position": 2, "name": sectionName, "item": `https://www.summersteeze.com${basePath}` },
+      { "@type": "ListItem", "position": 3, "name": title, "item": `https://www.summersteeze.com${basePath}/${slug}` }
     ]
   };
 }

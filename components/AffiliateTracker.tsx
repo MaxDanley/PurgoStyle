@@ -3,8 +3,8 @@
 import { useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 
-const AFFILIATE_STORAGE_KEY = "purgo_affiliate_ref";
-const AFFILIATE_EXPIRY_KEY = "purgo_affiliate_ref_expiry";
+const AFFILIATE_STORAGE_KEY = "summersteeze_affiliate_ref";
+const AFFILIATE_EXPIRY_KEY = "summersteeze_affiliate_ref_expiry";
 const AFFILIATE_EXPIRY_DAYS = 30;
 
 export function getStoredAffiliateRef(): string | null {

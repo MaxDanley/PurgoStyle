@@ -1,5 +1,5 @@
 /**
- * Seed Purgo Style store with t-shirt and activewear products.
+ * Seed Summer Steeze store with t-shirt and activewear products.
  * Prices match the CSV list; each product has S, M, L variants.
  */
 import { PrismaClient } from "@prisma/client";
@@ -15,11 +15,11 @@ const PRODUCTS: { name: string; slug: string; description: string; category: str
   { name: "Highline Tee", slug: "highline-tee", description: "Everyday premium tee.", category: "Tees", image: "/placeholder.svg", price: 39.99 },
   { name: "Summit Tee", slug: "summit-tee", description: "Active lifestyle tee.", category: "Tees", image: "/placeholder.svg", price: 49.99 },
   { name: "Canyon Tee", slug: "canyon-tee", description: "Bold design tee.", category: "Tees", image: "/placeholder.svg", price: 54.99 },
-  { name: "Purgo Classic Tee", slug: "purgo-classic-tee", description: "Signature Purgo tee.", category: "Tees", image: "/placeholder.svg", price: 59.99 },
+  { name: "Summer Steeze Classic Tee", slug: "purgo-classic-tee", description: "Signature Summer Steeze tee.", category: "Tees", image: "/placeholder.svg", price: 59.99 },
   { name: "Desert Wind Hoodie", slug: "desert-wind-hoodie", description: "Lightweight hoodie.", category: "Hoodies", image: "/placeholder.svg", price: 69.99 },
   { name: "Sunrise Hoodie", slug: "sunrise-hoodie", description: "Cozy pullover.", category: "Hoodies", image: "/placeholder.svg", price: 74.99 },
   { name: "Peak Performance Hoodie", slug: "peak-performance-hoodie", description: "Training hoodie.", category: "Hoodies", image: "/placeholder.svg", price: 89.99 },
-  { name: "Purgo Premium Hoodie", slug: "purgo-premium-hoodie", description: "Premium heavyweight hoodie.", category: "Hoodies", image: "/placeholder.svg", price: 104.99 },
+  { name: "Summer Steeze Premium Hoodie", slug: "purgo-premium-hoodie", description: "Premium heavyweight hoodie.", category: "Hoodies", image: "/placeholder.svg", price: 104.99 },
   { name: "Glow Tee", slug: "glow-tee", description: "Standout design.", category: "Tees", image: "/placeholder.svg", price: 114.99 },
   { name: "Ridge Hoodie", slug: "ridge-hoodie", description: "Rugged style hoodie.", category: "Hoodies", image: "/placeholder.svg", price: 124.99 },
   { name: "KLOW Hoodie", slug: "klow-hoodie", description: "Premium oversized hoodie.", category: "Hoodies", image: "/placeholder.svg", price: 154.99 },

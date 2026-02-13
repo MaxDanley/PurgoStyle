@@ -1,4 +1,4 @@
--- Two orders for 2/12/26 — match peptide order refs; totals and items are Purgo Style website items.
+-- Two orders for 2/12/26 — match peptide order refs; totals and items are Summer Steeze website items.
 -- Run in Supabase SQL Editor after products exist (e.g. from seed-purgo-products.sql).
 --
 -- Order 1: PL-1770921562644-O55C — 2/12/26 11:40 AM — $247.36
@@ -128,6 +128,6 @@ VALUES
   (gen_random_uuid()::text, 'order-20597', 'PENDING', 'Order placed (ref PL-1770915257055-S9KB)', '2026-02-12 09:55:00'),
   (gen_random_uuid()::text, 'order-20597', 'PROCESSING', 'Payment received', '2026-02-12 09:55:00');
 
--- Run once. Ensure Purgo Style Labs products exist (run seed-purgo-products.sql or seed-purgo-labs first).
+-- Run once. Ensure Summer Steeze products exist (run seed-purgo-products.sql or seed-purgo-labs first).
 -- Order numbers match peptide refs: PL-1770921562644-O55C ($247.36), PL-1770915257055-S9KB ($205.97).
 -- Update customer name/email/address in admin if you have the real details for these orders.

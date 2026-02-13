@@ -8,9 +8,9 @@ export default function TermsPage() {
         <div className="prose prose-lg max-w-none text-gray-700">
           <h2>Introduction</h2>
           <p>
-            These terms and conditions apply to your use of the website <span className="font-semibold text-gray-900">purgostyle.com</span> (the
-            &ldquo;Website&rdquo;). The Website is owned and operated by <span className="font-semibold text-gray-900">Arbitration Enterprises LLC</span>, a limited liability
-            company (the &ldquo;Company&rdquo;). By accessing or using the Website, you (&ldquo;User&rdquo;) agree that you have read,
+            These terms and conditions apply to your use of the website <span className="font-semibold text-gray-900">summersteeze.com</span> (the
+            &ldquo;Website&rdquo;).             The Website is owned and operated by <span className="font-semibold text-gray-900">Summer Steeze</span> (the
+            &ldquo;Company&rdquo;). By accessing or using the Website, you (&ldquo;User&rdquo;) agree that you have read,
             understood, and accept these terms and conditions (the &ldquo;Agreement&rdquo;), including our{" "}
             <a href="/privacy">Privacy Policy</a>, which is incorporated by reference.
           </p>
@@ -26,7 +26,7 @@ export default function TermsPage() {
 
           <h2>Products and Use of the Website</h2>
           <p>
-            The Company sells apparel under the brand Purgo Style Labs, including activewear, t-shirts, sweatshirts,
+            The Company sells apparel under the brand Summer Steeze, including activewear, t-shirts, sweatshirts,
             and related clothing (the &ldquo;Products&rdquo;) for personal wear. All Products are offered for sale through the
             Website subject to availability. You agree to use the Website and Products only for lawful purposes and in
             accordance with this Agreement.
@@ -150,7 +150,7 @@ export default function TermsPage() {
           <p>
             The Company may give you notice by email to the address you provide or by posting on the Website. You must
             keep your email address current. To give the Company notice, contact us by email at{" "}
-            <a href="mailto:hello@purgostyle.com">hello@purgostyle.com</a> or by mail to Arbitration Enterprises LLC,
+            <a href="mailto:help@summersteeze.com">help@summersteeze.com</a> or by mail to Summer Steeze,
             Scottsdale, AZ 85260. Email notice is effective when sent; mail notice is effective three business days
             after mailing.
           </p>

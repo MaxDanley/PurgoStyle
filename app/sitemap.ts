@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next';
 import { products } from '@/lib/products';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.purgostyle.com';
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.summersteeze.com';
 
   // Static pages (no database required)
   const staticPages = [

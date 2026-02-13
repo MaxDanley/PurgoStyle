@@ -1,4 +1,4 @@
-/** Purgo Style: products are loaded from DB (seed-purgostyle). This file provides fallbacks and helpers. */
+/** Summer Steeze: products are loaded from DB. This file provides fallbacks and helpers. */
 
 export interface ProductVariant {
   id: string;
@@ -33,8 +33,8 @@ export function getProductBySlug(_slug: string): Product | undefined {
 export function getProductSeo(product: { name: string; slug: string; category: string; description: string; variants?: { size: string }[] }) {
   const sizes = product.variants?.map((v) => v.size).filter(Boolean).slice(0, 3) || [];
   const sizePhrase = sizes.length ? ` ${sizes.join(" & ")}` : "";
-  const title = `Buy ${product.name}${sizePhrase} | Purgo Style`;
-  const description = `${product.name} – ${product.description.slice(0, 120)}. Arizona activewear. Purgo Style.`;
+  const title = `Buy ${product.name}${sizePhrase} | Summer Steeze`;
+  const description = `${product.name} – ${product.description.slice(0, 120)}. Arizona activewear. Summer Steeze.`;
   return { title, description: description.slice(0, 160) };
 }
 

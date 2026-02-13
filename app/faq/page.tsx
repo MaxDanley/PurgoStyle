@@ -9,7 +9,7 @@ const faqData: { question: string; answer: string }[] = [
   },
   {
     question: "What is your return policy?",
-    answer: "We offer a 30-day return policy for unworn items with tags attached. Items must be in original condition. Contact hello@purgostyle.com to start a return."
+    answer: "We offer a 30-day return policy for unworn items with tags attached. Items must be in original condition. Contact hello@summersteeze.com to start a return."
   },
   {
     question: "How do I track my order?",
@@ -32,8 +32,8 @@ const faqData: { question: string; answer: string }[] = [
     answer: "Machine wash cold with like colors. Tumble dry low or hang dry. Avoid bleach to preserve print and color."
   },
   {
-    question: "Where is Purgo Style based?",
-    answer: "We're an Arizona-based activewear and tee brand. Purgo comes from the Latin word meaning to purify—we keep our designs and quality straightforward and clean."
+    question: "Where is Summer Steeze based?",
+    answer: "We're an Arizona-based activewear and tee brand. We keep our designs and quality straightforward and clean."
   }
 ];
 

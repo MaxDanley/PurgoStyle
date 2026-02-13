@@ -1306,8 +1306,8 @@ export default function AdminDashboard() {
               <p className="text-gray-600 mb-6">
                 Send a mass text to customers who have had an order delivered at least one month ago and have a phone on file. Logged-in users must have opted in; guest orders with a phone are included by default (prior guests who gave phone count as opted in).
               </p>
-              <div className="bg-cyan-50 border border-cyan-200 rounded-lg p-4 mb-6">
-                <p className="text-sm text-cyan-800">
+              <div className="bg-brand-50 border border-brand-200 rounded-lg p-4 mb-6">
+                <p className="text-sm text-brand-800">
                   <strong>Eligible recipients:</strong> {smsEligibleCount !== null ? smsEligibleCount : "Loading..."} (delivered ≥1 month ago, has phone; guests with phone included by default)
                 </p>
               </div>
@@ -1329,7 +1329,7 @@ export default function AdminDashboard() {
                     type="file"
                     accept="image/*"
                     onChange={(e) => setSmsImageFile(e.target.files?.[0] ?? null)}
-                    className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-cyan-50 file:text-cyan-700 hover:file:bg-cyan-100"
+                    className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100"
                   />
                   <p className="text-xs text-gray-500 mt-1">Image will be uploaded and sent as MMS. Max 5MB combined.</p>
                 </div>
@@ -2644,7 +2644,7 @@ export default function AdminDashboard() {
                     type="checkbox"
                     checked={sendCancellationEmail}
                     onChange={(e) => setSendCancellationEmail(e.target.checked)}
-                    className="w-4 h-4 text-cyan-600 border-gray-300 rounded focus:ring-cyan-500"
+                    className="w-4 h-4 text-brand-600 border-gray-300 rounded focus:ring-brand-500"
                   />
                   <span className="text-sm text-gray-700">
                     Send email notification to customer

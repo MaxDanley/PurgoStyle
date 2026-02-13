@@ -26,7 +26,7 @@ export default function RegisterPage() {
   // Track page view
   useEffect(() => {
     if (pathname) {
-      trackPageView(window.location.href, 'Register - Purgo Style Labs', {
+      trackPageView(window.location.href, 'Register - Summer Steeze', {
         page_type: 'register',
       });
     }
@@ -99,15 +99,15 @@ export default function RegisterPage() {
       <div className="max-w-md w-full">
         <div className="text-center mb-8">
           <Image
-            src="/logo-small-copy.png"
-            alt="Purgo Style Labs"
+            src="/STEEZ.png"
+            alt="Summer Steeze"
             width={80}
             height={80}
             className="mx-auto mb-4"
           />
           <h1 className="sr-only">Create Your Account</h1>
           <h2 className="text-3xl font-bold text-gray-900">Create Account</h2>
-          <p className="text-gray-600 mt-2">Join Purgo Style Labs today</p>
+          <p className="text-gray-600 mt-2">Join Summer Steeze today</p>
         </div>
 
         <div className="card p-8">

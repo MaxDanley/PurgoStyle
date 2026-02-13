@@ -1,5 +1,5 @@
 ═══════════════════════════════════════════════════════════════
-   PURGO LABS - DEPLOYMENT QUICK COMMANDS
+   SUMMER STEEZE - DEPLOYMENT QUICK COMMANDS
 ═══════════════════════════════════════════════════════════════
 
 ✅ GIT INITIALIZED: All files committed to 'main' branch locally
@@ -11,13 +11,13 @@ STEP 1: CREATE GITHUB REPO & PUSH
 1. Go to: https://github.com/new
 
 2. Fill in:
-   - Name: PurgoLabs
+   - Name: SummerSteeze
    - Private: ✓ (recommended)
    - DO NOT add README, .gitignore, or license
 
 3. Run these commands (replace YOUR_USERNAME):
 
-   git remote add origin https://github.com/YOUR_USERNAME/PurgoLabs.git
+   git remote add origin https://github.com/YOUR_USERNAME/SummerSteeze.git
    git push -u origin main
 
    ✅ Done! Your code is on GitHub
@@ -30,7 +30,7 @@ STEP 2: DEPLOY TO VERCEL
 
 2. Sign in with GitHub
 
-3. Import "PurgoLabs" repository
+3. Import "SummerSteeze" repository
 
 4. Click "Deploy" (don't worry, we'll add env vars next)
 
@@ -44,7 +44,7 @@ In Vercel → Settings → Environment Variables, add ALL of these:
 │ DATABASE (Required)                                         │
 ├─────────────────────────────────────────────────────────────┤
 │ DATABASE_URL                                                │
-│ postgresql://user:password@host:5432/purgolabs             │
+│ postgresql://user:password@host:5432/summersteeze             │
 │                                                             │
 │ 👉 Get from: Supabase, Neon, or Railway                    │
 └─────────────────────────────────────────────────────────────┘
@@ -56,7 +56,7 @@ In Vercel → Settings → Environment Variables, add ALL of these:
 │ Run: openssl rand -base64 32                               │
 │                                                             │
 │ NEXTAUTH_URL                                                │
-│ https://purgolabs.com                                       │
+│ https://www.summersteeze.com                                │
 └─────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────┐
@@ -69,7 +69,7 @@ In Vercel → Settings → Environment Variables, add ALL of these:
 │ your-secret                                                 │
 │                                                             │
 │ 👉 Get from: console.cloud.google.com                      │
-│    Redirect URI: https://purgolabs.com/api/auth/callback/google │
+│    Redirect URI: https://www.summersteeze.com/api/auth/callback/google │
 └─────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────┐
@@ -85,7 +85,7 @@ In Vercel → Settings → Environment Variables, add ALL of these:
 │ whsec_...                                                   │
 │                                                             │
 │ 👉 Get from: dashboard.stripe.com                          │
-│    Webhook URL: https://purgolabs.com/api/webhooks/stripe  │
+│    Webhook URL: https://www.summersteeze.com/api/webhooks/stripe  │
 └─────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────┐
@@ -95,7 +95,7 @@ In Vercel → Settings → Environment Variables, add ALL of these:
 │ re_...                                                      │
 │                                                             │
 │ EMAIL_FROM                                                  │
-│ noreply@purgolabs.com                                       │
+│ noreply@summersteeze.com                                    │
 │                                                             │
 │ 👉 Get from: resend.com (verify domain first!)             │
 └─────────────────────────────────────────────────────────────┘
@@ -104,7 +104,7 @@ In Vercel → Settings → Environment Variables, add ALL of these:
 │ SITE URL                                                    │
 ├─────────────────────────────────────────────────────────────┤
 │ NEXT_PUBLIC_SITE_URL                                        │
-│ https://purgolabs.com                                       │
+│ https://www.summersteeze.com                                 │
 └─────────────────────────────────────────────────────────────┘
 
 After adding all variables:
@@ -120,9 +120,9 @@ In Vercel:
 ──────────
 1. Go to: Settings → Domains
 2. Click "Add"
-3. Enter: purgolabs.com
+3. Enter: summersteeze.com
 4. Click "Add"
-5. Also add: www.purgolabs.com
+5. Also add: www.summersteeze.com
 
 In GoDaddy:
 ──────────
@@ -172,7 +172,7 @@ Or use Vercel CLI:
 STEP 6: TEST YOUR SITE
 ═══════════════════════════════════════════════════════════════
 
-Visit: https://purgolabs.com
+Visit: https://www.summersteeze.com
 
 Test:
   ✓ Browse products
@@ -188,7 +188,7 @@ Test:
 QUICK SERVICE URLS
 ═══════════════════════════════════════════════════════════════
 
-GitHub:          https://github.com/YOUR_USERNAME/PurgoLabs
+GitHub:          https://github.com/YOUR_USERNAME/SummerSteeze
 Vercel:          https://vercel.com/dashboard
 Supabase:        https://supabase.com/dashboard
 Stripe:          https://dashboard.stripe.com

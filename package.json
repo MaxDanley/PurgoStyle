@@ -1,7 +1,7 @@
 {
-  "name": "purgostyle",
+  "name": "summersteeze",
   "version": "1.0.0",
-  "description": "Purgo Style - Arizona Activewear & Tee Brand",
+  "description": "Summer Steeze - Arizona Activewear & Tee Brand",
   "scripts": {
     "dev": "next dev",
     "build": "prisma generate && next build",

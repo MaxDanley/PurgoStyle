@@ -15,9 +15,9 @@ const getResend = () => {
   return resendInstance;
 };
 
-const fromEmail = process.env.EMAIL_FROM || "noreply@purgostyle.com";
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://www.purgostyle.com";
-const supportEmail = process.env.SUPPORT_EMAIL || "hello@purgostyle.com";
+const fromEmail = process.env.EMAIL_FROM || "noreply@summersteeze.com";
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://www.summersteeze.com";
+const supportEmail = process.env.SUPPORT_EMAIL || "help@summersteeze.com";
 
 // Shopify-style email template wrapper
 function getEmailWrapper(content: string, orderNumber?: string) {
@@ -27,7 +27,7 @@ function getEmailWrapper(content: string, orderNumber?: string) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Purgo Style Labs</title>
+  <title>Summer Steeze</title>
 </head>
 <body style="margin: 0; padding: 0; background-color: #f4f4f4; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
   <table role="presentation" style="width: 100%; border-collapse: collapse;">
@@ -40,7 +40,7 @@ function getEmailWrapper(content: string, orderNumber?: string) {
               <table role="presentation" style="width: 100%;">
                 <tr>
                   <td style="font-size: 24px; font-weight: 400; color: #333333;">
-                    Purgo Style Labs
+                    Summer Steeze
                   </td>
                   ${orderNumber ? `
                   <td style="text-align: right; font-size: 14px; color: #999999;">
@@ -64,7 +64,7 @@ function getEmailWrapper(content: string, orderNumber?: string) {
             <td style="padding: 24px 40px; background-color: #fafafa; border-top: 1px solid #e5e5e5;">
               <p style="margin: 0; font-size: 13px; color: #999999; line-height: 1.5;">
                 If you have any questions, reply to this email or contact us at<br>
-                <a href="mailto:hello@purgostyle.com" style="color: #1a73e8; text-decoration: none;">hello@purgostyle.com</a>
+                <a href="mailto:hello@summersteeze.com" style="color: #f27e56; text-decoration: none;">hello@summersteeze.com</a>
               </p>
             </td>
           </tr>
@@ -221,17 +221,17 @@ export async function sendPasswordResetEmail(email: string, resetUrl: string) {
   try {
     await sendEmail({
       to: email,
-      subject: "Reset Your Password - Purgo Style Labs",
+      subject: "Reset Your Password - Summer Steeze",
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #1890ff;">Reset Your Password</h2>
-          <p>You requested to reset your password for your Purgo Style Labs account.</p>
+          <h2 style="color: #f27e56;">Reset Your Password</h2>
+          <p>You requested to reset your password for your Summer Steeze account.</p>
           <p>Click the button below to reset your password:</p>
-          <a href="${resetUrl}" style="display: inline-block; padding: 12px 24px; background-color: #1890ff; color: white; text-decoration: none; border-radius: 6px; margin: 20px 0;">Reset Password</a>
+          <a href="${resetUrl}" style="display: inline-block; padding: 12px 24px; background-color: #f27e56; color: white; text-decoration: none; border-radius: 6px; margin: 20px 0;">Reset Password</a>
           <p>If you didn't request this, you can safely ignore this email.</p>
           <p>This link will expire in 1 hour.</p>
           <hr style="margin: 30px 0; border: none; border-top: 1px solid #eee;">
-          <p style="color: #666; font-size: 12px;">Purgo Style Labs</p>
+          <p style="color: #666; font-size: 12px;">Summer Steeze</p>
         </div>
       `,
     });
@@ -271,13 +271,13 @@ export async function sendOrderConfirmationEmail(
     <table role="presentation" style="margin-bottom: 32px;">
       <tr>
         <td>
-          <a href="${baseUrl}/track-order" style="display: inline-block; padding: 12px 24px; background-color: #1a73e8; color: #ffffff; text-decoration: none; border-radius: 4px; font-size: 14px; font-weight: 500;">
+          <a href="${baseUrl}/track-order" style="display: inline-block; padding: 12px 24px; background-color: #f27e56; color: #ffffff; text-decoration: none; border-radius: 4px; font-size: 14px; font-weight: 500;">
             View your order
           </a>
         </td>
         <td style="padding-left: 16px;">
           <span style="color: #666666;">or</span>
-          <a href="${baseUrl}/products" style="color: #1a73e8; text-decoration: none; margin-left: 8px; font-size: 14px;">
+          <a href="${baseUrl}/products" style="color: #f27e56; text-decoration: none; margin-left: 8px; font-size: 14px;">
             Visit our store
           </a>
         </td>
@@ -304,7 +304,7 @@ export async function sendOrderConfirmationEmail(
   try {
     await sendEmail({
       to: email,
-      subject: `Order #${orderNumber} confirmed - Purgo Style Labs`,
+      subject: `Order #${orderNumber} confirmed - Summer Steeze`,
       html: getEmailWrapper(content, `#${orderNumber}`),
     });
   } catch (error) {
@@ -357,7 +357,7 @@ export async function sendShippingNotificationEmail(
     
     <!-- CTA -->
     <div style="margin-top: 24px; text-align: center;">
-      <a href="${baseUrl}/track-order" style="color: #1a73e8; text-decoration: none; font-size: 14px;">
+      <a href="${baseUrl}/track-order" style="color: #f27e56; text-decoration: none; font-size: 14px;">
         View order details →
       </a>
     </div>
@@ -366,7 +366,7 @@ export async function sendShippingNotificationEmail(
   try {
     await sendEmail({
       to: email,
-      subject: `Your order #${orderNumber} has shipped - Purgo Style Labs`,
+      subject: `Your order #${orderNumber} has shipped - Summer Steeze`,
       html: getEmailWrapper(content, `#${orderNumber}`),
     });
   } catch (error) {
@@ -522,7 +522,7 @@ export async function sendOrderStatusChangeEmail(
     
     <!-- CTA -->
     <div style="margin-top: 24px;">
-      <a href="${baseUrl}/track-order" style="display: inline-block; padding: 12px 24px; background-color: #1a73e8; color: #ffffff; text-decoration: none; border-radius: 4px; font-size: 14px; font-weight: 500;">
+      <a href="${baseUrl}/track-order" style="display: inline-block; padding: 12px 24px; background-color: #f27e56; color: #ffffff; text-decoration: none; border-radius: 4px; font-size: 14px; font-weight: 500;">
         View order details
       </a>
     </div>
@@ -531,7 +531,7 @@ export async function sendOrderStatusChangeEmail(
   try {
     await sendEmail({
       to: email,
-      subject: `Order #${orderNumber} - ${status.title} - Purgo Style Labs`,
+      subject: `Order #${orderNumber} - ${status.title} - Summer Steeze`,
       html: getEmailWrapper(content, `#${orderNumber}`),
     });
   } catch (error) {
@@ -612,7 +612,7 @@ export async function sendPaymentConfirmationEmail(
     
     <!-- CTA -->
     <div style="margin-top: 24px;">
-      <a href="${baseUrl}/track-order" style="display: inline-block; padding: 12px 24px; background-color: #1a73e8; color: #ffffff; text-decoration: none; border-radius: 4px; font-size: 14px; font-weight: 500;">
+      <a href="${baseUrl}/track-order" style="display: inline-block; padding: 12px 24px; background-color: #f27e56; color: #ffffff; text-decoration: none; border-radius: 4px; font-size: 14px; font-weight: 500;">
         View order details
       </a>
     </div>
@@ -621,7 +621,7 @@ export async function sendPaymentConfirmationEmail(
   try {
     await sendEmail({
       to: email,
-      subject: `Payment received for order #${orderNumber} - Purgo Style Labs`,
+      subject: `Payment received for order #${orderNumber} - Summer Steeze`,
       html: getEmailWrapper(content, `#${orderNumber}`),
     });
   } catch (error) {
@@ -692,7 +692,7 @@ export async function sendTrackingUpdateEmail(
     
     <!-- CTA -->
     <a href="https://tools.usps.com/go/TrackConfirmAction?tLabels=${trackingNumber}" 
-       style="display: inline-block; padding: 12px 24px; background-color: #1a73e8; color: #ffffff; text-decoration: none; border-radius: 4px; font-size: 14px; font-weight: 500;">
+       style="display: inline-block; padding: 12px 24px; background-color: #f27e56; color: #ffffff; text-decoration: none; border-radius: 4px; font-size: 14px; font-weight: 500;">
       Track on USPS
     </a>
   `;
@@ -700,7 +700,7 @@ export async function sendTrackingUpdateEmail(
   try {
     await sendEmail({
       to: email,
-      subject: `${statusInfo.icon} ${statusInfo.title} - Order #${orderNumber} - Purgo Style Labs`,
+      subject: `${statusInfo.icon} ${statusInfo.title} - Order #${orderNumber} - Summer Steeze`,
       html: getEmailWrapper(content, `#${orderNumber}`),
     });
   } catch (error) {
@@ -729,7 +729,7 @@ export async function sendTrackingNumberUpdateEmail(
         ${trackingNumber}
       </p>
       <a href="https://tools.usps.com/go/TrackConfirmAction?tLabels=${trackingNumber}" 
-         style="display: inline-block; padding: 12px 24px; background-color: #1a73e8; color: #ffffff; text-decoration: none; border-radius: 4px; font-size: 14px; font-weight: 500;">
+         style="display: inline-block; padding: 12px 24px; background-color: #f27e56; color: #ffffff; text-decoration: none; border-radius: 4px; font-size: 14px; font-weight: 500;">
         Track your shipment
       </a>
     </div>
@@ -745,7 +745,7 @@ export async function sendTrackingNumberUpdateEmail(
   try {
     await sendEmail({
       to: email,
-      subject: `Tracking updated for order #${orderNumber} - Purgo Style Labs`,
+      subject: `Tracking updated for order #${orderNumber} - Summer Steeze`,
       html: getEmailWrapper(content, `#${orderNumber}`),
     });
   } catch (error) {
@@ -799,18 +799,18 @@ export async function sendOrderNotificationToSupport(
     ? `<span style="color: #f59e0b; font-weight: bold;">PENDING - Payment not yet received</span>`
     : `<span style="color: #10b981; font-weight: bold;">PAID - Payment received</span>`;
 
-  const adminTo = "support@purgolabs.com";
+  const adminTo = process.env.SUPPORT_EMAIL || "help@summersteeze.com";
   try {
     await sendEmail({
       to: adminTo,
       subject: "TSHIRT-STORE ORDER",
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 700px; margin: 0 auto;">
-          <h2 style="color: #1890ff;">New Order Received</h2>
+          <h2 style="color: #f27e56;">New Order Received</h2>
           <p>A new order has been placed on the website.</p>
           
-          <div style="background-color: #f0f9ff; border-left: 4px solid #1890ff; padding: 20px; margin: 20px 0;">
-            <h3 style="margin-top: 0; color: #2563eb;">Order Information</h3>
+          <div style="background-color: #fef5f2; border-left: 4px solid #f27e56; padding: 20px; margin: 20px 0;">
+            <h3 style="margin-top: 0; color: #e0653d;">Order Information</h3>
             <p style="font-size: 16px; margin: 8px 0;"><strong>Order Number:</strong> ${orderNumber}</p>
             <p style="font-size: 16px; margin: 8px 0;"><strong>Payment Method:</strong> ${paymentMethodName}</p>
             <p style="font-size: 16px; margin: 8px 0;"><strong>Payment Status:</strong> ${paymentStatusText}</p>
@@ -883,13 +883,13 @@ export async function sendAffiliatePayoutRequestEmail(details: {
   const { affiliateName, affiliateEmail, discountCode, amount, requestId } = details;
   try {
     await sendEmail({
-      to: "hello@purgostyle.com",
+      to: "hello@summersteeze.com",
       subject: `Affiliate Payout Request: ${affiliateName} ($${amount.toFixed(2)})`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #0e7490;">Affiliate Payout Request</h2>
+          <h2 style="color: #f27e56;">Affiliate Payout Request</h2>
           <p>An affiliate has requested a payout. Process and mark as paid in the admin dashboard.</p>
-          <div style="background-color: #f0f9ff; border-left: 4px solid #0e7490; padding: 16px; margin: 16px 0;">
+          <div style="background-color: #fef5f2; border-left: 4px solid #f27e56; padding: 16px; margin: 16px 0;">
             <p style="margin: 0 0 8px 0;"><strong>Affiliate:</strong> ${affiliateName}</p>
             <p style="margin: 0 0 8px 0;"><strong>Email:</strong> <a href="mailto:${affiliateEmail}">${affiliateEmail}</a></p>
             <p style="margin: 0 0 8px 0;"><strong>Discount code:</strong> ${discountCode}</p>
@@ -914,16 +914,16 @@ export async function sendDiscountCodeRequestNotification(email: string) {
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #f9fafb; padding: 40px;">
           <div style="background-color: white; border-radius: 12px; padding: 40px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-            <h2 style="color: #0e7490; font-size: 24px; margin-top: 0;">New Discount Code Request</h2>
+            <h2 style="color: #f27e56; font-size: 24px; margin-top: 0;">New Discount Code Request</h2>
             
             <p style="color: #374151; font-size: 16px; line-height: 1.6;">
               A customer has requested a 10% discount code from the homepage popup.
             </p>
 
-            <div style="background-color: #f0f9ff; border-left: 4px solid #0e7490; padding: 20px; margin: 20px 0; border-radius: 4px;">
+            <div style="background-color: #fef5f2; border-left: 4px solid #f27e56; padding: 20px; margin: 20px 0; border-radius: 4px;">
               <p style="margin: 0; color: #374151; font-size: 16px;">
                 <strong>Customer Email:</strong><br>
-                <a href="mailto:${email}" style="color: #0e7490; text-decoration: none; font-size: 18px;">${email}</a>
+                <a href="mailto:${email}" style="color: #f27e56; text-decoration: none; font-size: 18px;">${email}</a>
               </p>
             </div>
 
@@ -932,7 +932,7 @@ export async function sendDiscountCodeRequestNotification(email: string) {
             </p>
 
             <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb; color: #9ca3af; font-size: 12px;">
-              <p style="margin: 0;">This is an automated notification from the Purgo Style Labs website.</p>
+              <p style="margin: 0;">This is an automated notification from the Summer Steeze website.</p>
             </div>
           </div>
         </div>
@@ -957,25 +957,25 @@ export async function sendAccountCreationNotification(
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #f9fafb; padding: 40px;">
           <div style="background-color: white; border-radius: 12px; padding: 40px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-            <h2 style="color: #0e7490; font-size: 24px; margin-top: 0;">New Account Created</h2>
+            <h2 style="color: #f27e56; font-size: 24px; margin-top: 0;">New Account Created</h2>
             
             <p style="color: #374151; font-size: 16px; line-height: 1.6;">
               A new user account has been created on the website.
             </p>
 
-            <div style="background-color: #f0f9ff; border-left: 4px solid #0e7490; padding: 20px; margin: 20px 0; border-radius: 4px;">
+            <div style="background-color: #fef5f2; border-left: 4px solid #f27e56; padding: 20px; margin: 20px 0; border-radius: 4px;">
               <p style="margin: 8px 0; color: #374151; font-size: 16px;">
                 <strong>Name:</strong><br>
                 ${name}
               </p>
               <p style="margin: 8px 0; color: #374151; font-size: 16px;">
                 <strong>Email:</strong><br>
-                <a href="mailto:${email}" style="color: #0e7490; text-decoration: none;">${email}</a>
+                <a href="mailto:${email}" style="color: #f27e56; text-decoration: none;">${email}</a>
               </p>
               ${phone ? `
               <p style="margin: 8px 0; color: #374151; font-size: 16px;">
                 <strong>Phone:</strong><br>
-                <a href="tel:${phone}" style="color: #0e7490; text-decoration: none;">${phone}</a>
+                <a href="tel:${phone}" style="color: #f27e56; text-decoration: none;">${phone}</a>
               </p>
               ` : ''}
             </div>
@@ -985,7 +985,7 @@ export async function sendAccountCreationNotification(
             </p>
 
             <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb; color: #9ca3af; font-size: 12px;">
-              <p style="margin: 0;">This is an automated notification from the Purgo Style Labs website.</p>
+              <p style="margin: 0;">This is an automated notification from the Summer Steeze website.</p>
             </div>
           </div>
         </div>
@@ -1006,7 +1006,7 @@ export async function sendDiscountCodeRetargetingEmail(email: string, discountCo
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #f9fafb; padding: 40px;">
           <div style="background-color: white; border-radius: 12px; padding: 40px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
             <div style="text-align: center; margin-bottom: 30px;">
-              <h1 style="color: #0e7490; font-size: 32px; margin: 0;">Your Discount Code Awaits! 🎉</h1>
+              <h1 style="color: #f27e56; font-size: 32px; margin: 0;">Your Discount Code Awaits! 🎉</h1>
             </div>
               
             <p style="color: #374151; font-size: 16px; line-height: 1.6;">
@@ -1014,10 +1014,10 @@ export async function sendDiscountCodeRetargetingEmail(email: string, discountCo
               We noticed you requested a discount code but haven't used it yet. Your 10% off code is still waiting for you!
             </p>
 
-            <div style="background: linear-gradient(135deg, #0e7490 0%, #0891b2 100%); border-radius: 8px; padding: 30px; text-align: center; margin: 30px 0;">
+            <div style="background: linear-gradient(135deg, #f27e56 0%, #e0653d 100%); border-radius: 8px; padding: 30px; text-align: center; margin: 30px 0;">
               <p style="color: white; font-size: 14px; margin: 0 0 10px 0; opacity: 0.9;">YOUR DISCOUNT CODE</p>
               <div style="background-color: white; border-radius: 6px; padding: 20px; margin: 15px 0;">
-                <p style="font-size: 32px; font-weight: bold; color: #0e7490; margin: 0; letter-spacing: 2px;">
+                <p style="font-size: 32px; font-weight: bold; color: #f27e56; margin: 0; letter-spacing: 2px;">
                   ${discountCode}
                 </p>
               </div>
@@ -1027,13 +1027,13 @@ export async function sendDiscountCodeRetargetingEmail(email: string, discountCo
             </div>
 
             <div style="text-align: center; margin-top: 30px;">
-              <a href="https://www.purgostyle.com/products" 
-                 style="display: inline-block; background-color: #0e7490; color: white; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px;">
+              <a href="https://www.summersteeze.com/products" 
+                 style="display: inline-block; background-color: #f27e56; color: white; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px;">
                 Shop Now
               </a>
             </div>
 
-            <div style="background-color: #f0f9ff; border-left: 4px solid #0e7490; padding: 20px; margin: 30px 0; border-radius: 4px;">
+            <div style="background-color: #fef5f2; border-left: 4px solid #f27e56; padding: 20px; margin: 30px 0; border-radius: 4px;">
               <p style="color: #374151; font-size: 14px; margin: 0; line-height: 1.6;">
                 <strong>How to use:</strong><br>
                 1. Add products to your cart<br>
@@ -1046,13 +1046,13 @@ export async function sendDiscountCodeRetargetingEmail(email: string, discountCo
             <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 30px 0;">
 
             <p style="color: #6b7280; font-size: 14px; line-height: 1.6; margin: 20px 0 0 0;">
-              Questions? Reply to this email or visit our <a href="https://www.purgostyle.com/contact" style="color: #0e7490; text-decoration: none;">contact page</a>.
+              Questions? Reply to this email or visit our <a href="https://www.summersteeze.com/contact" style="color: #f27e56; text-decoration: none;">contact page</a>.
             </p>
 
             <p style="color: #9ca3af; font-size: 12px; margin-top: 30px; text-align: center;">
-              Purgo Style Labs<br>
-              <a href="https://www.purgostyle.com/unsubscribe?email=${encodeURIComponent(email)}" 
-                 style="color: #0e7490; text-decoration: underline;">
+              Summer Steeze<br>
+              <a href="https://www.summersteeze.com/unsubscribe?email=${encodeURIComponent(email)}" 
+                 style="color: #f27e56; text-decoration: underline;">
                 Manage your email preferences</a>
             </p>
           </div>
@@ -1113,13 +1113,13 @@ export async function sendZellePaymentInstructions(
         <tr>
           <td style="padding-bottom: 16px;">
             <p style="margin: 0 0 4px 0; font-size: 12px; color: #666666; text-transform: uppercase; letter-spacing: 0.5px;">Send to</p>
-            <p style="margin: 0; font-size: 16px; font-weight: 600; color: #1a73e8; font-family: monospace;">orders@purgostyle.com</p>
+            <p style="margin: 0; font-size: 16px; font-weight: 600; color: #f27e56; font-family: monospace;">orders@summersteeze.com</p>
           </td>
         </tr>
         <tr>
           <td style="padding: 16px; background-color: #fef3c7; border-radius: 8px;">
             <p style="margin: 0 0 4px 0; font-size: 12px; color: #92400e; text-transform: uppercase; letter-spacing: 0.5px;">Memo (Required)</p>
-            <p style="margin: 0 0 8px 0; font-size: 16px; font-weight: 600; color: #92400e;">purgo style labs</p>
+            <p style="margin: 0 0 8px 0; font-size: 16px; font-weight: 600; color: #92400e;">summer steeze</p>
             <p style="margin: 0; font-size: 12px; color: #92400e;">⚠️ Do not mention product names in the memo.</p>
           </td>
         </tr>
@@ -1149,7 +1149,7 @@ export async function sendZellePaymentInstructions(
   try {
     await sendEmail({
       to: email,
-      subject: `Complete your payment - Order #${orderNumber} - Purgo Style Labs`,
+      subject: `Complete your payment - Order #${orderNumber} - Summer Steeze`,
       html: getEmailWrapper(content, `#${orderNumber}`),
     });
   } catch (error) {
@@ -1174,7 +1174,7 @@ export async function sendVenmoPaymentInstructions(
     shippingCost: number;
   }
 ) {
-  const venmoLink = `https://venmo.com/purgolabs?txn=pay&amount=${total.toFixed(2)}&note=Online+Goods`;
+  const venmoLink = `https://venmo.com/summersteeze?txn=pay&amount=${total.toFixed(2)}&note=Online+Goods`;
   const qrCodeUrl = `${baseUrl}/zelle_qr.png`;
 
   const content = `
@@ -1219,7 +1219,7 @@ export async function sendVenmoPaymentInstructions(
         <tr>
           <td style="padding-top: 16px; border-top: 1px solid #e5e5e5;">
             <p style="margin: 0 0 4px 0; font-size: 12px; color: #666666; text-transform: uppercase; letter-spacing: 0.5px;">Venmo Profile</p>
-            <p style="margin: 0 0 16px 0; font-size: 16px; font-weight: 600; color: #008CFF; font-family: monospace;">@purgolabs</p>
+            <p style="margin: 0 0 16px 0; font-size: 16px; font-weight: 600; color: #008CFF; font-family: monospace;">@summersteeze</p>
             <p style="margin: 0 0 4px 0; font-size: 12px; color: #666666; text-transform: uppercase; letter-spacing: 0.5px;">Note</p>
             <p style="margin: 0; font-size: 16px; font-weight: 600; color: #333333;">Online Goods</p>
           </td>
@@ -1250,7 +1250,7 @@ export async function sendVenmoPaymentInstructions(
   try {
     await sendEmail({
       to: email,
-      subject: `Complete your payment - Order #${orderNumber} - Purgo Style Labs`,
+      subject: `Complete your payment - Order #${orderNumber} - Summer Steeze`,
       html: getEmailWrapper(content, `#${orderNumber}`),
     });
   } catch (error) {
@@ -1315,14 +1315,14 @@ export async function sendCreditCardPaymentInstructions(
       </p>
 
       <div style="text-align: center; margin: 24px 0;">
-        <a href="${paymentLink}" style="display: inline-block; padding: 16px 32px; background-color: #1a73e8; color: #ffffff; text-decoration: none; border-radius: 6px; font-size: 16px; font-weight: 600;">
+        <a href="${paymentLink}" style="display: inline-block; padding: 16px 32px; background-color: #f27e56; color: #ffffff; text-decoration: none; border-radius: 6px; font-size: 16px; font-weight: 600;">
           Make Payment Now
         </a>
       </div>
 
       <p style="margin: 0; font-size: 13px; color: #666666; text-align: center;">
         Or copy and paste this link: <br>
-        <a href="${paymentLink}" style="color: #1a73e8;">${paymentLink}</a>
+        <a href="${paymentLink}" style="color: #f27e56;">${paymentLink}</a>
       </p>
     </div>
     
@@ -1349,7 +1349,7 @@ export async function sendCreditCardPaymentInstructions(
   try {
     await sendEmail({
       to: email,
-      subject: `Complete your payment - Order #${orderNumber} - Purgo Style Labs`,
+      subject: `Complete your payment - Order #${orderNumber} - Summer Steeze`,
       html: getEmailWrapper(content, `#${orderNumber}`),
     });
   } catch (error) {
@@ -1443,7 +1443,7 @@ export async function sendCryptoPaymentInstructions(
   try {
     await sendEmail({
       to: email,
-      subject: `Complete your payment - Order #${orderNumber} - Purgo Style Labs`,
+      subject: `Complete your payment - Order #${orderNumber} - Summer Steeze`,
       html: getEmailWrapper(content, `#${orderNumber}`),
     });
   } catch (error) {
@@ -1478,14 +1478,14 @@ export async function sendPaymentReminderEmail(
       </p>
 
       <div style="text-align: center; margin: 24px 0;">
-        <a href="${paymentLink}" style="display: inline-block; padding: 16px 32px; background-color: #1a73e8; color: #ffffff; text-decoration: none; border-radius: 6px; font-size: 16px; font-weight: 600;">
+        <a href="${paymentLink}" style="display: inline-block; padding: 16px 32px; background-color: #f27e56; color: #ffffff; text-decoration: none; border-radius: 6px; font-size: 16px; font-weight: 600;">
           Make Payment Now
         </a>
       </div>
 
       <p style="margin: 0; font-size: 13px; color: #666666; text-align: center;">
         Or copy and paste this link: <br>
-        <a href="${paymentLink}" style="color: #1a73e8;">${paymentLink}</a>
+        <a href="${paymentLink}" style="color: #f27e56;">${paymentLink}</a>
       </p>
     </div>
   `;
@@ -1493,7 +1493,7 @@ export async function sendPaymentReminderEmail(
   try {
     await sendEmail({
       to: email,
-      subject: `⏰ Reminder: Complete Your Payment - Order #${orderNumber} - Purgo Style Labs`,
+      subject: `⏰ Reminder: Complete Your Payment - Order #${orderNumber} - Summer Steeze`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #f59e0b;">Payment Reminder</h2>
@@ -1509,8 +1509,8 @@ export async function sendPaymentReminderEmail(
             </p>
           </div>
 
-          <div style="background-color: #f0f9ff; border-left: 4px solid #1890ff; padding: 20px; margin: 20px 0;">
-            <h3 style="margin-top: 0; color: #2563eb;">Payment Instructions</h3>
+          <div style="background-color: #fef5f2; border-left: 4px solid #f27e56; padding: 20px; margin: 20px 0;">
+            <h3 style="margin-top: 0; color: #e0653d;">Payment Instructions</h3>
             
             <div style="text-align: center; padding: 20px; background-color: white; border-radius: 8px; margin: 15px 0;">
               <p style="font-size: 14px; color: #6b7280; margin-bottom: 5px;">Amount to send</p>
@@ -1523,18 +1523,18 @@ export async function sendPaymentReminderEmail(
           </div>
 
           <div style="background-color: #eff6ff; border-left: 4px solid #3b82f6; padding: 20px; margin: 20px 0;">
-            <h3 style="margin-top: 0; color: #2563eb;">Need Help?</h3>
+            <h3 style="margin-top: 0; color: #e0653d;">Need Help?</h3>
             <p style="color: #1e40af; line-height: 1.6;">
               If you've already sent your payment, please allow a few minutes for it to process. 
               If you're experiencing any issues, please contact our support team immediately.
             </p>
             <p style="color: #1e40af; margin-top: 10px;">
-              <strong>Support:</strong> <a href="mailto:hello@purgostyle.com" style="color: #1890ff;">hello@purgostyle.com</a>
+              <strong>Support:</strong> <a href="mailto:help@summersteeze.com" style="color: #f27e56;">help@summersteeze.com</a>
             </p>
           </div>
 
           <hr style="margin: 30px 0; border: none; border-top: 1px solid #eee;">
-          <p style="color: #666; font-size: 12px;">Purgo Style Labs</p>
+          <p style="color: #666; font-size: 12px;">Summer Steeze</p>
         </div>
       `,
     });
@@ -1554,7 +1554,7 @@ export async function sendAffiliateInviteEmail(email: string, inviteUrl: string)
       You're Invited!
     </h1>
     <p style="margin: 0 0 24px 0; font-size: 16px; color: #666666; line-height: 1.6;">
-      We'd like to invite you to join the Purgo Style Labs Affiliate Program. Earn commissions on every sale you refer!
+      We'd like to invite you to join the Summer Steeze Affiliate Program. Earn commissions on every sale you refer!
     </p>
     
     <!-- Highlight Box -->
@@ -1609,13 +1609,13 @@ export async function sendAffiliateInviteEmail(email: string, inviteUrl: string)
       <tr>
         <td>
           <a href="${inviteUrl}" 
-             style="display: inline-block; padding: 16px 32px; background-color: #1a73e8; color: #ffffff; text-decoration: none; border-radius: 6px; font-size: 16px; font-weight: 600;">
+             style="display: inline-block; padding: 16px 32px; background-color: #f27e56; color: #ffffff; text-decoration: none; border-radius: 6px; font-size: 16px; font-weight: 600;">
             Accept Invitation
           </a>
         </td>
         <td style="padding-left: 16px;">
           <span style="color: #666666;">or</span>
-          <a href="${baseUrl}" style="color: #1a73e8; text-decoration: none; margin-left: 8px; font-size: 14px;">
+          <a href="${baseUrl}" style="color: #f27e56; text-decoration: none; margin-left: 8px; font-size: 14px;">
             Visit our store
           </a>
         </td>
@@ -1630,7 +1630,7 @@ export async function sendAffiliateInviteEmail(email: string, inviteUrl: string)
       <table role="presentation" style="width: 100%;">
         <tr>
           <td style="padding: 12px 0; vertical-align: top; width: 40px;">
-            <div style="width: 28px; height: 28px; background-color: #1a73e8; color: white; border-radius: 50%; text-align: center; line-height: 28px; font-size: 14px; font-weight: 600;">1</div>
+            <div style="width: 28px; height: 28px; background-color: #f27e56; color: white; border-radius: 50%; text-align: center; line-height: 28px; font-size: 14px; font-weight: 600;">1</div>
           </td>
           <td style="padding: 12px 0 12px 12px; vertical-align: top;">
             <p style="margin: 0 0 4px 0; font-size: 14px; font-weight: 500; color: #333333;">Accept this invitation</p>
@@ -1639,7 +1639,7 @@ export async function sendAffiliateInviteEmail(email: string, inviteUrl: string)
         </tr>
         <tr>
           <td style="padding: 12px 0; vertical-align: top; width: 40px;">
-            <div style="width: 28px; height: 28px; background-color: #1a73e8; color: white; border-radius: 50%; text-align: center; line-height: 28px; font-size: 14px; font-weight: 600;">2</div>
+            <div style="width: 28px; height: 28px; background-color: #f27e56; color: white; border-radius: 50%; text-align: center; line-height: 28px; font-size: 14px; font-weight: 600;">2</div>
           </td>
           <td style="padding: 12px 0 12px 12px; vertical-align: top;">
             <p style="margin: 0 0 4px 0; font-size: 14px; font-weight: 500; color: #333333;">Share your code or QR</p>
@@ -1648,7 +1648,7 @@ export async function sendAffiliateInviteEmail(email: string, inviteUrl: string)
         </tr>
         <tr>
           <td style="padding: 12px 0; vertical-align: top; width: 40px;">
-            <div style="width: 28px; height: 28px; background-color: #1a73e8; color: white; border-radius: 50%; text-align: center; line-height: 28px; font-size: 14px; font-weight: 600;">3</div>
+            <div style="width: 28px; height: 28px; background-color: #f27e56; color: white; border-radius: 50%; text-align: center; line-height: 28px; font-size: 14px; font-weight: 600;">3</div>
           </td>
           <td style="padding: 12px 0 12px 12px; vertical-align: top;">
             <p style="margin: 0 0 4px 0; font-size: 14px; font-weight: 500; color: #333333;">Earn commissions</p>
@@ -1666,7 +1666,7 @@ export async function sendAffiliateInviteEmail(email: string, inviteUrl: string)
   try {
     await sendEmail({
       to: email,
-      subject: "You're Invited to Join the Purgo Style Labs Affiliate Program",
+      subject: "You're Invited to Join the Summer Steeze Affiliate Program",
       html: getEmailWrapper(content),
     });
   } catch (error) {

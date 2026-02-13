@@ -8,10 +8,10 @@ import ProductsPageSEO from "@/components/ProductsPageSEO";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Products | Purgo Style Labs",
-  description: "Shop Purgo Style Labs. Arizona activewear, premium tees, and apparel. Quality you can feel.",
+  title: "Products | Summer Steeze",
+  description: "Shop Summer Steeze. Arizona activewear, premium tees, and apparel. Quality you can feel.",
   alternates: {
-    canonical: "https://www.purgostyle.com/products",
+    canonical: "https://www.summersteeze.com/products",
   },
 };
 
@@ -66,7 +66,7 @@ export default async function ProductsPage() {
 
   return (
     <>
-      <PageViewTracker pageTitle="Products - Purgo Style Labs" pageType="products" />
+      <PageViewTracker pageTitle="Products - Summer Steeze" pageType="products" />
       <DiscountPopup />
       <div className="py-12">
         <div className="container-custom">

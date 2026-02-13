@@ -22,7 +22,7 @@ export default function SignInPage() {
   // Track page view
   useEffect(() => {
     if (pathname) {
-      trackPageView(window.location.href, 'Sign In - Purgo Style Labs', {
+      trackPageView(window.location.href, 'Sign In - Summer Steeze', {
         page_type: 'signin',
       });
     }
@@ -39,7 +39,7 @@ export default function SignInPage() {
   if (status === "loading") {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-cyan-600"></div>
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-brand-600"></div>
       </div>
     );
   }
@@ -84,8 +84,8 @@ export default function SignInPage() {
         <div className="text-center mb-8 animate-fade-in">
           <Link href="/" className="inline-block">
             <Image
-              src="/logo-small-copy.png"
-              alt="Purgo Style Labs"
+              src="/STEEZ.png"
+              alt="Summer Steeze"
               width={80}
               height={80}
               className="mx-auto mb-6 drop-shadow-2xl hover:scale-110 transition-transform duration-300"
@@ -132,7 +132,7 @@ export default function SignInPage() {
             <div className="flex items-center justify-between">
               <Link
                 href="/auth/forgot-password"
-                className="text-sm text-cyan-600 hover:text-cyan-700 transition-colors"
+                className="text-sm text-brand-600 hover:text-brand-700 transition-colors"
               >
                 Forgot password?
               </Link>
@@ -160,7 +160,7 @@ export default function SignInPage() {
           {/* Sign Up Link */}
           <p className="mt-6 text-center text-sm text-gray-600">
             Don't have an account?{" "}
-            <Link href="/auth/register" className="text-cyan-600 hover:text-cyan-700 font-medium transition-colors">
+            <Link href="/auth/register" className="text-brand-600 hover:text-brand-700 font-medium transition-colors">
               Create account
             </Link>
           </p>

@@ -29,7 +29,7 @@ export default function Tabs({ tabs, defaultTab, className = "" }: TabsProps) {
                 py-4 px-1 border-b-2 font-medium text-sm transition-colors
                 ${
                   activeTab === tab.id
-                    ? 'border-cyan-500 text-cyan-600'
+                    ? 'border-brand-500 text-brand-600'
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                 }
               `}

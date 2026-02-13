@@ -10,37 +10,37 @@ import GoogleMerchantWidget from "@/components/GoogleMerchantWidget";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.purgostyle.com"),
+  metadataBase: new URL("https://www.summersteeze.com"),
   title: {
-    default: "Purgo Style | Arizona Activewear & Premium Tees",
-    template: "%s | Purgo Style"
+    default: "Summer Steeze | Arizona Activewear & Premium Tees",
+    template: "%s | Summer Steeze"
   },
-  description: "Purgo Style is an Arizona-based activewear and tee brand. Premium tees, sweatshirts, and apparel. Latin for purify—quality you can feel.",
-  keywords: "Purgo Style, Arizona activewear, t-shirts, sweatshirts, apparel, Purgo",
-  authors: [{ name: "Purgo Style" }],
-  creator: "Purgo Style",
-  publisher: "Purgo Style",
+  description: "Summer Steeze is an Arizona-based activewear and tee brand. Premium tees, sweatshirts, and apparel. Quality you can feel.",
+  keywords: "Summer Steeze, Arizona activewear, t-shirts, sweatshirts, apparel",
+  authors: [{ name: "Summer Steeze" }],
+  creator: "Summer Steeze",
+  publisher: "Summer Steeze",
   robots: { index: true, follow: true },
   verification: {
     google: "rZpt5wvHCgLFnHfK_DW3fo5_wo7OOSkZjn8rc9v3XcE",
   },
-  icons: { icon: '/logo-small-copy.png', apple: '/logo-small-copy.png' },
+  icons: { icon: '/STEEZ.png', apple: '/STEEZ.png' },
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://www.purgostyle.com',
-    siteName: 'Purgo Style',
-    title: "Purgo Style - Arizona Activewear & Tees",
+    url: 'https://www.summersteeze.com',
+    siteName: 'Summer Steeze',
+    title: "Summer Steeze - Arizona Activewear & Tees",
     description: "Premium tees and activewear from Arizona.",
-    images: [{ url: '/logo-small-copy.png', width: 1200, height: 630, alt: 'Purgo Style' }],
+    images: [{ url: '/STEEZ.png', width: 1200, height: 630, alt: 'Summer Steeze' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Purgo Style - Arizona Activewear & Tees',
+    title: 'Summer Steeze - Arizona Activewear & Tees',
     description: 'Premium tees and activewear from Arizona.',
-    images: ['/logo-small-copy.png'],
+    images: ['/STEEZ.png'],
   },
-  alternates: { canonical: 'https://www.purgostyle.com' },
+  alternates: { canonical: 'https://www.summersteeze.com' },
 };
 
 export default function RootLayout({

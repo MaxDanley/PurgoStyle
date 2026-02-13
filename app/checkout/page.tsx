@@ -22,7 +22,7 @@ import {
   trackCheckoutAbandonment
 } from "@/lib/analytics";
 import { usePathname } from "next/navigation";
-const CHECKOUT_DRAFT_KEY = "purgostyle_checkout_v1";
+const CHECKOUT_DRAFT_KEY = "summersteeze_checkout_v1";
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -191,7 +191,7 @@ export default function CheckoutPage() {
   // Track page view and begin checkout
   useEffect(() => {
     if (pathname && items.length > 0) {
-      trackPageView(window.location.href, 'Checkout - Purgo Style Labs', {
+      trackPageView(window.location.href, 'Checkout - Summer Steeze', {
         page_type: 'checkout',
       });
 
@@ -540,7 +540,7 @@ export default function CheckoutPage() {
                 <form onSubmit={handleShippingSubmit} className="space-y-4">
                   {/* Guest Checkout Option */}
                   {!session && (
-                    <div className="mb-6 p-6 bg-gradient-to-r from-blue-50 to-cyan-50 border border-blue-200 rounded-lg">
+                    <div className="mb-6 p-6 bg-gradient-to-r from-blue-50 to-brand-50 border border-brand-200 rounded-lg">
                       <div className="flex items-start space-x-3">
                         <input
                           type="checkbox"
@@ -557,7 +557,7 @@ export default function CheckoutPage() {
                             You can complete your purchase without creating an account. We'll only need your email for order updates.
                           </p>
                           {!isGuest && (
-                            <div className="mt-3 p-3 bg-white rounded border border-blue-200">
+                            <div className="mt-3 p-3 bg-white rounded border border-brand-200">
                               <p className="text-sm text-gray-700">
                                 <Link href="/auth/signin" className="text-blue-600 hover:text-blue-700 font-medium">
                                   Sign in to your account
@@ -938,10 +938,10 @@ export default function CheckoutPage() {
                       id="subscribe-sms"
                       checked={subscribeToSms}
                       onChange={(e) => setSubscribeToSms(e.target.checked)}
-                      className="h-3.5 w-3.5 text-cyan-600 focus:ring-cyan-500 border-gray-300 rounded"
+                      className="h-3.5 w-3.5 text-brand-600 focus:ring-brand-500 border-gray-300 rounded"
                     />
                     <label htmlFor="subscribe-sms" className="text-xs text-gray-500">
-                      Text me offers and sales from Purgo Style Labs (optional)
+                      Text me offers and sales from Summer Steeze (optional)
                     </label>
                   </div>
 

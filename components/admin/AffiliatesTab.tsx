@@ -93,7 +93,7 @@ export default function AffiliatesTab() {
   const [showScansModal, setShowScansModal] = useState(false);
   const [selectedAffiliateScans, setSelectedAffiliateScans] = useState<Affiliate | null>(null);
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://www.purgostyle.com";
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://www.summersteeze.com";
 
   useEffect(() => {
     fetchAffiliates();
@@ -230,7 +230,7 @@ export default function AffiliatesTab() {
   const downloadQRCode = () => {
     if (!qrCodeData) return;
     const link = document.createElement("a");
-    link.download = `purgo-labs-affiliate-${qrCodeData.code}.png`;
+    link.download = `summersteeze-affiliate-${qrCodeData.code}.png`;
     link.href = qrCodeData.url;
     link.click();
   };
@@ -293,7 +293,7 @@ export default function AffiliatesTab() {
                       {req.affiliate.user.name || "—"}
                     </td>
                     <td className="px-4 py-3 text-sm text-gray-600">
-                      <a href={`mailto:${req.affiliate.user.email}`} className="text-cyan-600 hover:underline">
+                      <a href={`mailto:${req.affiliate.user.email}`} className="text-brand-600 hover:underline">
                         {req.affiliate.user.email}
                       </a>
                     </td>
@@ -319,7 +319,7 @@ export default function AffiliatesTab() {
                           type="button"
                           onClick={() => handleMarkPayoutPaid(req.id)}
                           disabled={markingPaidId === req.id}
-                          className="text-sm font-medium text-cyan-600 hover:text-cyan-800 disabled:opacity-50"
+                          className="text-sm font-medium text-brand-600 hover:text-brand-800 disabled:opacity-50"
                         >
                           {markingPaidId === req.id ? "Updating..." : "Mark as paid"}
                         </button>

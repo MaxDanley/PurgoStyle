@@ -41,22 +41,22 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
           .replace(/Iii/g, 'III');
         
         return {
-          title: `${productName} - Coming Soon | Purgo Style Labs`,
-          description: `${productName} is coming soon to Purgo Style Labs. Explore our current selection of products.`,
+          title: `${productName} - Coming Soon | Summer Steeze`,
+          description: `${productName} is coming soon to Summer Steeze. Explore our current selection of products.`,
           openGraph: {
-            title: `${productName} - Coming Soon | Purgo Style Labs`,
-            description: `${productName} is coming soon to Purgo Style Labs. Explore our current selection of products.`,
+            title: `${productName} - Coming Soon | Summer Steeze`,
+            description: `${productName} is coming soon to Summer Steeze. Explore our current selection of products.`,
             type: "website",
-            url: `https://www.purgostyle.com/products/${slug}`,
+            url: `https://www.summersteeze.com/products/${slug}`,
           },
           alternates: {
-            canonical: `https://www.purgostyle.com/products/${slug}`,
+            canonical: `https://www.summersteeze.com/products/${slug}`,
           },
         };
       }
       
       return {
-        title: "Product Not Found - Purgo Style Labs",
+        title: "Product Not Found - Summer Steeze",
       };
     }
 
@@ -76,24 +76,24 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
       openGraph: {
         title: seo.title,
         description: seo.description,
-        images: image ? [`https://www.purgostyle.com${image}`] : [],
+        images: image ? [`https://www.summersteeze.com${image}`] : [],
         type: "website",
-        url: `https://www.purgostyle.com/products/${slug}`,
+        url: `https://www.summersteeze.com/products/${slug}`,
       },
       twitter: {
         card: "summary_large_image",
         title: seo.title,
         description: seo.description,
-        images: image ? [`https://www.purgostyle.com${image}`] : [],
+        images: image ? [`https://www.summersteeze.com${image}`] : [],
       },
       alternates: {
-        canonical: `https://www.purgostyle.com/products/${slug}`,
+        canonical: `https://www.summersteeze.com/products/${slug}`,
       },
     };
   } catch (error) {
     console.error("Error generating metadata:", error);
     return {
-      title: "Product - Purgo Style Labs",
+      title: "Product - Summer Steeze",
     };
   }
 }

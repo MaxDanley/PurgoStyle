@@ -16,14 +16,14 @@ export default function ProductComingSoon({ productName, slug: _slug }: ProductC
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative overflow-hidden py-20 md:py-28 bg-gradient-to-br from-cyan-50 via-white to-slate-50">
-        <div className="absolute -right-32 -top-32 h-64 w-64 rounded-full bg-cyan-400/20 blur-3xl" />
+      <section className="relative overflow-hidden py-20 md:py-28 bg-gradient-to-br from-brand-50 via-white to-slate-50">
+        <div className="absolute -right-32 -top-32 h-64 w-64 rounded-full bg-brand-400/20 blur-3xl" />
         <div className="absolute -left-32 bottom-0 h-72 w-72 rounded-full bg-blue-500/10 blur-3xl" />
         
         <div className="container-custom relative z-10">
           <div className="max-w-3xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-cyan-100 rounded-full mb-6">
-              <span className="text-cyan-700 font-semibold text-sm">Coming Soon</span>
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-brand-100 rounded-full mb-6">
+              <span className="text-brand-700 font-semibold text-sm">Coming Soon</span>
             </div>
             
             <h1 className="text-5xl md:text-6xl font-bold text-slate-900 mb-6">
@@ -32,7 +32,7 @@ export default function ProductComingSoon({ productName, slug: _slug }: ProductC
             
             <p className="text-xl text-slate-700 mb-8 leading-relaxed">
               We're currently working on adding <strong>{productName}</strong> to our catalog. 
-              It will be available soon with the same quality standards you expect from Purgo Style Labs.
+              It will be available soon with the same quality standards you expect from Summer Steeze.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -69,8 +69,8 @@ export default function ProductComingSoon({ productName, slug: _slug }: ProductC
             
             <div className="grid md:grid-cols-3 gap-6 mb-12">
               <div className="card p-6 text-center">
-                <div className="w-12 h-12 bg-cyan-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-6 h-6 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-12 h-12 bg-brand-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-6 h-6 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
@@ -81,8 +81,8 @@ export default function ProductComingSoon({ productName, slug: _slug }: ProductC
               </div>
               
               <div className="card p-6 text-center">
-                <div className="w-12 h-12 bg-cyan-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-6 h-6 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-12 h-12 bg-brand-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-6 h-6 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
@@ -93,8 +93,8 @@ export default function ProductComingSoon({ productName, slug: _slug }: ProductC
               </div>
               
               <div className="card p-6 text-center">
-                <div className="w-12 h-12 bg-cyan-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-6 h-6 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-12 h-12 bg-brand-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-6 h-6 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                   </svg>
                 </div>
@@ -132,13 +132,13 @@ export default function ProductComingSoon({ productName, slug: _slug }: ProductC
                     />
                   </div>
                 )}
-                <h3 className="text-lg font-semibold text-slate-900 mb-2 group-hover:text-cyan-600 transition-colors">
+                <h3 className="text-lg font-semibold text-slate-900 mb-2 group-hover:text-brand-600 transition-colors">
                   {product.name}
                 </h3>
                 <p className="text-sm text-slate-600 line-clamp-2 mb-4">
                   {product.description}
                 </p>
-                <span className="text-cyan-600 font-semibold text-sm inline-flex items-center">
+                <span className="text-brand-600 font-semibold text-sm inline-flex items-center">
                   View Product
                   <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />

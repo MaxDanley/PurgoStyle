@@ -1,4 +1,4 @@
-# Purgo Style Labs
+# Summer Steeze
 
 Arizona activewear and premium tees. Built with Next.js.
 
@@ -63,14 +63,14 @@ Never commit this value or expose it in the browser.
 | `NEXTAUTH_SECRET` | Secret for NextAuth.js sessions (see above) |
 | `NEXTAUTH_URL` | App URL (e.g. `http://localhost:3000` in dev, production URL in prod) |
 | `RESEND_API_KEY` | Resend API key for transactional email |
-| `EMAIL_FROM` | From address for emails (e.g. `noreply@purgostyle.com`) |
-| `SUPPORT_EMAIL` | Support contact (e.g. `support@purgostyle.com`) |
+| `EMAIL_FROM` | From address for emails (e.g. `noreply@summersteeze.com`) |
+| `SUPPORT_EMAIL` | Support contact (e.g. `help@summersteeze.com`) |
 
 ### Site URL
 
 | Variable | Description |
 |----------|-------------|
-| `NEXT_PUBLIC_BASE_URL` | Public site URL (e.g. `https://www.purgostyle.com`) |
+| `NEXT_PUBLIC_BASE_URL` | Public site URL (e.g. `https://www.summersteeze.com`) |
 | `NEXT_PUBLIC_SITE_URL` | Same as base URL; used for auth reset link |
 
 ### Optional – analytics & marketing
@@ -133,7 +133,7 @@ Never commit this value or expose it in the browser.
 - Set all required (and any optional) env vars in your hosting dashboard (e.g. Vercel).
 - Ensure `NEXT_PUBLIC_BASE_URL` and `NEXTAUTH_URL` match your production URL.
 
-### If you get 404 on the root URL (https://www.purgostyle.com/)
+### If you get 404 on the root URL (https://www.summersteeze.com/)
 
 **If your build log shows “Restored build cache from previous deployment”, the cache is being reused and the 404 can persist.** You must redeploy with the cache cleared (step 3 below).
 
@@ -154,4 +154,4 @@ Never commit this value or expose it in the browser.
    - Open the latest deployment and check that the status is **Ready** (not Building or Error). If the build failed, fix the build logs; a failed build can leave the site on a previous state that showed 404.
 
 5. **Domain**
-   - Ensure **www.purgostyle.com** (and purgostyle.com if used) is assigned to this project and points to the deployment you expect.
+   - Ensure **www.summersteeze.com** (and summersteeze.com if used) is assigned to this project and points to the deployment you expect.

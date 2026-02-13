@@ -47,7 +47,7 @@ export default function FeaturedProductsCarousel({ products }: FeaturedProductsC
                 <div className="card overflow-hidden h-full hover:scale-105 transition-all duration-300">
                   {/* Product Image */}
                   <div className="relative h-72 bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden rounded-lg">
-                    <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg"></div>
+                    <div className="absolute inset-0 bg-gradient-to-r from-brand-500/20 to-brand-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg"></div>
                     
                     <Image
                       src={product.image || getFeaturedImage(product.slug)}
@@ -62,7 +62,7 @@ export default function FeaturedProductsCarousel({ products }: FeaturedProductsC
 
                   {/* Product Info */}
                   <div className="p-6">
-                    <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-cyan-600 transition-colors">
+                    <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-brand-600 transition-colors">
                       {product.name}
                     </h3>
                     <p className="text-sm text-gray-600 mb-4 line-clamp-2">
@@ -77,7 +77,7 @@ export default function FeaturedProductsCarousel({ products }: FeaturedProductsC
                             : `${minPrice(product.variants).toFixed(2)} - ${maxPrice(product.variants).toFixed(2)}`}
                         </p>
                       </div>
-                      <button className="bg-cyan-500 hover:bg-cyan-400 text-white px-6 py-2 rounded-full transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-cyan-500/50">
+                      <button className="bg-brand-500 hover:bg-brand-400 text-white px-6 py-2 rounded-full transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-brand-500/50">
                         View
                       </button>
                     </div>
@@ -104,7 +104,7 @@ export default function FeaturedProductsCarousel({ products }: FeaturedProductsC
               key={idx}
               onClick={() => setCurrentIndex(idx)}
               className={`h-2 rounded-full transition-all duration-300 ${
-                idx === currentIndex ? 'w-8 bg-cyan-600' : 'w-2 bg-gray-300'
+                idx === currentIndex ? 'w-8 bg-brand-600' : 'w-2 bg-gray-300'
               }`}
               aria-label={`Go to slide ${idx + 1}`}
             />
@@ -120,7 +120,7 @@ export default function FeaturedProductsCarousel({ products }: FeaturedProductsC
               {/* Product Image */}
               <div className="relative h-72 bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden rounded-lg">
                 {/* Glow effect on hover */}
-                <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-brand-500/20 to-brand-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg"></div>
                 
                 <Image
                   src={product.image || getFeaturedImage(product.slug)}
@@ -135,7 +135,7 @@ export default function FeaturedProductsCarousel({ products }: FeaturedProductsC
 
               {/* Product Info */}
               <div className="p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-cyan-600 transition-colors">
+                <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-brand-600 transition-colors">
                   {product.name}
                 </h3>
                 <p className="text-sm text-gray-600 mb-4 line-clamp-2">
@@ -150,7 +150,7 @@ export default function FeaturedProductsCarousel({ products }: FeaturedProductsC
                         : `${minPrice(product.variants).toFixed(2)} - ${maxPrice(product.variants).toFixed(2)}`}
                     </p>
                   </div>
-                  <button className="bg-cyan-500 hover:bg-cyan-400 text-white px-6 py-2 rounded-full transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-cyan-500/50">
+                  <button className="bg-brand-500 hover:bg-brand-400 text-white px-6 py-2 rounded-full transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-brand-500/50">
                     View
                   </button>
                 </div>

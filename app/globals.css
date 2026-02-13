@@ -36,7 +36,7 @@
 
 @layer components {
   .btn-primary {
-    @apply bg-cyan-500 hover:bg-cyan-400 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 shadow-lg hover:shadow-cyan-500/50 hover:scale-105;
+    @apply bg-brand-500 hover:bg-brand-400 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 shadow-lg hover:shadow-brand-500/50 hover:scale-105;
   }
   
   .btn-secondary {
@@ -44,11 +44,11 @@
   }
   
   .input-field {
-    @apply w-full px-4 py-3 bg-white border border-gray-300 text-gray-900 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none transition-all placeholder-gray-400;
+    @apply w-full px-4 py-3 bg-white border border-gray-300 text-gray-900 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all placeholder-gray-400;
   }
   
   .card {
-    @apply bg-white backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl hover:shadow-cyan-500/20 transition-all duration-300 border border-gray-200;
+    @apply bg-white backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl hover:shadow-brand-500/20 transition-all duration-300 border border-gray-200;
   }
   
   .container-custom {
@@ -62,7 +62,7 @@
 
   /* Gradient text */
   .gradient-text {
-    @apply bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-brand-400 to-brand-600 bg-clip-text text-transparent;
   }
 
   /* Animations */

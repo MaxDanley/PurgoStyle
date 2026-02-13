@@ -15,7 +15,7 @@ declare global {
 function getSessionId(): string {
   if (typeof window === 'undefined') return '';
   
-  const key = 'purgolabs_session_id';
+  const key = 'summersteeze_session_id';
   let sessionId = localStorage.getItem(key);
   
   if (!sessionId) {
