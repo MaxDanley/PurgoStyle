@@ -5,7 +5,7 @@ import Link from "next/link";
 import FeaturedProductsCarousel from "@/components/FeaturedProductsCarousel";
 import Accordion from "@/components/Accordion";
 import StructuredData from "@/components/StructuredData";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { trackPageView, trackViewItemList, trackEvent } from "@/lib/analytics";
 import { usePathname } from "next/navigation";
 import { Archivo_Black } from 'next/font/google';
@@ -20,8 +20,22 @@ interface HomeClientProps {
   featuredProducts: any[];
 }
 
-export default function HomeClient({ featuredProducts }: HomeClientProps) {
+export default function HomeClient({ featuredProducts: initialProducts }: HomeClientProps) {
   const pathname = usePathname();
+  const [featuredProducts, setFeaturedProducts] = useState<any[]>(initialProducts);
+
+  // Fetch featured products client-side so server never needs DB for /
+  useEffect(() => {
+    if (initialProducts.length > 0) return;
+    fetch("/api/products")
+      .then((res) => res.ok ? res.json() : { products: [] })
+      .then((data) => {
+        const list = data.products || [];
+        const featured = list.filter((p: any) => p.featured).slice(0, 6);
+        setFeaturedProducts(featured);
+      })
+      .catch(() => setFeaturedProducts([]));
+  }, [initialProducts.length]);
 
   // Track page view
   useEffect(() => {
@@ -30,17 +44,17 @@ export default function HomeClient({ featuredProducts }: HomeClientProps) {
         page_type: 'home',
         page_section: 'landing',
       });
-      
-      // Track featured products list view
-      trackViewItemList(
-        featuredProducts.map(p => ({
-          itemId: p.id,
-          itemName: p.name,
-          itemCategory: p.category,
-          price: p.variants[0]?.price || 0,
-        })),
-        'Featured Products'
-      );
+      if (featuredProducts.length > 0) {
+        trackViewItemList(
+          featuredProducts.map(p => ({
+            itemId: p.id,
+            itemName: p.name,
+            itemCategory: p.category,
+            price: p.variants[0]?.price || 0,
+          })),
+          'Featured Products'
+        );
+      }
     }
   }, [pathname, featuredProducts]);
 

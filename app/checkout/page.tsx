@@ -10,7 +10,6 @@ import toast from "react-hot-toast";
 import { LightBulbIcon } from "@heroicons/react/24/outline";
 import { calculateShipping, ShippingOption } from "@/lib/shipping";
 import RewardsPoints from "@/components/RewardsPoints";
-import BacWaterRecommendation from "@/components/BacWaterRecommendation";
 import CreditCardPaymentForm from "@/components/CreditCardPaymentForm";
 import { 
   trackPageView, 
@@ -132,9 +131,6 @@ export default function CheckoutPage() {
 
     return () => clearTimeout(timeoutId);
   }, [shippingInfo.street, shippingInfo.apartment, shippingInfo.city, shippingInfo.state, shippingInfo.zipCode]);
-
-  // Check if BAC Water is in cart
-  const hasBacWater = items.some(item => item.productId === "8");
 
   // Load saved checkout draft (guest or logged-in) on first mount
   useEffect(() => {
@@ -864,9 +860,6 @@ export default function CheckoutPage() {
                       </div>
                     </div>
                   )}
-
-                  {/* BAC Water Recommendation */}
-                  <BacWaterRecommendation hasBacWater={hasBacWater} />
 
                   {/* Rewards Points */}
                   <RewardsPoints 
