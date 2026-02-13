@@ -1,5 +1,5 @@
 import NextAuth from "next-auth";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 // Edge-safe config inline (no @/ imports — Prisma/bcrypt would break Edge)
 const edgeAuthConfig = {
@@ -23,20 +23,31 @@ const edgeAuthConfig = {
 
 const { auth } = NextAuth(edgeAuthConfig as any);
 
-export default auth((req) => {
+const authMiddleware = auth((req) => {
   const { pathname } = req.nextUrl;
   const isLoggedIn = !!req.auth;
 
-  const isProtectedRoute = 
-    pathname.startsWith('/account') || 
-    pathname.startsWith('/admin');
+  const isProtectedRoute =
+    pathname.startsWith("/account") || pathname.startsWith("/admin");
 
   if (isProtectedRoute && !isLoggedIn) {
-    return NextResponse.redirect(new URL('/auth/signin', req.url));
+    return NextResponse.redirect(new URL("/auth/signin", req.url));
   }
 
   return NextResponse.next();
 });
+
+export default async function middleware(
+  req: NextRequest,
+  ...args: unknown[]
+) {
+  try {
+    return await (authMiddleware as (req: NextRequest, ...a: unknown[]) => Promise<NextResponse>)(req, ...args);
+  } catch (err) {
+    console.error("[middleware] Invocation failed:", err);
+    return NextResponse.next();
+  }
+}
 
 export const config = {
   matcher: [
