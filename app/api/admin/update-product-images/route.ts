@@ -17,16 +17,16 @@ export async function POST() {
     // Update each product with its new image
     // Handle both old slugs (tirzepatide/retatrutide) and new slugs (glp-2-trz/glp-3-rt)
     const productUpdates = [
-      { slugs: ['bpc-157'], image: '/bpc_final_product.png' },
-      { slugs: ['glp-2-trz', 'tirzepatide'], image: '/glp2_final_product.png' },
-      { slugs: ['glp-3-rt', 'retatrutide'], image: '/glp3_final_product.png' },
-      { slugs: ['glutathione'], image: '/gluta_final_product.png' },
-      { slugs: ['glow'], image: '/glow_final_product.png' },
-      { slugs: ['tesamorelin'], image: '/tesa_final_product.png' },
-      { slugs: ['igf1lr3'], image: '/lgf_final_product.png' },
-      { slugs: ['mots-c'], image: '/motsc_final_product.png' },
+      { slugs: ['bpc-157'], image: '/products/bpc157.png' },
+      { slugs: ['glp-2-trz', 'tirzepatide'], image: '/products/tirzepatide.png' },
+      { slugs: ['glp-3-rt', 'retatrutide'], image: '/products/retatrutide.png' },
+      { slugs: ['glutathione'], image: '/products/glutathione.png' },
+      { slugs: ['glow'], image: '/products/glow.png' },
+      { slugs: ['tesamorelin'], image: '/products/tesamorelin.png' },
+      { slugs: ['igf1lr3'], image: '/products/igf1lr3.png' },
+      { slugs: ['mots-c'], image: '/placeholder.svg' },
       { slugs: ['bac-water'], image: '/bac_final_product.png' },
-      { slugs: ['melatonin'], image: '/mela_final_product.png' },
+      { slugs: ['melatonin'], image: '/placeholder.svg' },
     ];
 
     const results = [];

@@ -7,16 +7,16 @@ async function main() {
 
   // Update each product with its new image
   const productUpdates = [
-    { slug: 'bpc-157', image: '/bpc_final_product.png' },
-    { slug: 'tirzepatide', image: '/glp2_final_product.png' },
-    { slug: 'retatrutide', image: '/glp3_final_product.png' },
-    { slug: 'glutathione', image: '/gluta_final_product.png' },
-    { slug: 'glow', image: '/glow_final_product.png' },
-    { slug: 'tesamorelin', image: '/tesa_final_product.png' },
-    { slug: 'igf1lr3', image: '/lgf_final_product.png' },
-    { slug: 'mots-c', image: '/motsc_final_product.png' },
+    { slug: 'bpc-157', image: '/products/bpc157.png' },
+    { slug: 'tirzepatide', image: '/products/tirzepatide.png' },
+    { slug: 'retatrutide', image: '/products/retatrutide.png' },
+    { slug: 'glutathione', image: '/products/glutathione.png' },
+    { slug: 'glow', image: '/products/glow.png' },
+    { slug: 'tesamorelin', image: '/products/tesamorelin.png' },
+    { slug: 'igf1lr3', image: '/products/igf1lr3.png' },
+    { slug: 'mots-c', image: '/placeholder.svg' },
     { slug: 'bac-water', image: '/bac_final_product.png' },
-    { slug: 'melatonin', image: '/mela_final_product.png' },
+    { slug: 'melatonin', image: '/placeholder.svg' },
   ];
 
   for (const update of productUpdates) {

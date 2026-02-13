@@ -1174,7 +1174,7 @@ export async function sendVenmoPaymentInstructions(
   }
 ) {
   const venmoLink = `https://venmo.com/purgolabs?txn=pay&amount=${total.toFixed(2)}&note=Online+Goods`;
-  const qrCodeUrl = `${baseUrl}/venmo_qr_code.png`;
+  const qrCodeUrl = `${baseUrl}/zelle_qr.png`;
 
   const content = `
     <!-- Header -->

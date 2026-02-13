@@ -221,7 +221,7 @@ export default function CartPage() {
                     {/* Product Image */}
                     <div className="relative w-20 h-20 md:w-24 md:h-24 bg-gray-50 rounded-lg overflow-hidden flex-shrink-0">
                       <Image
-                        src={item.image || '/vial-placeholder.svg'}
+                        src={item.image || '/placeholder.svg'}
                         alt={item.productName}
                         fill
                         className="object-cover"
@@ -230,7 +230,7 @@ export default function CartPage() {
                           console.error('Image failed to load:', item.image, e);
                           // Set fallback image
                           const target = e.target as HTMLImageElement;
-                          target.src = '/vial-placeholder.svg';
+                          target.src = '/placeholder.svg';
                         }}
                         onLoad={() => {
                           console.log('Image loaded successfully:', item.image);

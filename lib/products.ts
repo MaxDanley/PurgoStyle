@@ -43,7 +43,7 @@ export function getProductById(_id: string): Product | undefined {
 }
 
 export function getFeaturedImage(_slug: string): string {
-  return "/placeholder-tee.png";
+  return "/placeholder.svg";
 }
 
 export function getCrossedOutPrice(actualPrice: number): number {
