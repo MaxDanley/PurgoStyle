@@ -23,7 +23,13 @@ Copy `.env.example` to `.env.local` and fill in the values below.
    - **`DIRECT_URL`** = the **same** value
    Use the same in local `.env.local`.
 
-**If you can’t enable IPv4 (e.g. staying on free tier):** use the **Shared Pooler** (Session mode, port 5432) from the Connect modal → “Some platforms are IPv4-only” and add `?sslmode=require&connect_timeout=30&connection_limit=1` to the pooler URL. You may still hit pool limits under load; the fix is to switch to direct + IPv4.
+**Or use Transaction mode pooler (port 6543):** If the pooler works from your network (e.g. same as another project), use the **Transaction** pooler with **port 6543** and `pgbouncer=true` so Prisma doesn’t use prepared statements. Format:
+   ```text
+   postgresql://postgres.[PROJECT-REF]:[YOUR-PASSWORD]@aws-1-[REGION].pooler.supabase.com:6543/postgres?pgbouncer=true&connection_limit=1&sslmode=require
+   ```
+   Replace **`[PROJECT-REF]`** (e.g. `vogljdswvunirliipoym`), **`[YOUR-PASSWORD]`** (URL-encode special chars), and **`[REGION]`** (e.g. `us-east-1` or `us-east-2` from the Connect modal). Set both **`DATABASE_URL`** and **`DIRECT_URL`** to this in Vercel.
+
+**If you can’t enable IPv4 and 6543 is unreachable:** use the **Session** pooler (port 5432) from “Some platforms are IPv4-only” and add `?sslmode=require&connect_timeout=30&connection_limit=1`. Session mode has stricter pool limits; prefer Transaction (6543) or direct + IPv4.
 
 **Troubleshooting:**
 - **“Can’t reach database server” (P1001):** Use the direct URL only after IPv4 add-on is enabled; otherwise use the Shared Pooler. Ensure `sslmode=require` is in the URL.
