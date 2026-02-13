@@ -4,7 +4,7 @@
   "description": "Purgo Style - Arizona Activewear & Tee Brand",
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && prisma db push && next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
     "postinstall": "prisma generate",
