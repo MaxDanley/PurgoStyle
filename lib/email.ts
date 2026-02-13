@@ -1514,9 +1514,8 @@ export async function sendPaymentReminderEmail(
             <div style="text-align: center; padding: 20px; background-color: white; border-radius: 8px; margin: 15px 0;">
               <p style="font-size: 14px; color: #6b7280; margin-bottom: 5px;">Amount to send</p>
               <p style="font-size: 32px; font-weight: bold; color: #1f2937; margin: 10px 0;">
-                ${isZelle || isVenmo || isCreditCard ? `$${total.toFixed(2)}` : `${paymentDetails?.cryptoAmount ? paymentDetails.cryptoAmount.toFixed(8) : '0.00000000'} ${paymentDetails?.cryptoCurrency?.toUpperCase() || ''}`}
+                $${total.toFixed(2)}
               </p>
-              ${!isZelle && !isVenmo && !isCreditCard ? `<p style="font-size: 14px; color: #6b7280; margin-top: 5px;">≈ $${total.toFixed(2)} USD</p>` : ''}
             </div>
 
             ${paymentInstructions}
