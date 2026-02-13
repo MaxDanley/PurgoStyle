@@ -234,11 +234,6 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
             <div className="relative w-full">
               {images.length > 0 && (
                 <div className="relative w-full aspect-square rounded-lg overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
-                  {/* SALE Badge */}
-                  <div className="absolute top-2 left-2 z-20 bg-cyan-500 text-white px-3 py-1 rounded-md font-bold text-xs shadow-md">
-                    SALE!
-                  </div>
-                  
                   {/* Main Product Image - Priority Load */}
                   {images.map((imageSrc, index) => {
                     const isFirstImage = index === 0;
