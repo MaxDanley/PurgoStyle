@@ -12,8 +12,19 @@ import Tabs from "@/components/Tabs";
 import StructuredData from "@/components/StructuredData";
 import { trackPageView, trackViewItem, trackAddToCart } from "@/lib/analytics";
 import { usePathname } from "next/navigation";
-import { ChevronLeftIcon, ChevronRightIcon, ExclamationTriangleIcon } from "@heroicons/react/24/outline";
+import { ChevronLeftIcon, ChevronRightIcon, ExclamationTriangleIcon, StarIcon } from "@heroicons/react/24/outline";
+import { StarIcon as StarIconSolid } from "@heroicons/react/24/solid";
 import { getFeaturedImage } from "@/lib/products";
+
+const ALLOWED_SIZES = ["S", "M", "L", "SMALL", "MEDIUM", "LARGE"];
+
+function normalizeSizeForDisplay(size: string): string {
+  const u = size.toUpperCase();
+  if (u === "SMALL") return "S";
+  if (u === "MEDIUM") return "M";
+  if (u === "LARGE") return "L";
+  return u;
+}
 
 interface ProductDetailClientProps {
   product: any;
@@ -29,7 +40,16 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
   const [activeTab, setActiveTab] = useState<"general" | "chemical">("general");
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [shippingLocation, setShippingLocation] = useState<string | null>(null);
+  const [reviews, setReviews] = useState<{ id: string; authorName: string; rating: number; body: string; sizePurchased?: string | null; verifiedBuyer: boolean; helpfulCount: number; notHelpfulCount: number; createdAt: string }[]>([]);
+  const [reviewTotalCount, setReviewTotalCount] = useState(0);
+  const [reviewAverageRating, setReviewAverageRating] = useState(0);
+  const [showReviewForm, setShowReviewForm] = useState(false);
   const pathname = usePathname();
+
+  // Only show S, M, L variants
+  const sizeFilter = (v: { size: string }) => ALLOWED_SIZES.includes(v.size.toUpperCase());
+  const displayVariants = (product?.variants ?? []).filter(sizeFilter);
+  const productVariants = displayVariants.length > 0 ? displayVariants : (product?.variants ?? []);
 
   // "Ships by Today" if before 4pm Arizona and not Sunday; else next business day
   const getShipsByLabel = () => {
@@ -62,13 +82,26 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
     return availableVariant || variants[0];
   };
 
-  // Initialize selected variant on mount
+  // Initialize selected variant on mount (use productVariants = S/M/L only)
   useEffect(() => {
-    if (product && product.variants) {
-      const firstAvailable = findFirstAvailableVariant(product.variants);
+    if (product && productVariants.length > 0) {
+      const firstAvailable = findFirstAvailableVariant(productVariants);
       setSelectedVariant(firstAvailable);
     }
-  }, [product]);
+  }, [product?.id, productVariants.length]);
+
+  // Fetch reviews for this product
+  useEffect(() => {
+    if (!slug) return;
+    fetch(`/api/products/${slug}/reviews`)
+      .then((res) => (res.ok ? res.json() : { reviews: [], totalCount: 0, averageRating: 0 }))
+      .then((data) => {
+        setReviews(data.reviews ?? []);
+        setReviewTotalCount(data.totalCount ?? 0);
+        setReviewAverageRating(data.averageRating ?? 0);
+      })
+      .catch(() => {});
+  }, [slug]);
 
   // Track page view and product view
   useEffect(() => {
@@ -315,11 +348,39 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
               <div className="hidden lg:block text-sm text-primary-600 font-semibold mb-2 uppercase">
                 {product.category}
               </div>
-              <h1 className="text-4xl font-bold text-gray-900 mb-2 lg:mb-4 mt-2 lg:mt-0">
-                {product.name}
-              </h1>
+              {/* Title and price on one row (reference style) */}
+              <div className="flex flex-wrap items-start justify-between gap-4 mb-2">
+                <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mt-2 lg:mt-0">
+                  {product.name}
+                </h1>
+                {selectedVariant && (
+                  <span className="text-2xl md:text-3xl font-bold text-gray-900">
+                    ${selectedVariant.price.toFixed(2)}
+                  </span>
+                )}
+              </div>
 
-              {/* Price */}
+              {/* Reviews: blank stars + count, click scrolls to #reviews */}
+              <div className="flex items-center gap-2 mb-4">
+                <div className="flex items-center gap-0.5 text-gray-300">
+                  {[1, 2, 3, 4, 5].map((i) =>
+                    reviewTotalCount > 0 && i <= Math.round(reviewAverageRating) ? (
+                      <StarIconSolid key={i} className="w-5 h-5 text-gray-900" aria-hidden />
+                    ) : (
+                      <StarIcon key={i} className="w-5 h-5 text-gray-300" aria-hidden />
+                    )
+                  )}
+                </div>
+                <button
+                  type="button"
+                  onClick={() => document.getElementById("reviews")?.scrollIntoView({ behavior: "smooth" })}
+                  className="text-sm text-gray-600 hover:text-gray-900 underline underline-offset-2"
+                >
+                  {reviewTotalCount} {reviewTotalCount === 1 ? "Review" : "Reviews"}
+                </button>
+              </div>
+
+              {/* Price (sale badge etc) - keep for consistency, price already in title row */}
               <div className="mb-6">
                 {selectedVariant && (
                   <div className="flex items-center gap-3 flex-wrap">
@@ -394,23 +455,23 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
                 )}
               </div>
 
-              {/* Variant Selection */}
+              {/* Size: S, M, L only */}
               <div className="mb-6">
                 <label className="block text-sm font-semibold text-gray-900 mb-3">
-                  Select Size:
+                  Select Size
                 </label>
                 <div className="flex flex-wrap gap-3">
-                  {product.variants.map((variant: any) => (
+                  {productVariants.map((variant: any) => (
                     <button
                       key={variant.id}
                       onClick={() => setSelectedVariant(variant)}
-                      className={`px-6 py-3 border-2 rounded-lg font-semibold transition ${
+                      className={`min-w-[3rem] px-6 py-3 border-2 rounded-lg font-semibold transition ${
                         selectedVariant?.id === variant.id
-                          ? "border-primary-500 bg-primary-50 text-primary-700"
-                          : "border-gray-300 hover:border-gray-400"
+                          ? "border-gray-900 bg-gray-900 text-white"
+                          : "border-gray-300 hover:border-gray-400 text-gray-900"
                       }`}
                     >
-                      {variant.size}
+                      {normalizeSizeForDisplay(variant.size)}
                     </button>
                   ))}
                 </div>
@@ -563,6 +624,78 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
               </div>
             </div>
           </div>
+
+          {/* Reviews section: scroll target from "X Reviews" link */}
+          <section id="reviews" className="mt-16 pt-12 border-t border-gray-200 scroll-mt-24">
+            <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+              <h2 className="text-xl font-bold text-gray-900">Community Reviews</h2>
+              <button
+                type="button"
+                onClick={() => setShowReviewForm((v) => !v)}
+                className="text-sm font-medium text-gray-900 border border-gray-300 hover:bg-gray-50 px-4 py-2 rounded-md"
+              >
+                {showReviewForm ? "Cancel" : "Write a review"}
+              </button>
+            </div>
+
+            {showReviewForm && (
+              <ProductReviewForm
+                productName={product.name}
+                slug={slug}
+                sizeOptions={productVariants.map((v: any) => normalizeSizeForDisplay(v.size))}
+                onSuccess={() => {
+                  setShowReviewForm(false);
+                  fetch(`/api/products/${slug}/reviews`)
+                    .then((res) => (res.ok ? res.json() : { reviews: [], totalCount: 0, averageRating: 0 }))
+                    .then((data: { reviews?: Array<{ id: string; authorName: string; rating: number; body: string; sizePurchased?: string | null; verifiedBuyer: boolean; helpfulCount: number; notHelpfulCount: number; createdAt: string }>; totalCount?: number; averageRating?: number }) => {
+                      setReviews(data.reviews ?? []);
+                      setReviewTotalCount(data.totalCount ?? 0);
+                      setReviewAverageRating(data.averageRating ?? 0);
+                    })
+                    .catch(() => {});
+                }}
+              />
+            )}
+
+            {reviews.length === 0 && !showReviewForm && (
+              <p className="text-gray-600 mb-2">No reviews yet. Be the first to leave a review.</p>
+            )}
+
+            {reviews.length > 0 && (
+              <ul className="space-y-6 mt-6">
+                {reviews.map((r) => (
+                  <li key={r.id} className="border-b border-gray-100 pb-6 last:border-0">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="font-medium text-gray-900">{r.authorName}</span>
+                      {r.verifiedBuyer && (
+                        <span className="text-xs text-gray-500">Verified Buyer</span>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-1.5 text-amber-500 mb-2">
+                      {[1, 2, 3, 4, 5].map((i) => (
+                        <StarIconSolid
+                          key={i}
+                          className={`w-4 h-4 ${i <= r.rating ? "text-gray-900" : "text-gray-200"}`}
+                          aria-hidden
+                        />
+                      ))}
+                    </div>
+                    {r.sizePurchased && (
+                      <p className="text-sm text-gray-500 mb-1">Size: {r.sizePurchased}</p>
+                    )}
+                    <p className="text-gray-700 whitespace-pre-wrap">{r.body}</p>
+                    <p className="text-xs text-gray-400 mt-2">
+                      {new Date(r.createdAt).toLocaleDateString("en-US", {
+                        month: "2-digit",
+                        day: "2-digit",
+                        year: "2-digit",
+                      })}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
 
           {/* You May Also Like - Full width, centered below product info */}
           <RelatedProductsList currentProductId={product.id} currentCategory={product.category} />
@@ -735,6 +868,139 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
         </>
       )}
     </>
+  );
+}
+
+function ProductReviewForm({
+  productName,
+  slug,
+  sizeOptions,
+  onSuccess,
+}: {
+  productName: string;
+  slug: string;
+  sizeOptions: string[];
+  onSuccess: () => void;
+}) {
+  const [authorName, setAuthorName] = useState("");
+  const [authorEmail, setAuthorEmail] = useState("");
+  const [rating, setRating] = useState(5);
+  const [body, setBody] = useState("");
+  const [sizePurchased, setSizePurchased] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    if (!authorName.trim()) {
+      setError("Name is required.");
+      return;
+    }
+    if (!body.trim()) {
+      setError("Review text is required.");
+      return;
+    }
+    setSubmitting(true);
+    try {
+      const res = await fetch(`/api/products/${slug}/reviews`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          authorName: authorName.trim(),
+          authorEmail: authorEmail.trim() || undefined,
+          rating,
+          body: body.trim(),
+          sizePurchased: sizePurchased || undefined,
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        setError(data.error || "Failed to submit review.");
+        setSubmitting(false);
+        return;
+      }
+      toast.success("Thanks! Your review has been posted.");
+      setAuthorName("");
+      setAuthorEmail("");
+      setRating(5);
+      setBody("");
+      setSizePurchased("");
+      onSuccess();
+    } catch {
+      setError("Something went wrong. Please try again.");
+    }
+    setSubmitting(false);
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="mb-8 p-6 border border-gray-200 rounded-lg bg-gray-50 space-y-4 max-w-xl">
+      <h3 className="font-semibold text-gray-900">Write a review</h3>
+      {error && <p className="text-sm text-red-600">{error}</p>}
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">Name *</label>
+        <input
+          type="text"
+          value={authorName}
+          onChange={(e) => setAuthorName(e.target.value)}
+          className="w-full border border-gray-300 rounded-md px-3 py-2"
+          required
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">Email (optional)</label>
+        <input
+          type="email"
+          value={authorEmail}
+          onChange={(e) => setAuthorEmail(e.target.value)}
+          className="w-full border border-gray-300 rounded-md px-3 py-2"
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">Rating</label>
+        <div className="flex gap-1">
+          {[1, 2, 3, 4, 5].map((i) => (
+            <button
+              key={i}
+              type="button"
+              onClick={() => setRating(i)}
+              className="p-1"
+              aria-label={`${i} stars`}
+            >
+              <StarIconSolid className={`w-8 h-8 ${i <= rating ? "text-amber-500" : "text-gray-300"}`} />
+            </button>
+          ))}
+        </div>
+      </div>
+      {sizeOptions.length > 0 && (
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Size purchased (optional)</label>
+          <select
+            value={sizePurchased}
+            onChange={(e) => setSizePurchased(e.target.value)}
+            className="w-full border border-gray-300 rounded-md px-3 py-2"
+          >
+            <option value="">Select size</option>
+            {sizeOptions.map((s) => (
+              <option key={s} value={s}>{s}</option>
+            ))}
+          </select>
+        </div>
+      )}
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">Your review *</label>
+        <textarea
+          value={body}
+          onChange={(e) => setBody(e.target.value)}
+          rows={4}
+          className="w-full border border-gray-300 rounded-md px-3 py-2"
+          required
+        />
+      </div>
+      <button type="submit" disabled={submitting} className="btn-primary">
+        {submitting ? "Submitting…" : "Submit review"}
+      </button>
+    </form>
   );
 }
 

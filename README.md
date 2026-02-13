@@ -107,6 +107,11 @@ Never commit this value or expose it in the browser.
    ```bash
    npx prisma migrate deploy
    ```
+   To create the **product reviews** table (if you added the `ProductReview` model and haven’t migrated yet), create and apply the migration:
+   ```bash
+   ./scripts/add-reviews-table.sh
+   ```
+   Or run `npx prisma migrate dev --name add_product_reviews` from the project root.
 
 4. Start the dev server:
    ```bash
