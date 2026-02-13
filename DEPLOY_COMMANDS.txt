@@ -1,0 +1,239 @@
+═══════════════════════════════════════════════════════════════
+   PURGO LABS - DEPLOYMENT QUICK COMMANDS
+═══════════════════════════════════════════════════════════════
+
+✅ GIT INITIALIZED: All files committed to 'main' branch locally
+
+
+STEP 1: CREATE GITHUB REPO & PUSH
+═══════════════════════════════════════════════════════════════
+
+1. Go to: https://github.com/new
+
+2. Fill in:
+   - Name: PurgoLabs
+   - Private: ✓ (recommended)
+   - DO NOT add README, .gitignore, or license
+
+3. Run these commands (replace YOUR_USERNAME):
+
+   git remote add origin https://github.com/YOUR_USERNAME/PurgoLabs.git
+   git push -u origin main
+
+   ✅ Done! Your code is on GitHub
+
+
+STEP 2: DEPLOY TO VERCEL
+═══════════════════════════════════════════════════════════════
+
+1. Go to: https://vercel.com/new
+
+2. Sign in with GitHub
+
+3. Import "PurgoLabs" repository
+
+4. Click "Deploy" (don't worry, we'll add env vars next)
+
+
+STEP 3: ADD ENVIRONMENT VARIABLES
+═══════════════════════════════════════════════════════════════
+
+In Vercel → Settings → Environment Variables, add ALL of these:
+
+┌─────────────────────────────────────────────────────────────┐
+│ DATABASE (Required)                                         │
+├─────────────────────────────────────────────────────────────┤
+│ DATABASE_URL                                                │
+│ postgresql://user:password@host:5432/purgolabs             │
+│                                                             │
+│ 👉 Get from: Supabase, Neon, or Railway                    │
+└─────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────┐
+│ AUTHENTICATION (Required)                                   │
+├─────────────────────────────────────────────────────────────┤
+│ NEXTAUTH_SECRET                                             │
+│ Run: openssl rand -base64 32                               │
+│                                                             │
+│ NEXTAUTH_URL                                                │
+│ https://purgolabs.com                                       │
+└─────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────┐
+│ GOOGLE OAUTH (For "Sign in with Google")                   │
+├─────────────────────────────────────────────────────────────┤
+│ GOOGLE_CLIENT_ID                                            │
+│ your-id.apps.googleusercontent.com                          │
+│                                                             │
+│ GOOGLE_CLIENT_SECRET                                        │
+│ your-secret                                                 │
+│                                                             │
+│ 👉 Get from: console.cloud.google.com                      │
+│    Redirect URI: https://purgolabs.com/api/auth/callback/google │
+└─────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────┐
+│ STRIPE (Required for payments)                              │
+├─────────────────────────────────────────────────────────────┤
+│ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY                         │
+│ pk_live_...                                                 │
+│                                                             │
+│ STRIPE_SECRET_KEY                                           │
+│ sk_live_...                                                 │
+│                                                             │
+│ STRIPE_WEBHOOK_SECRET                                       │
+│ whsec_...                                                   │
+│                                                             │
+│ 👉 Get from: dashboard.stripe.com                          │
+│    Webhook URL: https://purgolabs.com/api/webhooks/stripe  │
+└─────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────┐
+│ EMAIL (Required for notifications)                          │
+├─────────────────────────────────────────────────────────────┤
+│ RESEND_API_KEY                                              │
+│ re_...                                                      │
+│                                                             │
+│ EMAIL_FROM                                                  │
+│ noreply@purgolabs.com                                       │
+│                                                             │
+│ 👉 Get from: resend.com (verify domain first!)             │
+└─────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────┐
+│ SITE URL                                                    │
+├─────────────────────────────────────────────────────────────┤
+│ NEXT_PUBLIC_SITE_URL                                        │
+│ https://purgolabs.com                                       │
+└─────────────────────────────────────────────────────────────┘
+
+After adding all variables:
+  → Go to Deployments
+  → Click "..." on latest deployment
+  → Click "Redeploy"
+
+
+STEP 4: CONNECT GODADDY DOMAIN
+═══════════════════════════════════════════════════════════════
+
+In Vercel:
+──────────
+1. Go to: Settings → Domains
+2. Click "Add"
+3. Enter: purgolabs.com
+4. Click "Add"
+5. Also add: www.purgolabs.com
+
+In GoDaddy:
+──────────
+1. Go to: godaddy.com → My Products → DNS
+2. Click "DNS" for your domain
+
+OPTION A - Use Vercel Nameservers (EASIER):
+────────────────────────────────────────────
+1. In Vercel, copy the nameservers shown
+2. In GoDaddy, scroll to "Nameservers"
+3. Click "Change" → "Custom nameservers"
+4. Paste Vercel's nameservers
+5. Save
+⏱️  Wait 24-48 hours for propagation
+
+OPTION B - Keep GoDaddy DNS:
+────────────────────────────
+Add these DNS records in GoDaddy:
+
+Type: A
+Name: @
+Value: 76.76.21.21
+TTL: 600 seconds
+
+Type: CNAME
+Name: www
+Value: cname.vercel-dns.com
+TTL: 1 Hour
+
+⏱️  Wait 1-2 hours for propagation
+
+
+STEP 5: RUN DATABASE MIGRATIONS
+═══════════════════════════════════════════════════════════════
+
+After adding DATABASE_URL in Vercel:
+
+DATABASE_URL="your-production-url" npx prisma migrate deploy
+
+Or use Vercel CLI:
+  npm i -g vercel
+  vercel link
+  vercel env pull .env.production
+  npx prisma migrate deploy
+
+
+STEP 6: TEST YOUR SITE
+═══════════════════════════════════════════════════════════════
+
+Visit: https://purgolabs.com
+
+Test:
+  ✓ Browse products
+  ✓ Add to cart
+  ✓ Create account
+  ✓ Sign in with Google
+  ✓ Place order (use test card)
+  ✓ Check email confirmations
+  ✓ Admin panel works
+  ✓ Mobile responsive
+
+
+QUICK SERVICE URLS
+═══════════════════════════════════════════════════════════════
+
+GitHub:          https://github.com/YOUR_USERNAME/PurgoLabs
+Vercel:          https://vercel.com/dashboard
+Supabase:        https://supabase.com/dashboard
+Stripe:          https://dashboard.stripe.com
+Resend:          https://resend.com/dashboard
+Google Cloud:    https://console.cloud.google.com
+GoDaddy:         https://godaddy.com/help
+
+
+TROUBLESHOOTING
+═══════════════════════════════════════════════════════════════
+
+Domain not working?
+  → Wait longer (DNS takes time)
+  → Check DNS records match exactly
+  → Try incognito mode
+
+Database errors?
+  → Verify DATABASE_URL is correct
+  → Run migrations on production DB
+  → Check Vercel logs
+
+OAuth not working?
+  → Update redirect URIs in Google Cloud
+  → Verify NEXTAUTH_URL matches domain
+  → Check NEXTAUTH_SECRET is set
+
+Emails not sending?
+  → Verify domain in Resend
+  → Add all DNS records (SPF, DKIM, DMARC)
+  → Check Resend logs
+
+
+FUTURE UPDATES
+═══════════════════════════════════════════════════════════════
+
+To deploy changes:
+
+  git add .
+  git commit -m "Your update description"
+  git push origin main
+
+Vercel auto-deploys when you push! 🚀
+
+
+═══════════════════════════════════════════════════════════════
+   📖 Full Details: See GITHUB_VERCEL_SETUP.md
+═══════════════════════════════════════════════════════════════
+

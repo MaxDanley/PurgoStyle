@@ -1,0 +1,89 @@
+═══════════════════════════════════════════════════════════════
+   PUSH TO GITHUB - STEP BY STEP
+═══════════════════════════════════════════════════════════════
+
+STEP 1: CREATE REPOSITORY ON GITHUB.COM
+═══════════════════════════════════════════════════════════════
+
+1. Open browser and go to: https://github.com/new
+
+2. Sign in to your GitHub account
+
+3. Fill in the form:
+   ┌─────────────────────────────────────────────────────────┐
+   │ Repository name: PurgoLabs                              │
+   │ Description: Purgo Labs E-Commerce Platform             │
+   │ Visibility: ○ Public  ● Private (recommended)           │
+   │                                                         │
+   │ ⚠️ DO NOT CHECK THESE:                                  │
+   │    □ Add a README file                                  │
+   │    □ Add .gitignore                                     │
+   │    □ Choose a license                                   │
+   └─────────────────────────────────────────────────────────┘
+
+4. Click "Create repository"
+
+
+STEP 2: COPY YOUR GITHUB USERNAME
+═══════════════════════════════════════════════════════════════
+
+After creating the repo, GitHub will show you commands.
+
+Look at the URL shown, it will be something like:
+  https://github.com/YOUR_USERNAME/PurgoLabs.git
+
+Copy YOUR_USERNAME (it's your GitHub username)
+
+
+STEP 3: RUN THESE COMMANDS
+═══════════════════════════════════════════════════════════════
+
+Replace YOUR_USERNAME with your actual GitHub username:
+
+cd /Users/maxdanley/PurgoLabs
+
+git remote add origin https://github.com/YOUR_USERNAME/PurgoLabs.git
+
+git push -u origin main
+
+
+EXAMPLE:
+If your username is "maxdanley", run:
+
+git remote add origin https://github.com/maxdanley/PurgoLabs.git
+git push -u origin main
+
+
+STEP 4: VERIFY
+═══════════════════════════════════════════════════════════════
+
+Go to: https://github.com/YOUR_USERNAME/PurgoLabs
+
+You should see all 64 files uploaded!
+
+
+TROUBLESHOOTING:
+═══════════════════════════════════════════════════════════════
+
+Error: "remote origin already exists"
+→ Run: git remote remove origin
+→ Then run the commands again
+
+Error: "Authentication failed"
+→ You may need to use a Personal Access Token instead of password
+→ Go to: https://github.com/settings/tokens
+→ Generate new token (classic)
+→ Use token as password when prompted
+
+Need SSH instead?
+→ Run: git remote add origin git@github.com:YOUR_USERNAME/PurgoLabs.git
+→ Then: git push -u origin main
+
+
+READY TO TELL ME YOUR GITHUB USERNAME?
+═══════════════════════════════════════════════════════════════
+
+Once you create the repo and tell me your GitHub username,
+I can run the exact commands for you!
+
+

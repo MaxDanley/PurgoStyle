@@ -1,0 +1,7 @@
+📝 To add the background image:
+
+1. Right-click the vial image you attached
+2. Save it as: hero-bg.jpg
+3. Place it in: /Users/maxdanley/PurgoLabs/public/hero-bg.jpg
+
+The code is ready and will automatically use it!

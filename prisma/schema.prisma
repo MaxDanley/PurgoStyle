@@ -1,0 +1,654 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?
+  phone         String?
+  smsOptIn      Boolean   @default(false) // Marketing text messages (offers/sales) via Twilio
+  role          UserRole  @default(USER)
+  rewardsPoints Int       @default(0)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  accounts           Account[]
+  sessions           Session[]
+  orders             Order[]
+  addresses          Address[]
+  pointsHistory      PointsHistory[]
+  stockNotifications StockNotification[]
+  abandonedCarts     AbandonedCart[]
+  subscribers        Subscriber[]
+  affiliate          Affiliate?
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model PasswordResetToken {
+  id        String   @id @default(cuid())
+  email     String
+  token     String   @unique
+  expires   DateTime
+  createdAt DateTime @default(now())
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  description String
+  category    String
+  image       String
+  coaUrl      String? // Certificate of Analysis file URL
+  active      Boolean  @default(true)
+  featured    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  variants   ProductVariant[]
+  orderItems OrderItem[]
+}
+
+model ProductVariant {
+  id         String   @id @default(cuid())
+  productId  String
+  size       String
+  price      Float
+  stockCount Int      @default(0)
+  sku        String   @unique
+  active     Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  product            Product             @relation(fields: [productId], references: [id], onDelete: Cascade)
+  orderItems         OrderItem[]
+  stockNotifications StockNotification[]
+}
+
+model Address {
+  id        String   @id @default(cuid())
+  userId    String?
+  name      String
+  street    String
+  apartment String? // Apartment, suite, unit, etc.
+  city      String
+  state     String
+  zipCode   String
+  country   String   @default("US")
+  phone     String?
+  isDefault Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  orders Order[]
+}
+
+model Order {
+  id                String      @id @default(cuid())
+  userId            String?
+  email             String? // Customer email (for guest orders)
+  orderNumber       String      @unique
+  status            OrderStatus @default(PENDING)
+  subtotal          Float
+  shippingInsurance Float       @default(3.50)
+  shippingCost      Float
+  shippingMethod    String      @default("ground")
+  total             Float
+
+  // Rewards points
+  pointsEarned   Int @default(0)
+  pointsRedeemed Int @default(0)
+
+  // Shipping info
+  shippingAddressId String?
+  phone             String?   // Denormalized for guest orders / SMS campaigns (also on Address)
+  trackingNumber    String?
+  shippedAt         DateTime?
+  deliveredAt       DateTime?
+
+  // Payment info
+  paymentMethod PaymentMethod @default(OTHER)
+  paymentStatus PaymentStatus @default(PENDING)
+
+  // Crypto payment info (for NOWPayments)
+  cryptoPaymentId        String?
+  cryptoPaymentAddress   String?
+  cryptoPaymentAmount    Float?
+  cryptoCurrency         String?
+  cryptoPaymentExpiresAt DateTime?
+  cryptoPaymentStatus    String? // waiting, confirming, confirmed, sending, partially_paid, finished, failed, refunded, expired
+
+  // BarterPay payment info
+  barterPayTransactionIndex String?
+
+  // Green eDebit payment info
+  greenPayorId          String?
+  greenTransactionId    String?
+  greenCheckNumber      String?
+  greenVerificationType String? // RTV or BV
+
+  // Discount info
+  discountCodeId String?
+  discountAmount Float   @default(0)
+
+  // Affiliate tracking
+  affiliateId String?
+
+  // Attribution Info (New)
+  attributionSource    String?   // e.g. facebook, google, organic, newsletter
+  attributionMedium    String?   // e.g. cpc, email, social, organic
+  attributionCampaign  String?   // e.g. summer_sale
+  attributionContent   String?   // e.g. banner_top
+  attributionTerm      String?   // e.g. peptides
+  initialReferrer      String?   // The very first referrer for the session/user
+
+  // Payment reminder tracking
+  paymentReminderSentAt DateTime?
+  paymentReminderImSentAt DateTime? // iMessage reminder (Blooio) for credit card, sent ~2h after order
+
+  // SMS marketing opt-in (at checkout; for guest orders)
+  smsOptIn Boolean?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user            User?                @relation(fields: [userId], references: [id])
+  shippingAddress Address?             @relation(fields: [shippingAddressId], references: [id])
+  discountCode    DiscountCode?        @relation(fields: [discountCodeId], references: [id])
+  affiliate       Affiliate?           @relation(fields: [affiliateId], references: [id])
+  items           OrderItem[]
+  statusHistory   OrderStatusHistory[]
+  pointsHistory   PointsHistory[]
+
+  @@index([userId])
+  @@index([orderNumber])
+  @@index([cryptoPaymentId])
+  @@index([barterPayTransactionIndex])
+  @@index([greenPayorId])
+  @@index([greenTransactionId])
+  @@index([paymentStatus, paymentMethod])
+  @@index([createdAt, paymentStatus])
+  @@index([affiliateId])
+}
+
+enum OrderStatus {
+  PENDING
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+  REFUNDED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+enum PaymentMethod {
+  CRYPTO
+  ZELLE
+  VENMO
+  BARTERPAY
+  EDEBIT
+  CREDIT_CARD
+  OTHER
+}
+
+model OrderItem {
+  id          String   @id @default(cuid())
+  orderId     String
+  productId   String
+  variantId   String
+  quantity    Int
+  price       Float
+  isBackorder Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  order   Order          @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product Product        @relation(fields: [productId], references: [id])
+  variant ProductVariant @relation(fields: [variantId], references: [id])
+}
+
+model OrderStatusHistory {
+  id        String      @id @default(cuid())
+  orderId   String
+  status    OrderStatus
+  note      String?
+  createdAt DateTime    @default(now())
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+}
+
+model DiscountCode {
+  id             String       @id @default(cuid())
+  code           String       @unique
+  description    String?
+  discountType   DiscountType @default(PERCENTAGE)
+  discountAmount Float
+  minOrderAmount Float?
+  maxDiscount    Float?
+  freeShipping   Boolean      @default(false)
+  usageLimit     Int?
+  usageCount     Int          @default(0)
+  isActive       Boolean      @default(true)
+  expiresAt      DateTime?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  orders      Order[]
+  subscribers Subscriber[]
+}
+
+enum DiscountType {
+  PERCENTAGE
+  FIXED_AMOUNT
+}
+
+model PointsHistory {
+  id          String     @id @default(cuid())
+  userId      String
+  orderId     String?
+  points      Int
+  type        PointsType
+  description String
+  createdAt   DateTime   @default(now())
+
+  user  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  order Order? @relation(fields: [orderId], references: [id])
+
+  @@index([userId])
+}
+
+enum PointsType {
+  EARNED
+  REDEEMED
+  EXPIRED
+}
+
+model BlogPost {
+  id              String    @id @default(cuid())
+  title           String
+  slug            String    @unique
+  excerpt         String
+  content         String    @db.Text
+  keywords        String[]
+  metaDescription String    @db.Text
+  featuredImage   String? // URL or path to featured image
+  articleImages   String[] // Array of image URLs/paths for article content
+  published       Boolean   @default(false)
+  publishedAt     DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([slug])
+  @@index([published, publishedAt])
+}
+
+enum PSEOPageType {
+  COMPARISON
+  PEPTIDE
+}
+
+model PSEOPage {
+  id              String      @id @default(cuid())
+  type            PSEOPageType
+  title           String
+  slug            String    @unique
+  excerpt         String
+  content         String    @db.Text
+  keywords        String[]
+  metaDescription String    @db.Text
+  featuredImage   String?
+  published       Boolean   @default(false)
+  publishedAt     DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([type, slug])
+  @@index([published, publishedAt])
+}
+
+model EmailPreferences {
+  id          String   @id @default(cuid())
+  email       String   @unique
+  promotions  Boolean  @default(true)
+  newsletters Boolean  @default(true)
+  research    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([email])
+}
+
+model Subscriber {
+  id               String           @id @default(cuid())
+  email            String           @unique
+  source           SubscriberSource
+  status           SubscriberStatus @default(ACTIVE)
+  resendContactId  String? // Resend contact ID for syncing
+  resendAudienceId String? // Which Resend audience/segment they're in (deprecated - use segments via API)
+
+  // Preferences (mirror EmailPreferences but track source)
+  promotions  Boolean @default(true)
+  newsletters Boolean @default(true)
+  research    Boolean @default(true)
+
+  // Metadata
+  firstName      String?
+  lastName       String?
+  userId         String? // Link to User if they have account
+  discountCodeId String? // Link to discount code if signed up via discount
+
+  // Timestamps
+  subscribedAt   DateTime  @default(now())
+  unsubscribedAt DateTime?
+  lastSyncedAt   DateTime? // Last sync with Resend
+
+  // Retargeting email tracking
+  retargetingEmailSent   Boolean   @default(false)
+  retargetingEmailSentAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user         User?         @relation(fields: [userId], references: [id], onDelete: SetNull)
+  discountCode DiscountCode? @relation(fields: [discountCodeId], references: [id], onDelete: SetNull)
+
+  @@index([email])
+  @@index([status])
+  @@index([source])
+  @@index([resendContactId])
+  @@index([userId])
+}
+
+enum SubscriberSource {
+  DISCOUNT_SIGNUP // Home page 15% discount signup
+  CHECKOUT_OPT_IN // Checkout subscribeToPromotions
+  USER_ACCOUNT // User account with preferences enabled
+  STOCK_NOTIFICATION // Stock notification signup
+  MANUAL_IMPORT // Manually added
+  OTHER
+}
+
+enum SubscriberStatus {
+  ACTIVE
+  UNSUBSCRIBED
+  BOUNCED
+  COMPLAINED
+}
+
+model StockNotification {
+  id        String   @id @default(cuid())
+  variantId String
+  userId    String?
+  email     String
+  notified  Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  variant ProductVariant @relation(fields: [variantId], references: [id], onDelete: Cascade)
+  user    User?          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([variantId])
+  @@index([userId])
+  @@index([email])
+}
+
+model AbandonedCart {
+  id                 String    @id @default(cuid())
+  userId             String?
+  email              String
+  cartData           String    @db.Text // JSON string of cart items
+  reminderSent       Int       @default(0) // Number of reminders sent
+  converted          Boolean   @default(false) // Whether cart was converted to order
+  userAgent          String?
+  ipAddress          String?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  lastReminderSentAt DateTime?
+
+  user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([email])
+  @@index([converted])
+  @@index([createdAt])
+}
+
+model PendingBarterPayOrder {
+  id                String   @id @default(cuid())
+  orderNumber       String   @unique
+  transactionIndex  String   @unique
+  userId            String?
+  items             Json // Store order items as JSON
+  shippingInfo      Json // Store shipping info as JSON
+  billingInfo       Json? // Store billing info as JSON
+  metadata          Json // Store metadata as JSON
+  subtotal          Float
+  shippingInsurance Float    @default(3.50)
+  shippingCost      Float
+  pointsEarned      Int
+  total             Float
+  discountAmount    Float    @default(0)
+  createdAt         DateTime @default(now())
+  expiresAt         DateTime // Clean up after 24 hours
+
+  @@index([transactionIndex])
+  @@index([orderNumber])
+  @@index([createdAt])
+  @@index([expiresAt])
+}
+
+// ============================================
+// AFFILIATE PROGRAM
+// ============================================
+
+model Affiliate {
+  id             String  @id @default(cuid())
+  userId         String  @unique
+  discountCode   String  @unique // Short code like "JOHN15"
+  commissionRate Float   @default(15) // Percentage commission (default 15%)
+  isActive       Boolean @default(true)
+
+  // Discount settings (what the customer gets)
+  discountPercentage Float     @default(30) // Percentage off for customers using this code
+  freeShipping       Boolean   @default(true) // Whether code includes free shipping
+  usageLimit         Int? // Max number of uses (null = unlimited)
+  usageCount         Int       @default(0) // Current usage count
+  expiresAt          DateTime? // Optional expiration date
+  minOrderAmount     Float? // Minimum order amount to use code
+
+  // Stats (cached for performance, updated on order completion)
+  totalSales        Float @default(0)
+  totalOrders       Int   @default(0)
+  totalCommission   Float @default(0)
+  pendingCommission Float @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user      User                    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  orders    Order[]
+  clicks    AffiliateClick[]
+  commissions AffiliateCommission[]
+  payoutRequests AffiliatePayoutRequest[]
+
+  @@index([discountCode])
+  @@index([userId])
+}
+
+// Commission credited when an order is paid (tier-based rate at time of order)
+model AffiliateCommission {
+  id            String   @id @default(cuid())
+  affiliateId   String
+  orderId       String
+  amount        Float    // Commission amount in USD
+  tier          Int      // 1-4
+  commissionRate Float   // Rate used (15, 17, 20, 25)
+  createdAt     DateTime @default(now())
+
+  affiliate Affiliate @relation(fields: [affiliateId], references: [id], onDelete: Cascade)
+
+  @@index([affiliateId])
+  @@index([orderId])
+}
+
+// Payout request: affiliate requests payout; admin pays and marks PAID
+model AffiliatePayoutRequest {
+  id         String   @id @default(cuid())
+  affiliateId String
+  amount     Float
+  status     String   @default("PENDING") // PENDING | PAID
+  requestedAt DateTime @default(now())
+  paidAt     DateTime?
+  note       String?
+  createdAt  DateTime @default(now())
+
+  affiliate Affiliate @relation(fields: [affiliateId], references: [id], onDelete: Cascade)
+
+  @@index([affiliateId])
+  @@index([status])
+}
+
+model AffiliateClick {
+  id          String   @id @default(cuid())
+  affiliateId String
+  source      String   @default("qr") // "qr" or "link"
+  userAgent   String?
+  ipAddress   String?
+  city        String?
+  state       String?
+  country     String?
+  isUnique    Boolean  @default(true) // Whether this is a unique scan (first time from this IP)
+  createdAt   DateTime @default(now())
+
+  affiliate Affiliate @relation(fields: [affiliateId], references: [id], onDelete: Cascade)
+
+  @@index([affiliateId])
+  @@index([createdAt])
+  @@index([ipAddress])
+}
+
+model AffiliateInvite {
+  id        String   @id @default(cuid())
+  email     String
+  token     String   @unique
+  used      Boolean  @default(false)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([token])
+  @@index([email])
+}
+
+// ============================================
+// WEBSITE ANALYTICS
+// ============================================
+
+model PageView {
+  id        String   @id @default(cuid())
+  sessionId String // Session identifier (cookie-based or IP-based)
+  pagePath  String
+  referrer  String?
+  userAgent String?
+  ipAddress String?
+  createdAt DateTime @default(now())
+
+  @@index([sessionId])
+  @@index([createdAt])
+  @@index([pagePath])
+}
+
+model CartEvent {
+  id        String   @id @default(cuid())
+  sessionId String // Session identifier
+  email     String? // Email if available
+  eventType String // 'add_to_cart', 'remove_from_cart', 'view_cart'
+  productId String?
+  variantId String?
+  quantity  Int?
+  userAgent String?
+  ipAddress String?
+  createdAt DateTime @default(now())
+
+  @@index([sessionId])
+  @@index([email])
+  @@index([createdAt])
+}
+
+model CheckoutEvent {
+  id        String   @id @default(cuid())
+  sessionId String // Session identifier
+  email     String? // Email if available
+  step      String // 'cart', 'shipping', 'payment', 'review', 'completed'
+  cartValue Float? // Cart total at this step
+  userAgent String?
+  ipAddress String?
+  createdAt DateTime @default(now())
+
+  @@index([sessionId])
+  @@index([email])
+  @@index([step])
+  @@index([createdAt])
+}
+
+// Track Blooio campaign sends (5 new conversations/day limit). Excludes from "next 5" once sent.
+model BlooioCampaignSent {
+  id     String   @id @default(cuid())
+  phone  String   // E.164
+  sentAt DateTime @default(now())
+
+  @@unique([phone])
+  @@index([sentAt])
+}
