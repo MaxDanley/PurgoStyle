@@ -1275,7 +1275,7 @@ export async function sendCreditCardPaymentInstructions(
     shippingCost: number;
   }
 ) {
-  const paymentLink = "https://square.link/u/uRYagWpU";
+  const paymentLink = "https://buy.stripe.com/28E14nbKraiRd4G9440Fi00";
 
   const content = `
     <!-- Header -->
@@ -1459,7 +1459,7 @@ export async function sendPaymentReminderEmail(
   paymentMethod: "CREDIT_CARD",
   paymentDetails?: Record<string, never>
 ) {
-  const paymentLink = "https://square.link/u/uRYagWpU";
+  const paymentLink = "https://buy.stripe.com/28E14nbKraiRd4G9440Fi00";
 
   const paymentInstructions = `
     <div style="padding: 32px; background-color: #dbeafe; border-radius: 8px; margin: 15px 0; text-align: center;">

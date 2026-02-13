@@ -400,7 +400,7 @@ function OrderConfirmationContent() {
             <div className="relative bg-white rounded-lg shadow-lg border-2 p-6" style={{ borderColor: '#3b82f6' }}>
               <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
                 <p className="text-sm text-green-800">
-                  If you completed your payment on Square, your order is confirmed and you can exit this page. Otherwise, proceed with instructions to pay below.
+                  If you completed your payment, your order is confirmed and you can exit this page. Otherwise, proceed with instructions to pay below.
                 </p>
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-4">Complete Your Payment</h3>
@@ -440,10 +440,10 @@ function OrderConfirmationContent() {
 
                 <div className="text-center">
                   <a 
-                    href="https://square.link/u/uRYagWpU"
+                    href="https://buy.stripe.com/28E14nbKraiRd4G9440Fi00"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-block bg-[#3b82f6] text-white px-12 py-6 rounded-xl font-bold text-xl hover:bg-[#2563eb] transition-colors shadow-lg w-full sm:w-auto"
+                    className="inline-block bg-brand-500 text-white px-12 py-6 rounded-xl font-bold text-xl hover:bg-brand-600 transition-colors shadow-lg w-full sm:w-auto"
                   >
                     Make Payment Now
                   </a>

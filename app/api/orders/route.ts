@@ -3,6 +3,19 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { cookies } from "next/headers";
 
+const CANONICAL_SOURCE = "https://www.summersteeze.com";
+
+function normalizeAttribution(attribution: any, initialReferrer: string | undefined) {
+  const isOurDomain = (v: string | undefined) =>
+    v && (v.includes("summersteeze.com") || v.includes("localhost"));
+  const out: any = { ...attribution };
+  if (isOurDomain(attribution?.source)) out.source = "summersteeze.com";
+  return {
+    ...out,
+    initialReferrer: isOurDomain(initialReferrer) ? CANONICAL_SOURCE : (initialReferrer ?? null),
+  };
+}
+
 export async function POST(req: Request) {
   try {
     const session = await auth();
@@ -19,11 +32,11 @@ export async function POST(req: Request) {
     // Generate order number
     const orderNumber = `PL${Date.now()}${Math.floor(Math.random() * 1000)}`;
 
-    // Retrieve attribution data from cookies
+    // Retrieve attribution from cookies (normalized: only summersteeze.com, no internal paths)
     const cookieStore = await cookies();
     const attributionCookie = cookieStore.get("summersteeze_attribution");
     const initialReferrerCookie = cookieStore.get("summersteeze_initial_referrer");
-    
+
     let attributionData: any = {};
     if (attributionCookie) {
       try {
@@ -32,6 +45,10 @@ export async function POST(req: Request) {
         // Ignore parsing errors
       }
     }
+    const normalized = normalizeAttribution(
+      attributionData,
+      initialReferrerCookie?.value
+    );
 
     // Create order
     const order = await prisma.order.create({
@@ -45,14 +62,14 @@ export async function POST(req: Request) {
         total,
         shippingAddressId,
         paymentStatus: "PAID",
-        
-        // Add attribution
-        attributionSource: attributionData.source,
-        attributionMedium: attributionData.medium,
+
+        // Attribution: only summersteeze.com, never internal website metadata
+        attributionSource: normalized.source ?? attributionData.source,
+        attributionMedium: normalized.source === "summersteeze.com" ? "direct" : attributionData.medium,
         attributionCampaign: attributionData.campaign,
         attributionContent: attributionData.content,
         attributionTerm: attributionData.term,
-        initialReferrer: initialReferrerCookie?.value,
+        initialReferrer: normalized.initialReferrer ?? undefined,
 
         items: {
           create: items.map((item: any) => ({

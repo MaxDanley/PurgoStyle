@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { ArrowRightIcon } from "@heroicons/react/24/solid";
 
-const SQUARE_PAYMENT_URL = "https://square.link/u/uRYagWpU";
+const STRIPE_PAYMENT_URL = "https://buy.stripe.com/28E14nbKraiRd4G9440Fi00";
 
 interface CreditCardPaymentFormProps {
   total: number;
@@ -59,7 +59,7 @@ export default function CreditCardPaymentForm({
     setPaymentError(null);
 
     // Single new tab to payment page, opened directly from this click
-    window.open(SQUARE_PAYMENT_URL, "_blank", "noopener,noreferrer");
+    window.open(STRIPE_PAYMENT_URL, "_blank", "noopener,noreferrer");
 
     try {
       const response = await fetch("/api/orders/create-card", {

@@ -6,7 +6,19 @@ import { validateGuestOrderInfo } from "@/lib/validation";
 import { handleCheckoutSubscription } from "@/lib/subscriber-helpers";
 import { cookies } from "next/headers";
 
-const PAYMENT_LINK = "https://square.link/u/uRYagWpU";
+const PAYMENT_LINK = "https://buy.stripe.com/28E14nbKraiRd4G9440Fi00";
+const CANONICAL_SOURCE = "https://www.summersteeze.com";
+
+/** Normalize referrer/attribution so we only expose summersteeze.com, not internal paths. */
+function normalizeAttribution(attribution: any, initialReferrer: string | undefined) {
+  const isOurDomain = (v: string | undefined) =>
+    v && (v.includes("summersteeze.com") || v.includes("localhost"));
+  const out = { ...attribution };
+  if (isOurDomain(attribution?.source)) out.source = "summersteeze.com";
+  if (isOurDomain(initialReferrer))
+    return { ...out, initialReferrer: CANONICAL_SOURCE };
+  return { ...out, initialReferrer: initialReferrer ?? null };
+}
 
 /**
  * Create an order with Credit Card payment
@@ -180,11 +192,11 @@ export async function POST(req: Request) {
       }
     }
 
-    // Retrieve attribution data from cookies
+    // Retrieve attribution data from cookies (normalized: only summersteeze.com, no internal paths)
     const cookieStore = await cookies();
     const attributionCookie = cookieStore.get("summersteeze_attribution");
     const initialReferrerCookie = cookieStore.get("summersteeze_initial_referrer");
-    
+
     let attributionData: any = {};
     if (attributionCookie) {
       try {
@@ -193,6 +205,10 @@ export async function POST(req: Request) {
         // Ignore parsing errors
       }
     }
+    const normalized = normalizeAttribution(
+      attributionData,
+      initialReferrerCookie?.value
+    );
 
     // Create order with PENDING payment status
     const order = await prisma.order.create({
@@ -212,14 +228,14 @@ export async function POST(req: Request) {
         paymentStatus: "PENDING",
         shippingMethod: (metadata.shippingMethod as string) || "ground",
         affiliateId, // Track affiliate referral
-        
-        // Add attribution
-        attributionSource: attributionData.source,
-        attributionMedium: attributionData.medium,
+
+        // Attribution: only summersteeze.com, never internal website metadata
+        attributionSource: normalized.source ?? attributionData.source,
+        attributionMedium: normalized.source === "summersteeze.com" ? "direct" : attributionData.medium,
         attributionCampaign: attributionData.campaign,
         attributionContent: attributionData.content,
         attributionTerm: attributionData.term,
-        initialReferrer: initialReferrerCookie?.value,
+        initialReferrer: normalized.initialReferrer ?? undefined,
 
         smsOptIn: metadata.smsOptIn === true,
         statusHistory: {
