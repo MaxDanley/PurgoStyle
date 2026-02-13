@@ -1,8 +1,27 @@
 import NextAuth from "next-auth";
-import { authConfig } from "@/lib/auth.config";
 import { NextResponse } from "next/server";
 
-const { auth } = NextAuth(authConfig);
+// Edge-safe config inline (no @/ imports — Prisma/bcrypt would break Edge)
+const edgeAuthConfig = {
+  providers: [],
+  session: { strategy: "jwt" as const },
+  pages: { signIn: "/auth/signin", signOut: "/auth/signout", error: "/auth/error" },
+  callbacks: {
+    jwt({ token }: any) {
+      return token;
+    },
+    session({ session, token }: any) {
+      if (session?.user) {
+        (session.user as any).id = token.id;
+        (session.user as any).role = token.role;
+        (session.user as any).phone = token.phone ?? null;
+      }
+      return session;
+    },
+  },
+};
+
+const { auth } = NextAuth(edgeAuthConfig as any);
 
 export default auth((req) => {
   const { pathname } = req.nextUrl;
