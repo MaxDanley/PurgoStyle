@@ -9,20 +9,20 @@ Copy `.env.example` to `.env.local` and fill in the values below.
 ### Getting Supabase credentials (DATABASE_URL)
 
 1. Go to [Supabase Dashboard](https://supabase.com/dashboard) and open your project (or create one). If the project is **paused** (free tier), click **Restore project** first.
-2. In the left sidebar, open **Project Settings** (gear icon) → **Database**.
-3. **For Vercel: use the direct connection (port 5432) and add SSL + timeout.** Under **Connection string** → **URI**, copy the string (host **`db.xxx.supabase.co`**, port **5432**). **Append** `?sslmode=require&connect_timeout=30` so the full URL looks like:
-   ```text
-   postgresql://postgres.[PROJECT-REF]:[YOUR-PASSWORD]@db.vogljdswvunirliipoym.supabase.co:5432/postgres?sslmode=require&connect_timeout=30
-   ```
-   Replace **`[YOUR-PASSWORD]`** with your actual database password (see **Database password** on the same page; use **Reset database password** if you don’t know it). Do **not** leave the literal text `[YOUR-PASSWORD]` in the URL.
+2. In the left sidebar, open **Project Settings** (gear icon) → **Database**. Open the **“Connect to your project”** modal (or the **Connection string** section).
+3. **If the direct connection shows “Not IPv4 compatible”** (common on newer Supabase projects): Vercel is IPv4-only, so you **must use the Shared Pooler** instead of the direct URI.
+   - In the Connect modal, expand **“Some platforms are IPv4-only”** (or look for **Connection pooling** → **Session** or **Transaction** mode).
+   - Copy the **Shared Pooler** connection string (host will look like `aws-0-[region].pooler.supabase.com`, port **6543** for Transaction or **5432** for Session). Do **not** use the direct `db.xxx.supabase.co` URI when it says Not IPv4 compatible.
+   - Build the URL: `postgresql://postgres.[PROJECT-REF]:[YOUR-PASSWORD]@aws-0-[REGION].pooler.supabase.com:6543/postgres?pgbouncer=true&sslmode=require&connect_timeout=30`
+   - Replace **`[YOUR-PASSWORD]`** with your database password, **`[PROJECT-REF]`** and **`[REGION]`** with the values from the Shared Pooler string (e.g. from the modal or Database settings). Use **Reset database password** if you don’t know the password.
 4. In **Vercel** (Settings → Environment Variables), set **both**:
-   - **`DATABASE_URL`** = that full URI (with `?sslmode=require&connect_timeout=30`)
-   - **`DIRECT_URL`** = the same full URI
+   - **`DATABASE_URL`** = that Shared Pooler URI (with `?pgbouncer=true&sslmode=require&connect_timeout=30`)
+   - **`DIRECT_URL`** = the **same** value (same Shared Pooler URI)
    For local `.env.local`, set the same. If your password contains special characters (e.g. `#`, `@`, `%`), [URL-encode](https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding) them (e.g. `#` → `%23`).
 5. **If you still see “Can’t reach database server” (P1001):**
-   - **Add** `?sslmode=require&connect_timeout=30` to both `DATABASE_URL` and `DIRECT_URL` in Vercel (Supabase requires SSL; longer timeout helps cold starts).
-   - In Supabase dashboard, open **Project Settings** → **Database** and copy the **exact** URI from the connect panel; ensure host is `db.xxx.supabase.co` and port is `5432`.
-   - If the project is **paused** (free tier), click **Restore project** and wait 1–2 minutes before retrying.
+   - **Use the Shared Pooler** (IPv4 compatible), not the direct connection, when Supabase shows “Not IPv4 compatible”.
+   - Ensure the URL includes `pgbouncer=true` (required for Transaction mode with Prisma) and `sslmode=require`.
+   - If the project is **paused**, click **Restore project** and wait 1–2 minutes before retrying.
    - Check [Supabase Status](https://status.supabase.com) and your project’s **Database** health in the dashboard.
 
 **Do you need Supabase anon key or service role?** For this app, **no**. We use NextAuth with Prisma and only talk to the database via `DATABASE_URL`. Supabase’s **anon** (public) and **service_role** keys are for Supabase Auth and Row Level Security when you use the Supabase client. Here we use NextAuth for auth and Prisma for DB, so only `DATABASE_URL` is required from Supabase.
@@ -47,7 +47,7 @@ Never commit this value or expose it in the browser.
 
 | Variable | Description |
 |----------|-------------|
-| `DATABASE_URL` | PostgreSQL direct connection from Supabase (port 5432; see above) |
+| `DATABASE_URL` | PostgreSQL connection from Supabase (use **Shared Pooler** if direct shows “Not IPv4 compatible”; see above) |
 | `DIRECT_URL` | Same as `DATABASE_URL` (required by Prisma schema) |
 | `NEXTAUTH_SECRET` | Secret for NextAuth.js sessions (see above) |
 | `NEXTAUTH_URL` | App URL (e.g. `http://localhost:3000` in dev, production URL in prod) |
