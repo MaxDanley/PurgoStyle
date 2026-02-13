@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { sendOrderStatusChangeEmail, sendPaymentConfirmationEmail } from "@/lib/email";
+import { sendOrderStatusChangeEmail, sendPaymentConfirmationEmail, sendOrderConfirmationEmail } from "@/lib/email";
 
 export async function PATCH(
   req: Request,
@@ -157,8 +157,42 @@ export async function PATCH(
     // Get customer email (prefer order.email for guest orders, fallback to user.email)
     const customerEmail = (order as any).email || order.user?.email || currentOrder.user?.email || "";
 
-    // Send payment confirmation email when status changes from PENDING to PROCESSING
-    if (oldStatus === "PENDING" && status === "PROCESSING") {
+    // Send "Thank you for your purchase" order confirmation when status changes to PROCESSING
+    if (oldStatus === "PENDING" && status === "PROCESSING" && customerEmail) {
+      try {
+        const addr = order.shippingAddress;
+        const orderDetailsForConfirmation = {
+          items: order.items.map((item: any) => ({
+            productName: item.product?.name || "Product",
+            variantSize: item.variant?.size || "",
+            quantity: item.quantity,
+            price: item.price,
+            isBackorder: item.isBackorder || false,
+          })),
+          shippingAddress: addr ? {
+            name: addr.name,
+            street: addr.street,
+            city: addr.city,
+            state: addr.state,
+            zipCode: addr.zipCode,
+            country: addr.country || "US",
+          } : undefined,
+          subtotal: order.subtotal,
+          shippingInsurance: (order as any).shippingInsurance ?? 3.50,
+          shippingCost: order.shippingCost,
+          total: order.total,
+          discountAmount: (order as any).discountAmount ?? 0,
+        };
+        await sendOrderConfirmationEmail(
+          customerEmail,
+          order.orderNumber,
+          orderDetailsForConfirmation,
+          (order as any).paymentMethod || "OTHER"
+        );
+        console.log(`✅ Order confirmation ("Thank you for your purchase") email sent for order ${order.orderNumber}`);
+      } catch (emailError) {
+        console.error("Failed to send order confirmation email:", emailError);
+      }
       try {
         const paymentMethod = (order as any).paymentMethod || "OTHER";
         await sendPaymentConfirmationEmail(
@@ -182,7 +216,6 @@ export async function PATCH(
         console.log(`✅ Payment confirmation email sent for order ${order.orderNumber}`);
       } catch (emailError) {
         console.error("Failed to send payment confirmation email:", emailError);
-        // Don't fail the request if email fails
       }
     }
 
