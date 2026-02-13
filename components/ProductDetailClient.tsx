@@ -526,17 +526,6 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
                   <span className="text-cyan-400 font-semibold">FREE</span> shipping to {shippingLocation ?? "your state"}
                 </div>
               </div>
-
-              {/* Payment method icons - Visa, Mastercard, Apple Pay, Google Pay, Venmo, Zelle, Crypto */}
-              <div className="flex flex-wrap items-center gap-3 pt-3">
-                <Image src="/placeholder.svg" alt="Visa" width={40} height={26} className="h-6 w-auto object-contain" />
-                <Image src="/placeholder.svg" alt="Mastercard" width={40} height={26} className="h-6 w-auto object-contain" />
-                <Image src="/Apple_Pay-Logo.png" alt="Apple Pay" width={40} height={26} className="h-6 w-auto object-contain" />
-                <Image src="/Google_Pay_Logo.svg.png" alt="Google Pay" width={40} height={26} className="h-6 w-auto object-contain" />
-                <Image src="/placeholder.svg" alt="Venmo" width={40} height={26} className="h-6 w-auto object-contain" />
-                <Image src="/zellelogo.png" alt="Zelle" width={40} height={26} className="h-6 w-auto object-contain" />
-                <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">Crypto</span>
-              </div>
             </div>
           </div>
 
