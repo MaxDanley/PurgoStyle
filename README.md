@@ -120,6 +120,8 @@ Never commit this value or expose it in the browser.
 
 ### If you get 404 on the root URL (https://www.purgostyle.com/)
 
+**If your build log shows “Restored build cache from previous deployment”, the cache is being reused and the 404 can persist.** You must redeploy with the cache cleared (step 3 below).
+
 1. **Vercel → Project Settings → General**
    - **Root Directory** must be empty (or `.`). If it points to a subfolder, the app will not see `app/page.tsx` and `/` will 404.
 
@@ -128,9 +130,10 @@ Never commit this value or expose it in the browser.
    - **Build Command:** `npm run build` (or leave default).
    - **Output Directory:** leave **empty** (Next.js uses `.next`; do not set e.g. `out` unless you use static export).
 
-3. **Redeploy with cache cleared**
-   - Deployments → … on latest deployment → **Redeploy**.
-   - Enable **Clear Build Cache** (or “Redeploy with empty cache”) so Vercel doesn’t reuse an old build that might have failed or cached a 404.
+3. **Redeploy with cache cleared (required)**
+   - Go to **Deployments**, open the **⋯** menu on the latest deployment, then **Redeploy**.
+   - In the redeploy dialog, turn **on** “Clear Build Cache” (or “Redeploy with empty cache” / “Clear cache and redeploy”). If you don’t see it, check **Advanced** or **Options**.
+   - Confirm. The new build log should **not** say “Restored build cache”; it will do a full install and build. Only then will the 404 go away.
 
 4. **Confirm the deployment succeeded**
    - Open the latest deployment and check that the status is **Ready** (not Building or Error). If the build failed, fix the build logs; a failed build can leave the site on a previous state that showed 404.
