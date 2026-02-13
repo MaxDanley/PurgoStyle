@@ -13,8 +13,10 @@ Copy `.env.example` to `.env.local` and fill in the values below.
 3. **If the direct connection shows “Not IPv4 compatible”** (common on newer Supabase projects): Vercel is IPv4-only, so you **must use the Shared Pooler** instead of the direct URI.
    - In the Connect modal, expand **“Some platforms are IPv4-only”** (or look for **Connection pooling** → **Session** or **Transaction** mode).
    - Copy the **Shared Pooler** connection string (host will look like `aws-0-[region].pooler.supabase.com`, port **6543** for Transaction or **5432** for Session). Do **not** use the direct `db.xxx.supabase.co` URI when it says Not IPv4 compatible.
-   - Build the URL: `postgresql://postgres.[PROJECT-REF]:[YOUR-PASSWORD]@aws-0-[REGION].pooler.supabase.com:6543/postgres?pgbouncer=true&sslmode=require&connect_timeout=30`
-   - Replace **`[YOUR-PASSWORD]`** with your database password, **`[PROJECT-REF]`** and **`[REGION]`** with the values from the Shared Pooler string (e.g. from the modal or Database settings). Use **Reset database password** if you don’t know the password.
+   - Example (Session mode, port 5432):  
+     `postgresql://postgres.[PROJECT-REF]:[YOUR-PASSWORD]@aws-1-us-east-1.pooler.supabase.com:5432/postgres?sslmode=require&connect_timeout=30`  
+     For Transaction mode (port 6543) use the same host with `:6543` and add `&pgbouncer=true`.
+   - Replace **`[YOUR-PASSWORD]`** with your database password and **`[PROJECT-REF]`** with your project ref (e.g. `vogljdswvunirliipoym`). Use **Reset database password** if you don’t know the password.
 4. In **Vercel** (Settings → Environment Variables), set **both**:
    - **`DATABASE_URL`** = that Shared Pooler URI (with `?pgbouncer=true&sslmode=require&connect_timeout=30`)
    - **`DIRECT_URL`** = the **same** value (same Shared Pooler URI)
