@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SessionProvider from "@/components/SessionProvider";
+import GoogleMerchantWidget from "@/components/GoogleMerchantWidget";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -52,20 +52,7 @@ export default function RootLayout({
     <html lang="en">
       <head />
       <body className={inter.className}>
-        <Script
-          id="merchantWidgetScript"
-          src="https://www.gstatic.com/shopping/merchant/merchantwidget.js"
-          strategy="lazyOnload"
-          onLoad={() => {
-            if (typeof window !== "undefined" && (window as unknown as { merchantwidget?: { start: (o: object) => void } }).merchantwidget) {
-              (window as unknown as { merchantwidget: { start: (o: object) => void } }).merchantwidget.start({
-                merchant_id: 5685077232,
-                position: "BOTTOM_RIGHT",
-                region: "US",
-              });
-            }
-          }}
-        />
+        <GoogleMerchantWidget />
         <SessionProvider>
           <Toaster position="top-center" />
           <div id="page-content-wrapper" className="bg-white min-h-screen">
