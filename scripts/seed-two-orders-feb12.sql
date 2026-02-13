@@ -1,13 +1,13 @@
--- Two orders for 2/12/26 with exact totals and discount codes applied.
+-- Two orders for 2/12/26 — match peptide order refs; totals and items are Purgo Style website items.
 -- Run in Supabase SQL Editor after products exist (e.g. from seed-purgo-products.sql).
 --
--- Order 1: 2/12/26 11:40 AM — $247.36 (•••• 8046)
---   Items: Black Sweatpants (M $125) + Black Logo T-Shirt Front (M $100) = $225 subtotal
---   Shipping $25 + Insurance $3.50 - Discount $6.14 = $247.36
+-- Order 1: PL-1770921562644-O55C — 2/12/26 11:40 AM — $247.36
+--   Customer/address below; items: Black Sweatpants (M $125) + Black Logo T-Shirt Front (M $100).
+--   Subtotal $225 + Shipping $25 + Insurance $3.50 - Discount FEB6 $6.14 = $247.36
 --
--- Order 2: 2/12/26 9:55 AM — $205.97 (•••• 9160)
---   Items: Black Sweatpants (L $125) + White T-Shirt Infinity Logo (L $100) = $225 subtotal
---   Shipping $0 + Insurance $3.50 - Discount $22.53 = $205.97
+-- Order 2: PL-1770915257055-S9KB — 2/12/26 9:55 AM — $205.97
+--   Customer/address below; items: Black Sweatpants (L $125) + White T-Shirt Infinity Logo (L $100).
+--   Subtotal $225 + Shipping $0 + Insurance $3.50 - Discount FEB22 $22.53 = $205.97
 
 -- 1) Discount codes used for these orders (fixed amount)
 INSERT INTO "DiscountCode" (id, code, description, "discountType", "discountAmount", "minOrderAmount", "maxDiscount", "freeShipping", "usageLimit", "usageCount", "isActive", "createdAt", "updatedAt")
@@ -16,11 +16,11 @@ VALUES
   (gen_random_uuid()::text, 'FEB22', 'Feb order discount $22.53', 'FIXED_AMOUNT', 22.53, NULL, NULL, false, NULL, 1, true, NOW(), NOW())
 ON CONFLICT (code) DO NOTHING;
 
--- 2) Shipping addresses (guest orders)
+-- 2) Shipping addresses and customer info (guest orders; order number ties to peptide ref)
 INSERT INTO "Address" (id, "userId", name, street, apartment, city, state, "zipCode", country, phone, "isDefault", "createdAt", "updatedAt")
 VALUES
-  ('addr-order-24736', NULL, 'Customer One', '123 Main St', NULL, 'Phoenix', 'AZ', '85001', 'US', NULL, false, '2026-02-12 11:40:00', '2026-02-12 11:40:00'),
-  ('addr-order-20597', NULL, 'Customer Two', '456 Oak Ave', NULL, 'Scottsdale', 'AZ', '85251', 'US', NULL, false, '2026-02-12 09:55:00', '2026-02-12 09:55:00')
+  ('addr-order-24736', NULL, 'Customer PL-O55C', '123 Main St', NULL, 'Phoenix', 'AZ', '85001', 'US', NULL, false, '2026-02-12 11:40:00', '2026-02-12 11:40:00'),
+  ('addr-order-20597', NULL, 'Customer PL-S9KB', '456 Oak Ave', NULL, 'Scottsdale', 'AZ', '85251', 'US', NULL, false, '2026-02-12 09:55:00', '2026-02-12 09:55:00')
 ON CONFLICT (id) DO NOTHING;
 
 -- 3) Orders (use discount code IDs by code)
@@ -32,8 +32,8 @@ INSERT INTO "Order" (
 SELECT
   'order-24736',
   NULL,
-  'customer1@example.com',
-  'PL-20260212-1140',
+  'order-o55c@example.com',
+  'PL-1770921562644-O55C',
   'PROCESSING',
   225.00,
   3.50,
@@ -49,7 +49,7 @@ SELECT
   6.14,
   '2026-02-12 11:40:00',
   '2026-02-12 11:40:00'
-WHERE NOT EXISTS (SELECT 1 FROM "Order" WHERE "orderNumber" = 'PL-20260212-1140');
+WHERE NOT EXISTS (SELECT 1 FROM "Order" WHERE "orderNumber" = 'PL-1770921562644-O55C');
 
 INSERT INTO "Order" (
   id, "userId", email, "orderNumber", status, subtotal, "shippingInsurance", "shippingCost", "shippingMethod", total,
@@ -59,8 +59,8 @@ INSERT INTO "Order" (
 SELECT
   'order-20597',
   NULL,
-  'customer2@example.com',
-  'PL-20260212-0955',
+  'order-s9kb@example.com',
+  'PL-1770915257055-S9KB',
   'PROCESSING',
   225.00,
   3.50,
@@ -76,7 +76,7 @@ SELECT
   22.53,
   '2026-02-12 09:55:00',
   '2026-02-12 09:55:00'
-WHERE NOT EXISTS (SELECT 1 FROM "Order" WHERE "orderNumber" = 'PL-20260212-0955');
+WHERE NOT EXISTS (SELECT 1 FROM "Order" WHERE "orderNumber" = 'PL-1770915257055-S9KB');
 
 -- 4) Order items (resolve product/variant by slug and size)
 -- Order 1: Black Sweatpants M ($125), Black Logo T-Shirt Front M ($100)
@@ -118,13 +118,14 @@ WHERE p.slug = 'white-tshirt-infinity-logo' AND pv.size = 'L'
   AND (SELECT COUNT(*) FROM "OrderItem" oi WHERE oi."orderId" = 'order-20597') = 1
 LIMIT 1;
 
--- 5) Order status history
+-- 5) Order status history (note includes order ref for matching)
 INSERT INTO "OrderStatusHistory" (id, "orderId", status, note, "createdAt")
 VALUES
-  (gen_random_uuid()::text, 'order-24736', 'PENDING', 'Order placed', '2026-02-12 11:40:00'),
+  (gen_random_uuid()::text, 'order-24736', 'PENDING', 'Order placed (ref PL-1770921562644-O55C)', '2026-02-12 11:40:00'),
   (gen_random_uuid()::text, 'order-24736', 'PROCESSING', 'Payment received', '2026-02-12 11:40:00'),
-  (gen_random_uuid()::text, 'order-20597', 'PENDING', 'Order placed', '2026-02-12 09:55:00'),
+  (gen_random_uuid()::text, 'order-20597', 'PENDING', 'Order placed (ref PL-1770915257055-S9KB)', '2026-02-12 09:55:00'),
   (gen_random_uuid()::text, 'order-20597', 'PROCESSING', 'Payment received', '2026-02-12 09:55:00');
 
 -- Run once. Ensure Purgo Style Labs products exist (run seed-purgo-products.sql or seed-purgo-labs first).
--- If orders PL-20260212-1140 / PL-20260212-0955 already exist, skip or delete those orders before re-running.
+-- Order numbers match peptide refs: PL-1770921562644-O55C ($247.36), PL-1770915257055-S9KB ($205.97).
+-- Update customer name/email/address in admin if you have the real details for these orders.
