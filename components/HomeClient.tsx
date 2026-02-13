@@ -147,24 +147,8 @@ export default function HomeClient({ featuredProducts }: HomeClientProps) {
           </div>
         </div>
 
-        {/* Review Links - Desktop */}
+        {/* Review Link - Desktop (Google only) */}
         <div className="absolute bottom-44 right-8 hidden lg:flex flex-col items-end gap-3 z-20 scroll-animate opacity-0" data-direction="slide-left">
-          <a 
-            href="https://www.trustpilot.com/review/purgostyle.com" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="bg-white text-gray-900 rounded-xl px-5 py-2 border border-gray-200 hover:border-gray-300 transition-all inline-flex items-center gap-3 shadow-xl"
-          >
-            <span className="text-black text-sm font-semibold">Review us on</span>
-            <Image 
-              src="/trustpilotfinal.png" 
-              alt="Trustpilot" 
-              width={80}
-              height={24}
-              className="h-6 w-auto"
-            />
-          </a>
-          
           <a 
             href="https://share.google/kCQYHyMGyamt5M1yj" 
             target="_blank" 
@@ -183,14 +167,14 @@ export default function HomeClient({ featuredProducts }: HomeClientProps) {
 
         {/* View Lab Reports - Bottom Right (white card like reference) */}
         <div className="absolute bottom-24 right-8 hidden lg:block z-20 scroll-animate opacity-0" data-direction="slide-left">
-          <Link href="/lab-reports" className="bg-white text-gray-900 rounded-xl px-5 py-4 border border-gray-200 hover:border-gray-300 transition-all inline-flex items-center gap-3 shadow-xl">
+          <Link href="/products" className="bg-white text-gray-900 rounded-xl px-5 py-4 border border-gray-200 hover:border-gray-300 transition-all inline-flex items-center gap-3 shadow-xl">
             <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center border border-gray-200">
               <svg className="w-6 h-6 text-gray-700" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clipRule="evenodd" />
               </svg>
             </div>
             <div>
-              <p className="text-gray-900 text-sm font-semibold">[View Lab Reports]</p>
+              <p className="text-gray-900 text-sm font-semibold">View Products</p>
               <p className="text-gray-600 text-xs mt-1">All products undergo rigorous third-party lab testing for purity, potency, and safety</p>
             </div>
           </Link>
@@ -207,24 +191,8 @@ export default function HomeClient({ featuredProducts }: HomeClientProps) {
           }}></div>
         </div>
         <div className="container-custom relative z-10">
-          {/* Reviews - Mobile Only */}
+          {/* Reviews - Mobile Only (Google only) */}
           <div className="flex flex-row items-center justify-center gap-3 mb-8 lg:hidden">
-            <a 
-              href="https://www.trustpilot.com/review/purgostyle.com" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="bg-white text-gray-900 rounded-xl px-3 py-2 border border-gray-200 hover:border-gray-300 transition-all inline-flex items-center gap-2 shadow-xl"
-            >
-              <span className="text-black text-xs font-semibold">Review us on</span>
-              <Image 
-                src="/trustpilotfinal.png" 
-                alt="Trustpilot" 
-                width={64}
-                height={16}
-                className="h-4 w-auto"
-              />
-            </a>
-            
             <a 
               href="https://share.google/kCQYHyMGyamt5M1yj" 
               target="_blank" 
@@ -389,7 +357,7 @@ export default function HomeClient({ featuredProducts }: HomeClientProps) {
           name: "Purgo Style Labs",
           legalName: "Purgo Style Labs",
           url: "https://www.purgostyle.com",
-          logo: "https://www.purgostyle.com/logo.png",
+          logo: "https://www.purgostyle.com/logo-small-copy.png",
           description: "Purgo Style Labs – Arizona activewear and premium tees. Quality you can feel.",
           contactPoint: {
             "@type": "ContactPoint",
@@ -419,7 +387,7 @@ export default function HomeClient({ featuredProducts }: HomeClientProps) {
           "@id": "https://www.purgostyle.com",
           name: "Purgo Style Labs",
           legalName: "Purgo Style Labs",
-          image: "https://www.purgostyle.com/logo.png",
+          image: "https://www.purgostyle.com/logo-small-copy.png",
           url: "https://www.purgostyle.com",
           email: "support@purgostyle.com",
           openingHoursSpecification: [

@@ -10,7 +10,6 @@ import StockNotificationButton from "@/components/StockNotificationButton";
 import Accordion from "@/components/Accordion";
 import Tabs from "@/components/Tabs";
 import StructuredData from "@/components/StructuredData";
-import COAImageViewer from "@/components/COAImageViewer";
 import { trackPageView, trackViewItem, trackAddToCart } from "@/lib/analytics";
 import { usePathname } from "next/navigation";
 import { ChevronLeftIcon, ChevronRightIcon, ExclamationTriangleIcon } from "@heroicons/react/24/outline";
@@ -40,7 +39,7 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
   
   const [selectedVariant, setSelectedVariant] = useState<any>(null);
   const [quantity, setQuantity] = useState(1);
-  const [activeTab, setActiveTab] = useState<"general" | "chemical" | "coa">("general");
+  const [activeTab, setActiveTab] = useState<"general" | "chemical">("general");
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [shippingLocation, setShippingLocation] = useState<string | null>(null);
   const pathname = usePathname();
@@ -103,7 +102,7 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
     }
   }, [product, selectedVariant, pathname]);
 
-  const tabButtonClasses = (tab: "general" | "chemical" | "coa") =>
+  const tabButtonClasses = (tab: "general" | "chemical") =>
     `pb-4 border-b-2 font-semibold transition-colors ${
       activeTab === tab
         ? "border-primary-500 text-primary-600"
@@ -111,7 +110,6 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
     }`;
 
   const chemicalProperties = (product as any).chemicalProperties;
-  const coaUrl = (product as any).coaUrl;
 
   /** Render product description with short paragraphs and bullet lists for readability (SEO). */
   function renderProductDescription(text: string) {
@@ -423,44 +421,26 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
                 )}
               </div>
 
-              {/* Reviews Section - Trustpilot & Google buttons only */}
+              {/* Reviews Section - Google only */}
               <div className="flex items-center justify-between mb-6">
                 <span className="font-medium text-gray-900 text-sm">Reviews</span>
-                <div className="flex items-center gap-3">
-                  <a 
-                    href="https://www.trustpilot.com/review/purgostyle.com?_gl=1*1k1z474*_gcl_au*Mzc5MTg1MDI3LjE3NjgzNjcyMDQ.*_ga*NzU2NDk1NTYuMTc2ODM2NzIxNg..*_ga_11HBWMC274*czE3NjgzNjcyMTUkbzEkZzEkdDE3NjgzNjcyNzAkajUkbDAkaDA" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-xs bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 px-3 py-1.5 rounded-md font-medium transition-colors flex items-center gap-2 shadow-sm"
-                  >
-                    <Image 
-                      src="/trustpilotfinal.png" 
-                      alt="Trustpilot" 
-                      width={60} 
-                      height={16} 
-                      className="h-4 w-auto object-contain"
-                      priority={false}
-                      quality={90}
-                    />
-                  </a>
-                  <a 
-                    href="https://share.google/kCQYHyMGyamt5M1yj" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-xs bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 px-3 py-1.5 rounded-md font-medium transition-colors flex items-center gap-2 shadow-sm"
-                  >
-                    <Image 
-                      src="/google_g_icon_download.png" 
-                      alt="Google" 
-                      width={16} 
-                      height={16} 
-                      className="w-4 h-4 object-contain"
-                      priority={false}
-                      quality={90}
-                    />
-                    Google Reviews
-                  </a>
-                </div>
+                <a 
+                  href="https://share.google/kCQYHyMGyamt5M1yj" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-xs bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 px-3 py-1.5 rounded-md font-medium transition-colors flex items-center gap-2 shadow-sm"
+                >
+                  <Image 
+                    src="/google_g_icon_download.png" 
+                    alt="Google" 
+                    width={16} 
+                    height={16} 
+                    className="w-4 h-4 object-contain"
+                    priority={false}
+                    quality={90}
+                  />
+                  Google Reviews
+                </a>
               </div>
 
               {/* Variant Selection */}
@@ -654,15 +634,6 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
                 >
                   Chemical Properties
                 </button>
-                {coaUrl && (
-                  <button
-                    type="button"
-                    onClick={() => setActiveTab("coa")}
-                    className={tabButtonClasses("coa")}
-                  >
-                    COA
-                  </button>
-                )}
               </div>
             </div>
             <div className="py-8">
@@ -766,26 +737,6 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
                 </div>
               )}
 
-              {activeTab === "coa" && (
-                <div className="space-y-4">
-                  {coaUrl ? (
-                    <>
-                      <p className="text-gray-700">
-                        View the latest Certificate of Analysis for laboratory documentation.
-                      </p>
-                      <COAImageViewer coaUrl={coaUrl} productName={product?.name} />
-                      <p className="text-xs text-gray-500">
-                        Click on the certificate to view it in full size. This document can be used as part of your internal quality and compliance records.
-                      </p>
-                    </>
-                  ) : (
-                    <p className="text-gray-600">
-                      A certificate of analysis is not currently published for this item. Please contact support if you
-                      require specific batch documentation.
-                    </p>
-                  )}
-                </div>
-              )}
             </div>
           </div>
 

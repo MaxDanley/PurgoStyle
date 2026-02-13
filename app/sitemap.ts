@@ -18,7 +18,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/privacy',
     '/terms',
     '/disclaimer',
-    '/lab-reports',
     '/cart',
     '/checkout',
     '/track-order',
@@ -64,23 +63,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     console.error('Error fetching blog posts for sitemap:', error);
   }
 
-  // Fetch PSEO pages (comparison + peptide) for interlinking discovery
-  let pseoPages: MetadataRoute.Sitemap = [];
-  try {
-    const pseo = await prisma.pSEOPage.findMany({
-      where: { published: true },
-      select: { type: true, slug: true, updatedAt: true },
-    });
-    pseoPages = pseo.map((p) => ({
-      url: `${baseUrl}${p.type === 'COMPARISON' ? '/compare' : '/peptides'}/${p.slug}`,
-      lastModified: p.updatedAt,
-      changeFrequency: 'weekly' as const,
-      priority: 0.6,
-    }));
-  } catch (error) {
-    console.error('Error fetching PSEO pages for sitemap:', error);
-  }
-
   // Generate static page entries (higher priority for key pages helps sitelink signals)
   const staticPageEntries = staticPages.map((page) => ({
     url: `${baseUrl}${page}`,
@@ -90,5 +72,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
 
   // Combine all pages
-  return [...staticPageEntries, ...productPages, ...blogPosts, ...pseoPages];
+  return [...staticPageEntries, ...productPages, ...blogPosts];
 }

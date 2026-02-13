@@ -8,7 +8,7 @@ export default function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           <div className="col-span-2 md:col-span-1">
             <div className="flex items-center space-x-2 mb-4">
-              <Image src="/logo-small.png" alt="Purgo Style" width={40} height={40} />
+              <Image src="/logo-small-copy.png" alt="Purgo Style" width={40} height={40} />
               <div>
                 <div className="font-bold text-lg text-gray-900">PURGO STYLE</div>
                 <div className="text-xs text-cyan-600">ARIZONA ACTIVEWEAR</div>

@@ -13,7 +13,6 @@
     "db:seed": "tsx scripts/seed.ts",
     "db:seed-products": "tsx scripts/seed-products.ts",
     "db:seed-purgostyle": "tsx scripts/seed-purgostyle.ts",
-    "generate:pseo": "tsx scripts/generate-pseo-content.ts",
     "migrate:secure": "tsx scripts/secure-migrate.ts"
   },
   "keywords": [],

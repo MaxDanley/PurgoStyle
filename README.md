@@ -6,18 +6,51 @@ Arizona activewear and premium tees. Built with Next.js.
 
 Copy `.env.example` to `.env.local` and fill in the values below.
 
+### Getting Supabase credentials (DATABASE_URL)
+
+1. Go to [Supabase Dashboard](https://supabase.com/dashboard) and open your project (or create one).
+2. In the left sidebar, open **Project Settings** (gear icon) → **Database**.
+3. Under **Connection string**, choose the mode:
+   - **URI** (recommended for this app): Use the **Direct connection** URI if you run migrations and the app from a single environment. Copy it and replace the placeholder `[YOUR-PASSWORD]` with your database password (same as under **Database password** on that page; reset it if needed).
+   - For **serverless** (e.g. Vercel), use **Connection pooling** → **Transaction** mode and the URI shown there (often port `6543`); this is your `DATABASE_URL`.
+4. Set in `.env.local`:
+   ```bash
+   DATABASE_URL="postgresql://postgres.[PROJECT-REF]:[YOUR-PASSWORD]@aws-0-[REGION].pooler.supabase.com:6543/postgres?pgbouncer=true"
+   ```
+   Or for direct (no pooler):
+   ```bash
+   DATABASE_URL="postgresql://postgres:[YOUR-PASSWORD]@db.[PROJECT-REF].supabase.co:5432/postgres"
+   ```
+5. **Database password**: If you don’t know it, use **Database** → **Reset database password**, then use the new password in the URI above.
+
+**Do you need Supabase anon key or service role?** For this app, **no**. We use NextAuth with Prisma and only talk to the database via `DATABASE_URL`. Supabase’s **anon** (public) and **service_role** keys are for Supabase Auth and Row Level Security when you use the Supabase client. Here we use NextAuth for auth and Prisma for DB, so only `DATABASE_URL` is required from Supabase.
+
+### Getting NEXTAUTH_SECRET
+
+NextAuth uses this to sign cookies and tokens. Generate a random value and set it once:
+
+- **Option A (recommended):** In a terminal, run:
+  ```bash
+  openssl rand -base64 32
+  ```
+  Copy the output and set in `.env.local`:
+  ```bash
+  NEXTAUTH_SECRET="paste-the-output-here"
+  ```
+- **Option B:** Use any long random string (e.g. from [generate-secret.vercel.app](https://generate-secret.vercel.app)) and set `NEXTAUTH_SECRET` to it.
+
+Never commit this value or expose it in the browser.
+
 ### Required
 
 | Variable | Description |
 |----------|-------------|
-| `DATABASE_URL` | PostgreSQL connection string (e.g. Supabase) |
-| `NEXTAUTH_SECRET` | Secret for NextAuth.js sessions (generate a random string) |
+| `DATABASE_URL` | PostgreSQL connection string from Supabase (see above) |
+| `NEXTAUTH_SECRET` | Secret for NextAuth.js sessions (see above) |
 | `NEXTAUTH_URL` | App URL (e.g. `http://localhost:3000` in dev, production URL in prod) |
 | `RESEND_API_KEY` | Resend API key for transactional email |
 | `EMAIL_FROM` | From address for emails (e.g. `noreply@purgostyle.com`) |
 | `SUPPORT_EMAIL` | Support contact (e.g. `support@purgostyle.com`) |
-| `GOOGLE_CLIENT_ID` | Google OAuth client ID (for sign-in) |
-| `GOOGLE_CLIENT_SECRET` | Google OAuth client secret |
 
 ### Site URL
 
@@ -30,40 +63,13 @@ Copy `.env.example` to `.env.local` and fill in the values below.
 
 | Variable | Description |
 |----------|-------------|
-| `NEXT_PUBLIC_GA_ID` | Google Analytics measurement ID |
 | `NEXT_PUBLIC_FB_PIXEL_ID` | Facebook Pixel ID |
-| `OMNISEND_API_KEY` | Omnisend API key for marketing emails |
-| `RESEND_AUDIENCE_ID` | Resend audience ID for mailing list |
-| `RESEND_SEGMENT_IDS` | Comma-separated Resend segment IDs |
-
-### Optional – payments & orders
-
-| Variable | Description |
-|----------|-------------|
-| `BARTERPAY_API_KEY` | BarterPay API key |
-| `BARTERPAY_API_URL` | BarterPay API base URL (default: test API) |
-| `NOWPAYMENTS_API_KEY` | NOWPayments API key for crypto |
-| `GREEN_API_URL` | Green (eCheck) API URL |
-| `GREEN_CLIENT_ID` or `GREEN_MID` | Green merchant ID |
-| `GREEN_API_PASSWORD` | Green API password |
-
-### Optional – shipping & tracking
-
-| Variable | Description |
-|----------|-------------|
-| `USPS_API_ENV` | USPS API environment (e.g. `tem` for test) |
-| `USPS_CONSUMER_KEY` | USPS API consumer key |
-| `USPS_CONSUMER_SECRET` | USPS API consumer secret |
 
 ### Optional – content & assets
 
 | Variable | Description |
 |----------|-------------|
-| `ANTHROPIC_API_KEY` | Anthropic API key (for PSEO/blog generation) |
-| `HUGGINGFACE_API_KEY` | Hugging Face API key (optional; for AI images) |
-| `UNSPLASH_ACCESS_KEY` | Unsplash API key (for blog images) |
-| `BLOB_READ_WRITE_TOKEN_READ_WRITE_TOKEN` | Vercel Blob token for COA/file storage |
-| `BLOOIO_API_KEY` or `BLOOIO_KEY` | Blooio API key (if used) |
+| (none) | Blog images use Picsum Photos; no API keys required. |
 
 ### Optional – scripts & migrations
 

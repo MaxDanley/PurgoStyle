@@ -531,8 +531,7 @@ export default function AccountPage() {
                                 </div>
                               </div>
 
-                              {/* Check Payment Status Button for Pending Crypto Orders */}
-                              {order.status === "PENDING" && 
+                              {false && order.status === "PENDING" && 
                                order.paymentMethod === "CRYPTO" && 
                                order.cryptoPaymentId && (
                                 <div className="mt-4 pt-4 border-t border-gray-200">

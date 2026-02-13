@@ -73,7 +73,7 @@ export function generateStructuredData(
     });
   }
   
-  const baseImage = featuredImage || "https://www.purgostyle.com/logo.png";
+  const baseImage = featuredImage || "https://www.purgostyle.com/logo-small-copy.png";
   
   return {
     "@context": "https://schema.org",
@@ -93,7 +93,7 @@ export function generateStructuredData(
       "name": "Purgo Style Labs",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://www.purgostyle.com/logo.png",
+        "url": "https://www.purgostyle.com/logo-small-copy.png",
         "width": 512,
         "height": 512
       }

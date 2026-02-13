@@ -1,9 +1,8 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { USPSAPI } from "@/lib/tracking";
 
-// Get tracking information for an order
+// Get tracking information for an order (tracking provider removed; returns order + number only)
 export async function GET(req: Request) {
   try {
     const session = await auth();
@@ -27,15 +26,12 @@ export async function GET(req: Request) {
 
     let order = null;
     if (orderId) {
-      // Verify user owns this order
       order = await prisma.order.findFirst({
         where: {
           id: orderId,
           userId: session.user.id,
         },
-        include: {
-          user: true,
-        },
+        include: { user: true },
       });
 
       if (!order) {
@@ -55,7 +51,6 @@ export async function GET(req: Request) {
       trackingNumber = order.trackingNumber;
     }
 
-    // Ensure we have a tracking number
     if (!trackingNumber) {
       return NextResponse.json(
         { error: "No tracking number available" },
@@ -63,30 +58,18 @@ export async function GET(req: Request) {
       );
     }
 
-    // Use USPS API (free, official)
-    if (!process.env.USPS_CONSUMER_KEY || !process.env.USPS_CONSUMER_SECRET) {
-      throw new Error("USPS API credentials not configured");
-    }
-
-    const uspsApi = new USPSAPI(
-      process.env.USPS_CONSUMER_KEY,
-      process.env.USPS_CONSUMER_SECRET
-    );
-    const trackingInfo = await uspsApi.trackPackage(trackingNumber);
-
     return NextResponse.json({
       trackingNumber,
-      status: trackingInfo.status,
-      summary: trackingInfo.summary,
-      location: trackingInfo.location,
-      lastUpdate: trackingInfo.date,
+      status: "In transit",
+      summary: "Tracking number on file. Carrier details not configured.",
+      location: "",
+      lastUpdate: null,
       order: order ? {
         id: order.id,
         orderNumber: order.orderNumber,
         status: order.status,
       } : null,
     });
-
   } catch (error) {
     console.error("Tracking error:", error);
     return NextResponse.json(

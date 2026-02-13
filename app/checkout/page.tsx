@@ -325,82 +325,6 @@ export default function CheckoutPage() {
     }
   }, [session, isGuest]);
 
-  // Check for pending BarterPay order on page load (user might have clicked back)
-  useEffect(() => {
-    const checkPendingBarterPayOrder = async () => {
-      const pendingOrderData = sessionStorage.getItem('barterpay_pending_order');
-      if (pendingOrderData) {
-        try {
-          const cartData = JSON.parse(pendingOrderData);
-          const { orderNumber } = cartData;
-          
-          // Check if order exists and its payment status
-          const orderResponse = await fetch(`/api/orders/by-order-number?orderNumber=${orderNumber}`);
-          if (orderResponse.ok) {
-            const orderData = await orderResponse.json();
-            const order = orderData.order;
-            
-            // If order is still pending (payment not confirmed), restore cart
-            if (order && order.paymentStatus === "PENDING" && order.paymentMethod === "BARTERPAY") {
-              console.log("🔄 Restoring cart from pending BarterPay order");
-              // Restore items to cart
-              clearCart();
-              cartData.items.forEach((item: any) => {
-                addItem({
-                  productId: item.productId,
-                  variantId: item.variantId,
-                  productName: item.productName || "Product",
-                  variantSize: item.variantSize || "",
-                  price: item.price,
-                  image: item.image || "",
-                  quantity: item.quantity,
-                });
-              });
-              // Restore shipping info
-              setShippingInfo(cartData.shippingInfo);
-              // Clear the pending order from sessionStorage
-              sessionStorage.removeItem('barterpay_pending_order');
-              toast.success("Your cart has been restored. Please complete your payment.");
-            } else if (order && order.paymentStatus === "PAID") {
-              // Order was completed, clear sessionStorage
-              sessionStorage.removeItem('barterpay_pending_order');
-            }
-          } else {
-            // Order doesn't exist, restore cart
-            console.log("🔄 Restoring cart - order not found");
-            clearCart();
-            cartData.items.forEach((item: any) => {
-              addItem({
-                productId: item.productId,
-                variantId: item.variantId,
-                productName: item.productName || "Product",
-                variantSize: item.variantSize || "",
-                price: item.price,
-                image: item.image || "",
-                quantity: item.quantity,
-              });
-            });
-            const restored = cartData.shippingInfo || {};
-            const [firstName = "", ...restName] = (restored.name || "").split(" ");
-            const lastName = restName.join(" ");
-            setShippingInfo({
-              firstName,
-              lastName,
-              ...restored,
-            });
-            sessionStorage.removeItem('barterpay_pending_order');
-          }
-        } catch (error) {
-          console.error("Error checking pending BarterPay order:", error);
-          // Clear invalid sessionStorage data
-          sessionStorage.removeItem('barterpay_pending_order');
-        }
-      }
-    };
-    
-    checkPendingBarterPayOrder();
-  }, []); // Only run on mount
-
   const validateDiscountCode = async (code: string) => {
     if (!code.trim()) {
       setDiscountAmount(0);
@@ -900,17 +824,6 @@ export default function CheckoutPage() {
                         </div>
                       </div>
 
-                      {/* Address Validation Warning */}
-                      {addressValidationStatus === 'invalid' && (
-                        <div className="flex items-start gap-2 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
-                          <svg className="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                          </svg>
-                          <p className="text-sm text-yellow-800">
-                            Your address did not come up as valid on USPS. Are you sure it&apos;s correct?
-                          </p>
-                        </div>
-                      )}
                     </>
                   )}
 
@@ -1289,6 +1202,17 @@ export default function CheckoutPage() {
                     <span>${total.toFixed(2)}</span>
                   </div>
                 </div>
+              </div>
+              <div className="mt-4 pt-4 border-t border-gray-200">
+                <a
+                  href="https://share.google/kCQYHyMGyamt5M1yj"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 text-sm text-gray-600 hover:text-gray-900"
+                >
+                  <Image src="/Google-Review-Emblem.png" alt="Google" width={56} height={18} className="h-4 w-auto" />
+                  <span>Leave a review</span>
+                </a>
               </div>
             </div>
           </div>

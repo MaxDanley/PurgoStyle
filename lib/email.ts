@@ -1,5 +1,4 @@
 import { Resend } from "resend";
-import { sendEmailViaOmnisend } from "@/lib/omnisend";
 
 // Lazy initialization to avoid build-time errors
 let resendInstance: Resend | null = null;
@@ -204,38 +203,18 @@ export async function sendEmail({
   html: string;
   from?: string;
 }) {
-  try {
-    // Try Omnisend first
-    await sendEmailViaOmnisend({
-      to,
-      subject,
-      html,
-      fromEmail: from,
-    });
-    console.log(`✅ Email sent via Omnisend to ${to}`);
-  } catch (omnisendError) {
-    console.warn("⚠️ Omnisend failed, falling back to Resend:", omnisendError);
-    
-    // Fallback to Resend
-    const resend = getResend();
-    if (!resend) {
-      console.error("❌ Resend fallback unavailable (no API key)");
-      throw omnisendError;
-    }
-
-    try {
-      await resend.emails.send({
-        from,
-        to,
-        subject,
-        html,
-      });
-      console.log(`✅ Email sent via Resend (fallback) to ${to}`);
-    } catch (resendError) {
-      console.error("❌ Resend fallback also failed:", resendError);
-      throw omnisendError; // Throw the original error
-    }
+  const resend = getResend();
+  if (!resend) {
+    console.error("❌ Resend not configured (no API key)");
+    throw new Error("Email service not configured");
   }
+  await resend.emails.send({
+    from,
+    to,
+    subject,
+    html,
+  });
+  console.log(`✅ Email sent via Resend to ${to}`);
 }
 
 export async function sendPasswordResetEmail(email: string, resetUrl: string) {
@@ -268,15 +247,6 @@ export async function sendOrderConfirmationEmail(
   orderDetails: any,
   paymentMethod?: string
 ) {
-  // BarterPay notice
-  const barterPayNotice = paymentMethod === "BARTERPAY" ? `
-    <div style="margin-top: 20px; padding: 16px; background-color: #eff6ff; border-radius: 8px;">
-      <p style="margin: 0; font-size: 13px; color: #1e40af;">
-        <strong>Payment Note:</strong> Your credit card statement will show "BarterPay" as the merchant.
-      </p>
-    </div>
-  ` : '';
-
   // Backorder notice
   const hasBackorder = orderDetails.items && orderDetails.items.some((item: any) => item.isBackorder);
   const backorderNotice = hasBackorder ? `
@@ -315,7 +285,6 @@ export async function sendOrderConfirmationEmail(
     </table>
     
     ${backorderNotice}
-    ${barterPayNotice}
     
     <!-- Order Summary -->
     <div style="margin-top: 32px;">
@@ -515,11 +484,11 @@ export async function sendOrderStatusChangeEmail(
     ${cancellationSection}
     
     ${newStatus === "DELIVERED" ? `
-    <!-- Trustpilot Review Request -->
+    <!-- Google Review Request -->
     <div style="margin-top: 32px; padding: 24px; background-color: #f0fdf4; border-radius: 8px; border: 2px solid #16a34a;">
       <div style="text-align: center; margin-bottom: 16px;">
         <h3 style="margin: 0 0 8px 0; font-size: 18px; font-weight: 600; color: #166534;">Love your order? Share your experience!</h3>
-        <p style="margin: 0; font-size: 14px; color: #166534;">Help other researchers by leaving a review on Trustpilot</p>
+        <p style="margin: 0; font-size: 14px; color: #166534;">Leave us a review on Google</p>
       </div>
       <div style="text-align: center; margin-bottom: 16px;">
         <div style="display: inline-flex; align-items: center; gap: 4px; margin-bottom: 12px;">
@@ -541,11 +510,11 @@ export async function sendOrderStatusChangeEmail(
         </div>
       </div>
       <div style="text-align: center;">
-        <a href="https://www.trustpilot.com/review/purgostyle.com?_gl=1*1k1z474*_gcl_au*Mzc5MTg1MDI3LjE3NjgzNjcyMDQ.*_ga*NzU2NDk1NTYuMTc2ODM2NzIxNg..*_ga_11HBWMC274*czE3NjgzNjcyMTUkbzEkZzEkdDE3NjgzNjcyNzAkajUkbDAkaDA" 
+        <a href="https://share.google/kCQYHyMGyamt5M1yj" 
            target="_blank" 
            rel="noopener noreferrer"
            style="display: inline-block; padding: 12px 24px; background-color: #16a34a; color: #ffffff; text-decoration: none; border-radius: 6px; font-size: 14px; font-weight: 600;">
-          Write a Review on Trustpilot
+          Write a Review on Google
         </a>
       </div>
     </div>
@@ -886,16 +855,7 @@ export async function sendOrderNotificationToSupport(
           ${orderDetails.paymentStatus === "PENDING" ? `
           <div style="background-color: #fef3c7; border-left: 4px solid #f59e0b; padding: 20px; margin: 20px 0;">
             <h3 style="margin-top: 0; color: #d97706;">⚠️ Action Required</h3>
-            <p style="color: #92400e; font-weight: bold;">This order is pending payment. Please wait for payment confirmation before processing.</p>
-            ${orderDetails.paymentMethod === "ZELLE" ? `
-              <p style="color: #92400e; margin-top: 10px;">Payment should be sent to orders@purgostyle.com with memo "purgo style labs".</p>
-            ` : orderDetails.paymentMethod === "VENMO" ? `
-              <p style="color: #92400e; margin-top: 10px;">Payment should be sent to @purgolabs on Venmo with note "Online Goods".</p>
-            ` : orderDetails.paymentMethod === "CREDIT_CARD" ? `
-              <p style="color: #92400e; margin-top: 10px;">Payment link has been sent to customer via email.</p>
-            ` : orderDetails.paymentMethod === "CRYPTO" ? `
-              <p style="color: #92400e; margin-top: 10px;">Payment will be automatically verified via NOWPayments. Check the order in the admin panel for payment status.</p>
-            ` : ''}
+            <p style="color: #92400e; font-weight: bold;">This order is pending payment. Payment link has been sent to customer via email.</p>
           </div>
           ` : ''}
 
@@ -1495,65 +1455,12 @@ export async function sendPaymentReminderEmail(
   email: string,
   orderNumber: string,
   total: number,
-  paymentMethod: "ZELLE" | "CRYPTO" | "VENMO" | "CREDIT_CARD",
-  paymentDetails?: {
-    // For Zelle
-    zelleEmail?: string;
-    zellePhone?: string;
-    // For Crypto
-    cryptoAddress?: string;
-    cryptoAmount?: number;
-    cryptoCurrency?: string;
-  }
+  paymentMethod: "CREDIT_CARD",
+  paymentDetails?: Record<string, never>
 ) {
-  const isZelle = paymentMethod === "ZELLE";
-  const isVenmo = paymentMethod === "VENMO";
-  const isCreditCard = paymentMethod === "CREDIT_CARD";
-
-  const venmoLink = `https://venmo.com/purgolabs?txn=pay&amount=${total.toFixed(2)}&note=Online+Goods`;
-  const qrCodeUrl = `${baseUrl}/venmo_qr_code.png`;
-
   const paymentLink = "https://square.link/u/uRYagWpU";
 
-  const paymentInstructions = isZelle ? `
-    <div style="background-color: white; padding: 15px; border-radius: 8px; margin: 15px 0;">
-      <p style="font-weight: bold; margin-bottom: 10px; color: #374151;">Send to Email:</p>
-      <div style="background-color: #f9fafb; padding: 12px; border-radius: 6px; border: 2px solid #3b82f6;">
-        <code style="font-size: 18px; font-weight: bold; color: #3b82f6;">${paymentDetails?.zelleEmail || "orders@purgostyle.com"}</code>
-      </div>
-    </div>
-
-    <div style="background-color: #fef3c7; padding: 15px; border-radius: 8px; margin: 15px 0; border: 1px solid #fbbf24;">
-      <p style="font-weight: bold; margin-bottom: 10px; color: #92400e;">Memo (Required):</p>
-      <div style="background-color: white; padding: 12px; border-radius: 6px; border: 1px solid #f59e0b;">
-        <code style="font-size: 16px; color: #1f2937;">purgo style labs</code>
-      </div>
-      <p style="font-size: 12px; color: #92400e; margin-top: 8px;">
-        ⚠️ Do not mention product names in the memo.
-      </p>
-    </div>
-
-  ` : isVenmo ? `
-    <div style="background-color: white; padding: 15px; border-radius: 8px; margin: 15px 0; text-align: center;">
-      <img src="${qrCodeUrl}" alt="Venmo QR Code" style="max-width: 150px; border-radius: 8px; border: 1px solid #e5e5e5; margin-bottom: 16px;">
-      <br>
-      <a href="${venmoLink}" style="display: inline-block; padding: 10px 20px; background-color: #008CFF; color: white; text-decoration: none; border-radius: 6px; font-weight: 600; margin-bottom: 16px;">
-        Pay with Venmo
-      </a>
-      
-      <div style="text-align: left; margin-top: 16px;">
-        <p style="font-weight: bold; margin-bottom: 5px; color: #374151;">Venmo Profile:</p>
-        <div style="background-color: #f9fafb; padding: 8px; border-radius: 6px; border: 1px solid #e5e5e5; margin-bottom: 12px;">
-          <code style="font-size: 16px; font-weight: bold; color: #008CFF;">@purgolabs</code>
-        </div>
-        
-        <p style="font-weight: bold; margin-bottom: 5px; color: #374151;">Note:</p>
-        <div style="background-color: #f9fafb; padding: 8px; border-radius: 6px; border: 1px solid #e5e5e5;">
-          <code style="font-size: 14px; color: #333333;">Online Goods</code>
-        </div>
-      </div>
-    </div>
-  ` : isCreditCard ? `
+  const paymentInstructions = `
     <div style="padding: 32px; background-color: #dbeafe; border-radius: 8px; margin: 15px 0; text-align: center;">
       <p style="margin: 0 0 8px 0; font-size: 13px; color: #666666; text-transform: uppercase; letter-spacing: 0.5px;">Amount Due</p>
       <p style="margin: 0; font-size: 36px; font-weight: 700; color: #1e40af;">$${total.toFixed(2)}</p>
@@ -1578,26 +1485,6 @@ export async function sendPaymentReminderEmail(
       <p style="margin: 0; font-size: 13px; color: #666666; text-align: center;">
         Or copy and paste this link: <br>
         <a href="${paymentLink}" style="color: #1a73e8;">${paymentLink}</a>
-      </p>
-    </div>
-  ` : `
-    <div style="text-align: center; padding: 20px; background-color: white; border-radius: 8px; margin: 15px 0;">
-      <p style="font-size: 14px; color: #6b7280; margin-bottom: 5px;">Send exactly</p>
-      <p style="font-size: 28px; font-weight: bold; color: #1f2937; margin: 10px 0;">
-        ${paymentDetails?.cryptoAmount ? paymentDetails.cryptoAmount.toFixed(8) : '0.00000000'} ${paymentDetails?.cryptoCurrency?.toUpperCase() || ''}
-      </p>
-      <p style="font-size: 14px; color: #6b7280; margin-top: 5px;">
-        ≈ $${total.toFixed(2)} USD
-      </p>
-    </div>
-
-    <div style="background-color: white; padding: 15px; border-radius: 8px; margin: 15px 0;">
-      <p style="font-weight: bold; margin-bottom: 10px; color: #374151;">Wallet Address:</p>
-      <div style="background-color: #f9fafb; padding: 12px; border-radius: 6px; border: 2px solid #3b82f6; word-break: break-all;">
-        <code style="font-size: 14px; color: #3b82f6; font-weight: bold;">${paymentDetails?.cryptoAddress || ''}</code>
-      </div>
-      <p style="font-size: 12px; color: #6b7280; margin-top: 8px;">
-        ⚠️ Please double-check the address before sending. Cryptocurrency transactions cannot be reversed.
       </p>
     </div>
   `;

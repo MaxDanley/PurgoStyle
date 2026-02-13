@@ -283,10 +283,10 @@ export default function CommunityFeed({ productKeywords }: CommunityFeedProps) {
             View All Products
           </Link>
           <Link
-            href="/lab-reports"
+            href="/products"
             className="px-6 py-3 bg-white text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium border border-gray-300"
           >
-            View Lab Reports
+            View Products
           </Link>
         </div>
       </div>

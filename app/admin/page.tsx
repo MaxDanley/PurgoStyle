@@ -133,9 +133,6 @@ export default function AdminDashboard() {
     variantId: string;
     stockCount: number;
   } | null>(null);
-  const [uploadingCOA, setUploadingCOA] = useState<string | null>(null);
-  const [coaFiles, setCoaFiles] = useState<Record<string, File>>({});
-  
   // Search and filter state
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<string[]>(["PENDING", "PROCESSING", "SHIPPED", "REFUNDED"]);
@@ -541,76 +538,6 @@ export default function AdminDashboard() {
     }
   };
 
-  const handleCOAFileSelect = (productId: string, e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setCoaFiles((prev) => ({ ...prev, [productId]: file }));
-    }
-  };
-
-  const uploadCOA = async (productId: string) => {
-    const file = coaFiles[productId];
-    if (!file) {
-      toast.error("Please select a file first");
-      return;
-    }
-
-    setUploadingCOA(productId);
-
-    try {
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("productId", productId);
-
-      const response = await fetch("/api/admin/products/coa", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (response.ok) {
-        toast.success("COA uploaded successfully");
-        setCoaFiles((prev) => {
-          const newState = { ...prev };
-          delete newState[productId];
-          return newState;
-        });
-        // Refresh products to show updated COA URL
-        fetchProducts();
-      } else {
-        const error = await response.json();
-        toast.error(error.error || "Failed to upload COA");
-      }
-    } catch {
-      toast.error("Failed to upload COA");
-    } finally {
-      setUploadingCOA(null);
-    }
-  };
-
-  const deleteCOA = async (productId: string) => {
-    if (!confirm("Are you sure you want to delete this COA?")) {
-      return;
-    }
-
-    try {
-      const response = await fetch(`/api/admin/products/coa`, {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ productId }),
-      });
-
-      if (response.ok) {
-        toast.success("COA deleted successfully");
-        fetchProducts();
-      } else {
-        const error = await response.json();
-        toast.error(error.error || "Failed to delete COA");
-      }
-    } catch {
-      toast.error("Failed to delete COA");
-    }
-  };
-
   const updateOrderStatus = async (orderId: string, status: string) => {
     // If changing to SHIPPED, require tracking number
     if (status === "SHIPPED") {
@@ -862,12 +789,6 @@ export default function AdminDashboard() {
   const [isSendingSms, setIsSendingSms] = useState(false);
   const [smsResult, setSmsResult] = useState<{ sent: number; failed: number; total: number } | null>(null);
 
-  const [blooioNextFive, setBlooioNextFive] = useState<string[]>([]);
-  const [blooioStats, setBlooioStats] = useState<{ totalEligible: number; alreadySentCount: number; remainingCount: number } | null>(null);
-  const [blooioMessage, setBlooioMessage] = useState("");
-  const [isSendingBlooio, setIsSendingBlooio] = useState(false);
-  const [blooioResult, setBlooioResult] = useState<{ sent: number; failed: number; total: number } | null>(null);
-
   const handleSendCampaign = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -980,66 +901,11 @@ export default function AdminDashboard() {
     }
   };
 
-  const fetchBlooioNext = async () => {
-    try {
-      const res = await fetch("/api/admin/sms-campaign/blooio-next");
-      if (res.ok) {
-        const data = await res.json();
-        setBlooioNextFive(data.phones ?? []);
-        setBlooioStats({
-          totalEligible: data.totalEligible ?? 0,
-          alreadySentCount: data.alreadySentCount ?? 0,
-          remainingCount: data.remainingCount ?? 0,
-        });
-      } else {
-        setBlooioNextFive([]);
-        setBlooioStats(null);
-      }
-    } catch {
-      setBlooioNextFive([]);
-      setBlooioStats(null);
-    }
-  };
-
   useEffect(() => {
     if (activeTab === "campaigns" && campaignSubTab === "sms") {
       fetchSmsEligibleCount();
-      fetchBlooioNext();
     }
   }, [activeTab, campaignSubTab]);
-
-  const handleSendBlooioFirstFive = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!blooioMessage.trim()) {
-      toast.error("Please enter a message");
-      return;
-    }
-    if (blooioNextFive.length === 0) {
-      toast.error("No recipients in this batch (all eligible have been sent already).");
-      return;
-    }
-    if (!confirm(`Send this message via Blooio (iMessage/SMS) to the next ${blooioNextFive.length} recipient(s)? They will be removed from the list for tomorrow's batch.`)) return;
-    setIsSendingBlooio(true);
-    setBlooioResult(null);
-    try {
-      const res = await fetch("/api/admin/sms-campaign/blooio-send", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: blooioMessage.trim() }),
-      });
-      const data = await res.json();
-      if (res.ok) {
-        setBlooioResult({ sent: data.sent, failed: data.failed, total: data.total });
-        toast.success(`Blooio: ${data.sent} sent, ${data.failed} failed (batch of ${data.total})`);
-        setBlooioMessage("");
-        fetchBlooioNext();
-      } else toast.error(data.error || "Failed to send Blooio campaign");
-    } catch {
-      toast.error("Failed to send Blooio campaign");
-    } finally {
-      setIsSendingBlooio(false);
-    }
-  };
 
   const handleSendSmsCampaign = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -1462,48 +1328,6 @@ export default function AdminDashboard() {
             {/* SMS sub-tab */}
             {campaignSubTab === "sms" && (
             <div className="card p-6 space-y-8">
-              {/* Blooio: 5 per day (new conversations limit) */}
-              <div className="border border-blue-200 rounded-lg p-5 bg-blue-50/50">
-                <h3 className="text-lg font-bold text-gray-900 mb-1">Blooio (iMessage/SMS) — 5 per day</h3>
-                <p className="text-sm text-gray-600 mb-4">
-                  Same eligible list (delivered ≥1 month ago, has phone, opted in). Blooio allows only 5 new conversations per day. Send to the first 5 today; they are removed from the list so tomorrow you get the next 5.
-                </p>
-                {blooioStats !== null && (
-                  <div className="text-sm text-gray-700 mb-3">
-                    <strong>Next batch:</strong> {blooioNextFive.length} recipient(s) — {blooioStats.remainingCount} remaining (already sent: {blooioStats.alreadySentCount})
-                  </div>
-                )}
-                {blooioNextFive.length > 0 && (
-                  <ul className="text-sm text-gray-600 mb-3 list-disc list-inside">
-                    {blooioNextFive.map((p) => (
-                      <li key={p}>{p.replace(/(\+1)?(\d{3})\d{4}(\d{4})/, "$1$2***$3")}</li>
-                    ))}
-                  </ul>
-                )}
-                <form onSubmit={handleSendBlooioFirstFive} className="space-y-3">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Custom message *</label>
-                    <textarea
-                      value={blooioMessage}
-                      onChange={(e) => setBlooioMessage(e.target.value)}
-                      placeholder="Type your message for this batch of 5..."
-                      className="input-field h-24 resize-y"
-                      maxLength={1600}
-                    />
-                  </div>
-                  {blooioResult && (
-                    <p className="text-sm text-gray-600">Last run: {blooioResult.sent} sent, {blooioResult.failed} failed</p>
-                  )}
-                  <button
-                    type="submit"
-                    disabled={isSendingBlooio || blooioNextFive.length === 0 || !blooioMessage.trim()}
-                    className={`btn-primary ${isSendingBlooio || blooioNextFive.length === 0 || !blooioMessage.trim() ? "opacity-50 cursor-not-allowed" : ""}`}
-                  >
-                    {isSendingBlooio ? "Sending..." : `Send to first 5 (${blooioNextFive.length})`}
-                  </button>
-                </form>
-              </div>
-
               <div>
               <h2 className="text-2xl font-bold text-gray-900 mb-2">SMS Campaign (Twilio)</h2>
               <p className="text-gray-600 mb-6">
@@ -2453,63 +2277,6 @@ export default function AdminDashboard() {
                           </span>
                         </div>
                       </div>
-                      <div className="flex flex-col gap-2">
-                        <label className="cursor-pointer">
-                          <input
-                            type="file"
-                            accept=".pdf,.jpg,.jpeg,.png"
-                            className="hidden"
-                            onChange={(e) => handleCOAFileSelect(product.id, e)}
-                          />
-                          <span className="text-xs text-blue-600 hover:text-blue-800">
-                            {coaFiles[product.id] ? coaFiles[product.id].name : "Upload COA"}
-                          </span>
-                        </label>
-                        {coaFiles[product.id] && (
-                          <button
-                            onClick={() => uploadCOA(product.id)}
-                            disabled={uploadingCOA === product.id}
-                            className="text-xs bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 disabled:bg-gray-400"
-                          >
-                            {uploadingCOA === product.id ? "Uploading..." : "Upload"}
-                          </button>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* COA Section */}
-                    <div className="border-t border-gray-200 pt-4 mt-4">
-                      <h4 className="font-semibold text-gray-900 mb-3">Certificate of Analysis (COA)</h4>
-                      {product.coaUrl ? (
-                        <div className="flex items-center justify-between bg-green-50 p-3 rounded-lg border border-green-200">
-                          <div className="flex items-center gap-3">
-                            <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                            </svg>
-                            <div>
-                              <p className="text-sm font-medium text-gray-900">COA Available</p>
-                              <a 
-                                href={product.coaUrl} 
-                                target="_blank" 
-                                rel="noopener noreferrer"
-                                className="text-xs text-blue-600 hover:text-blue-800"
-                              >
-                                View COA ↗
-                              </a>
-                            </div>
-                          </div>
-                          <button
-                            onClick={() => deleteCOA(product.id)}
-                            className="text-sm bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
-                          >
-                            Delete COA
-                          </button>
-                        </div>
-                      ) : (
-                        <div className="bg-yellow-50 p-3 rounded-lg border border-yellow-200">
-                          <p className="text-sm text-gray-700">No COA uploaded yet. Upload a COA using the "Upload COA" button above.</p>
-                        </div>
-                      )}
                     </div>
 
                     <div className="border-t border-gray-200 pt-4 mt-4">

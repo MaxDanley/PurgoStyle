@@ -117,7 +117,7 @@ export default function ContactPage() {
                       </p>
                     </div>
                     <Image
-                      src="/logo-small.png"
+                      src="/logo-small-copy.png"
                       alt="Purgo Style Labs"
                       width={40}
                       height={40}

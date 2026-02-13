@@ -174,7 +174,7 @@ export default function Navbar() {
             {/* Logo */}
             <Link href="/" className="flex items-center">
               <Image
-                src="/logo-small.png"
+                src="/logo-small-copy.png"
                 alt="Purgo Style"
                 width={60}
                 height={60}

@@ -17,35 +17,12 @@ export default function CookieConsent() {
         setIsOpen(true);
       }, 1000);
     } else {
-      // If already consented and analytics was accepted, load GA and Facebook Pixel
       const consentData = JSON.parse(consent);
       if (consentData.analytics) {
-        loadGoogleAnalytics();
         loadFacebookPixel();
       }
     }
   }, []);
-
-  const loadGoogleAnalytics = () => {
-    // Dynamically load Google Analytics if consent given
-    if (typeof window !== 'undefined' && process.env.NEXT_PUBLIC_GA_ID) {
-      // Add gtag script
-      const script1 = document.createElement('script');
-      script1.src = `https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`;
-      script1.async = true;
-      document.head.appendChild(script1);
-
-      // Initialize gtag
-      const script2 = document.createElement('script');
-      script2.innerHTML = `
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');
-      `;
-      document.head.appendChild(script2);
-    }
-  };
 
   const loadFacebookPixel = () => {
     // Dynamically load Facebook Pixel if consent given
@@ -114,9 +91,7 @@ export default function CookieConsent() {
     
     localStorage.setItem("cookieConsent", JSON.stringify(consentData));
     
-    // If analytics consent given, load GA and Facebook Pixel
     if (analytics) {
-      loadGoogleAnalytics();
       loadFacebookPixel();
     }
   };
