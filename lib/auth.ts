@@ -1,19 +1,17 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "@/lib/prisma";
-import NextAuth from "next-auth";
+import NextAuth, { type NextAuthConfig } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import { z } from "zod";
 import { sendAccountCreationNotification } from "@/lib/email";
-import { authConfig as edgeAuthConfig } from "@/lib/auth.config";
 
 const loginSchema = z.object({
   email: z.string().email(),
   password: z.string().min(6),
 });
 
-const authConfig = {
-  ...edgeAuthConfig,
+const authConfig: NextAuthConfig = {
   adapter: PrismaAdapter(prisma),
   debug: process.env.NODE_ENV !== "production" ? true : undefined,
   providers: [
@@ -56,6 +54,12 @@ const authConfig = {
       },
     }),
   ],
+  session: { strategy: "jwt" },
+  pages: {
+    signIn: "/auth/signin",
+    signOut: "/auth/signout",
+    error: "/auth/error",
+  },
   callbacks: {
     async jwt({ token, user, account: _account }) {
       if (user) {
@@ -87,7 +91,7 @@ const authConfig = {
       if (session.user) {
         (session.user as any).id = token.id;
         (session.user as any).role = token.role;
-        (session.user as any).phone = (token as any).phone || null;
+        (session.user as any).phone = (token as any).phone ?? null;
       }
       return session;
     },

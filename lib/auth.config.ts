@@ -5,6 +5,7 @@ import type { NextAuthConfig } from "next-auth";
  * Used by middleware.ts. Full config with adapter and providers is in lib/auth.ts.
  */
 export const authConfig = {
+  providers: [], // required by type; real providers are in lib/auth.ts
   session: { strategy: "jwt" as const },
   pages: {
     signIn: "/auth/signin",
