@@ -95,7 +95,7 @@ export default function Footer() {
           <div className="col-span-2 md:col-span-1 mt-6 md:mt-0">
             <h3 className="font-bold text-lg mb-4 text-gray-900">Follow us</h3>
             <a
-              href="https://www.facebook.com/profile.php?id=61587658187619"
+              href="https://www.facebook.com/profile.php?id=61588015956175"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-gray-400 hover:text-brand-400 transition-colors"

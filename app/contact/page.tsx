@@ -146,7 +146,7 @@ export default function ContactPage() {
                     </div>
                     <div className="flex items-center gap-2 mt-2 pt-2 border-t border-slate-200">
                       <a
-                        href="https://www.facebook.com/profile.php?id=61587658187619"
+                        href="https://www.facebook.com/profile.php?id=61588015956175"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 text-brand-600 hover:text-brand-700 font-medium"

@@ -327,7 +327,7 @@ export default function HomeClient({ featuredProducts: initialProducts }: HomeCl
           sameAs: [
             "https://www.instagram.com/summersteeze/",
             "https://x.com/SummerSteeze",
-            "https://www.facebook.com/profile.php?id=61587658187619",
+            "https://www.facebook.com/profile.php?id=61588015956175",
           ],
         }}
       />
