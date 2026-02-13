@@ -8,20 +8,23 @@ Copy `.env.example` to `.env.local` and fill in the values below.
 
 ### Getting Supabase credentials (DATABASE_URL)
 
-1. Go to [Supabase Dashboard](https://supabase.com/dashboard) and open your project (or create one).
+1. Go to [Supabase Dashboard](https://supabase.com/dashboard) and open your project (or create one). If the project is **paused** (free tier), click **Restore project** first.
 2. In the left sidebar, open **Project Settings** (gear icon) → **Database**.
-3. Under **Connection string**, choose the mode:
-   - **URI** (recommended for this app): Use the **Direct connection** URI if you run migrations and the app from a single environment. Copy it and replace the placeholder `[YOUR-PASSWORD]` with your database password (same as under **Database password** on that page; reset it if needed).
-   - For **serverless** (e.g. Vercel), use **Connection pooling** → **Transaction** mode and the URI shown there (often port `6543`); this is your `DATABASE_URL`.
-4. Set in `.env.local`:
-   ```bash
-   DATABASE_URL="postgresql://postgres.[PROJECT-REF]:[YOUR-PASSWORD]@aws-0-[REGION].pooler.supabase.com:6543/postgres?pgbouncer=true"
+3. **Use the pooler URL for this app** (especially on Vercel or any serverless host). Under **Connection string** → **Connection pooling** → **Transaction** mode, copy the URI. It will look like:
+   ```text
+   postgresql://postgres.[PROJECT-REF]:[YOUR-PASSWORD]@aws-0-[REGION].pooler.supabase.com:6543/postgres?pgbouncer=true
    ```
-   Or for direct (no pooler):
+   Replace **`[YOUR-PASSWORD]`** with your actual database password (see **Database password** on the same page; use **Reset database password** if you don’t know it). Do **not** leave the literal text `[YOUR-PASSWORD]` in the URL.
+4. Set in `.env.local` (and in your host’s env vars, e.g. Vercel):
    ```bash
-   DATABASE_URL="postgresql://postgres:[YOUR-PASSWORD]@db.[PROJECT-REF].supabase.co:5432/postgres"
+   DATABASE_URL="postgresql://postgres.[PROJECT-REF]:YOUR_ACTUAL_PASSWORD@aws-0-[REGION].pooler.supabase.com:6543/postgres?pgbouncer=true"
    ```
-5. **Database password**: If you don’t know it, use **Database** → **Reset database password**, then use the new password in the URI above.
+   If your password contains special characters (e.g. `#`, `@`, `%`), [URL-encode](https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding) them (e.g. `#` → `%23`).
+5. **Why “can’t reach database server” or connection fails:**
+   - **Direct URL (port 5432)** from Supabase often fails on serverless (Vercel) due to connection limits and timeouts. Use the **pooler** URL (port **6543**, Transaction mode) as above.
+   - Ensure you replaced `[YOUR-PASSWORD]` with the real password.
+   - Ensure `DATABASE_URL` is set in the environment where the app runs (e.g. Vercel → Project → Settings → Environment Variables).
+   - If the project was paused, restore it and wait a minute before retrying.
 
 **Do you need Supabase anon key or service role?** For this app, **no**. We use NextAuth with Prisma and only talk to the database via `DATABASE_URL`. Supabase’s **anon** (public) and **service_role** keys are for Supabase Auth and Row Level Security when you use the Supabase client. Here we use NextAuth for auth and Prisma for DB, so only `DATABASE_URL` is required from Supabase.
 

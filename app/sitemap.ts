@@ -1,11 +1,10 @@
 import { MetadataRoute } from 'next';
 import { products } from '@/lib/products';
-import { prisma } from '@/lib/prisma';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.purgostyle.com';
 
-  // Static pages
+  // Static pages (no database required)
   const staticPages = [
     '',
     '/products',
@@ -36,7 +35,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/unsubscribe',
   ];
 
-  // Generate product pages
+  // Generate product pages from static product list
   const productPages = products.map((product) => ({
     url: `${baseUrl}/products/${product.slug}`,
     lastModified: new Date(),
@@ -44,26 +43,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }));
 
-  // Fetch published blog posts
-  let blogPosts: MetadataRoute.Sitemap = [];
-  try {
-    const publishedPosts = await prisma.blogPost.findMany({
-      where: { published: true },
-      select: { slug: true, updatedAt: true },
-      orderBy: { updatedAt: 'desc' },
-    });
-
-    blogPosts = publishedPosts.map((post) => ({
-      url: `${baseUrl}/blog/${post.slug}`,
-      lastModified: post.updatedAt,
-      changeFrequency: 'daily' as const,
-      priority: 0.6,
-    }));
-  } catch (error) {
-    console.error('Error fetching blog posts for sitemap:', error);
-  }
-
-  // Generate static page entries (higher priority for key pages helps sitelink signals)
+  // Static page entries (no DB call — blog post URLs omitted to avoid requiring DB for sitemap)
   const staticPageEntries = staticPages.map((page) => ({
     url: `${baseUrl}${page}`,
     lastModified: new Date(),
@@ -71,6 +51,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: page === '' ? 1.0 : page === '/products' ? 0.9 : 0.7,
   }));
 
-  // Combine all pages
-  return [...staticPageEntries, ...productPages, ...blogPosts];
+  return [...staticPageEntries, ...productPages];
 }
