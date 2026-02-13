@@ -93,7 +93,7 @@ export default function AffiliatesTab() {
   const [showScansModal, setShowScansModal] = useState(false);
   const [selectedAffiliateScans, setSelectedAffiliateScans] = useState<Affiliate | null>(null);
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://www.purgolabs.com";
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://www.purgostyle.com";
 
   useEffect(() => {
     fetchAffiliates();

@@ -3,7 +3,7 @@ import { products } from '@/lib/products';
 import { prisma } from '@/lib/prisma';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://www.purgolabs.com';
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.purgostyle.com';
 
   // Static pages
   const staticPages = [
@@ -13,7 +13,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/contact',
     '/research',
     '/faq',
-    '/guide/buy-peptides-online',
     '/returns',
     '/shipping',
     '/privacy',

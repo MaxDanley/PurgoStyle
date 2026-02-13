@@ -1,5 +1,5 @@
 /**
- * Purgo Labs affiliate tier system (from program graphic).
+ * Purgo Style Labs affiliate tier system (from program graphic).
  * Monthly sales determine tier; commission rate and benefits follow.
  */
 

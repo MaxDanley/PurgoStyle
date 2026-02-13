@@ -36,7 +36,7 @@ export default function LabReportsPageSEO() {
       <Accordion title="Our Testing Methods">
         <div className="prose prose-lg max-w-none text-gray-700">
           <p className="mb-4">
-            Purgo Labs employs comprehensive testing methods to verify product quality, purity, and identity. Our testing protocols utilize multiple analytical techniques to ensure that every product meets our strict quality standards.
+            Purgo Style Labs employs comprehensive testing methods to verify product quality, purity, and identity. Our testing protocols utilize multiple analytical techniques to ensure that every product meets our strict quality standards.
           </p>
           <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">HPLC Methodology</h3>
           <p className="mb-4">
@@ -64,7 +64,7 @@ export default function LabReportsPageSEO() {
       <Accordion title="Quality Standards & Compliance">
         <div className="prose prose-lg max-w-none text-gray-700">
           <p className="mb-4">
-            Purgo Labs maintains strict quality standards and compliance with industry regulations to ensure that all products meet the highest standards for research use. Our quality assurance processes are designed to consistently deliver products that meet or exceed industry standards.
+            Purgo Style Labs maintains strict quality standards and compliance with industry regulations to ensure that all products meet the highest standards for research use. Our quality assurance processes are designed to consistently deliver products that meet or exceed industry standards.
           </p>
           <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">Industry Standards</h3>
           <p className="mb-4">
@@ -80,7 +80,7 @@ export default function LabReportsPageSEO() {
           </p>
           <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">Compliance Information</h3>
           <p className="mb-4">
-            All Purgo Labs products comply with regulations for Research Use Only (RUO) materials. We maintain compliance with applicable laws and regulations governing research materials, quality control, and documentation. Compliance information is available upon request and documented in product materials.
+            All Purgo Style Labs products comply with regulations for Research Use Only (RUO) materials. We maintain compliance with applicable laws and regulations governing research materials, quality control, and documentation. Compliance information is available upon request and documented in product materials.
           </p>
         </div>
       </Accordion>
@@ -92,7 +92,7 @@ export default function LabReportsPageSEO() {
           </p>
           <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">Report Availability</h3>
           <p className="mb-4">
-            Certificates of Analysis are available for all Purgo Labs products and can be accessed directly from product pages. Reports are provided in PDF format and include comprehensive analytical data, quality metrics, and batch information. Reports are updated for each production batch to ensure current documentation.
+            Certificates of Analysis are available for all Purgo Style Labs products and can be accessed directly from product pages. Reports are provided in PDF format and include comprehensive analytical data, quality metrics, and batch information. Reports are updated for each production batch to ensure current documentation.
           </p>
           <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">Download Instructions</h3>
           <p className="mb-4">

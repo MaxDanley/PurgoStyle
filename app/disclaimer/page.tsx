@@ -15,7 +15,7 @@ export default function DisclaimerPage() {
 
           <h2>Research Use Only</h2>
           <p>
-            All peptides and compounds sold by Purgo Labs are intended solely for in-vitro research and laboratory 
+            All products sold by Purgo Style Labs are intended for their designated use. 
             applications. These products are NOT:
           </p>
           <ul>
@@ -29,7 +29,7 @@ export default function DisclaimerPage() {
 
           <h2>Buyer Qualifications</h2>
           <p>
-            By purchasing from Purgo Labs, you represent and warrant that:
+            By purchasing from Purgo Style Labs, you represent and warrant that:
           </p>
           <ul>
             <li>You are a qualified research professional or institution</li>
@@ -41,7 +41,7 @@ export default function DisclaimerPage() {
 
           <h2>No Medical Claims</h2>
           <p>
-            Purgo Labs makes no medical claims about any of our products. Any information provided about peptides and 
+            Purgo Style Labs makes no medical claims about any of our products. Any information provided about products and 
             their properties is for educational and research purposes only and should not be construed as medical advice.
           </p>
 
@@ -59,7 +59,7 @@ export default function DisclaimerPage() {
 
           <h2>Liability</h2>
           <p>
-            Purgo Labs assumes no responsibility for:
+            Purgo Style Labs assumes no responsibility for:
           </p>
           <ul>
             <li>Misuse of products outside of research settings</li>
@@ -90,7 +90,7 @@ export default function DisclaimerPage() {
             <li>Have read and understood this disclaimer</li>
             <li>Agree to use products only for research purposes</li>
             <li>Accept full responsibility for proper product use</li>
-            <li>Will not hold Purgo Labs liable for misuse</li>
+            <li>Will not hold Purgo Style Labs liable for misuse</li>
             <li>Understand that violation may result in legal consequences</li>
           </ul>
 
@@ -104,12 +104,12 @@ export default function DisclaimerPage() {
           <h2>Contact Information</h2>
           <p>
             For questions about proper research use of our products, please contact our support team at 
-            support@purgolabs.com
+            support@purgostyle.com
           </p>
 
           <div className="bg-yellow-50 border-2 border-yellow-300 rounded-lg p-6 mt-8">
             <p className="text-yellow-900 font-semibold">
-              By purchasing from Purgo Labs, you acknowledge that you have read, understood, and agree to comply with 
+              By purchasing from Purgo Style Labs, you acknowledge that you have read, understood, and agree to comply with 
               all terms of this disclaimer and our Terms of Service.
             </p>
           </div>

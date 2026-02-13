@@ -71,7 +71,7 @@ function OrderConfirmationContent() {
   // Track page view
   useEffect(() => {
     if (pathname) {
-      trackPageView(window.location.href, 'Order Confirmation - Purgo Labs', {
+      trackPageView(window.location.href, 'Order Confirmation - Purgo Style Labs', {
         page_type: 'order_confirmation',
       });
     }
@@ -256,7 +256,7 @@ function OrderConfirmationContent() {
         items: formattedOrder.items.map(item => ({
           itemId: item.product.name, // Using product name as ID since we don't have product ID here
           itemName: item.product.name,
-          itemCategory: 'Peptides',
+          itemCategory: 'Apparel',
           price: typeof item.price === 'number' ? item.price : parseFloat(String(item.price)) || 0,
           quantity: item.quantity,
         })),
@@ -543,7 +543,7 @@ function OrderConfirmationContent() {
                     </button>
                   </div>
                   <p className="text-xs text-yellow-800">
-                    Do not mention product names or the word "peptides" in the note.
+                    Do not mention product names in the note.
                   </p>
                 </div>
               </div>
@@ -591,11 +591,11 @@ function OrderConfirmationContent() {
                   <div>
                     <p className="text-xs font-medium text-gray-600 mb-2">Or send to Email:</p>
                     <div className="flex items-center justify-between bg-white border border-gray-300 rounded-lg p-3">
-                      <code className="text-sm font-mono font-bold italic" style={{ color: '#3aaff9' }}>orders@purgolabs.com</code>
+                      <code className="text-sm font-mono font-bold italic" style={{ color: '#3aaff9' }}>orders@purgostyle.com</code>
                       <button
                         type="button"
                         onClick={() => {
-                          navigator.clipboard.writeText("orders@purgolabs.com");
+                          navigator.clipboard.writeText("orders@purgostyle.com");
                           toast.success("Email copied!");
                         }}
                         className="px-3 py-1.5 text-xs flex items-center gap-1 rounded-lg font-semibold transition-colors"
@@ -613,11 +613,11 @@ function OrderConfirmationContent() {
                 <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
                   <p className="text-xs font-medium text-yellow-900 mb-2">Memo (Required):</p>
                   <div className="flex items-center justify-between bg-white border border-yellow-300 rounded-lg p-3 mb-2">
-                    <code className="text-sm font-mono text-gray-900">purgo labs</code>
+                    <code className="text-sm font-mono text-gray-900">purgo style labs</code>
                     <button
                       type="button"
                       onClick={() => {
-                        navigator.clipboard.writeText("purgo labs");
+                        navigator.clipboard.writeText("purgo style labs");
                         toast.success("Memo copied!");
                       }}
                       className="btn-secondary px-3 py-1.5 text-xs flex items-center gap-1"
@@ -627,7 +627,7 @@ function OrderConfirmationContent() {
                     </button>
                   </div>
                   <p className="text-xs text-yellow-800">
-                    Do not mention product names or the word "peptides" in the memo.
+                    Do not mention product names in the memo.
                   </p>
                 </div>
               </div>

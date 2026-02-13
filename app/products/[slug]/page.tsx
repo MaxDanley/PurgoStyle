@@ -41,22 +41,22 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
           .replace(/Iii/g, 'III');
         
         return {
-          title: `${productName} - Coming Soon | Purgo Labs`,
-          description: `${productName} is coming soon to Purgo Labs. Explore our current selection of premium research-grade peptides.`,
+          title: `${productName} - Coming Soon | Purgo Style Labs`,
+          description: `${productName} is coming soon to Purgo Style Labs. Explore our current selection of products.`,
           openGraph: {
-            title: `${productName} - Coming Soon | Purgo Labs`,
-            description: `${productName} is coming soon to Purgo Labs. Explore our current selection of premium research-grade peptides.`,
+            title: `${productName} - Coming Soon | Purgo Style Labs`,
+            description: `${productName} is coming soon to Purgo Style Labs. Explore our current selection of products.`,
             type: "website",
-            url: `https://www.purgolabs.com/products/${slug}`,
+            url: `https://www.purgostyle.com/products/${slug}`,
           },
           alternates: {
-            canonical: `https://www.purgolabs.com/products/${slug}`,
+            canonical: `https://www.purgostyle.com/products/${slug}`,
           },
         };
       }
       
       return {
-        title: "Product Not Found - Purgo Labs",
+        title: "Product Not Found - Purgo Style Labs",
       };
     }
 
@@ -76,24 +76,24 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
       openGraph: {
         title: seo.title,
         description: seo.description,
-        images: image ? [`https://www.purgolabs.com${image}`] : [],
+        images: image ? [`https://www.purgostyle.com${image}`] : [],
         type: "website",
-        url: `https://www.purgolabs.com/products/${slug}`,
+        url: `https://www.purgostyle.com/products/${slug}`,
       },
       twitter: {
         card: "summary_large_image",
         title: seo.title,
         description: seo.description,
-        images: image ? [`https://www.purgolabs.com${image}`] : [],
+        images: image ? [`https://www.purgostyle.com${image}`] : [],
       },
       alternates: {
-        canonical: `https://www.purgolabs.com/products/${slug}`,
+        canonical: `https://www.purgostyle.com/products/${slug}`,
       },
     };
   } catch (error) {
     console.error("Error generating metadata:", error);
     return {
-      title: "Product - Purgo Labs",
+      title: "Product - Purgo Style Labs",
     };
   }
 }

@@ -64,7 +64,7 @@ export default function ForgotPasswordPage() {
         <div className="text-center mb-8">
           <Image
             src="/logo-small.png"
-            alt="Purgo Labs"
+            alt="Purgo Style Labs"
             width={80}
             height={80}
             className="mx-auto mb-4"

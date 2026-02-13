@@ -272,7 +272,7 @@ export default function CommunityFeed({ productKeywords }: CommunityFeedProps) {
           Explore Premium Research Peptides
         </h3>
         <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-          Join researchers worldwide who trust Purgo Labs for high-purity, lab-tested research peptides. 
+          Join customers who trust Purgo Style Labs for quality activewear and apparel. 
           Browse our complete catalog of premium research-grade compounds.
         </p>
         <div className="flex flex-wrap justify-center gap-4">

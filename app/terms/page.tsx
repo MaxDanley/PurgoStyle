@@ -8,7 +8,7 @@ export default function TermsPage() {
         <div className="prose prose-lg max-w-none text-gray-700">
           <h2>Introduction to Our Terms and Conditions</h2>
           <p>
-            By using this website, <span className="font-semibold text-gray-900">purgolabs.com</span> (the
+            By using this website, <span className="font-semibold text-gray-900">purgostyle.com</span> (the
             &ldquo;Website&rdquo;), which is owned and operated by PurgoLabs LLC, an Arizona limited liability
             company (the &ldquo;Company&rdquo;), you (&ldquo;User&rdquo;) hereby acknowledge and agree that by
             accessing or using the Website, User is deemed to have read and accepted the following terms and
@@ -373,7 +373,7 @@ export default function TermsPage() {
           <p>
             <span className="font-semibold uppercase text-gray-900">To the Company:</span> To give the Company notice
             under this Agreement, User must contact the Company either by email at{" "}
-            <a href="mailto:support@purgolabs.com">support@purgolabs.com</a> or by personal delivery, overnight courier,
+            <a href="mailto:support@purgostyle.com">support@purgostyle.com</a> or by personal delivery, overnight courier,
             or registered or certified mail to PurgoLabs LLC, Scottsdale, AZ 85260. Notices provided by email will be
             effective when User sends the email and notices provided by registered or certified mail will be effective
             three business days after they are sent.

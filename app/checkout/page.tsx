@@ -195,7 +195,7 @@ export default function CheckoutPage() {
   // Track page view and begin checkout
   useEffect(() => {
     if (pathname && items.length > 0) {
-      trackPageView(window.location.href, 'Checkout - Purgo Labs', {
+      trackPageView(window.location.href, 'Checkout - Purgo Style Labs', {
         page_type: 'checkout',
       });
 
@@ -203,7 +203,7 @@ export default function CheckoutPage() {
         items: items.map(item => ({
           itemId: item.productId,
           itemName: item.productName,
-          itemCategory: 'Peptides',
+          itemCategory: 'Apparel',
           price: item.price,
           quantity: item.quantity,
         })),
@@ -1035,7 +1035,7 @@ export default function CheckoutPage() {
                       className="h-3.5 w-3.5 text-cyan-600 focus:ring-cyan-500 border-gray-300 rounded"
                     />
                     <label htmlFor="subscribe-sms" className="text-xs text-gray-500">
-                      Text me offers and sales from Purgo Labs (optional)
+                      Text me offers and sales from Purgo Style Labs (optional)
                     </label>
                   </div>
 

@@ -22,8 +22,8 @@ export async function sendEmailViaOmnisend({
   to: _to,
   subject: _subject,
   html: _html,
-  fromName: _fromName = "Purgo Labs",
-  fromEmail: _fromEmail = "orders@purgolabs.com",
+  fromName: _fromName = "Purgo Style Labs",
+  fromEmail: _fromEmail = "orders@purgostyle.com",
 }: SendEmailOptions) {
   // Omnisend doesn't have a direct transactional email API endpoint.
   // They use event-based automations instead. To use Omnisend for emails, you would need to:

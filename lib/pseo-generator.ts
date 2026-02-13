@@ -8,7 +8,6 @@ import { prisma } from './prisma';
 import { injectInternalLinks } from './blog-seo';
 import { generateAIImage } from './ai-images';
 import { products } from './products';
-import { getBuyPeptidesKeywordPhrases } from './buy-peptides-keywords';
 import fs from 'fs';
 import path from 'path';
 
@@ -202,11 +201,8 @@ async function generateContent(product: string, topic: string, intent: string, c
   // Get research context for more informed content
   const researchContext = await getResearchContext(product, topic);
   
-  const buyPeptidesPhrases = getBuyPeptidesKeywordPhrases().slice(0, 8).join(", ");
-  const systemPrompt = `You are an expert SEO content writer and scientific researcher for "Purgo Labs", a premium research peptide supplier. 
-You write in a professional, objective, scientific tone suitable for laboratory professionals and researchers.
-You NEVER give medical advice. You always emphasize that products are for "Research Use Only" and "Not for Human Consumption".
-COMPLIANCE: Use "GLP-2 TRZ" instead of Tirzepatide, and "Reta-trutide" or "GLP-3 RT" instead of Retatrutide in body text.`;
+  const systemPrompt = `You are an expert SEO content writer for "Purgo Style Labs", an Arizona activewear and apparel brand. 
+You write in a professional, brand-appropriate tone.`;
 
   // Diverse title templates - NEVER use "Unlock the power of" / "Unlock the potential of" / "Discover the"
   const titleVariations = [
@@ -239,7 +235,7 @@ COMPLIANCE: Use "GLP-2 TRZ" instead of Tirzepatide, and "Reta-trutide" or "GLP-3
     - Product: ${product}
     - Topic: ${topic}
     - Current Date: ${currentDate}
-    ${competitor ? `- Competitor Analysis: Compare Purgo Labs (emphasize 99%+ purity, US testing, fast shipping) vs ${competitor}. Be fair but highlight Purgo's advantages.` : ''}
+    ${competitor ? `- Competitor Analysis: Compare Purgo Style Labs vs ${competitor}. Be fair but highlight Purgo Style Labs advantages.` : ''}
     - User Search Intent: "${intent}" (This is a BUYER searching - they want to purchase. Write content that helps them make a purchase decision).
     
     ${researchContext}
@@ -256,7 +252,7 @@ COMPLIANCE: Use "GLP-2 TRZ" instead of Tirzepatide, and "Reta-trutide" or "GLP-3
     - Where to buy ${product} online (with specific, actionable advice)
     - How to choose a reliable supplier (real criteria, not generic)
     - What to look for when buying ${product} (specific quality indicators)
-    - Why Purgo Labs is a trusted source (concrete reasons)
+    - Why Purgo Style Labs is a trusted source (concrete reasons)
     - Pricing considerations, shipping options, quality verification
     - How to order and what to expect
 
@@ -280,7 +276,7 @@ COMPLIANCE: Use "GLP-2 TRZ" instead of Tirzepatide, and "Reta-trutide" or "GLP-3
        - Include real, helpful information - not generic filler.
        - Be conversational and helpful, like a knowledgeable researcher helping a colleague.
     
-    3. Keywords: List 10-15 keywords targeting BUYER searches. Include these high-value phrases where relevant: ${buyPeptidesPhrases}. Also use: "${intent}", "buy ${product}", "buy ${product} online", "${product} supplier", "where to purchase ${product}", etc.
+    3. Keywords: List 10-15 keywords targeting BUYER searches. Include high-value phrases. Also use: "${intent}", "buy ${product}", "buy ${product} online", "${product} supplier", "where to purchase ${product}", etc.
     
     4. Excerpt: A unique 150-160 char summary that's engaging and includes purchase intent.
     
@@ -646,10 +642,9 @@ export async function generatePSEOContent(options: GeneratePSEOOptions = {}): Pr
       }
       
       linksToAdd.push(
-        { text: "Buy Peptides Online", url: "/products" },
-        { text: "Buy Peptides Online Guide", url: "/guide/buy-peptides-online" },
-        { text: "Research Peptides", url: "/products" },
-        { text: "US Made Peptides", url: "/about" }
+        { text: "Shop", url: "/products" },
+        { text: "Products", url: "/products" },
+        { text: "About", url: "/about" }
       );
       
       // Add links to comparison and peptide PSEO pages for interlinking
@@ -695,13 +690,13 @@ export async function generatePSEOContent(options: GeneratePSEOOptions = {}): Pr
   };
 }
 
-/** Generate comparison page content (Purgo Labs vs Competitor) */
+/** Generate comparison page content (Purgo Style Labs vs Competitor) */
 async function generateComparisonPageContent(competitor: string): Promise<{ title: string; content: string; excerpt: string; keywords: string[]; metaDescription: string } | null> {
   const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
   if (!ANTHROPIC_API_KEY) return null;
-  const systemPrompt = `You are an expert SEO content writer for "Purgo Labs", a premium research peptide supplier. Write in a professional, objective tone. You NEVER give medical advice. Products are "Research Use Only" and "Not for Human Consumption".`;
-  const userPrompt = `Write a comparison article: "Purgo Labs vs ${competitor}" for researchers choosing a peptide supplier.
-Include: key differences (purity, testing, shipping, pricing), why researchers choose Purgo Labs (99%+ purity, US testing, fast shipping), and when each option may suit different needs.
+  const systemPrompt = `You are an expert SEO content writer for "Purgo Style Labs", an Arizona activewear and apparel brand. Write in a professional, objective tone.`;
+  const userPrompt = `Write a comparison article: "Purgo Style Labs vs ${competitor}".
+Include: key differences (quality, shipping, pricing), why customers choose Purgo Style Labs, and when each option may suit different needs.
 Use Markdown: ## for sections, ### for subsections, bullet points. 800-1200 words.
 Output ONLY valid JSON: { "title": "...", "content": "...", "excerpt": "...", "keywords": ["..."], "metaDescription": "..." }`;
   try {
@@ -730,12 +725,12 @@ Output ONLY valid JSON: { "title": "...", "content": "...", "excerpt": "...", "k
   }
 }
 
-/** Generate peptide info page content */
+/** Generate product info page content */
 async function generatePeptidePageContent(product: string): Promise<{ title: string; content: string; excerpt: string; keywords: string[]; metaDescription: string } | null> {
   const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
   if (!ANTHROPIC_API_KEY) return null;
-  const systemPrompt = `You are an expert SEO content writer for "Purgo Labs", a premium research peptide supplier. Write in a professional, scientific tone. You NEVER give medical advice. Products are "Research Use Only" and "Not for Human Consumption".`;
-  const userPrompt = `Write a research-focused guide about ${product} for laboratory researchers. Cover: what ${product} is, research applications, purity and quality considerations, how to choose a supplier (lead to Purgo Labs), storage and handling. Use Markdown: ## and ###, bullet points. 800-1200 words. Include natural internal link opportunities (e.g. "buy peptides online", "research peptides").
+  const systemPrompt = `You are an expert SEO content writer for "Purgo Style Labs", an Arizona activewear and apparel brand. Write in a professional tone.`;
+  const userPrompt = `Write a guide about ${product}. Cover: what it is, quality considerations, how to shop (lead to Purgo Style Labs). Use Markdown: ## and ###, bullet points. 800-1200 words. Include natural internal link opportunities to products and about.
 Output ONLY valid JSON: { "title": "...", "content": "...", "excerpt": "...", "keywords": ["..."], "metaDescription": "..." }`;
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
@@ -769,7 +764,7 @@ export interface GeneratePSEOComparisonAndPeptideOptions {
   dryRun?: boolean;
 }
 
-/** Generate comparison pages (Purgo Labs vs X) and peptide info pages; interlink with products and each other */
+/** Generate comparison pages (Purgo Style Labs vs X) and product info pages; interlink with products and each other */
 export async function generatePSEOComparisonAndPeptidePages(options: GeneratePSEOComparisonAndPeptideOptions = {}): Promise<GeneratePSEResult> {
   const comparisonBatch = options.comparisonBatchSize ?? 2;
   const peptideBatch = options.peptideBatchSize ?? 2;

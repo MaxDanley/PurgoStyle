@@ -22,7 +22,7 @@ export default function SignInPage() {
   // Track page view
   useEffect(() => {
     if (pathname) {
-      trackPageView(window.location.href, 'Sign In - Purgo Labs', {
+      trackPageView(window.location.href, 'Sign In - Purgo Style Labs', {
         page_type: 'signin',
       });
     }
@@ -90,7 +90,7 @@ export default function SignInPage() {
           <Link href="/" className="inline-block">
             <Image
               src="/logo-small.png"
-              alt="Purgo Labs"
+              alt="Purgo Style Labs"
               width={80}
               height={80}
               className="mx-auto mb-6 drop-shadow-2xl hover:scale-110 transition-transform duration-300"

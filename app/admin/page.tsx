@@ -935,7 +935,7 @@ export default function AdminDashboard() {
   };
 
   const sendCustomEmail = async () => {
-    if (!confirm("Are you sure you want to send the '20% OFF ALL PEPTIDES JUST FOR YOU' email to ALL subscribers? This cannot be undone.")) {
+    if (!confirm("Are you sure you want to send the '20% OFF JUST FOR YOU' promotional email to ALL subscribers? This cannot be undone.")) {
       return;
     }
 
@@ -1294,7 +1294,7 @@ export default function AdminDashboard() {
                       value={campaignSubject}
                       onChange={(e) => setCampaignSubject(e.target.value)}
                       className="input-field"
-                      placeholder="e.g. Special Offer: 20% Off All Peptides!"
+                      placeholder="e.g. Special Offer: 20% Off Your Order!"
                     />
                   </div>
 
@@ -1386,8 +1386,8 @@ export default function AdminDashboard() {
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900">Send 20% OFF Promotion (Legacy)</h3>
                     <p className="text-gray-600 mt-1 max-w-2xl">
-                      Send the "20% OFF ALL PEPTIDES JUST FOR YOU" promotional email to all subscribers on the main mailing list.
-                      This email includes the special offer and peptide product highlights.
+                      Send the "20% OFF JUST FOR YOU" promotional email to all subscribers on the main mailing list.
+                      This email includes the special offer and product highlights.
                     </p>
                     <div className="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
                       <p className="text-sm text-yellow-800">

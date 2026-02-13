@@ -224,7 +224,7 @@ export async function POST(req: Request) {
         statusHistory: {
           create: {
             status: "PENDING",
-            note: `Order created with Zelle payment. Awaiting payment confirmation. Payment should be sent to orders@purgolabs.com with memo "purgo labs".`,
+            note: `Order created with Zelle payment. Awaiting payment confirmation. Payment should be sent to orders@purgostyle.com with memo "purgo style labs".`,
           },
         },
       },

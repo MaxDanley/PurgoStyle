@@ -8,10 +8,10 @@ import ProductsPageClient from "@/components/ProductsPageClient";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Buy Peptides Online | Purgo Labs",
-  description: "Buy peptides online from Purgo Labs. Browse premium lab-tested research peptides with 99%+ purity.",
+  title: "Products | Purgo Style Labs",
+  description: "Shop Purgo Style Labs. Arizona activewear, premium tees, and apparel. Quality you can feel.",
   alternates: {
-    canonical: "https://www.purgolabs.com/products",
+    canonical: "https://www.purgostyle.com/products",
   },
 };
 
@@ -66,7 +66,7 @@ export default async function ProductsPage() {
 
   return (
     <>
-      <PageViewTracker pageTitle="Products - Purgo Labs" pageType="products" />
+      <PageViewTracker pageTitle="Products - Purgo Style Labs" pageType="products" />
       <DiscountPopup />
       <div className="py-12">
         <div className="container-custom">

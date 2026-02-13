@@ -150,7 +150,7 @@ export async function POST(req: Request) {
         price_currency: "usd",
         pay_currency: payCurrency, // Optional: let user choose
         order_id: orderNumber,
-        order_description: `Purgo Labs Order ${orderNumber}`,
+        order_description: `Purgo Style Labs Order ${orderNumber}`,
         ipn_callback_url: `${baseUrl}/api/webhooks/nowpayments`,
         success_url: `${baseUrl}/order-confirmation?order=${orderNumber}`,
         cancel_url: `${baseUrl}/checkout?canceled=true`,

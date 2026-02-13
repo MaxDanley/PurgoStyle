@@ -88,18 +88,18 @@ async function sendStockNotificationEmails(variantId: string) {
     for (const notification of notifications) {
       try {
         await sendEmail({
-          from: "Purgo Labs <noreply@purgolabs.com>",
+          from: "Purgo Style Labs <noreply@purgostyle.com>",
           to: notification.email,
           subject: `${productName} is back in stock!`,
           html: `
             <h1>Great news! ${productName} is back in stock</h1>
             <p>Hi there,</p>
-            <p>We wanted to let you know that <strong>${productName}</strong> is now available again at Purgo Labs!</p>
+            <p>We wanted to let you know that <strong>${productName}</strong> is now available again at Purgo Style Labs!</p>
             <p>Hurry - limited stock available!</p>
-            <a href="https://www.purgolabs.com/products/${variant.product.slug}" style="background: #2563eb; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block; margin: 20px 0;">
+            <a href="https://www.purgostyle.com/products/${variant.product.slug}" style="background: #2563eb; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block; margin: 20px 0;">
               Shop Now
             </a>
-            <p>Best regards,<br>The Purgo Labs Team</p>
+            <p>Best regards,<br>The Purgo Style Labs Team</p>
           `,
         });
 

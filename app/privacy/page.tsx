@@ -42,7 +42,7 @@ export default function PrivacyPage() {
             <li>
               <span className="font-semibold text-gray-900">Company</span> (referred to as either &ldquo;the Company,&rdquo;
               &ldquo;We,&rdquo; &ldquo;Us,&rdquo; or &ldquo;Our&rdquo; in this Agreement) refers to PurgoLabs LLC, doing
-              business as Purgo Labs, an Arizona limited liability company.
+              business as Purgo Style Labs, an Arizona limited liability company.
             </li>
             <li>
               <span className="font-semibold text-gray-900">Affiliate</span> means an entity that controls, is controlled
@@ -56,7 +56,7 @@ export default function PrivacyPage() {
             </li>
             <li>
               <span className="font-semibold text-gray-900">Website</span> refers to{" "}
-              <a href="https://www.purgolabs.com">https://www.purgolabs.com</a>.
+              <a href="https://www.purgostyle.com">https://www.purgostyle.com</a>.
             </li>
             <li>
               <span className="font-semibold text-gray-900">Country</span> refers to: United States.
@@ -387,7 +387,7 @@ export default function PrivacyPage() {
           <p>If you have any questions about this Privacy Policy, you can contact us:</p>
           <ul>
             <li>
-              By email: <a href="mailto:support@purgolabs.com">support@purgolabs.com</a>
+              By email: <a href="mailto:support@purgostyle.com">support@purgostyle.com</a>
             </li>
             <li>By mail: PurgoLabs LLC, Attn: Privacy Policy, Scottsdale, AZ 85260</li>
             <li>Through our <a href="/contact">Contact Us</a> page</li>

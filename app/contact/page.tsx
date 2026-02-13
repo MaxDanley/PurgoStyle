@@ -68,7 +68,7 @@ export default function ContactPage() {
           <div className="grid gap-10 lg:grid-cols-[1.1fr_minmax(0,_0.9fr)] items-center">
             <div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 leading-tight">
-                Contact <span className="gradient-text">Purgo Labs</span>
+                Contact <span className="gradient-text">Purgo Style Labs</span>
               </h1>
               <p className="mt-4 text-lg text-slate-700 max-w-xl">
                 Have a question about an order, documentation, or partnering with us? Our support
@@ -81,7 +81,7 @@ export default function ContactPage() {
                   </p>
                   <div className="mt-2 flex items-center gap-2 text-sm text-slate-800">
                     <FaEnvelope className="h-4 w-4 text-cyan-600" />
-                    <span>support@purgolabs.com</span>
+                    <span>support@purgostyle.com</span>
                   </div>
                   <p className="mt-1 text-xs text-slate-500">
                     For orders, documentation, and business inquiries.
@@ -118,7 +118,7 @@ export default function ContactPage() {
                     </div>
                     <Image
                       src="/logo-small.png"
-                      alt="Purgo Labs"
+                      alt="Purgo Style Labs"
                       width={40}
                       height={40}
                       className="rounded-full border border-cyan-100 bg-white shadow-md"
@@ -173,7 +173,7 @@ export default function ContactPage() {
                   For order questions, tracking, or issues with received materials.
                 </p>
                 <p className="mt-2 text-sm font-mono text-slate-800">
-                  support@purgolabs.com
+                  support@purgostyle.com
                 </p>
               </div>
 
@@ -188,7 +188,7 @@ export default function ContactPage() {
                   Clarifications on documentation, COAs, or research‑use restrictions.
                 </p>
                 <p className="mt-2 text-sm font-mono text-slate-800">
-                  support@purgolabs.com
+                  support@purgostyle.com
                 </p>
               </div>
 

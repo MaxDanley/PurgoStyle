@@ -54,7 +54,7 @@ export default function ProductsPageSEO() {
       <Accordion title="Our Quality Assurance Process">
         <div className="prose prose-lg max-w-none text-gray-700">
           <p className="mb-4">
-            At Purgo Labs, quality assurance is integrated into every step of our production and distribution process. We maintain strict quality control measures to ensure that every product meets our high standards for purity, identity, and consistency.
+            At Purgo Style Labs, quality assurance is integrated into every step of our production and distribution process. We maintain strict quality control measures to ensure that every product meets our high standards for purity, identity, and consistency.
           </p>
           <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">Testing Protocols</h3>
           <p className="mb-4">
@@ -78,7 +78,7 @@ export default function ProductsPageSEO() {
       <Accordion title="Research Resources & Support">
         <div className="prose prose-lg max-w-none text-gray-700">
           <p className="mb-4">
-            Purgo Labs provides comprehensive research resources and support to help researchers achieve their scientific objectives. We offer detailed documentation, research protocols, and technical support to facilitate successful research applications.
+            Purgo Style Labs provides comprehensive research resources and support to help researchers achieve their scientific objectives. We offer detailed documentation, research protocols, and technical support to facilitate successful research applications.
           </p>
           <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">Research Protocols</h3>
           <p className="mb-4">

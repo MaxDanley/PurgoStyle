@@ -24,7 +24,7 @@ export function generateStructuredData(
   featuredImage?: string,
   articleImages?: string[]
 ): object {
-  const url = `https://www.purgolabs.com/blog/${slug}`;
+  const url = `https://www.purgostyle.com/blog/${slug}`;
   
   // Generate ImageObject for featured image
   const imageObjects: any[] = [];
@@ -39,10 +39,10 @@ export function generateStructuredData(
       "caption": imageAlt,
       "description": imageAlt,
       "name": title,
-      "license": "https://www.purgolabs.com",
+      "license": "https://www.purgostyle.com",
       "creator": {
         "@type": "Organization",
-        "name": "Purgo Labs"
+        "name": "Purgo Style Labs"
       }
     });
   }
@@ -64,16 +64,16 @@ export function generateStructuredData(
         "caption": imageAlt,
         "description": imageAlt,
         "name": sectionTitle || `${title} - Image ${index + 1}`,
-        "license": "https://www.purgolabs.com",
+        "license": "https://www.purgostyle.com",
         "creator": {
           "@type": "Organization",
-          "name": "Purgo Labs"
+          "name": "Purgo Style Labs"
         }
       });
     });
   }
   
-  const baseImage = featuredImage || "https://www.purgolabs.com/logo.png";
+  const baseImage = featuredImage || "https://www.purgostyle.com/logo.png";
   
   return {
     "@context": "https://schema.org",
@@ -85,15 +85,15 @@ export function generateStructuredData(
     "dateModified": publishedAt.toISOString(),
     "author": {
       "@type": "Organization",
-      "name": "Purgo Labs",
-      "url": "https://www.purgolabs.com"
+      "name": "Purgo Style Labs",
+      "url": "https://www.purgostyle.com"
     },
     "publisher": {
       "@type": "Organization",
-      "name": "Purgo Labs",
+      "name": "Purgo Style Labs",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://www.purgolabs.com/logo.png",
+        "url": "https://www.purgostyle.com/logo.png",
         "width": 512,
         "height": 512
       }
@@ -130,7 +130,7 @@ export function generateImageAltText(title: string, content: string): string {
   }
   
   // Add context
-  altText += " - Purgo Labs research peptides laboratory study";
+  altText += " - Purgo Style Labs";
   
   return altText;
 }
@@ -302,19 +302,19 @@ export function generateBreadcrumbStructuredData(slug: string, title: string): o
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https://www.purgolabs.com"
+        "item": "https://www.purgostyle.com"
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": "Blog",
-        "item": "https://www.purgolabs.com/blog"
+        "item": "https://www.purgostyle.com/blog"
       },
       {
         "@type": "ListItem",
         "position": 3,
         "name": title,
-        "item": `https://www.purgolabs.com/blog/${slug}`
+        "item": `https://www.purgostyle.com/blog/${slug}`
       }
     ]
   };
@@ -413,9 +413,9 @@ export function generatePSEOPageBreadcrumb(type: 'compare' | 'peptides', slug: s
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.purgolabs.com" },
-      { "@type": "ListItem", "position": 2, "name": sectionName, "item": `https://www.purgolabs.com${basePath}` },
-      { "@type": "ListItem", "position": 3, "name": title, "item": `https://www.purgolabs.com${basePath}/${slug}` }
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.purgostyle.com" },
+      { "@type": "ListItem", "position": 2, "name": sectionName, "item": `https://www.purgostyle.com${basePath}` },
+      { "@type": "ListItem", "position": 3, "name": title, "item": `https://www.purgostyle.com${basePath}/${slug}` }
     ]
   };
 }

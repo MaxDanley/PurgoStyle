@@ -87,7 +87,7 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
   // Track page view and product view
   useEffect(() => {
     if (product && selectedVariant && pathname) {
-      trackPageView(window.location.href, `${product.name} - Purgo Labs`, {
+      trackPageView(window.location.href, `${product.name} - Purgo Style Labs`, {
         page_type: 'product',
         product_id: product.id,
         product_name: product.name,
@@ -214,7 +214,7 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
             </Link>
             <span className="mx-2 text-gray-400">/</span>
             <Link href="/products" className="text-gray-500 hover:text-primary-600">
-              Buy Peptides
+              Products
             </Link>
             <span className="mx-2 text-gray-400">/</span>
             <span className="text-gray-900 font-medium">{product.name}</span>
@@ -428,7 +428,7 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
                 <span className="font-medium text-gray-900 text-sm">Reviews</span>
                 <div className="flex items-center gap-3">
                   <a 
-                    href="https://www.trustpilot.com/review/purgolabs.com?_gl=1*1k1z474*_gcl_au*Mzc5MTg1MDI3LjE3NjgzNjcyMDQ.*_ga*NzU2NDk1NTYuMTc2ODM2NzIxNg..*_ga_11HBWMC274*czE3NjgzNjcyMTUkbzEkZzEkdDE3NjgzNjcyNzAkajUkbDAkaDA" 
+                    href="https://www.trustpilot.com/review/purgostyle.com?_gl=1*1k1z474*_gcl_au*Mzc5MTg1MDI3LjE3NjgzNjcyMDQ.*_ga*NzU2NDk1NTYuMTc2ODM2NzIxNg..*_ga_11HBWMC274*czE3NjgzNjcyMTUkbzEkZzEkdDE3NjgzNjcyNzAkajUkbDAkaDA" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="text-xs bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 px-3 py-1.5 rounded-md font-medium transition-colors flex items-center gap-2 shadow-sm"
@@ -678,7 +678,7 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
                     <p className="text-black text-sm">
                       This product is supplied solely for laboratory research. It is not intended for human or
                       veterinary use, ingestion, or diagnostic applications. No dosing or administration support is
-                      provided, and Purgo Labs does not promote or endorse any off-label utilization.
+                      provided, and Purgo Style Labs does not promote or endorse any off-label utilization.
                     </p>
                   </div>
 
@@ -760,7 +760,7 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
                   ) : (
                     <p className="text-gray-600">
                       Detailed chemical property data for this product is currently being compiled. Please check back
-                      soon or contact support@purgolabs.com for assistance.
+                      soon or contact support@purgostyle.com for assistance.
                     </p>
                   )}
                 </div>
@@ -799,9 +799,9 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
             "@context": "https://schema.org",
             "@type": "BreadcrumbList",
             itemListElement: [
-              { "@type": "ListItem", position: 1, name: "Home", item: "https://www.purgolabs.com/" },
-              { "@type": "ListItem", position: 2, name: "Buy Peptides", item: "https://www.purgolabs.com/products" },
-              { "@type": "ListItem", position: 3, name: product.name, item: `https://www.purgolabs.com/products/${product.slug}` },
+              { "@type": "ListItem", position: 1, name: "Home", item: "https://www.purgostyle.com/" },
+              { "@type": "ListItem", position: 2, name: "Products", item: "https://www.purgostyle.com/products" },
+              { "@type": "ListItem", position: 3, name: product.name, item: `https://www.purgostyle.com/products/${product.slug}` },
             ],
           }}
         />
@@ -816,16 +816,16 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
               "@type": "Product",
               name: product.name,
               description: product.description,
-              image: `https://www.purgolabs.com${product.image}`,
+              image: `https://www.purgostyle.com${product.image}`,
               brand: {
                 "@type": "Brand",
-                name: "Purgo Labs",
+                name: "Purgo Style Labs",
               },
               sku: selectedVariant.sku,
               mpn: selectedVariant.sku,
               offers: {
                 "@type": "Offer",
-                url: `https://www.purgolabs.com/products/${product.slug}`,
+                url: `https://www.purgostyle.com/products/${product.slug}`,
                 priceCurrency: "USD",
                 price: selectedVariant.price.toFixed(2),
                 priceValidUntil: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // Valid for 1 year
@@ -835,7 +835,7 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
                 itemCondition: "https://schema.org/NewCondition",
                 seller: {
                   "@type": "Organization",
-                  name: "Purgo Labs",
+                  name: "Purgo Style Labs",
                 },
               },
             }}

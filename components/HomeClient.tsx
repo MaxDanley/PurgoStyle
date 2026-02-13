@@ -150,7 +150,7 @@ export default function HomeClient({ featuredProducts }: HomeClientProps) {
         {/* Review Links - Desktop */}
         <div className="absolute bottom-44 right-8 hidden lg:flex flex-col items-end gap-3 z-20 scroll-animate opacity-0" data-direction="slide-left">
           <a 
-            href="https://www.trustpilot.com/review/purgolabs.com?_gl=1*1k1z474*_gcl_au*Mzc5MTg1MDI3LjE3NjgzNjcyMDQ.*_ga*NzU2NDk1NTYuMTc2ODM2NzIxNg..*_ga_11HBWMC274*czE3NjgzNjcyMTUkbzEkZzEkdDE3NjgzNjcyNzAkajUkbDAkaDA" 
+            href="https://www.trustpilot.com/review/purgostyle.com" 
             target="_blank" 
             rel="noopener noreferrer"
             className="bg-white text-gray-900 rounded-xl px-5 py-2 border border-gray-200 hover:border-gray-300 transition-all inline-flex items-center gap-3 shadow-xl"
@@ -210,7 +210,7 @@ export default function HomeClient({ featuredProducts }: HomeClientProps) {
           {/* Reviews - Mobile Only */}
           <div className="flex flex-row items-center justify-center gap-3 mb-8 lg:hidden">
             <a 
-              href="https://www.trustpilot.com/review/purgolabs.com?_gl=1*1k1z474*_gcl_au*Mzc5MTg1MDI3LjE3NjgzNjcyMDQ.*_ga*NzU2NDk1NTYuMTc2ODM2NzIxNg..*_ga_11HBWMC274*czE3NjgzNjcyMTUkbzEkZzEkdDE3NjgzNjcyNzAkajUkbDAkaDA" 
+              href="https://www.trustpilot.com/review/purgostyle.com" 
               target="_blank" 
               rel="noopener noreferrer"
               className="bg-white text-gray-900 rounded-xl px-3 py-2 border border-gray-200 hover:border-gray-300 transition-all inline-flex items-center gap-2 shadow-xl"
@@ -247,7 +247,7 @@ export default function HomeClient({ featuredProducts }: HomeClientProps) {
               Featured Products
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Our most popular research peptides, rigorously tested for purity
+              Our most popular products, made with quality you can feel
             </p>
           </div>
           
@@ -325,16 +325,15 @@ export default function HomeClient({ featuredProducts }: HomeClientProps) {
           <div className="glass rounded-3xl p-12 md:p-16">
             <div className="max-w-3xl mx-auto text-center">
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-                Welcome to <span className="gradient-text">Purgo Labs</span>
+                Welcome to <span className="gradient-text">Purgo Style Labs</span>
               </h2>
               <p className="text-xl text-gray-700 mb-6">
-                Your trusted source for premium-quality, <span className="text-cyan-600 font-semibold">lab-tested peptides</span>
+                Your trusted source for <span className="text-cyan-600 font-semibold">Arizona activewear & premium tees</span>
               </p>
               <p className="text-gray-600 mb-8">
-                We are dedicated to advancing scientific research by providing high-purity, 
-                pharmaceutical-grade peptides to research institutions, laboratories, and qualified 
-                professionals worldwide. Every product undergoes rigorous third-party testing to ensure 
-                the highest standards of quality and consistency.
+                We are dedicated to quality apparel—premium tees, sweatshirts, and activewear. 
+                Latin for purify: quality you can feel. Every piece is made with care for 
+                style and comfort.
               </p>
               <Link href="/about" className="btn-secondary inline-flex items-center gap-2">
                 Learn More About Us
@@ -350,93 +349,13 @@ export default function HomeClient({ featuredProducts }: HomeClientProps) {
       {/* SEO Content Sections - Expandable */}
       <section className="py-20 bg-gray-50">
         <div className="container-custom max-w-4xl">
-          <Accordion title="Learn More About Research Peptides">
+          <Accordion title="Learn More About Purgo Style Labs">
             <div className="prose prose-lg max-w-none text-gray-700">
               <p className="mb-4">
-                Research peptides are short chains of amino acids that serve as essential tools in modern scientific research. These synthetic or naturally-derived compounds play crucial roles in understanding biological processes, cellular signaling, and molecular interactions. At Purgo Labs, we provide high-purity research peptides specifically designed for laboratory use, enabling researchers to conduct groundbreaking studies in various fields of science.
+                Purgo Style Labs is an Arizona-based activewear and apparel brand. Our name comes from the Latin word for purify—we focus on quality you can feel in every tee, sweatshirt, and piece of activewear we make.
               </p>
               <p className="mb-4">
-                Research peptides function by interacting with specific receptors, enzymes, and cellular pathways. They can mimic natural biological compounds, block receptor sites, or enhance cellular processes. This versatility makes them invaluable for studying complex biological systems, from tissue repair mechanisms to metabolic pathways and hormone signaling.
-              </p>
-              <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">Types of Research Peptides</h3>
-              <p className="mb-4">
-                Research peptides can be categorized into several types based on their structure and function. Receptor agonists activate specific receptors, mimicking natural ligands to study cellular responses. Hormone analogs replicate the structure and function of natural hormones, allowing researchers to investigate endocrine systems. Growth factor compounds stimulate cell growth and differentiation, essential for tissue culture and regenerative medicine research. Antioxidant compounds help researchers understand oxidative stress and cellular protection mechanisms.
-              </p>
-              <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">Applications in Laboratory Research</h3>
-              <p className="mb-4">
-                Research peptides have diverse applications across multiple scientific disciplines. In tissue repair research, peptides like BPC-157 are studied for their potential role in wound healing and tissue regeneration. Metabolic research utilizes peptides such as tirzepatide and retatrutide to investigate glucose metabolism, insulin signaling, and energy balance. Hormone research employs analogs like tesamorelin to study growth hormone pathways and endocrine function.
-              </p>
-              <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">Safety and Handling Guidelines</h3>
-              <p className="mb-4">
-                Proper handling of research peptides is essential for maintaining their integrity and ensuring laboratory safety. All research peptides should be handled in a controlled laboratory environment by qualified researchers. Personal protective equipment, including gloves and lab coats, should be worn when handling these compounds. Work surfaces should be decontaminated after use, and all materials should be disposed of according to laboratory waste protocols.
-              </p>
-              <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">Storage Requirements</h3>
-              <p className="mb-4">
-                Research peptides are typically supplied as lyophilized (freeze-dried) powders that require proper storage to maintain stability. Unreconstituted peptides should be stored at temperatures between 2-8°C for short-term storage or at -20°C for long-term preservation. Once reconstituted, peptides should be aliquoted to avoid repeated freeze-thaw cycles and stored at -20°C. Proper storage ensures peptide stability and maintains research integrity.
-              </p>
-              <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">Legal Considerations - Research Use Only</h3>
-              <p className="mb-4">
-                All products from Purgo Labs are sold strictly for Research Use Only (RUO). These compounds are intended exclusively for laboratory research, analytical testing, and scientific investigation. They are not approved for human consumption, veterinary use, or any therapeutic applications. Researchers must comply with all applicable local, state, and federal regulations regarding the purchase, storage, and use of research compounds. It is the responsibility of the purchaser to ensure compliance with all relevant laws and regulations.
-              </p>
-            </div>
-          </Accordion>
-
-          <Accordion title="Research Applications & Use Cases">
-            <div className="prose prose-lg max-w-none text-gray-700">
-              <p className="mb-4">
-                Research peptides serve as powerful tools across numerous scientific disciplines, enabling researchers to investigate complex biological processes and develop new understanding of cellular mechanisms. The applications of research peptides span from basic science to applied research, contributing to advances in medicine, biology, and biotechnology.
-              </p>
-              <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">Tissue Repair and Wound Healing Research</h3>
-              <p className="mb-4">
-                Peptides like BPC-157 are extensively studied for their potential role in tissue repair and wound healing mechanisms. Researchers investigate how these compounds influence angiogenesis, fibroblast migration, and extracellular matrix formation. Studies focus on understanding the molecular pathways involved in tissue regeneration, which may contribute to future therapeutic developments in regenerative medicine.
-              </p>
-              <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">Metabolic Pathway Studies</h3>
-              <p className="mb-4">
-                Metabolic research utilizes peptides such as tirzepatide and retatrutide to study glucose metabolism, insulin signaling, and energy balance. These dual and triple agonist peptides allow researchers to investigate how multiple receptor pathways interact to regulate metabolic processes. Research in this area contributes to understanding metabolic diseases and potential therapeutic approaches.
-              </p>
-              <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">Hormone Receptor Research</h3>
-              <p className="mb-4">
-                Hormone analogs like tesamorelin enable researchers to study growth hormone releasing hormone (GHRH) pathways and their effects on various physiological processes. These studies investigate hormone-receptor interactions, signal transduction mechanisms, and downstream cellular responses. Such research contributes to understanding endocrine function and hormone-related conditions.
-              </p>
-              <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">Cellular Signaling Research</h3>
-              <p className="mb-4">
-                Research peptides are essential tools for studying cellular signaling pathways. Peptides like IGF-1 LR3 allow researchers to investigate growth factor signaling, including PI3K/Akt and MAPK pathways. These studies help understand how cells respond to external signals and regulate processes such as growth, differentiation, and survival.
-              </p>
-              <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">Antioxidant Research</h3>
-              <p className="mb-4">
-                Antioxidant compounds like glutathione are studied to understand oxidative stress mechanisms and cellular protection systems. Researchers investigate how these compounds neutralize reactive oxygen species, maintain cellular redox balance, and protect against oxidative damage. This research contributes to understanding aging, disease processes, and cellular health.
-              </p>
-            </div>
-          </Accordion>
-
-          <Accordion title="Our Quality Standards & Testing">
-            <div className="prose prose-lg max-w-none text-gray-700">
-              <p className="mb-4">
-                At Purgo Labs, quality is our highest priority. Every product undergoes rigorous testing and verification to ensure the highest standards of purity, potency, and consistency. Our comprehensive quality assurance process includes multiple analytical techniques and independent third-party verification.
-              </p>
-              <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">HPLC Verification Process</h3>
-              <p className="mb-4">
-                High-Performance Liquid Chromatography (HPLC) is a primary analytical method used to verify peptide purity and identity. This technique separates and quantifies peptide components, allowing us to confirm that each product meets our strict purity standards. HPLC analysis provides detailed information about peptide composition, identifying any impurities or degradation products that may be present.
-              </p>
-              <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">Mass Spectrometry Analysis</h3>
-              <p className="mb-4">
-                Mass spectrometry provides definitive confirmation of peptide identity and molecular weight. This analytical technique allows us to verify that each peptide matches its expected structure and molecular composition. Mass spectrometry analysis ensures that products are correctly synthesized and free from structural modifications or contaminants.
-              </p>
-              <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">Certificate of Analysis (COA)</h3>
-              <p className="mb-4">
-                Every product from Purgo Labs comes with a Certificate of Analysis (COA) that documents the analytical testing results. The COA includes information about purity percentage, molecular weight verification, and analytical method used. This documentation provides researchers with complete transparency about product quality and allows for verification of product specifications.
-              </p>
-              <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">Purity Standards</h3>
-              <p className="mb-4">
-                We maintain strict purity standards for all our research peptides, typically requiring 99% or greater purity for most products. This high level of purity ensures that research results are not compromised by impurities or contaminants. Our quality control processes are designed to consistently meet or exceed these standards across all product batches.
-              </p>
-              <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">Storage and Handling Protocols</h3>
-              <p className="mb-4">
-                Proper storage and handling are essential for maintaining product quality. All products are stored under controlled conditions that preserve stability and prevent degradation. We provide detailed storage instructions with each product to ensure researchers can maintain optimal conditions throughout the product lifecycle.
-              </p>
-              <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">Batch Testing Procedures</h3>
-              <p className="mb-4">
-                Every production batch undergoes comprehensive testing before release. Our batch testing procedures include identity confirmation, purity analysis, and stability testing. This rigorous approach ensures that every product meets our quality standards and provides consistent results for researchers.
+                We believe in simple, well-made clothing that holds up to your lifestyle. Every product is designed with attention to fit, fabric, and durability so you get pieces you’ll actually want to wear again and again.
               </p>
             </div>
           </Accordion>
@@ -444,63 +363,15 @@ export default function HomeClient({ featuredProducts }: HomeClientProps) {
           <Accordion title="Frequently Asked Questions">
             <div className="prose prose-lg max-w-none text-gray-700">
               <div className="mb-6">
-                <h3 className="text-lg font-bold text-gray-900 mb-2">What are research peptides?</h3>
-                <p className="text-gray-700">
-                  Research peptides are short chains of amino acids used in laboratory research to study biological processes, cellular signaling, and molecular interactions. They are synthetic or naturally-derived compounds designed for scientific investigation and are not intended for human or veterinary use.
-                </p>
-              </div>
-              <div className="mb-6">
-                <h3 className="text-lg font-bold text-gray-900 mb-2">How should research peptides be stored?</h3>
-                <p className="text-gray-700">
-                  Unreconstituted lyophilized peptides should be stored at 2-8°C for short-term storage or -20°C for long-term preservation. Once reconstituted, peptides should be aliquoted and stored at -20°C to avoid repeated freeze-thaw cycles. Always follow the specific storage instructions provided with each product.
-                </p>
-              </div>
-              <div className="mb-6">
-                <h3 className="text-lg font-bold text-gray-900 mb-2">What is a Certificate of Analysis (COA)?</h3>
-                <p className="text-gray-700">
-                  A Certificate of Analysis is a document that provides detailed information about the analytical testing performed on a specific product batch. It includes purity percentage, molecular weight verification, and the analytical methods used. COAs are available for all Purgo Labs products.
-                </p>
-              </div>
-              <div className="mb-6">
-                <h3 className="text-lg font-bold text-gray-900 mb-2">How do I reconstitute research peptides?</h3>
-                <p className="text-gray-700">
-                  Research peptides are typically reconstituted using bacteriostatic water (BAC water) or sterile diluent. The specific reconstitution protocol depends on the peptide and should be followed according to the product instructions. Generally, peptides are reconstituted at concentrations appropriate for the intended research application.
-                </p>
-              </div>
-              <div className="mb-6">
-                <h3 className="text-lg font-bold text-gray-900 mb-2">What is the purity of your peptides?</h3>
-                <p className="text-gray-700">
-                  Most Purgo Labs peptides have a purity of 99% or greater, as verified by HPLC and mass spectrometry analysis. The exact purity percentage for each product is documented in the Certificate of Analysis provided with each purchase.
-                </p>
-              </div>
-              <div className="mb-6">
-                <h3 className="text-lg font-bold text-gray-900 mb-2">Are your products tested by third-party laboratories?</h3>
-                <p className="text-gray-700">
-                  Yes, all products undergo rigorous third-party testing using HPLC and mass spectrometry to verify purity, identity, and quality. These independent tests ensure that our products meet the highest standards for research use.
-                </p>
-              </div>
-              <div className="mb-6">
-                <h3 className="text-lg font-bold text-gray-900 mb-2">What does Research Use Only (RUO) mean?</h3>
-                <p className="text-gray-700">
-                  Research Use Only means that products are intended exclusively for laboratory research, analytical testing, and scientific investigation. They are not approved for human consumption, veterinary use, or therapeutic applications. Researchers must comply with all applicable regulations.
-                </p>
-              </div>
-              <div className="mb-6">
-                <h3 className="text-lg font-bold text-gray-900 mb-2">How long do peptides remain stable?</h3>
-                <p className="text-gray-700">
-                  Lyophilized peptides, when stored properly at -20°C, can remain stable for 24-36 months. Once reconstituted, peptides should be used promptly or stored at -20°C in aliquots to maintain stability. Always refer to the specific product documentation for stability information.
-                </p>
-              </div>
-              <div className="mb-6">
                 <h3 className="text-lg font-bold text-gray-900 mb-2">What shipping methods do you offer?</h3>
                 <p className="text-gray-700">
-                  We offer various shipping options with full tracking capabilities. Orders are typically processed within 24 hours. Shipping methods and estimated delivery times are available during checkout. All products are shipped in temperature-controlled packaging when necessary.
+                  We offer various shipping options with full tracking. Orders are typically processed within 24 hours. Shipping methods and estimated delivery times are available during checkout.
                 </p>
               </div>
               <div className="mb-6">
-                <h3 className="text-lg font-bold text-gray-900 mb-2">Can I request additional testing or documentation?</h3>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">How can I contact support?</h3>
                 <p className="text-gray-700">
-                  Yes, researchers can request additional analytical data or documentation for specific research needs. Please contact our support team to discuss your requirements. We're committed to supporting your research with comprehensive product information.
+                  Reach out via our contact page or email support. We’re happy to help with orders, sizing, or any questions about our products.
                 </p>
               </div>
             </div>
@@ -515,15 +386,15 @@ export default function HomeClient({ featuredProducts }: HomeClientProps) {
         data={{
           "@context": "https://schema.org",
           "@type": "Organization",
-          name: "Purgo Labs",
-          legalName: "PurgoLabs LLC",
-          url: "https://www.purgolabs.com",
-          logo: "https://www.purgolabs.com/logo.png",
-          description: "Premium-quality, lab-tested research peptides for laboratory applications. Buy research peptides online with 99%+ purity verification.",
+          name: "Purgo Style Labs",
+          legalName: "Purgo Style Labs",
+          url: "https://www.purgostyle.com",
+          logo: "https://www.purgostyle.com/logo.png",
+          description: "Purgo Style Labs – Arizona activewear and premium tees. Quality you can feel.",
           contactPoint: {
             "@type": "ContactPoint",
             contactType: "Customer Service",
-            email: "support@purgolabs.com",
+            email: "support@purgostyle.com",
             availableLanguage: "English",
             areaServed: "US",
           },
@@ -545,12 +416,12 @@ export default function HomeClient({ featuredProducts }: HomeClientProps) {
         data={{
           "@context": "https://schema.org",
           "@type": "LocalBusiness",
-          "@id": "https://www.purgolabs.com",
-          name: "Purgo Labs",
-          legalName: "PurgoLabs LLC",
-          image: "https://www.purgolabs.com/logo.png",
-          url: "https://www.purgolabs.com",
-          email: "support@purgolabs.com",
+          "@id": "https://www.purgostyle.com",
+          name: "Purgo Style Labs",
+          legalName: "Purgo Style Labs",
+          image: "https://www.purgostyle.com/logo.png",
+          url: "https://www.purgostyle.com",
+          email: "support@purgostyle.com",
           openingHoursSpecification: [
             {
               "@type": "OpeningHoursSpecification",
@@ -560,7 +431,6 @@ export default function HomeClient({ featuredProducts }: HomeClientProps) {
             },
           ],
           priceRange: "$$",
-          servesCuisine: "Research Peptides",
           areaServed: {
             "@type": "Country",
             name: "United States",
@@ -571,26 +441,24 @@ export default function HomeClient({ featuredProducts }: HomeClientProps) {
         data={{
           "@context": "https://schema.org",
           "@type": "WebSite",
-          name: "Purgo Labs",
-          url: "https://www.purgolabs.com",
+          name: "Purgo Style Labs",
+          url: "https://www.purgostyle.com",
           potentialAction: {
             "@type": "SearchAction",
-            target: "https://www.purgolabs.com/products?search={search_term_string}",
+            target: "https://www.purgostyle.com/products?search={search_term_string}",
             "query-input": "required name=search_term_string",
           },
         }}
       />
-      {/* Main site navigation - helps search engines understand key links (e.g. for sitelinks) */}
       <StructuredData
         data={{
           "@context": "https://schema.org",
           "@type": "ItemList",
           itemListElement: [
-            { "@type": "ListItem", position: 1, name: "Buy Peptides", url: "https://www.purgolabs.com/products" },
-            { "@type": "ListItem", position: 2, name: "About", url: "https://www.purgolabs.com/about" },
-            { "@type": "ListItem", position: 3, name: "Contact", url: "https://www.purgolabs.com/contact" },
-            { "@type": "ListItem", position: 4, name: "Research", url: "https://www.purgolabs.com/research" },
-            { "@type": "ListItem", position: 5, name: "Blog", url: "https://www.purgolabs.com/blog" },
+            { "@type": "ListItem", position: 1, name: "Products", url: "https://www.purgostyle.com/products" },
+            { "@type": "ListItem", position: 2, name: "About", url: "https://www.purgostyle.com/about" },
+            { "@type": "ListItem", position: 3, name: "Contact", url: "https://www.purgostyle.com/contact" },
+            { "@type": "ListItem", position: 4, name: "Blog", url: "https://www.purgostyle.com/blog" },
           ],
         }}
       />

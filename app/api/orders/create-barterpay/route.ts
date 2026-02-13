@@ -123,7 +123,7 @@ export async function POST(req: Request) {
     // Get base URL for callbacks
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || process.env.VERCEL_URL
       ? `https://${process.env.VERCEL_URL}`
-      : "https://www.purgolabs.com";
+      : "https://www.purgostyle.com";
 
     // Create transaction with BarterPay
     let barterPayTransaction;

@@ -32,8 +32,7 @@ export default function ProductComingSoon({ productName, slug: _slug }: ProductC
             
             <p className="text-xl text-slate-700 mb-8 leading-relaxed">
               We're currently working on adding <strong>{productName}</strong> to our catalog. 
-              This premium research-grade peptide will be available soon with the same quality standards 
-              and purity verification you expect from Purgo Labs.
+              It will be available soon with the same quality standards you expect from Purgo Style Labs.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -168,7 +167,7 @@ export default function ProductComingSoon({ productName, slug: _slug }: ProductC
         <div className="container-custom">
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-sm leading-relaxed">
-              <strong>Research Use Only:</strong> All products from Purgo Labs are intended solely for 
+              <strong>Research Use Only:</strong> All products from Purgo Style Labs are intended solely for 
               laboratory research, analytical, and educational purposes. Not for human or veterinary 
               consumption. Researchers must comply with all applicable laws and regulations.
             </p>

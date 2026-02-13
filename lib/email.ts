@@ -28,7 +28,7 @@ function getEmailWrapper(content: string, orderNumber?: string) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Purgo Labs</title>
+  <title>Purgo Style Labs</title>
 </head>
 <body style="margin: 0; padding: 0; background-color: #f4f4f4; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
   <table role="presentation" style="width: 100%; border-collapse: collapse;">
@@ -41,7 +41,7 @@ function getEmailWrapper(content: string, orderNumber?: string) {
               <table role="presentation" style="width: 100%;">
                 <tr>
                   <td style="font-size: 24px; font-weight: 400; color: #333333;">
-                    Purgo Labs
+                    Purgo Style Labs
                   </td>
                   ${orderNumber ? `
                   <td style="text-align: right; font-size: 14px; color: #999999;">
@@ -242,17 +242,17 @@ export async function sendPasswordResetEmail(email: string, resetUrl: string) {
   try {
     await sendEmail({
       to: email,
-      subject: "Reset Your Password - Purgo Labs",
+      subject: "Reset Your Password - Purgo Style Labs",
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #1890ff;">Reset Your Password</h2>
-          <p>You requested to reset your password for your Purgo Labs account.</p>
+          <p>You requested to reset your password for your Purgo Style Labs account.</p>
           <p>Click the button below to reset your password:</p>
           <a href="${resetUrl}" style="display: inline-block; padding: 12px 24px; background-color: #1890ff; color: white; text-decoration: none; border-radius: 6px; margin: 20px 0;">Reset Password</a>
           <p>If you didn't request this, you can safely ignore this email.</p>
           <p>This link will expire in 1 hour.</p>
           <hr style="margin: 30px 0; border: none; border-top: 1px solid #eee;">
-          <p style="color: #666; font-size: 12px;">Purgo Labs - Premium Research Peptides</p>
+          <p style="color: #666; font-size: 12px;">Purgo Style Labs</p>
         </div>
       `,
     });
@@ -335,7 +335,7 @@ export async function sendOrderConfirmationEmail(
   try {
     await sendEmail({
       to: email,
-      subject: `Order #${orderNumber} confirmed - Purgo Labs`,
+      subject: `Order #${orderNumber} confirmed - Purgo Style Labs`,
       html: getEmailWrapper(content, `#${orderNumber}`),
     });
   } catch (error) {
@@ -397,7 +397,7 @@ export async function sendShippingNotificationEmail(
   try {
     await sendEmail({
       to: email,
-      subject: `Your order #${orderNumber} has shipped - Purgo Labs`,
+      subject: `Your order #${orderNumber} has shipped - Purgo Style Labs`,
       html: getEmailWrapper(content, `#${orderNumber}`),
     });
   } catch (error) {
@@ -562,7 +562,7 @@ export async function sendOrderStatusChangeEmail(
   try {
     await sendEmail({
       to: email,
-      subject: `Order #${orderNumber} - ${status.title} - Purgo Labs`,
+      subject: `Order #${orderNumber} - ${status.title} - Purgo Style Labs`,
       html: getEmailWrapper(content, `#${orderNumber}`),
     });
   } catch (error) {
@@ -652,7 +652,7 @@ export async function sendPaymentConfirmationEmail(
   try {
     await sendEmail({
       to: email,
-      subject: `Payment received for order #${orderNumber} - Purgo Labs`,
+      subject: `Payment received for order #${orderNumber} - Purgo Style Labs`,
       html: getEmailWrapper(content, `#${orderNumber}`),
     });
   } catch (error) {
@@ -731,7 +731,7 @@ export async function sendTrackingUpdateEmail(
   try {
     await sendEmail({
       to: email,
-      subject: `${statusInfo.icon} ${statusInfo.title} - Order #${orderNumber} - Purgo Labs`,
+      subject: `${statusInfo.icon} ${statusInfo.title} - Order #${orderNumber} - Purgo Style Labs`,
       html: getEmailWrapper(content, `#${orderNumber}`),
     });
   } catch (error) {
@@ -776,7 +776,7 @@ export async function sendTrackingNumberUpdateEmail(
   try {
     await sendEmail({
       to: email,
-      subject: `Tracking updated for order #${orderNumber} - Purgo Labs`,
+      subject: `Tracking updated for order #${orderNumber} - Purgo Style Labs`,
       html: getEmailWrapper(content, `#${orderNumber}`),
     });
   } catch (error) {
@@ -888,7 +888,7 @@ export async function sendOrderNotificationToSupport(
             <h3 style="margin-top: 0; color: #d97706;">⚠️ Action Required</h3>
             <p style="color: #92400e; font-weight: bold;">This order is pending payment. Please wait for payment confirmation before processing.</p>
             ${orderDetails.paymentMethod === "ZELLE" ? `
-              <p style="color: #92400e; margin-top: 10px;">Payment should be sent to orders@purgostyle.com with memo "purgo labs".</p>
+              <p style="color: #92400e; margin-top: 10px;">Payment should be sent to orders@purgostyle.com with memo "purgo style labs".</p>
             ` : orderDetails.paymentMethod === "VENMO" ? `
               <p style="color: #92400e; margin-top: 10px;">Payment should be sent to @purgolabs on Venmo with note "Online Goods".</p>
             ` : orderDetails.paymentMethod === "CREDIT_CARD" ? `
@@ -900,7 +900,7 @@ export async function sendOrderNotificationToSupport(
           ` : ''}
 
           <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; color: #666; font-size: 14px;">
-            <p>This is an automated notification from the Purgo Labs website.</p>
+            <p>This is an automated notification from the Purgo Style Labs website.</p>
             <p>Order details can be viewed in the admin panel.</p>
           </div>
         </div>
@@ -971,7 +971,7 @@ export async function sendDiscountCodeRequestNotification(email: string) {
             </p>
 
             <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb; color: #9ca3af; font-size: 12px;">
-              <p style="margin: 0;">This is an automated notification from the Purgo Labs website.</p>
+              <p style="margin: 0;">This is an automated notification from the Purgo Style Labs website.</p>
             </div>
           </div>
         </div>
@@ -1024,7 +1024,7 @@ export async function sendAccountCreationNotification(
             </p>
 
             <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb; color: #9ca3af; font-size: 12px;">
-              <p style="margin: 0;">This is an automated notification from the Purgo Labs website.</p>
+              <p style="margin: 0;">This is an automated notification from the Purgo Style Labs website.</p>
             </div>
           </div>
         </div>
@@ -1089,7 +1089,7 @@ export async function sendDiscountCodeRetargetingEmail(email: string, discountCo
             </p>
 
             <p style="color: #9ca3af; font-size: 12px; margin-top: 30px; text-align: center;">
-              Purgo Labs - Premium Research Peptides<br>
+              Purgo Style Labs<br>
               <a href="https://www.purgostyle.com/unsubscribe?email=${encodeURIComponent(email)}" 
                  style="color: #0e7490; text-decoration: underline;">
                 Manage your email preferences</a>
@@ -1158,7 +1158,7 @@ export async function sendZellePaymentInstructions(
         <tr>
           <td style="padding: 16px; background-color: #fef3c7; border-radius: 8px;">
             <p style="margin: 0 0 4px 0; font-size: 12px; color: #92400e; text-transform: uppercase; letter-spacing: 0.5px;">Memo (Required)</p>
-            <p style="margin: 0 0 8px 0; font-size: 16px; font-weight: 600; color: #92400e;">purgo labs</p>
+            <p style="margin: 0 0 8px 0; font-size: 16px; font-weight: 600; color: #92400e;">purgo style labs</p>
             <p style="margin: 0; font-size: 12px; color: #92400e;">⚠️ Do not mention product names in the memo.</p>
           </td>
         </tr>
@@ -1188,7 +1188,7 @@ export async function sendZellePaymentInstructions(
   try {
     await sendEmail({
       to: email,
-      subject: `Complete your payment - Order #${orderNumber} - Purgo Labs`,
+      subject: `Complete your payment - Order #${orderNumber} - Purgo Style Labs`,
       html: getEmailWrapper(content, `#${orderNumber}`),
     });
   } catch (error) {
@@ -1289,7 +1289,7 @@ export async function sendVenmoPaymentInstructions(
   try {
     await sendEmail({
       to: email,
-      subject: `Complete your payment - Order #${orderNumber} - Purgo Labs`,
+      subject: `Complete your payment - Order #${orderNumber} - Purgo Style Labs`,
       html: getEmailWrapper(content, `#${orderNumber}`),
     });
   } catch (error) {
@@ -1388,7 +1388,7 @@ export async function sendCreditCardPaymentInstructions(
   try {
     await sendEmail({
       to: email,
-      subject: `Complete your payment - Order #${orderNumber} - Purgo Labs`,
+      subject: `Complete your payment - Order #${orderNumber} - Purgo Style Labs`,
       html: getEmailWrapper(content, `#${orderNumber}`),
     });
   } catch (error) {
@@ -1482,7 +1482,7 @@ export async function sendCryptoPaymentInstructions(
   try {
     await sendEmail({
       to: email,
-      subject: `Complete your payment - Order #${orderNumber} - Purgo Labs`,
+      subject: `Complete your payment - Order #${orderNumber} - Purgo Style Labs`,
       html: getEmailWrapper(content, `#${orderNumber}`),
     });
   } catch (error) {
@@ -1526,10 +1526,10 @@ export async function sendPaymentReminderEmail(
     <div style="background-color: #fef3c7; padding: 15px; border-radius: 8px; margin: 15px 0; border: 1px solid #fbbf24;">
       <p style="font-weight: bold; margin-bottom: 10px; color: #92400e;">Memo (Required):</p>
       <div style="background-color: white; padding: 12px; border-radius: 6px; border: 1px solid #f59e0b;">
-        <code style="font-size: 16px; color: #1f2937;">purgo labs</code>
+        <code style="font-size: 16px; color: #1f2937;">purgo style labs</code>
       </div>
       <p style="font-size: 12px; color: #92400e; margin-top: 8px;">
-        ⚠️ Do not mention product names or the word "peptides" in the memo.
+        ⚠️ Do not mention product names in the memo.
       </p>
     </div>
 
@@ -1605,7 +1605,7 @@ export async function sendPaymentReminderEmail(
   try {
     await sendEmail({
       to: email,
-      subject: `⏰ Reminder: Complete Your Payment - Order #${orderNumber} - Purgo Labs`,
+      subject: `⏰ Reminder: Complete Your Payment - Order #${orderNumber} - Purgo Style Labs`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #f59e0b;">Payment Reminder</h2>
@@ -1647,7 +1647,7 @@ export async function sendPaymentReminderEmail(
           </div>
 
           <hr style="margin: 30px 0; border: none; border-top: 1px solid #eee;">
-          <p style="color: #666; font-size: 12px;">Purgo Labs - Premium Research Peptides</p>
+          <p style="color: #666; font-size: 12px;">Purgo Style Labs</p>
         </div>
       `,
     });
@@ -1667,7 +1667,7 @@ export async function sendAffiliateInviteEmail(email: string, inviteUrl: string)
       You're Invited!
     </h1>
     <p style="margin: 0 0 24px 0; font-size: 16px; color: #666666; line-height: 1.6;">
-      We'd like to invite you to join the Purgo Labs Affiliate Program. Earn commissions on every sale you refer!
+      We'd like to invite you to join the Purgo Style Labs Affiliate Program. Earn commissions on every sale you refer!
     </p>
     
     <!-- Highlight Box -->
@@ -1779,7 +1779,7 @@ export async function sendAffiliateInviteEmail(email: string, inviteUrl: string)
   try {
     await sendEmail({
       to: email,
-      subject: "You're Invited to Join the Purgo Labs Affiliate Program",
+      subject: "You're Invited to Join the Purgo Style Labs Affiliate Program",
       html: getEmailWrapper(content),
     });
   } catch (error) {
