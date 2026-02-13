@@ -20,6 +20,9 @@ export const metadata: Metadata = {
   creator: "Purgo Style",
   publisher: "Purgo Style",
   robots: { index: true, follow: true },
+  verification: {
+    google: "rZpt5wvHCgLFnHfK_DW3fo5_wo7OOSkZjn8rc9v3XcE",
+  },
   icons: { icon: '/logo-small-copy.png', apple: '/logo-small-copy.png' },
   openGraph: {
     type: 'website',
