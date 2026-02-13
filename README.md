@@ -21,9 +21,10 @@ Copy `.env.example` to `.env.local` and fill in the values below.
    ```
    If your password contains special characters (e.g. `#`, `@`, `%`), [URL-encode](https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding) them (e.g. `#` → `%23`).
 5. **Why “can’t reach database server” or connection fails:**
-   - **Direct URL (port 5432)** from Supabase often fails on serverless (Vercel) due to connection limits and timeouts. Use the **pooler** URL (port **6543**, Transaction mode) as above.
-   - Ensure you replaced `[YOUR-PASSWORD]` with the real password.
-   - Ensure `DATABASE_URL` is set in the environment where the app runs (e.g. Vercel → Project → Settings → Environment Variables).
+   - Use the **pooler** URL with port **6543** (Transaction mode). Do **not** use the direct URL (port 5432) for serverless/Vercel.
+   - If Supabase shows **“Not IPv4 compatible”** for the Dedicated Pooler, use **“Using the Shared Pooler”** instead (IPv4 compatible). Copy that connection string and replace `[YOUR-PASSWORD]` the same way.
+   - Ensure you replaced `[YOUR-PASSWORD]` with the real password (no literal `[YOUR-PASSWORD]` in the URL).
+   - Ensure `DATABASE_URL` is set where the app runs (e.g. Vercel → Settings → Environment Variables). Use `postgresql://` or `postgres://`; both work with Prisma.
    - If the project was paused, restore it and wait a minute before retrying.
 
 **Do you need Supabase anon key or service role?** For this app, **no**. We use NextAuth with Prisma and only talk to the database via `DATABASE_URL`. Supabase’s **anon** (public) and **service_role** keys are for Supabase Auth and Row Level Security when you use the Supabase client. Here we use NextAuth for auth and Prisma for DB, so only `DATABASE_URL` is required from Supabase.
