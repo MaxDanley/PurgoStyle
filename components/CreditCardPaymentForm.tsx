@@ -41,8 +41,6 @@ export default function CreditCardPaymentForm({
   const router = useRouter();
   const [isProcessing, setIsProcessing] = useState(false);
   const [paymentError, setPaymentError] = useState<string | null>(null);
-  const [complianceChecked, setComplianceChecked] = useState(false);
-  const [showComplianceError, setShowComplianceError] = useState(false);
   const hasAutoCopiedRef = useRef(false);
 
   // Auto-copy order amount to clipboard when form is shown (once per mount/total)
@@ -57,13 +55,6 @@ export default function CreditCardPaymentForm({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (!complianceChecked) {
-      setShowComplianceError(true);
-      return;
-    }
-
-    setShowComplianceError(false);
     setIsProcessing(true);
     setPaymentError(null);
 
@@ -142,34 +133,9 @@ export default function CreditCardPaymentForm({
         </p>
       </div>
 
-      <div className="space-y-2">
-        <label htmlFor="cc-research-confirmation" className="flex items-start gap-3 text-sm text-gray-700">
-          <input
-            id="cc-research-confirmation"
-            type="checkbox"
-            checked={complianceChecked}
-            onChange={(event) => {
-              setComplianceChecked(event.target.checked);
-              if (event.target.checked) {
-                setShowComplianceError(false);
-              }
-            }}
-            className="mt-1 h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
-          />
-          <span>
-            I confirm that I am 18 years of age or older and that my order is for personal use.
-          </span>
-        </label>
-        {showComplianceError && (
-          <p className="text-sm text-red-600">
-            Please confirm you are 18+ and agree before proceeding.
-          </p>
-        )}
-      </div>
-
       <button
         type="submit"
-        disabled={isProcessing || !complianceChecked}
+        disabled={isProcessing}
         className="btn-primary w-full flex items-center justify-center gap-2 text-lg py-4"
       >
         {isProcessing ? "Creating order…" : (
