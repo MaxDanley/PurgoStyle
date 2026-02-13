@@ -157,13 +157,12 @@ export default function CreditCardPaymentForm({
             className="mt-1 h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
           />
           <span>
-            I confirm that I am 21 years of age or older and that all compounds in this order will be used strictly
-            for laboratory and scientific research purposes only.
+            I confirm that I am 18 years of age or older and that my order is for personal use.
           </span>
         </label>
         {showComplianceError && (
           <p className="text-sm text-red-600">
-            Please acknowledge the age and research-use confirmation before proceeding.
+            Please confirm you are 18+ and agree before proceeding.
           </p>
         )}
       </div>

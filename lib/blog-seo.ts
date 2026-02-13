@@ -103,7 +103,7 @@ export function generateStructuredData(
       "@id": url
     },
     "keywords": extractKeywordsFromContent(content),
-    "articleSection": "Research Peptides",
+    "articleSection": "Products",
     "inLanguage": "en-US",
     // Add images array for better SEO
     "associatedMedia": imageObjects.length > 0 ? imageObjects : undefined
@@ -178,7 +178,7 @@ export function generateInternalLinks(
   }
 
   if (links.length < maxLinks) {
-    links.push({ text: "Research Peptides", url: "/products" });
+    links.push({ text: "Products", url: "/products" });
   }
   return links;
 }

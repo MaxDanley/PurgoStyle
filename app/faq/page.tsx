@@ -9,7 +9,7 @@ const faqData: { question: string; answer: string }[] = [
   },
   {
     question: "What is your return policy?",
-    answer: "We offer a 30-day return policy for unworn items with tags attached. Items must be in original condition. Contact support@purgostyle.com to start a return."
+    answer: "We offer a 30-day return policy for unworn items with tags attached. Items must be in original condition. Contact hello@purgostyle.com to start a return."
   },
   {
     question: "How do I track my order?",

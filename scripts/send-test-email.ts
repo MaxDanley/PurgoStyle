@@ -48,11 +48,11 @@ async function sendTestEmail() {
     }
 
     // Send the email
-    console.log("\n📧 Sending test email to support@purgostyle.com...");
+    console.log("\n📧 Sending test email to hello@purgostyle.com...");
     
     const result = await resend.emails.send({
       from: fromEmail,
-      to: "support@purgostyle.com",
+      to: "hello@purgostyle.com",
       subject: "Test Email - Purgo Style Labs Template",
       html: htmlContent,
     });

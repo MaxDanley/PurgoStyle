@@ -17,7 +17,7 @@ const getResend = () => {
 
 const fromEmail = process.env.EMAIL_FROM || "noreply@purgostyle.com";
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://www.purgostyle.com";
-const supportEmail = process.env.SUPPORT_EMAIL || "support@purgostyle.com";
+const supportEmail = process.env.SUPPORT_EMAIL || "hello@purgostyle.com";
 
 // Shopify-style email template wrapper
 function getEmailWrapper(content: string, orderNumber?: string) {
@@ -64,7 +64,7 @@ function getEmailWrapper(content: string, orderNumber?: string) {
             <td style="padding: 24px 40px; background-color: #fafafa; border-top: 1px solid #e5e5e5;">
               <p style="margin: 0; font-size: 13px; color: #999999; line-height: 1.5;">
                 If you have any questions, reply to this email or contact us at<br>
-                <a href="mailto:support@purgostyle.com" style="color: #1a73e8; text-decoration: none;">support@purgostyle.com</a>
+                <a href="mailto:hello@purgostyle.com" style="color: #1a73e8; text-decoration: none;">hello@purgostyle.com</a>
               </p>
             </td>
           </tr>
@@ -800,7 +800,7 @@ export async function sendOrderNotificationToSupport(
 
   try {
     await sendEmail({
-      to: "support@purgostyle.com",
+      to: "hello@purgostyle.com",
       subject: `New Order Received: #${orderNumber} - ${paymentStatusText.includes("PENDING") ? "PENDING PAYMENT" : "PAID"}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 700px; margin: 0 auto;">
@@ -882,7 +882,7 @@ export async function sendAffiliatePayoutRequestEmail(details: {
   const { affiliateName, affiliateEmail, discountCode, amount, requestId } = details;
   try {
     await sendEmail({
-      to: "support@purgostyle.com",
+      to: "hello@purgostyle.com",
       subject: `Affiliate Payout Request: ${affiliateName} ($${amount.toFixed(2)})`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -1528,7 +1528,7 @@ export async function sendPaymentReminderEmail(
               If you're experiencing any issues, please contact our support team immediately.
             </p>
             <p style="color: #1e40af; margin-top: 10px;">
-              <strong>Support:</strong> <a href="mailto:support@purgostyle.com" style="color: #1890ff;">support@purgostyle.com</a>
+              <strong>Support:</strong> <a href="mailto:hello@purgostyle.com" style="color: #1890ff;">hello@purgostyle.com</a>
             </p>
           </div>
 

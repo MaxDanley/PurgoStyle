@@ -71,8 +71,8 @@ export default function ContactPage() {
                 Contact <span className="gradient-text">Purgo Style Labs</span>
               </h1>
               <p className="mt-4 text-lg text-slate-700 max-w-xl">
-                Have a question about an order, documentation, or partnering with us? Our support
-                team is built for research operations, not generic ticket queues.
+                Have a question about an order, sizing, or our tees? Our support team is here to help
+                with orders, returns, and anything about our activewear and premium apparel.
               </p>
               <div className="mt-6 grid gap-4 sm:grid-cols-2 max-w-xl">
                 <div className="glass rounded-2xl p-4 border border-cyan-100">
@@ -81,10 +81,10 @@ export default function ContactPage() {
                   </p>
                   <div className="mt-2 flex items-center gap-2 text-sm text-slate-800">
                     <FaEnvelope className="h-4 w-4 text-cyan-600" />
-                    <span>support@purgostyle.com</span>
+                    <span>hello@purgostyle.com</span>
                   </div>
                   <p className="mt-1 text-xs text-slate-500">
-                    For orders, documentation, and business inquiries.
+                    For orders, sizing, and general inquiries.
                   </p>
                 </div>
                 <div className="glass rounded-2xl p-4 border border-cyan-100">
@@ -110,10 +110,10 @@ export default function ContactPage() {
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-xs font-semibold uppercase tracking-wide text-cyan-700">
-                        Lab-grade support
+                        Real support
                       </p>
                       <p className="mt-1 text-xs text-slate-600">
-                        Get answers that understand your workflows.
+                        Get answers about your order and our tees.
                       </p>
                     </div>
                     <Image
@@ -127,9 +127,8 @@ export default function ContactPage() {
                   <div className="mt-5 rounded-2xl bg-slate-900/95 p-4 text-left text-sm text-slate-100">
                     <p className="font-semibold text-cyan-300">Response expectations</p>
                     <p className="mt-2 text-xs text-slate-300">
-                      We typically respond within one business day. For order‑critical or time‑
-                      sensitive research questions, include your order number and project phase so
-                      we can prioritize accordingly.
+                      We typically respond within one business day. For order questions, include your
+                      order number so we can help you quickly.
                     </p>
                   </div>
                   <div className="mt-4 grid gap-3 text-xs text-slate-600">
@@ -139,11 +138,25 @@ export default function ContactPage() {
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                      <span>COA &amp; documentation requests</span>
+                      <span>Sizing &amp; care questions</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                      <span>Bulk &amp; recurring supply discussions</span>
+                      <span>Wholesale &amp; bulk orders</span>
+                    </div>
+                    <div className="flex items-center gap-2 mt-2 pt-2 border-t border-slate-200">
+                      <a
+                        href="https://www.facebook.com/profile.php?id=61587658187619"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 text-cyan-600 hover:text-cyan-700 font-medium"
+                        aria-label="Follow Purgo Style Labs on Facebook"
+                      >
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                        </svg>
+                        Follow us on Facebook
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -170,10 +183,10 @@ export default function ContactPage() {
                   <h2 className="text-lg font-semibold text-slate-900">Support &amp; orders</h2>
                 </div>
                 <p className="text-sm text-slate-600">
-                  For order questions, tracking, or issues with received materials.
+                  For order questions, tracking, or issues with your order.
                 </p>
                 <p className="mt-2 text-sm font-mono text-slate-800">
-                  support@purgostyle.com
+                  hello@purgostyle.com
                 </p>
               </div>
 
@@ -182,13 +195,13 @@ export default function ContactPage() {
                   <div className="h-9 w-9 rounded-xl bg-cyan-50 flex items-center justify-center text-cyan-600">
                     <FaQuestionCircle className="h-4 w-4" />
                   </div>
-                  <h2 className="text-lg font-semibold text-slate-900">Technical questions</h2>
+                  <h2 className="text-lg font-semibold text-slate-900">Sizing &amp; care</h2>
                 </div>
                 <p className="text-sm text-slate-600">
-                  Clarifications on documentation, COAs, or research‑use restrictions.
+                  Sizing, fabric, care instructions, or product questions.
                 </p>
                 <p className="mt-2 text-sm font-mono text-slate-800">
-                  support@purgostyle.com
+                  hello@purgostyle.com
                 </p>
               </div>
 
@@ -200,7 +213,7 @@ export default function ContactPage() {
                   <h2 className="text-lg font-semibold text-slate-900">Shipping &amp; logistics</h2>
                 </div>
                 <p className="text-sm text-slate-600">
-                  Questions about carriers, transit times, or special handling needs.
+                  Questions about shipping, delivery times, or tracking.
                 </p>
                 <Link
                   href="/shipping"
@@ -219,7 +232,7 @@ export default function ContactPage() {
                   <h2 className="text-lg font-semibold text-slate-900">FAQ &amp; policies</h2>
                 </div>
                 <p className="text-sm text-slate-600">
-                  Start here for common questions on orders, returns, and research‑only use.
+                  Sizing, orders, returns, and shipping.
                 </p>
                 <div className="mt-2 flex flex-col gap-1 text-xs font-semibold text-cyan-700">
                   <Link href="/faq" className="hover:text-cyan-600">
@@ -229,7 +242,7 @@ export default function ContactPage() {
                     → Returns &amp; refunds
                   </Link>
                   <Link href="/disclaimer" className="hover:text-cyan-600">
-                    → Research disclaimer
+                    → Terms &amp; disclaimer
                   </Link>
                 </div>
               </div>
@@ -242,8 +255,8 @@ export default function ContactPage() {
             >
               <h2 className="text-2xl font-bold text-slate-900 mb-2">Send us a message</h2>
               <p className="text-sm text-slate-600 mb-6">
-                Share as much context as you can (order number, product, research context) so we
-                can route your request to the right person on the first reply.
+                Include your order number and product name if your question is about an order, so we
+                can help you quickly.
               </p>
 
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -262,7 +275,7 @@ export default function ContactPage() {
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       className="input-field"
-                      placeholder="Dr. Jane Doe"
+                      placeholder="Your name"
                     />
                   </div>
                   <div>
@@ -279,7 +292,7 @@ export default function ContactPage() {
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       className="input-field"
-                      placeholder="you@institution.edu"
+                      placeholder="you@example.com"
                     />
                   </div>
                 </div>
@@ -316,7 +329,7 @@ export default function ContactPage() {
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     className="input-field"
-                    placeholder="Share details on your question, including any relevant order numbers or research context."
+                    placeholder="Your message—include order number if asking about an order."
                   />
                 </div>
 
@@ -330,8 +343,7 @@ export default function ContactPage() {
               </form>
 
               <p className="mt-4 text-xs text-slate-500">
-                By submitting this form, you confirm that your inquiry relates to laboratory or
-                scientific research. We do not provide guidance on human or animal use.
+                We’ll get back to you within one business day. For order issues, include your order number.
               </p>
             </div>
           </div>

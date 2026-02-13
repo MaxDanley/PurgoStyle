@@ -109,7 +109,7 @@ export default function CommunityFeed({ productKeywords }: CommunityFeedProps) {
         </svg>
         <h3 className="text-xl font-semibold text-gray-900 mb-2">No Posts Found</h3>
         <p className="text-gray-600 mb-6">
-          We're gathering the latest community discussions about research peptides.
+          We're gathering the latest community discussions about Purgo Style Labs and our tees.
         </p>
         <Link
           href="/products"
@@ -127,7 +127,7 @@ export default function CommunityFeed({ productKeywords }: CommunityFeedProps) {
       <div className="mb-8">
         <h2 className="text-2xl font-bold text-gray-900">Latest Community Discussions</h2>
         <p className="text-gray-600 mt-1">
-          {posts.length} {posts.length === 1 ? "post" : "posts"} about research peptides
+          {posts.length} {posts.length === 1 ? "post" : "posts"} about our brand and products
           <span className="text-sm text-gray-500 ml-2">(Updates hourly)</span>
         </p>
       </div>
@@ -269,7 +269,7 @@ export default function CommunityFeed({ productKeywords }: CommunityFeedProps) {
       {/* CTA Section */}
       <div className="mt-12 bg-gradient-to-br from-cyan-50 to-blue-50 rounded-xl p-8 text-center border border-cyan-200">
         <h3 className="text-2xl font-bold text-gray-900 mb-3">
-          Explore Premium Research Peptides
+          Shop our tees &amp; activewear
         </h3>
         <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
           Join customers who trust Purgo Style Labs for quality activewear and apparel. 

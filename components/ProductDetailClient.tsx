@@ -642,35 +642,9 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
                   <h2 className="text-2xl font-bold text-gray-900 mb-4">Product Overview</h2>
                   {renderProductDescription(product.longDescription || product.description)}
 
-                  <div className="mb-6 p-4">
-                    <p className="text-black font-bold text-base mb-2">
-                      Research Use Only Notice
-                    </p>
-                    <p className="text-black text-sm">
-                      This product is supplied solely for laboratory research. It is not intended for human or
-                      veterinary use, ingestion, or diagnostic applications. No dosing or administration support is
-                      provided, and Purgo Style Labs does not promote or endorse any off-label utilization.
-                    </p>
-                  </div>
-
-                  {product.researchAreas && product.researchAreas.length > 0 && (
-                    <>
-                      <h3 className="text-xl font-bold text-gray-900 mb-3">Research Applications</h3>
-                      <div className="flex flex-wrap gap-2">
-                        {product.researchAreas.map((area: string, index: number) => (
-                          <span
-                            key={index}
-                            className="bg-primary-100 text-primary-700 px-3 py-1 rounded-full text-sm font-medium"
-                          >
-                            {area}
-                          </span>
-                        ))}
-                      </div>
-                    </>
-                  )}
                   <p className="mt-4 text-gray-600">
                     <Link href="/products" className="text-primary-600 hover:text-primary-700 font-medium">
-                      Browse all research peptides →
+                      Browse all products →
                     </Link>
                   </p>
                 </div>
@@ -731,7 +705,7 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
                   ) : (
                     <p className="text-gray-600">
                       Detailed chemical property data for this product is currently being compiled. Please check back
-                      soon or contact support@purgostyle.com for assistance.
+                      soon or contact hello@purgostyle.com for assistance.
                     </p>
                   )}
                 </div>
@@ -798,26 +772,10 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
               mainEntity: [
                 {
                   "@type": "Question",
-                  name: `What is ${product.name} used for in research?`,
+                  name: `How should I care for ${product.name}?`,
                   acceptedAnswer: {
                     "@type": "Answer",
-                    text: `${product.name} is used in laboratory research to investigate ${product.researchAreas?.join(", ") || "various biological processes"}. Researchers employ this compound in controlled experimental systems to study cellular mechanisms and biological pathways.`,
-                  },
-                },
-                {
-                  "@type": "Question",
-                  name: `How should I store ${product.name}?`,
-                  acceptedAnswer: {
-                    "@type": "Answer",
-                    text: `Store unreconstituted lyophilized ${product.name} at 2-8°C for short-term storage or -20°C for long-term preservation. Once reconstituted, aliquot and store at -20°C to maintain stability.`,
-                  },
-                },
-                {
-                  "@type": "Question",
-                  name: `What is the purity of ${product.name}?`,
-                  acceptedAnswer: {
-                    "@type": "Answer",
-                    text: `${product.name} is verified to have a purity of 99% or greater as determined by HPLC analysis. The exact purity percentage for each batch is documented in the Certificate of Analysis.`,
+                    text: `Follow the care instructions on the product label. Generally, wash in cold water and tumble dry low or hang dry to maintain quality.`,
                   },
                 },
               ],

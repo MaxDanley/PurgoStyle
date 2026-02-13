@@ -149,7 +149,7 @@ export default function CartPage() {
         items: items.map(item => ({
           itemId: item.productId,
           itemName: item.productName,
-          itemCategory: 'Peptides',
+          itemCategory: 'Apparel',
           price: item.price,
           quantity: item.quantity,
         })),
@@ -183,7 +183,7 @@ export default function CartPage() {
             </svg>
           </div>
           <h1 className="text-3xl font-bold text-gray-900 mb-4">Your Cart is Empty</h1>
-          <p className="text-gray-600 mb-8">Add some research peptides to get started</p>
+          <p className="text-gray-600 mb-8">Add some items to get started</p>
           <Link href="/products" className="btn-primary">
             Browse Products
           </Link>
@@ -304,7 +304,7 @@ export default function CartPage() {
                           trackRemoveFromCart({
                             itemId: item.productId,
                             itemName: item.productName,
-                            itemCategory: 'Peptides',
+                            itemCategory: 'Apparel',
                             price: item.price,
                             quantity: item.quantity,
                             currency: 'USD',

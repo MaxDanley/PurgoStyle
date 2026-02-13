@@ -177,17 +177,17 @@ function UnsubscribeForm() {
                 </button>
               </div>
 
-              {/* Research Updates Toggle */}
+              {/* New arrivals & updates toggle */}
               <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:border-cyan-500 transition-colors">
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
                     <MdScience className="text-cyan-600 text-xl" />
                     <h3 className="font-semibold text-gray-900">
-                      Research Updates
+                      New arrivals &amp; updates
                     </h3>
                   </div>
                   <p className="text-sm text-gray-600">
-                    Latest peptide research and scientific articles
+                    New products, restocks, and offers
                   </p>
                 </div>
                 <button

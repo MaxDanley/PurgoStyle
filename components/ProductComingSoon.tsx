@@ -74,9 +74,9 @@ export default function ProductComingSoon({ productName, slug: _slug }: ProductC
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
-                <h3 className="text-lg font-semibold text-slate-900 mb-2">99%+ Purity</h3>
+                <h3 className="text-lg font-semibold text-slate-900 mb-2">Premium Quality</h3>
                 <p className="text-sm text-slate-600">
-                  HPLC and mass spectrometry verified purity certificates included
+                  Quality fabrics and construction you can trust
                 </p>
               </div>
               
@@ -88,7 +88,7 @@ export default function ProductComingSoon({ productName, slug: _slug }: ProductC
                 </div>
                 <h3 className="text-lg font-semibold text-slate-900 mb-2">Fast Shipping</h3>
                 <p className="text-sm text-slate-600">
-                  Secure packaging with temperature-controlled shipping options
+                  Secure packaging with fast, tracked shipping
                 </p>
               </div>
               
@@ -98,9 +98,9 @@ export default function ProductComingSoon({ productName, slug: _slug }: ProductC
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                   </svg>
                 </div>
-                <h3 className="text-lg font-semibold text-slate-900 mb-2">US Testing</h3>
+                <h3 className="text-lg font-semibold text-slate-900 mb-2">Secure Checkout</h3>
                 <p className="text-sm text-slate-600">
-                  All products tested in US laboratories with full documentation
+                  Safe, secure payment and order processing
                 </p>
               </div>
             </div>
@@ -162,18 +162,6 @@ export default function ProductComingSoon({ productName, slug: _slug }: ProductC
         </div>
       </section>
 
-      {/* Research Disclaimer */}
-      <section className="py-12 bg-slate-900 text-white">
-        <div className="container-custom">
-          <div className="max-w-3xl mx-auto text-center">
-            <p className="text-sm leading-relaxed">
-              <strong>Research Use Only:</strong> All products from Purgo Style Labs are intended solely for 
-              laboratory research, analytical, and educational purposes. Not for human or veterinary 
-              consumption. Researchers must comply with all applicable laws and regulations.
-            </p>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }

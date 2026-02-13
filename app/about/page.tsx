@@ -63,7 +63,7 @@ export default function AboutPage() {
         <div className="container-custom text-center">
           <p className="text-slate-600 max-w-xl mx-auto">
             Questions? Reach out at{" "}
-            <a href="mailto:support@purgostyle.com" className="text-cyan-600 hover:underline">support@purgostyle.com</a>.
+            <a href="mailto:hello@purgostyle.com" className="text-cyan-600 hover:underline">hello@purgostyle.com</a>.
           </p>
         </div>
       </section>

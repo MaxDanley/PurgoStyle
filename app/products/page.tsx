@@ -1,9 +1,9 @@
 import { prisma } from "@/lib/prisma";
 import { Suspense } from "react";
 import PageViewTracker from "@/components/PageViewTracker";
-import ProductsPageSEO from "@/components/ProductsPageSEO";
 import DiscountPopup from "@/components/DiscountPopup";
 import ProductsPageClient from "@/components/ProductsPageClient";
+import ProductsPageSEO from "@/components/ProductsPageSEO";
 
 import { Metadata } from "next";
 
@@ -73,10 +73,10 @@ export default async function ProductsPage() {
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Research Peptides
+            Products
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Our comprehensive selection of high-purity research peptides for laboratory use
+            Arizona activewear, premium tees, and apparel. Quality you can feel.
           </p>
         </div>
 
@@ -85,34 +85,7 @@ export default async function ProductsPage() {
           <ProductsPageClient products={products} />
         </Suspense>
 
-        {/* Info Section */}
-        <div className="mt-16 bg-gray-50 rounded-xl p-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Quality Assurance
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div>
-              <h3 className="font-semibold text-gray-900 mb-2">99%+ Purity</h3>
-              <p className="text-sm text-gray-600">
-                All peptides are tested via HPLC and mass spectrometry to ensure highest purity standards
-              </p>
-            </div>
-            <div>
-              <h3 className="font-semibold text-gray-900 mb-2">Proper Storage</h3>
-              <p className="text-sm text-gray-600">
-                Shipped in temperature-controlled packaging and stored at optimal conditions
-              </p>
-            </div>
-            <div>
-              <h3 className="font-semibold text-gray-900 mb-2">COA Available</h3>
-              <p className="text-sm text-gray-600">
-                Certificate of Analysis provided with each batch for verification and documentation
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* SEO Content Sections */}
+        {/* SEO Content */}
         <div className="mt-16 bg-gray-50">
           <ProductsPageSEO />
         </div>
