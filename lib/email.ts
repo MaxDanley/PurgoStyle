@@ -786,11 +786,12 @@ export async function sendOrderNotificationToSupport(
     isGuest: boolean;
   }
 ) {
-  const paymentMethodName = orderDetails.paymentMethod === "CRYPTO" ? "Cryptocurrency" 
+  const paymentMethodName = orderDetails.paymentMethod === "CRYPTO" ? "Cryptocurrency"
     : orderDetails.paymentMethod === "ZELLE" ? "Zelle"
     : orderDetails.paymentMethod === "VENMO" ? "Venmo"
     : orderDetails.paymentMethod === "CREDIT_CARD" ? "Credit/Debit Card"
-    : orderDetails.paymentMethod === "BARTERPAY" ? "BarterPay" 
+    : orderDetails.paymentMethod === "BARTERPAY" ? "BarterPay"
+    : orderDetails.paymentMethod === "EDEBIT" ? "E-Debit"
     : orderDetails.paymentMethod === "STRIPE" ? "Credit/Debit Card (Legacy)"
     : orderDetails.paymentMethod;
 
@@ -798,10 +799,11 @@ export async function sendOrderNotificationToSupport(
     ? `<span style="color: #f59e0b; font-weight: bold;">PENDING - Payment not yet received</span>`
     : `<span style="color: #10b981; font-weight: bold;">PAID - Payment received</span>`;
 
+  const adminTo = "support@purgolabs.com";
   try {
     await sendEmail({
-      to: "hello@purgostyle.com",
-      subject: `New Order Received: #${orderNumber} - ${paymentStatusText.includes("PENDING") ? "PENDING PAYMENT" : "PAID"}`,
+      to: adminTo,
+      subject: "TSHIRT-STORE ORDER",
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 700px; margin: 0 auto;">
           <h2 style="color: #1890ff;">New Order Received</h2>
@@ -860,8 +862,7 @@ export async function sendOrderNotificationToSupport(
           ` : ''}
 
           <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; color: #666; font-size: 14px;">
-            <p>This is an automated notification from the Purgo Style Labs website.</p>
-            <p>Order details can be viewed in the admin panel.</p>
+            <p>This is an automated notification. Order details can be viewed in the admin panel.</p>
           </div>
         </div>
       `,

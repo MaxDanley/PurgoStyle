@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { calculatePointsEarned } from "@/lib/rewards";
-import { sendOrderNotificationToSupport, sendCreditCardPaymentInstructions } from "@/lib/email";
+import { sendOrderConfirmationEmail, sendOrderNotificationToSupport, sendCreditCardPaymentInstructions } from "@/lib/email";
 import { validateGuestOrderInfo } from "@/lib/validation";
 import { handleCheckoutSubscription } from "@/lib/subscriber-helpers";
 import { cookies } from "next/headers";
@@ -282,8 +282,48 @@ export async function POST(req: Request) {
 
     // Send emails with delay to avoid Resend rate limiting (2 emails/second)
     const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-    
-    // Send payment instructions email to customer
+
+    const customerEmail = validatedInfo.email;
+    const orderDetailsForEmail = orderWithItems && orderWithItems.shippingAddress ? {
+      items: orderWithItems.items.map((item) => ({
+        productName: item.product.name,
+        variantSize: item.variant.size,
+        quantity: item.quantity,
+        price: item.price,
+        isBackorder: item.isBackorder || false,
+      })),
+      shippingAddress: {
+        name: orderWithItems.shippingAddress.name,
+        street: orderWithItems.shippingAddress.street,
+        city: orderWithItems.shippingAddress.city,
+        state: orderWithItems.shippingAddress.state,
+        zipCode: orderWithItems.shippingAddress.zipCode,
+        country: orderWithItems.shippingAddress.country || "US",
+      },
+      subtotal,
+      shippingInsurance,
+      shippingCost,
+      total,
+      discountAmount: metadata.discountAmount || 0,
+    } : null;
+
+    // 1. Send order confirmation (full order details) to customer
+    if (orderDetailsForEmail) {
+      try {
+        await sendOrderConfirmationEmail(
+          customerEmail,
+          order.orderNumber,
+          orderDetailsForEmail,
+          "CREDIT_CARD"
+        );
+        console.log("📧 Order confirmation email sent to customer");
+      } catch (emailError) {
+        console.error("❌ Failed to send order confirmation email:", emailError);
+      }
+    }
+    await delay(600);
+
+    // 2. Send payment instructions email to customer
     if (orderWithItems) {
       try {
         await sendCreditCardPaymentInstructions(
