@@ -37,7 +37,6 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
   
   const [selectedVariant, setSelectedVariant] = useState<any>(null);
   const [quantity, setQuantity] = useState(1);
-  const [activeTab, setActiveTab] = useState<"general" | "chemical">("general");
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [shippingLocation, setShippingLocation] = useState<string | null>(null);
   const [reviews, setReviews] = useState<{ id: string; authorName: string; rating: number; body: string; sizePurchased?: string | null; verifiedBuyer: boolean; helpfulCount: number; notHelpfulCount: number; createdAt: string }[]>([]);
@@ -121,15 +120,6 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
       });
     }
   }, [product, selectedVariant, pathname]);
-
-  const tabButtonClasses = (tab: "general" | "chemical") =>
-    `pb-4 border-b-2 font-semibold transition-colors ${
-      activeTab === tab
-        ? "border-primary-500 text-primary-600"
-        : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
-    }`;
-
-  const chemicalProperties = (product as any).chemicalProperties;
 
   /** Render product description with short paragraphs and bullet lists for readability (SEO). */
   function renderProductDescription(text: string) {
@@ -625,101 +615,17 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
           {/* You May Also Like - Full width, centered below product info */}
           <RelatedProductsList currentProductId={product.id} currentCategory={product.category} />
 
-          {/* Details Tabs */}
+          {/* Product Overview */}
           <div className="mt-16">
-            <div className="border-b border-gray-200">
-              <div className="flex flex-wrap gap-8">
-                <button
-                  type="button"
-                  onClick={() => setActiveTab("general")}
-                  className={tabButtonClasses("general")}
-                >
-                  General
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setActiveTab("chemical")}
-                  className={tabButtonClasses("chemical")}
-                >
-                  Chemical Properties
-                </button>
-              </div>
-            </div>
-            <div className="py-8">
-              {activeTab === "general" && (
-                <div className="prose max-w-none">
-                  <h2 className="text-2xl font-bold text-gray-900 mb-4">Product Overview</h2>
-                  {renderProductDescription(product.longDescription || product.description)}
+            <div className="prose max-w-none">
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">Product Overview</h2>
+              {renderProductDescription(product.longDescription || product.description)}
 
-                  <p className="mt-4 text-gray-600">
-                    <Link href="/products" className="text-primary-600 hover:text-primary-700 font-medium">
-                      Browse all products →
-                    </Link>
-                  </p>
-                </div>
-              )}
-
-              {activeTab === "chemical" && (
-                <div className="space-y-6">
-                  {chemicalProperties ? (
-                    <div className="overflow-hidden rounded-lg border border-gray-200">
-                      <table className="min-w-full divide-y divide-gray-200">
-                        <tbody className="bg-white divide-y divide-gray-200">
-                          {[
-                            { label: "CAS Number", value: chemicalProperties.casNumber },
-                            { label: "PubChem CID", value: chemicalProperties.pubChemCid },
-                            { label: "Molecular Weight", value: chemicalProperties.molecularWeight },
-                            { label: "Molecular Formula", value: chemicalProperties.molecularFormula },
-                            {
-                              label: "Synonyms",
-                              value: chemicalProperties.synonyms?.length
-                                ? chemicalProperties.synonyms.join(", ")
-                                : undefined,
-                            },
-                          ]
-                            .filter((row) => row.value)
-                            .map((row) => (
-                              <tr key={row.label}>
-                                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600 w-48">
-                                  {row.label}
-                                </th>
-                                <td className="px-6 py-4 text-sm text-gray-900">{row.value}</td>
-                              </tr>
-                            ))}
-                          {chemicalProperties.storage && chemicalProperties.storage.length > 0 && (
-                            <tr>
-                              <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600 align-top">
-                                Storage (Lyophilized)
-                              </th>
-                              <td className="px-6 py-4 text-sm text-gray-900">
-                                <ul className="list-disc list-inside space-y-1">
-                                  {chemicalProperties.storage.map((entry: string, index: number) => (
-                                    <li key={index}>{entry}</li>
-                                  ))}
-                                </ul>
-                              </td>
-                            </tr>
-                          )}
-                          {chemicalProperties.notes && (
-                            <tr>
-                              <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
-                                Notes
-                              </th>
-                              <td className="px-6 py-4 text-sm text-gray-900">{chemicalProperties.notes}</td>
-                            </tr>
-                          )}
-                        </tbody>
-                      </table>
-                    </div>
-                  ) : (
-                    <p className="text-gray-600">
-                      Detailed chemical property data for this product is currently being compiled. Please check back
-                      soon or contact hello@purgostyle.com for assistance.
-                    </p>
-                  )}
-                </div>
-              )}
-
+              <p className="mt-4 text-gray-600">
+                <Link href="/products" className="text-primary-600 hover:text-primary-700 font-medium">
+                  Browse all products →
+                </Link>
+              </p>
             </div>
           </div>
 
