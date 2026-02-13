@@ -7,7 +7,7 @@ interface ProductCardProps {
   showSaleBadge?: boolean;
 }
 
-export default function ProductCard({ product, showSaleBadge = true }: ProductCardProps) {
+export default function ProductCard({ product, showSaleBadge = false }: ProductCardProps) {
   // Show actual database prices
   const minPrice = Math.min(...product.variants.map((v) => v.price));
   const maxPrice = Math.max(...product.variants.map((v) => v.price));
@@ -24,15 +24,8 @@ export default function ProductCard({ product, showSaleBadge = true }: ProductCa
           {/* Glow effect on hover */}
           <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg"></div>
           
-          {/* SALE Badge */}
-          {showSaleBadge && (
-            <div className="absolute top-2 left-2 z-10 bg-cyan-500 text-white px-3 py-1 rounded-md font-bold text-xs shadow-md">
-              SALE!
-            </div>
-          )}
-          
           <Image
-            src={getFeaturedImage(product.slug)}
+            src={product.image || getFeaturedImage(product.slug)}
             alt={product.name}
             fill
             className="object-cover group-hover:scale-110 transition-transform duration-500 rounded-lg"

@@ -1171,10 +1171,6 @@ export default function CheckoutPage() {
                   <span>Shipping</span>
                   <span className="text-green-600 font-semibold">FREE</span>
                 </div>
-                <div className="flex justify-between text-green-600">
-                  <span>30% OFF</span>
-                  <span className="font-semibold">Applied</span>
-                </div>
                 {discountAmount > 0 && (
                   <div className="flex justify-between text-green-600">
                     <span>

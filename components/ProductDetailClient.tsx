@@ -380,81 +380,6 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
                 </button>
               </div>
 
-              {/* Price (sale badge etc) - keep for consistency, price already in title row */}
-              <div className="mb-6">
-                {selectedVariant && (
-                  <div className="flex items-center gap-3 flex-wrap">
-                    {/* Calculate pricing: database price is what customer pays, fake higher price is crossed out */}
-                    {(() => {
-                      const databasePrice = selectedVariant.price; // What customer actually pays
-                      const fakeHigherPrice = databasePrice / 0.7; // Fake price that when 30% off = database price
-                      const isBulkDiscount = (slug === "glp-3-rt" || slug === "glp-2-trz") && quantity >= 10;
-                      
-                      if (isBulkDiscount) {
-                        // Bulk discount: 20% additional off database price
-                        const bulkPrice = databasePrice * 0.8; // Customer pays 80% of database price
-                        const fakeBulkPrice = bulkPrice / 0.56; // Fake price for 44% off display
-                        return (
-                          <>
-                            <span className="text-3xl font-bold text-green-600">
-                              ${bulkPrice.toFixed(2)}
-                            </span>
-                            <span className="text-xl text-gray-400 line-through">
-                              ${fakeBulkPrice.toFixed(2)}
-                            </span>
-                            <span className="bg-green-100 text-green-700 px-2 py-1 rounded text-sm font-semibold">
-                              44% OFF
-                            </span>
-                          </>
-                        );
-                      } else {
-                        // Regular 30% off sale: customer pays database price, show fake higher price crossed out
-                        return (
-                          <>
-                            <span className="text-3xl font-bold text-gray-900">
-                              ${databasePrice.toFixed(2)}
-                            </span>
-                            <span className="text-xl text-gray-400 line-through">
-                              ${fakeHigherPrice.toFixed(2)}
-                            </span>
-                            <span className="bg-cyan-100 text-cyan-700 px-2 py-1 rounded text-sm font-semibold">
-                              30% OFF
-                            </span>
-                          </>
-                        );
-                      }
-                    })()}
-                  </div>
-                )}
-                {selectedVariant && (
-                  <div className="mt-2 text-sm text-gray-600">
-                    {(() => {
-                      const databasePrice = selectedVariant.price;
-                      const fakeHigherPrice = databasePrice / 0.7;
-                      const isBulkDiscount = (slug === "glp-3-rt" || slug === "glp-2-trz") && quantity >= 10;
-                      
-                      if (isBulkDiscount) {
-                        const bulkPrice = databasePrice * 0.8;
-                        const fakeBulkPrice = bulkPrice / 0.56;
-                        return (
-                          <>
-                            Total for {quantity} vials: <span className="font-bold text-green-600">${(bulkPrice * quantity).toFixed(2)}</span>
-                            <span className="text-gray-400 line-through ml-2">${(fakeBulkPrice * quantity).toFixed(2)}</span>
-                          </>
-                        );
-                      } else {
-                        return (
-                          <>
-                            Total for {quantity} vials: <span className="font-bold text-gray-900">${(databasePrice * quantity).toFixed(2)}</span>
-                            <span className="text-gray-400 line-through ml-2">${(fakeHigherPrice * quantity).toFixed(2)}</span>
-                          </>
-                        );
-                      }
-                    })()}
-                  </div>
-                )}
-              </div>
-
               {/* Size: S, M, L only */}
               <div className="mb-6">
                 <label className="block text-sm font-semibold text-gray-900 mb-3">
@@ -1042,8 +967,6 @@ function RelatedProductsList({ currentProductId, currentCategory }: { currentPro
 
   // Calculate fake higher price for display (database price / 0.7)
   // This makes it look like 30% off when customer pays database price
-  const getFakeHigherPrice = (databasePrice: number) => databasePrice / 0.7;
-
   return (
     <div className="mt-8 w-full">
       <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">You May Also Like</h2>
@@ -1055,9 +978,7 @@ function RelatedProductsList({ currentProductId, currentCategory }: { currentPro
           style={{ transform: `translateX(-${currentIndex * (100 / 3)}%)` }}
         >
           {relatedProducts.map((relatedProduct) => {
-            const databasePrice = Math.min(...relatedProduct.variants.map((v: any) => v.price));
-            const fakeHigherPrice = getFakeHigherPrice(databasePrice);
-            
+            const minPrice = Math.min(...relatedProduct.variants.map((v: any) => v.price));
             return (
               <div 
                 key={relatedProduct.id} 
@@ -1069,12 +990,8 @@ function RelatedProductsList({ currentProductId, currentCategory }: { currentPro
                   className="card overflow-hidden group block h-full"
                 >
                   <div className="relative h-48 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg overflow-hidden">
-                    {/* SALE Badge */}
-                    <div className="absolute top-2 left-2 z-10 bg-cyan-500 text-white px-2 py-1 rounded-md font-bold text-xs shadow-md">
-                      SALE!
-                    </div>
                     <Image
-                      src={getFeaturedImage(relatedProduct.slug) || relatedProduct.image}
+                      src={relatedProduct.image || getFeaturedImage(relatedProduct.slug)}
                       alt={relatedProduct.name}
                       fill
                       className="object-cover group-hover:scale-110 transition-transform rounded-lg"
@@ -1087,14 +1004,9 @@ function RelatedProductsList({ currentProductId, currentCategory }: { currentPro
                     <h3 className="font-bold text-gray-900 group-hover:text-primary-600 transition text-sm line-clamp-2">
                       {relatedProduct.name}
                     </h3>
-                    <div className="flex items-center gap-2 mt-1">
-                      <span className="text-sm font-bold text-gray-900">
-                        ${databasePrice.toFixed(2)}
-                      </span>
-                      <span className="text-xs text-gray-400 line-through">
-                        ${fakeHigherPrice.toFixed(2)}
-                      </span>
-                    </div>
+                    <p className="text-sm font-bold text-gray-900 mt-1">
+                      ${minPrice.toFixed(2)}
+                    </p>
                   </div>
                 </Link>
               </div>
@@ -1146,9 +1058,7 @@ function RelatedProductsList({ currentProductId, currentCategory }: { currentPro
       {/* Desktop Grid - Full width, centered, show at least 4 products */}
       <div className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-6 w-full max-w-7xl mx-auto">
         {relatedProducts.map((relatedProduct) => {
-          const databasePrice = Math.min(...relatedProduct.variants.map((v: any) => v.price));
-          const fakeHigherPrice = getFakeHigherPrice(databasePrice);
-          
+          const minPrice = Math.min(...relatedProduct.variants.map((v: any) => v.price));
           return (
             <Link
               key={relatedProduct.id}
@@ -1156,12 +1066,8 @@ function RelatedProductsList({ currentProductId, currentCategory }: { currentPro
               className="card overflow-hidden group"
             >
               <div className="relative h-48 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg overflow-hidden">
-                {/* SALE Badge */}
-                <div className="absolute top-2 left-2 z-10 bg-cyan-500 text-white px-3 py-1 rounded-md font-bold text-xs shadow-md">
-                  SALE!
-                </div>
                 <Image
-                  src={getFeaturedImage(relatedProduct.slug) || relatedProduct.image}
+                  src={relatedProduct.image || getFeaturedImage(relatedProduct.slug)}
                   alt={relatedProduct.name}
                   fill
                   className="object-cover group-hover:scale-110 transition-transform rounded-lg"
@@ -1174,14 +1080,9 @@ function RelatedProductsList({ currentProductId, currentCategory }: { currentPro
                 <h3 className="font-bold text-gray-900 group-hover:text-primary-600 transition">
                   {relatedProduct.name}
                 </h3>
-                <div className="flex items-center gap-2 mt-1">
-                  <span className="text-sm font-bold text-gray-900">
-                    ${databasePrice.toFixed(2)}
-                  </span>
-                  <span className="text-xs text-gray-400 line-through">
-                    ${fakeHigherPrice.toFixed(2)}
-                  </span>
-                </div>
+                <p className="text-sm font-bold text-gray-900 mt-1">
+                  ${minPrice.toFixed(2)}
+                </p>
               </div>
             </Link>
           );

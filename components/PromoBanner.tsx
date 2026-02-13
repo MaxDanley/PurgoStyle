@@ -1,7 +1,7 @@
 "use client";
 
 export default function PromoBanner() {
-  const message = "30% OFF & FREE SHIPPING SITE-WIDE";
+  const message = "FREE SHIPPING SITE-WIDE";
   
   return (
     <div className="bg-[#3aaff9] text-white py-2 overflow-hidden whitespace-nowrap">

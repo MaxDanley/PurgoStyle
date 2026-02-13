@@ -49,13 +49,8 @@ export default function FeaturedProductsCarousel({ products }: FeaturedProductsC
                   <div className="relative h-72 bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden rounded-lg">
                     <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg"></div>
                     
-                    {/* SALE Badge */}
-                    <div className="absolute top-2 left-2 z-10 bg-cyan-500 text-white px-3 py-1 rounded-md font-bold text-xs shadow-md">
-                      SALE!
-                    </div>
-                    
                     <Image
-                      src={getFeaturedImage(product.slug)}
+                      src={product.image || getFeaturedImage(product.slug)}
                       alt={product.name}
                       fill
                       className="object-cover group-hover:scale-110 transition-transform duration-500 rounded-lg"
@@ -76,8 +71,7 @@ export default function FeaturedProductsCarousel({ products }: FeaturedProductsC
                     
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-xs text-gray-500 mb-1">Starting at</p>
-                        <p className="text-2xl font-bold text-cyan-400">
+                        <p className="text-2xl font-bold text-gray-900">
                           ${minPrice(product.variants) === maxPrice(product.variants) 
                             ? minPrice(product.variants).toFixed(2) 
                             : `${minPrice(product.variants).toFixed(2)} - ${maxPrice(product.variants).toFixed(2)}`}
@@ -128,13 +122,8 @@ export default function FeaturedProductsCarousel({ products }: FeaturedProductsC
                 {/* Glow effect on hover */}
                 <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg"></div>
                 
-                {/* SALE Badge */}
-                <div className="absolute top-2 left-2 z-10 bg-cyan-500 text-white px-3 py-1 rounded-md font-bold text-xs shadow-md">
-                  SALE!
-                </div>
-                
                 <Image
-                  src={getFeaturedImage(product.slug)}
+                  src={product.image || getFeaturedImage(product.slug)}
                   alt={product.name}
                   fill
                   className="object-cover group-hover:scale-110 transition-transform duration-500 rounded-lg"
@@ -155,8 +144,7 @@ export default function FeaturedProductsCarousel({ products }: FeaturedProductsC
                 
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-xs text-gray-500 mb-1">Starting at</p>
-                    <p className="text-2xl font-bold text-cyan-400">
+                    <p className="text-2xl font-bold text-gray-900">
                       ${minPrice(product.variants) === maxPrice(product.variants) 
                         ? minPrice(product.variants).toFixed(2) 
                         : `${minPrice(product.variants).toFixed(2)} - ${maxPrice(product.variants).toFixed(2)}`}
