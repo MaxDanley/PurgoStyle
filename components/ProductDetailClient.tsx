@@ -524,6 +524,20 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
             </div>
           </div>
 
+          {/* Product Overview */}
+          <div className="mt-16">
+            <div className="prose max-w-none">
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">Product Overview</h2>
+              {renderProductDescription(product.longDescription || product.description)}
+
+              <p className="mt-4 text-gray-600">
+                <Link href="/products" className="text-primary-600 hover:text-primary-700 font-medium">
+                  Browse all products →
+                </Link>
+              </p>
+            </div>
+          </div>
+
           {/* Reviews section: scroll target from "X Reviews" link */}
           <section id="reviews" className="mt-16 pt-12 border-t border-gray-200 scroll-mt-24">
             <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
@@ -598,20 +612,6 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
 
           {/* You May Also Like - Full width, centered below product info */}
           <RelatedProductsList currentProductId={product.id} currentCategory={product.category} />
-
-          {/* Product Overview */}
-          <div className="mt-16">
-            <div className="prose max-w-none">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">Product Overview</h2>
-              {renderProductDescription(product.longDescription || product.description)}
-
-              <p className="mt-4 text-gray-600">
-                <Link href="/products" className="text-primary-600 hover:text-primary-700 font-medium">
-                  Browse all products →
-                </Link>
-              </p>
-            </div>
-          </div>
 
         </div>
       </div>
