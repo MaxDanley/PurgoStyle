@@ -1674,3 +1674,57 @@ export async function sendAffiliateInviteEmail(email: string, inviteUrl: string)
     throw error;
   }
 }
+
+export type CustomDesignInquiryData = {
+  name: string;
+  email: string;
+  phone?: string;
+  brand: string;
+  whatDoYouSell: string;
+  designServices: string;
+  projectDetails: string;
+  timeline: string;
+  quantityEstimate?: string;
+};
+
+export async function sendCustomDesignInquiryEmails(data: CustomDesignInquiryData) {
+  const customerContent = `
+    <p style="margin: 0 0 16px 0; font-size: 16px; color: #333333;">Hi ${data.name},</p>
+    <p style="margin: 0 0 16px 0; font-size: 15px; color: #555555; line-height: 1.6;">
+      Thank you for your interest in Summer Steeze Custom Design Services. We've received your request and will get back to you within 1–2 business days to discuss how we can help bring your vision to life.
+    </p>
+    <p style="margin: 0 0 16px 0; font-size: 15px; color: #555555; line-height: 1.6;">
+      In the meantime, if you have any questions, reply to this email or contact us at <a href="mailto:help@summersteeze.com" style="color: #f27e56;">help@summersteeze.com</a>.
+    </p>
+    <p style="margin: 0; font-size: 15px; color: #555555;">Best,<br>The Summer Steeze Team</p>
+  `;
+
+  const internalContent = `
+    <h2 style="color: #f27e56; font-size: 20px; margin-top: 0;">New Custom Design Services Inquiry</h2>
+    <div style="background-color: #fef5f2; border-left: 4px solid #f27e56; padding: 20px; margin: 20px 0; border-radius: 4px;">
+      <p style="margin: 0 0 8px 0;"><strong>Name:</strong> ${data.name}</p>
+      <p style="margin: 0 0 8px 0;"><strong>Email:</strong> <a href="mailto:${data.email}">${data.email}</a></p>
+      ${data.phone ? `<p style="margin: 0 0 8px 0;"><strong>Phone:</strong> ${data.phone}</p>` : ""}
+      <p style="margin: 0 0 8px 0;"><strong>Brand / Company:</strong> ${data.brand}</p>
+      <p style="margin: 0 0 8px 0;"><strong>What they sell:</strong> ${data.whatDoYouSell}</p>
+      <p style="margin: 0 0 8px 0;"><strong>Design services needed:</strong> ${data.designServices}</p>
+      <p style="margin: 0 0 8px 0;"><strong>Timeline:</strong> ${data.timeline}</p>
+      ${data.quantityEstimate ? `<p style="margin: 0 0 8px 0;"><strong>Quantity estimate:</strong> ${data.quantityEstimate}</p>` : ""}
+    </div>
+    <p style="margin: 0 0 8px 0;"><strong>Project details:</strong></p>
+    <p style="margin: 0; padding: 12px; background: #f8f8f8; border-radius: 4px; white-space: pre-wrap;">${data.projectDetails}</p>
+    <p style="margin: 20px 0 0 0; font-size: 13px; color: #666;">Reply to the customer at <a href="mailto:${data.email}">${data.email}</a> to discuss next steps.</p>
+  `;
+
+  await sendEmail({
+    to: data.email,
+    subject: "We received your Custom Design request – Summer Steeze",
+    html: getEmailWrapper(customerContent),
+  });
+
+  await sendEmail({
+    to: supportEmail,
+    subject: `Custom Design inquiry from ${data.name} (${data.brand})`,
+    html: getEmailWrapper(internalContent),
+  });
+}

@@ -28,6 +28,11 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/custom-design" className="text-gray-400 hover:text-brand-400 transition-colors">
+                  Custom Design Services
+                </Link>
+              </li>
+              <li>
                 <Link href="/about" className="text-gray-400 hover:text-brand-400 transition-colors">
                   About Us
                 </Link>

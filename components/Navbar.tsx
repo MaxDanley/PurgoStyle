@@ -129,6 +129,13 @@ export default function Navbar() {
             Shop
           </Link>
           <Link
+            href="/custom-design"
+            className="text-white hover:text-brand-400 font-bold text-xl transition-colors uppercase tracking-widest"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Custom Design
+          </Link>
+          <Link
             href="/about"
             className="text-white hover:text-brand-400 font-bold text-xl transition-colors uppercase tracking-widest"
             onClick={() => setIsMenuOpen(false)}
@@ -190,6 +197,9 @@ export default function Navbar() {
                 aria-label="Shop"
               >
                 Shop
+              </Link>
+              <Link href="/custom-design" className="text-white hover:text-brand-400 font-medium transition-colors">
+                Custom Design
               </Link>
               <Link href="/about" className="text-white hover:text-brand-400 font-medium transition-colors">
                 About
