@@ -21,9 +21,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  // Fetch featured products from database
   let featuredProducts: any[] = [];
-  
   try {
     const dbProducts = await prisma.product.findMany({
       include: {

@@ -76,7 +76,7 @@ export default function HomeClient({ featuredProducts }: HomeClientProps) {
         {/* Hero Background Image - Full Width, Scaled Down */}
         <div className="relative w-full h-[50vh] md:h-[60vh] lg:h-[65vh] z-0">
           <Image
-            src="/hero_final.png"
+            src="/hero_image.png"
             alt="Purgo Style"
             fill
             className="object-cover"
