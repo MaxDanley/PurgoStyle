@@ -14,18 +14,21 @@ Copy `.env.example` to `.env.local` and fill in the values below.
    - In the Connect modal, expand **“Some platforms are IPv4-only”** (or look for **Connection pooling** → **Session** or **Transaction** mode).
    - Copy the **Shared Pooler** connection string (host will look like `aws-0-[region].pooler.supabase.com`, port **6543** for Transaction or **5432** for Session). Do **not** use the direct `db.xxx.supabase.co` URI when it says Not IPv4 compatible.
    - Example (Session mode, port 5432):  
-     `postgresql://postgres.[PROJECT-REF]:[YOUR-PASSWORD]@aws-1-us-east-1.pooler.supabase.com:5432/postgres?sslmode=require&connect_timeout=30`  
+     `postgresql://postgres.[PROJECT-REF]:[YOUR-PASSWORD]@aws-1-us-east-1.pooler.supabase.com:5432/postgres?sslmode=require&connect_timeout=30&connection_limit=1`  
+     **Important:** `connection_limit=1` keeps each Vercel serverless instance to one DB connection so you don’t hit “max clients reached” (Session mode pool size is limited).  
      For Transaction mode (port 6543) use the same host with `:6543` and add `&pgbouncer=true`.
    - Replace **`[YOUR-PASSWORD]`** with your database password and **`[PROJECT-REF]`** with your project ref (e.g. `vogljdswvunirliipoym`). Use **Reset database password** if you don’t know the password.
 4. In **Vercel** (Settings → Environment Variables), set **both**:
-   - **`DATABASE_URL`** = that Shared Pooler URI (with `?pgbouncer=true&sslmode=require&connect_timeout=30`)
+   - **`DATABASE_URL`** = that Shared Pooler URI (with `?sslmode=require&connect_timeout=30&connection_limit=1`; add `&pgbouncer=true` only for Transaction mode/6543)
    - **`DIRECT_URL`** = the **same** value (same Shared Pooler URI)
    For local `.env.local`, set the same. If your password contains special characters (e.g. `#`, `@`, `%`), [URL-encode](https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding) them (e.g. `#` → `%23`).
-5. **If you still see “Can’t reach database server” (P1001):**
+5. **If you see “Can’t reach database server” (P1001):**
    - **Use the Shared Pooler** (IPv4 compatible), not the direct connection, when Supabase shows “Not IPv4 compatible”.
-   - Ensure the URL includes `pgbouncer=true` (required for Transaction mode with Prisma) and `sslmode=require`.
+   - Ensure the URL includes `sslmode=require` and `connection_limit=1`.
    - If the project is **paused**, click **Restore project** and wait 1–2 minutes before retrying.
    - Check [Supabase Status](https://status.supabase.com) and your project’s **Database** health in the dashboard.
+6. **If you see “max clients reached” or “MaxClientsInSessionMode”:**
+   - Add **`connection_limit=1`** to both `DATABASE_URL` and `DIRECT_URL` (e.g. `...postgres?sslmode=require&connect_timeout=30&connection_limit=1`). This limits each Vercel instance to one connection so you stay within Supabase’s Session mode pool size.
 
 **Do you need Supabase anon key or service role?** For this app, **no**. We use NextAuth with Prisma and only talk to the database via `DATABASE_URL`. Supabase’s **anon** (public) and **service_role** keys are for Supabase Auth and Row Level Security when you use the Supabase client. Here we use NextAuth for auth and Prisma for DB, so only `DATABASE_URL` is required from Supabase.
 
