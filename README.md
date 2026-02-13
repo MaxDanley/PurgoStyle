@@ -10,19 +10,20 @@ Copy `.env.example` to `.env.local` and fill in the values below.
 
 1. Go to [Supabase Dashboard](https://supabase.com/dashboard) and open your project (or create one). If the project is **paused** (free tier), click **Restore project** first.
 2. In the left sidebar, open **Project Settings** (gear icon) → **Database**.
-3. **For Vercel: use the direct connection (port 5432).** Under **Connection string** → **URI**, copy the string. It must use host **`db.xxx.supabase.co`** and **port 5432** (not the pooler on 6543). Example:
+3. **For Vercel: use the direct connection (port 5432) and add SSL + timeout.** Under **Connection string** → **URI**, copy the string (host **`db.xxx.supabase.co`**, port **5432**). **Append** `?sslmode=require&connect_timeout=30` so the full URL looks like:
    ```text
-   postgresql://postgres.[PROJECT-REF]:[YOUR-PASSWORD]@db.vogljdswvunirliipoym.supabase.co:5432/postgres
+   postgresql://postgres.[PROJECT-REF]:[YOUR-PASSWORD]@db.vogljdswvunirliipoym.supabase.co:5432/postgres?sslmode=require&connect_timeout=30
    ```
    Replace **`[YOUR-PASSWORD]`** with your actual database password (see **Database password** on the same page; use **Reset database password** if you don’t know it). Do **not** leave the literal text `[YOUR-PASSWORD]` in the URL.
 4. In **Vercel** (Settings → Environment Variables), set **both**:
-   - **`DATABASE_URL`** = that direct URI (port 5432)
-   - **`DIRECT_URL`** = the same direct URI (port 5432)
+   - **`DATABASE_URL`** = that full URI (with `?sslmode=require&connect_timeout=30`)
+   - **`DIRECT_URL`** = the same full URI
    For local `.env.local`, set the same. If your password contains special characters (e.g. `#`, `@`, `%`), [URL-encode](https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding) them (e.g. `#` → `%23`).
-5. **If you see “Can’t reach database server” (P1001):**
-   - Use the **direct** connection (port **5432**, host `db.xxx.supabase.co`). The pooler (port 6543) is often unreachable from Vercel.
-   - Ensure `DATABASE_URL` and `DIRECT_URL` are both set in Vercel for Production (and Preview if needed).
-   - If the project was paused, restore it and wait a minute before retrying.
+5. **If you still see “Can’t reach database server” (P1001):**
+   - **Add** `?sslmode=require&connect_timeout=30` to both `DATABASE_URL` and `DIRECT_URL` in Vercel (Supabase requires SSL; longer timeout helps cold starts).
+   - In Supabase dashboard, open **Project Settings** → **Database** and copy the **exact** URI from the connect panel; ensure host is `db.xxx.supabase.co` and port is `5432`.
+   - If the project is **paused** (free tier), click **Restore project** and wait 1–2 minutes before retrying.
+   - Check [Supabase Status](https://status.supabase.com) and your project’s **Database** health in the dashboard.
 
 **Do you need Supabase anon key or service role?** For this app, **no**. We use NextAuth with Prisma and only talk to the database via `DATABASE_URL`. Supabase’s **anon** (public) and **service_role** keys are for Supabase Auth and Row Level Security when you use the Supabase client. Here we use NextAuth for auth and Prisma for DB, so only `DATABASE_URL` is required from Supabase.
 
