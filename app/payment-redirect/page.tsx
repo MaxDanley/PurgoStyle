@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 const DESTINATION_BASE = "https://www.purgolabs.com/payment-stripe-success";
 
-export default function PaymentRedirectPage() {
+function PaymentRedirectContent() {
   const searchParams = useSearchParams();
   const [redirecting, setRedirecting] = useState(true);
 
@@ -39,5 +39,17 @@ export default function PaymentRedirectPage() {
         </p>
       </div>
     </div>
+  );
+}
+
+export default function PaymentRedirectPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-white">
+        <div className="w-12 h-12 border-4 border-brand-500 border-t-transparent rounded-full animate-spin" aria-hidden />
+      </div>
+    }>
+      <PaymentRedirectContent />
+    </Suspense>
   );
 }
