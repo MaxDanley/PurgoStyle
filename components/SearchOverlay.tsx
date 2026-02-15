@@ -178,10 +178,11 @@ export default function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                           </div>
                           
                           <Image
-                            src={getFeaturedImage(product.slug)}
+                            src={product.image || getFeaturedImage(product.slug)}
                             alt={product.name}
                             fill
                             className="object-cover group-hover:scale-110 transition-transform duration-500"
+                            sizes="(max-width: 640px) 100vw, 25vw"
                           />
                         </div>
 
