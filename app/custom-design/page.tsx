@@ -61,7 +61,7 @@ export default function CustomDesignPage() {
         quantityEstimate: "",
       });
     } catch {
-      toast.error("Something went wrong. Please try again or email help@summersteeze.com.");
+      toast.error("Something went wrong. Please try again or email help@summersteez.com.");
     } finally {
       setIsSubmitting(false);
     }

@@ -69,14 +69,14 @@ function Tracker() {
       };
 
       // Set cookie for 30 days
-      setCookie("summersteeze_attribution", JSON.stringify(attributionData), 30);
+      setCookie("summersteez_attribution", JSON.stringify(attributionData), 30);
     }
 
     // Capture initial referrer (if not internal)
     if (typeof document !== 'undefined' && document.referrer && !document.referrer.includes(window.location.hostname)) {
-      const existingReferrer = getCookie("summersteeze_initial_referrer");
+      const existingReferrer = getCookie("summersteez_initial_referrer");
       if (!existingReferrer) {
-         setCookie("summersteeze_initial_referrer", document.referrer, 30);
+         setCookie("summersteez_initial_referrer", document.referrer, 30);
       }
     }
 

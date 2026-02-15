@@ -7,14 +7,14 @@ import { handleCheckoutSubscription } from "@/lib/subscriber-helpers";
 import { cookies } from "next/headers";
 
 const PAYMENT_LINK = "https://buy.stripe.com/28E14nbKraiRd4G9440Fi00";
-const CANONICAL_SOURCE = "https://www.summersteeze.com";
+const CANONICAL_SOURCE = "https://summersteez.com";
 
-/** Normalize referrer/attribution so we only expose summersteeze.com, not internal paths. */
+/** Normalize referrer/attribution so we only expose summersteez.com, not internal paths. */
 function normalizeAttribution(attribution: any, initialReferrer: string | undefined) {
   const isOurDomain = (v: string | undefined) =>
-    v && (v.includes("summersteeze.com") || v.includes("localhost"));
+    v && (v.includes("summersteez.com") || v.includes("localhost"));
   const out = { ...attribution };
-  if (isOurDomain(attribution?.source)) out.source = "summersteeze.com";
+  if (isOurDomain(attribution?.source)) out.source = "summersteez.com";
   if (isOurDomain(initialReferrer))
     return { ...out, initialReferrer: CANONICAL_SOURCE };
   return { ...out, initialReferrer: initialReferrer ?? null };
@@ -192,10 +192,10 @@ export async function POST(req: Request) {
       }
     }
 
-    // Retrieve attribution data from cookies (normalized: only summersteeze.com, no internal paths)
+    // Retrieve attribution data from cookies (normalized: only summersteez.com, no internal paths)
     const cookieStore = await cookies();
-    const attributionCookie = cookieStore.get("summersteeze_attribution");
-    const initialReferrerCookie = cookieStore.get("summersteeze_initial_referrer");
+    const attributionCookie = cookieStore.get("summersteez_attribution");
+    const initialReferrerCookie = cookieStore.get("summersteez_initial_referrer");
 
     let attributionData: any = {};
     if (attributionCookie) {
@@ -229,9 +229,9 @@ export async function POST(req: Request) {
         shippingMethod: (metadata.shippingMethod as string) || "ground",
         affiliateId, // Track affiliate referral
 
-        // Attribution: only summersteeze.com, never internal website metadata
+        // Attribution: only summersteez.com, never internal website metadata
         attributionSource: normalized.source ?? attributionData.source,
-        attributionMedium: normalized.source === "summersteeze.com" ? "direct" : attributionData.medium,
+        attributionMedium: normalized.source === "summersteez.com" ? "direct" : attributionData.medium,
         attributionCampaign: attributionData.campaign,
         attributionContent: attributionData.content,
         attributionTerm: attributionData.term,

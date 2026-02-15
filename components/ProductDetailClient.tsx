@@ -623,9 +623,9 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
             "@context": "https://schema.org",
             "@type": "BreadcrumbList",
             itemListElement: [
-              { "@type": "ListItem", position: 1, name: "Home", item: "https://www.summersteeze.com/" },
-              { "@type": "ListItem", position: 2, name: "Products", item: "https://www.summersteeze.com/products" },
-              { "@type": "ListItem", position: 3, name: product.name, item: `https://www.summersteeze.com/products/${product.slug}` },
+              { "@type": "ListItem", position: 1, name: "Home", item: "https://www.summersteez.com/" },
+              { "@type": "ListItem", position: 2, name: "Products", item: "https://www.summersteez.com/products" },
+              { "@type": "ListItem", position: 3, name: product.name, item: `https://www.summersteez.com/products/${product.slug}` },
             ],
           }}
         />
@@ -640,7 +640,7 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
               "@type": "Product",
               name: product.name,
               description: product.description,
-              image: `https://www.summersteeze.com${product.image}`,
+              image: `https://www.summersteez.com${product.image}`,
               brand: {
                 "@type": "Brand",
                 name: "Summer Steeze",
@@ -649,7 +649,7 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
               mpn: selectedVariant.sku,
               offers: {
                 "@type": "Offer",
-                url: `https://www.summersteeze.com/products/${product.slug}`,
+                url: `https://www.summersteez.com/products/${product.slug}`,
                 priceCurrency: "USD",
                 price: selectedVariant.price.toFixed(2),
                 priceValidUntil: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // Valid for 1 year

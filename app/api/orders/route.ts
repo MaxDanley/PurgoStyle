@@ -3,13 +3,13 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { cookies } from "next/headers";
 
-const CANONICAL_SOURCE = "https://www.summersteeze.com";
+const CANONICAL_SOURCE = "https://www.summersteez.com";
 
 function normalizeAttribution(attribution: any, initialReferrer: string | undefined) {
   const isOurDomain = (v: string | undefined) =>
-    v && (v.includes("summersteeze.com") || v.includes("localhost"));
+    v && (v.includes("summersteez.com") || v.includes("localhost"));
   const out: any = { ...attribution };
-  if (isOurDomain(attribution?.source)) out.source = "summersteeze.com";
+  if (isOurDomain(attribution?.source)) out.source = "summersteez.com";
   return {
     ...out,
     initialReferrer: isOurDomain(initialReferrer) ? CANONICAL_SOURCE : (initialReferrer ?? null),
@@ -32,10 +32,10 @@ export async function POST(req: Request) {
     // Generate order number
     const orderNumber = `PL${Date.now()}${Math.floor(Math.random() * 1000)}`;
 
-    // Retrieve attribution from cookies (normalized: only summersteeze.com, no internal paths)
+    // Retrieve attribution from cookies (normalized: only summersteez.com, no internal paths)
     const cookieStore = await cookies();
-    const attributionCookie = cookieStore.get("summersteeze_attribution");
-    const initialReferrerCookie = cookieStore.get("summersteeze_initial_referrer");
+    const attributionCookie = cookieStore.get("summersteez_attribution");
+    const initialReferrerCookie = cookieStore.get("summersteez_initial_referrer");
 
     let attributionData: any = {};
     if (attributionCookie) {
@@ -63,9 +63,9 @@ export async function POST(req: Request) {
         shippingAddressId,
         paymentStatus: "PAID",
 
-        // Attribution: only summersteeze.com, never internal website metadata
+        // Attribution: only summersteez.com, never internal website metadata
         attributionSource: normalized.source ?? attributionData.source,
-        attributionMedium: normalized.source === "summersteeze.com" ? "direct" : attributionData.medium,
+        attributionMedium: normalized.source === "summersteez.com" ? "direct" : attributionData.medium,
         attributionCampaign: attributionData.campaign,
         attributionContent: attributionData.content,
         attributionTerm: attributionData.term,

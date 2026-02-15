@@ -7,7 +7,7 @@ export default function PrivacyPage() {
 
         <div className="prose prose-lg max-w-none text-gray-700">
           <p>
-            Summer Steeze (&ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;) operates the website summersteeze.com
+            Summer Steeze (&ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;) operates the website summersteez.com
             and the Summer Steeze brand. We are committed to protecting your privacy. This Privacy Policy describes
             how we collect, use, and disclose your information when you use our website and related services. It also
             describes your rights regarding that information.
@@ -26,11 +26,11 @@ export default function PrivacyPage() {
             </li>
             <li>
               <span className="font-semibold text-gray-900">Company</span> means Summer Steeze, operating
-              the Summer Steeze brand and the website summersteeze.com.
+              the Summer Steeze brand and the website summersteez.com.
             </li>
             <li>
               <span className="font-semibold text-gray-900">Website</span> means{" "}
-              <a href="https://www.summersteeze.com">https://www.summersteeze.com</a> and related pages we operate.
+              <a href="https://www.summersteez.com">https://www.summersteez.com</a> and related pages we operate.
             </li>
             <li>
               <span className="font-semibold text-gray-900">Personal Data</span> means information that identifies or
@@ -147,7 +147,7 @@ export default function PrivacyPage() {
           </ul>
           <p>
             To exercise these rights or ask questions about your data, contact us at{" "}
-            <a href="mailto:hello@summersteeze.com">hello@summersteeze.com</a>. You can also unsubscribe from marketing
+            <a href="mailto:hello@summersteez.com">hello@summersteez.com</a>. You can also unsubscribe from marketing
             emails using the link in any marketing message.
           </p>
 
@@ -167,7 +167,7 @@ export default function PrivacyPage() {
           <h2>Contact Us</h2>
           <p>If you have questions about this Privacy Policy or your personal data, you can contact us:</p>
           <ul>
-            <li>By email: <a href="mailto:help@summersteeze.com">help@summersteeze.com</a></li>
+            <li>By email: <a href="mailto:help@summersteez.com">help@summersteez.com</a></li>
             <li>By mail: Summer Steeze, Attn: Privacy, Scottsdale, AZ 85260</li>
             <li>Through our <a href="/contact">Contact</a> page</li>
           </ul>

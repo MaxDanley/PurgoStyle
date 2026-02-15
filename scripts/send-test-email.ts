@@ -9,16 +9,16 @@ if (!process.env.RESEND_API_KEY) {
 }
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-const fromEmail = process.env.EMAIL_FROM || "noreply@summersteeze.com";
+const fromEmail = process.env.EMAIL_FROM || "noreply@summersteez.com";
 
 async function sendTestEmail() {
   try {
     // Read the HTML template
-    const htmlPath = path.join(process.cwd(), "www.summersteeze.com", "email.html");
+    const htmlPath = path.join(process.cwd(), "www.summersteez.com", "email.html");
     let htmlContent = fs.readFileSync(htmlPath, "utf-8");
 
     // Read all images and convert to base64
-    const imagesDir = path.join(process.cwd(), "www.summersteeze.com", "images");
+    const imagesDir = path.join(process.cwd(), "www.summersteez.com", "images");
     const imageFiles = [
       "0f9b650b2c6a91c21d2b25b93ed89a4e.png",
       "38a22cf9aa0054a0c9afa35e014a58bc.png",
@@ -48,11 +48,11 @@ async function sendTestEmail() {
     }
 
     // Send the email
-    console.log("\n📧 Sending test email to hello@summersteeze.com...");
+    console.log("\n📧 Sending test email to hello@summersteez.com...");
     
     const result = await resend.emails.send({
       from: fromEmail,
-      to: "hello@summersteeze.com",
+      to: "hello@summersteez.com",
       subject: "Test Email - Summer Steeze Template",
       html: htmlContent,
     });

@@ -56,7 +56,7 @@ In Vercel → Settings → Environment Variables, add ALL of these:
 │ Run: openssl rand -base64 32                               │
 │                                                             │
 │ NEXTAUTH_URL                                                │
-│ https://www.summersteeze.com                                │
+│ https://www.summersteez.com                                │
 └─────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────┐
@@ -69,7 +69,7 @@ In Vercel → Settings → Environment Variables, add ALL of these:
 │ your-secret                                                 │
 │                                                             │
 │ 👉 Get from: console.cloud.google.com                      │
-│    Redirect URI: https://www.summersteeze.com/api/auth/callback/google │
+│    Redirect URI: https://www.summersteez.com/api/auth/callback/google │
 └─────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────┐
@@ -84,8 +84,14 @@ In Vercel → Settings → Environment Variables, add ALL of these:
 │ STRIPE_WEBHOOK_SECRET                                       │
 │ whsec_...                                                   │
 │                                                             │
+│ STRIPE_CREATE_SESSION_SECRET                                │
+│ shared-secret (Website A → B auth; generate with openssl rand -hex 32) │
+│                                                             │
 │ 👉 Get from: dashboard.stripe.com                          │
-│    Webhook URL: https://www.summersteeze.com/api/webhooks/stripe  │
+│    Webhook URL: https://www.summersteez.com/api/webhooks/stripe  │
+│    Subscribe to: checkout.session.completed,                 │
+│                  checkout.session.async_payment_succeeded,   │
+│                  checkout.session.async_payment_failed       │
 └─────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────┐
@@ -95,7 +101,7 @@ In Vercel → Settings → Environment Variables, add ALL of these:
 │ re_...                                                      │
 │                                                             │
 │ EMAIL_FROM                                                  │
-│ noreply@summersteeze.com                                    │
+│ noreply@summersteez.com                                    │
 │                                                             │
 │ 👉 Get from: resend.com (verify domain first!)             │
 └─────────────────────────────────────────────────────────────┘
@@ -104,7 +110,7 @@ In Vercel → Settings → Environment Variables, add ALL of these:
 │ SITE URL                                                    │
 ├─────────────────────────────────────────────────────────────┤
 │ NEXT_PUBLIC_SITE_URL                                        │
-│ https://www.summersteeze.com                                 │
+│ https://www.summersteez.com                                 │
 └─────────────────────────────────────────────────────────────┘
 
 After adding all variables:
@@ -120,9 +126,9 @@ In Vercel:
 ──────────
 1. Go to: Settings → Domains
 2. Click "Add"
-3. Enter: summersteeze.com
+3. Enter: summersteez.com
 4. Click "Add"
-5. Also add: www.summersteeze.com
+5. Also add: www.summersteez.com
 
 In GoDaddy:
 ──────────
@@ -172,7 +178,7 @@ Or use Vercel CLI:
 STEP 6: TEST YOUR SITE
 ═══════════════════════════════════════════════════════════════
 
-Visit: https://www.summersteeze.com
+Visit: https://www.summersteez.com
 
 Test:
   ✓ Browse products

@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   title: "Products | Summer Steeze",
   description: "Shop Summer Steeze. Arizona activewear, premium tees, and apparel. Quality you can feel.",
   alternates: {
-    canonical: "https://www.summersteeze.com/products",
+    canonical: "https://www.summersteez.com/products",
   },
 };
 

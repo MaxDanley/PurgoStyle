@@ -93,7 +93,7 @@ export default function AffiliatesTab() {
   const [showScansModal, setShowScansModal] = useState(false);
   const [selectedAffiliateScans, setSelectedAffiliateScans] = useState<Affiliate | null>(null);
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://www.summersteeze.com";
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://www.summersteez.com";
 
   useEffect(() => {
     fetchAffiliates();
@@ -230,7 +230,7 @@ export default function AffiliatesTab() {
   const downloadQRCode = () => {
     if (!qrCodeData) return;
     const link = document.createElement("a");
-    link.download = `summersteeze-affiliate-${qrCodeData.code}.png`;
+    link.download = `summersteez-affiliate-${qrCodeData.code}.png`;
     link.href = qrCodeData.url;
     link.click();
   };

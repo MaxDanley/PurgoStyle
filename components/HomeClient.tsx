@@ -307,13 +307,13 @@ export default function HomeClient({ featuredProducts: initialProducts }: HomeCl
           "@type": "Organization",
           name: "Summer Steeze",
           legalName: "Summer Steeze",
-          url: "https://www.summersteeze.com",
-          logo: "https://www.summersteeze.com/STEEZ.png",
+          url: "https://www.summersteez.com",
+          logo: "https://www.summersteez.com/STEEZ.png",
           description: "Summer Steeze – Arizona activewear and premium tees. Quality you can feel.",
           contactPoint: {
             "@type": "ContactPoint",
             contactType: "Customer Service",
-            email: "hello@summersteeze.com",
+            email: "hello@summersteez.com",
             availableLanguage: "English",
             areaServed: "US",
           },
@@ -325,7 +325,7 @@ export default function HomeClient({ featuredProducts: initialProducts }: HomeCl
             timeZone: "America/Phoenix",
           },
           sameAs: [
-            "https://www.instagram.com/summersteeze/",
+            "https://www.instagram.com/summersteez/",
             "https://x.com/SummerSteeze",
             "https://www.facebook.com/profile.php?id=61588015956175",
           ],
@@ -335,12 +335,12 @@ export default function HomeClient({ featuredProducts: initialProducts }: HomeCl
         data={{
           "@context": "https://schema.org",
           "@type": "LocalBusiness",
-          "@id": "https://www.summersteeze.com",
+          "@id": "https://www.summersteez.com",
           name: "Summer Steeze",
           legalName: "Summer Steeze",
-          image: "https://www.summersteeze.com/STEEZ.png",
-          url: "https://www.summersteeze.com",
-          email: "hello@summersteeze.com",
+          image: "https://www.summersteez.com/STEEZ.png",
+          url: "https://www.summersteez.com",
+          email: "hello@summersteez.com",
           openingHoursSpecification: [
             {
               "@type": "OpeningHoursSpecification",
@@ -361,10 +361,10 @@ export default function HomeClient({ featuredProducts: initialProducts }: HomeCl
           "@context": "https://schema.org",
           "@type": "WebSite",
           name: "Summer Steeze",
-          url: "https://www.summersteeze.com",
+          url: "https://www.summersteez.com",
           potentialAction: {
             "@type": "SearchAction",
-            target: "https://www.summersteeze.com/products?search={search_term_string}",
+            target: "https://www.summersteez.com/products?search={search_term_string}",
             "query-input": "required name=search_term_string",
           },
         }}
@@ -374,10 +374,10 @@ export default function HomeClient({ featuredProducts: initialProducts }: HomeCl
           "@context": "https://schema.org",
           "@type": "ItemList",
           itemListElement: [
-            { "@type": "ListItem", position: 1, name: "Products", url: "https://www.summersteeze.com/products" },
-            { "@type": "ListItem", position: 2, name: "About", url: "https://www.summersteeze.com/about" },
-            { "@type": "ListItem", position: 3, name: "Contact", url: "https://www.summersteeze.com/contact" },
-            { "@type": "ListItem", position: 4, name: "Blog", url: "https://www.summersteeze.com/blog" },
+            { "@type": "ListItem", position: 1, name: "Products", url: "https://www.summersteez.com/products" },
+            { "@type": "ListItem", position: 2, name: "About", url: "https://www.summersteez.com/about" },
+            { "@type": "ListItem", position: 3, name: "Contact", url: "https://www.summersteez.com/contact" },
+            { "@type": "ListItem", position: 4, name: "Blog", url: "https://www.summersteez.com/blog" },
           ],
         }}
       />

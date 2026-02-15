@@ -12,9 +12,9 @@ export const metadata: Metadata = {
     title: "Summer Steeze - Arizona Activewear & Tees",
     description: "Premium tees and activewear from Arizona.",
     type: "website",
-    url: "https://www.summersteeze.com",
+    url: "https://www.summersteez.com",
   },
-  alternates: { canonical: "https://www.summersteeze.com" },
+  alternates: { canonical: "https://www.summersteez.com" },
 };
 
 export default function Home() {

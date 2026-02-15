@@ -10,7 +10,7 @@ import GoogleMerchantWidget from "@/components/GoogleMerchantWidget";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.summersteeze.com"),
+  metadataBase: new URL("https://www.summersteez.com"),
   title: {
     default: "Summer Steeze | Arizona Activewear & Premium Tees",
     template: "%s | Summer Steeze"
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://www.summersteeze.com',
+    url: 'https://www.summersteez.com',
     siteName: 'Summer Steeze',
     title: "Summer Steeze - Arizona Activewear & Tees",
     description: "Premium tees and activewear from Arizona.",
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     description: 'Premium tees and activewear from Arizona.',
     images: ['/STEEZ.png'],
   },
-  alternates: { canonical: 'https://www.summersteeze.com' },
+  alternates: { canonical: 'https://www.summersteez.com' },
 };
 
 export default function RootLayout({

@@ -191,6 +191,9 @@ model Order {
   cryptoPaymentExpiresAt DateTime?
   cryptoPaymentStatus    String? // waiting, confirming, confirmed, sending, partially_paid, finished, failed, refunded, expired
 
+  // Stripe Checkout (for Website A dynamic sessions)
+  stripeSessionId String?   @unique
+
   // BarterPay payment info
   barterPayTransactionIndex String?
 
@@ -239,6 +242,7 @@ model Order {
   @@index([barterPayTransactionIndex])
   @@index([greenPayorId])
   @@index([greenTransactionId])
+  @@index([stripeSessionId])
   @@index([paymentStatus, paymentMethod])
   @@index([createdAt, paymentStatus])
   @@index([affiliateId])

@@ -47,10 +47,10 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
             title: `${productName} - Coming Soon | Summer Steeze`,
             description: `${productName} is coming soon to Summer Steeze. Explore our current selection of products.`,
             type: "website",
-            url: `https://www.summersteeze.com/products/${slug}`,
+            url: `https://www.summersteez.com/products/${slug}`,
           },
           alternates: {
-            canonical: `https://www.summersteeze.com/products/${slug}`,
+            canonical: `https://www.summersteez.com/products/${slug}`,
           },
         };
       }
@@ -76,18 +76,18 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
       openGraph: {
         title: seo.title,
         description: seo.description,
-        images: image ? [`https://www.summersteeze.com${image}`] : [],
+        images: image ? [`https://www.summersteez.com${image}`] : [],
         type: "website",
-        url: `https://www.summersteeze.com/products/${slug}`,
+        url: `https://www.summersteez.com/products/${slug}`,
       },
       twitter: {
         card: "summary_large_image",
         title: seo.title,
         description: seo.description,
-        images: image ? [`https://www.summersteeze.com${image}`] : [],
+        images: image ? [`https://www.summersteez.com${image}`] : [],
       },
       alternates: {
-        canonical: `https://www.summersteeze.com/products/${slug}`,
+        canonical: `https://www.summersteez.com/products/${slug}`,
       },
     };
   } catch (error) {

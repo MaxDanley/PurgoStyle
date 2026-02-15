@@ -81,7 +81,7 @@ export default function ContactPage() {
                   </p>
                   <div className="mt-2 flex items-center gap-2 text-sm text-slate-800">
                     <FaEnvelope className="h-4 w-4 text-brand-600" />
-                    <span>hello@summersteeze.com</span>
+                    <span>hello@summersteez.com</span>
                   </div>
                   <p className="mt-1 text-xs text-slate-500">
                     For orders, sizing, and general inquiries.
@@ -186,7 +186,7 @@ export default function ContactPage() {
                   For order questions, tracking, or issues with your order.
                 </p>
                 <p className="mt-2 text-sm font-mono text-slate-800">
-                  hello@summersteeze.com
+                  hello@summersteez.com
                 </p>
               </div>
 
@@ -201,7 +201,7 @@ export default function ContactPage() {
                   Sizing, fabric, care instructions, or product questions.
                 </p>
                 <p className="mt-2 text-sm font-mono text-slate-800">
-                  hello@summersteeze.com
+                  hello@summersteez.com
                 </p>
               </div>
 

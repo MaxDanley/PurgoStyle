@@ -15,9 +15,9 @@ const getResend = () => {
   return resendInstance;
 };
 
-const fromEmail = process.env.EMAIL_FROM || "noreply@summersteeze.com";
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://www.summersteeze.com";
-const supportEmail = process.env.SUPPORT_EMAIL || "help@summersteeze.com";
+const fromEmail = process.env.EMAIL_FROM || "noreply@summersteez.com";
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://www.summersteez.com";
+const supportEmail = process.env.SUPPORT_EMAIL || "help@summersteez.com";
 
 // Shopify-style email template wrapper
 function getEmailWrapper(content: string, orderNumber?: string) {
@@ -64,7 +64,7 @@ function getEmailWrapper(content: string, orderNumber?: string) {
             <td style="padding: 24px 40px; background-color: #fafafa; border-top: 1px solid #e5e5e5;">
               <p style="margin: 0; font-size: 13px; color: #999999; line-height: 1.5;">
                 If you have any questions, reply to this email or contact us at<br>
-                <a href="mailto:hello@summersteeze.com" style="color: #f27e56; text-decoration: none;">hello@summersteeze.com</a>
+                <a href="mailto:hello@summersteez.com" style="color: #f27e56; text-decoration: none;">hello@summersteez.com</a>
               </p>
             </td>
           </tr>
@@ -799,7 +799,7 @@ export async function sendOrderNotificationToSupport(
     ? `<span style="color: #f59e0b; font-weight: bold;">PENDING - Payment not yet received</span>`
     : `<span style="color: #10b981; font-weight: bold;">PAID - Payment received</span>`;
 
-  const adminTo = process.env.SUPPORT_EMAIL || "help@summersteeze.com";
+  const adminTo = process.env.SUPPORT_EMAIL || "help@summersteez.com";
   try {
     await sendEmail({
       to: adminTo,
@@ -883,7 +883,7 @@ export async function sendAffiliatePayoutRequestEmail(details: {
   const { affiliateName, affiliateEmail, discountCode, amount, requestId } = details;
   try {
     await sendEmail({
-      to: "hello@summersteeze.com",
+      to: "hello@summersteez.com",
       subject: `Affiliate Payout Request: ${affiliateName} ($${amount.toFixed(2)})`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -1027,7 +1027,7 @@ export async function sendDiscountCodeRetargetingEmail(email: string, discountCo
             </div>
 
             <div style="text-align: center; margin-top: 30px;">
-              <a href="https://www.summersteeze.com/products" 
+              <a href="https://www.summersteez.com/products" 
                  style="display: inline-block; background-color: #f27e56; color: white; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px;">
                 Shop Now
               </a>
@@ -1046,12 +1046,12 @@ export async function sendDiscountCodeRetargetingEmail(email: string, discountCo
             <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 30px 0;">
 
             <p style="color: #6b7280; font-size: 14px; line-height: 1.6; margin: 20px 0 0 0;">
-              Questions? Reply to this email or visit our <a href="https://www.summersteeze.com/contact" style="color: #f27e56; text-decoration: none;">contact page</a>.
+              Questions? Reply to this email or visit our <a href="https://www.summersteez.com/contact" style="color: #f27e56; text-decoration: none;">contact page</a>.
             </p>
 
             <p style="color: #9ca3af; font-size: 12px; margin-top: 30px; text-align: center;">
               Summer Steeze<br>
-              <a href="https://www.summersteeze.com/unsubscribe?email=${encodeURIComponent(email)}" 
+              <a href="https://www.summersteez.com/unsubscribe?email=${encodeURIComponent(email)}" 
                  style="color: #f27e56; text-decoration: underline;">
                 Manage your email preferences</a>
             </p>
@@ -1113,7 +1113,7 @@ export async function sendZellePaymentInstructions(
         <tr>
           <td style="padding-bottom: 16px;">
             <p style="margin: 0 0 4px 0; font-size: 12px; color: #666666; text-transform: uppercase; letter-spacing: 0.5px;">Send to</p>
-            <p style="margin: 0; font-size: 16px; font-weight: 600; color: #f27e56; font-family: monospace;">orders@summersteeze.com</p>
+            <p style="margin: 0; font-size: 16px; font-weight: 600; color: #f27e56; font-family: monospace;">orders@summersteez.com</p>
           </td>
         </tr>
         <tr>
@@ -1174,7 +1174,7 @@ export async function sendVenmoPaymentInstructions(
     shippingCost: number;
   }
 ) {
-  const venmoLink = `https://venmo.com/summersteeze?txn=pay&amount=${total.toFixed(2)}&note=Online+Goods`;
+  const venmoLink = `https://venmo.com/summersteez?txn=pay&amount=${total.toFixed(2)}&note=Online+Goods`;
   const qrCodeUrl = `${baseUrl}/zelle_qr.png`;
 
   const content = `
@@ -1219,7 +1219,7 @@ export async function sendVenmoPaymentInstructions(
         <tr>
           <td style="padding-top: 16px; border-top: 1px solid #e5e5e5;">
             <p style="margin: 0 0 4px 0; font-size: 12px; color: #666666; text-transform: uppercase; letter-spacing: 0.5px;">Venmo Profile</p>
-            <p style="margin: 0 0 16px 0; font-size: 16px; font-weight: 600; color: #008CFF; font-family: monospace;">@summersteeze</p>
+            <p style="margin: 0 0 16px 0; font-size: 16px; font-weight: 600; color: #008CFF; font-family: monospace;">@summersteez</p>
             <p style="margin: 0 0 4px 0; font-size: 12px; color: #666666; text-transform: uppercase; letter-spacing: 0.5px;">Note</p>
             <p style="margin: 0; font-size: 16px; font-weight: 600; color: #333333;">Online Goods</p>
           </td>
@@ -1529,7 +1529,7 @@ export async function sendPaymentReminderEmail(
               If you're experiencing any issues, please contact our support team immediately.
             </p>
             <p style="color: #1e40af; margin-top: 10px;">
-              <strong>Support:</strong> <a href="mailto:help@summersteeze.com" style="color: #f27e56;">help@summersteeze.com</a>
+              <strong>Support:</strong> <a href="mailto:help@summersteez.com" style="color: #f27e56;">help@summersteez.com</a>
             </p>
           </div>
 
@@ -1694,7 +1694,7 @@ export async function sendCustomDesignInquiryEmails(data: CustomDesignInquiryDat
       Thank you for your interest in Summer Steeze Custom Design Services. We've received your request and will get back to you within 1–2 business days to discuss how we can help bring your vision to life.
     </p>
     <p style="margin: 0 0 16px 0; font-size: 15px; color: #555555; line-height: 1.6;">
-      In the meantime, if you have any questions, reply to this email or contact us at <a href="mailto:help@summersteeze.com" style="color: #f27e56;">help@summersteeze.com</a>.
+      In the meantime, if you have any questions, reply to this email or contact us at <a href="mailto:help@summersteez.com" style="color: #f27e56;">help@summersteez.com</a>.
     </p>
     <p style="margin: 0; font-size: 15px; color: #555555;">Best,<br>The Summer Steeze Team</p>
   `;

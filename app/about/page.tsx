@@ -62,7 +62,7 @@ export default function AboutPage() {
         <div className="container-custom text-center">
           <p className="text-slate-600 max-w-xl mx-auto">
             Questions? Reach out at{" "}
-            <a href="mailto:hello@summersteeze.com" className="text-brand-600 hover:underline">hello@summersteeze.com</a>.
+            <a href="mailto:hello@summersteez.com" className="text-brand-600 hover:underline">hello@summersteez.com</a>.
           </p>
         </div>
       </section>

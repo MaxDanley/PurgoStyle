@@ -19,7 +19,7 @@ export default function ReturnsPage() {
 
             <h2 className="text-xl font-semibold text-gray-900 mb-4 mt-8">How to Return</h2>
             <p className="text-gray-600 mb-4">
-              Contact us at <a href="mailto:hello@summersteeze.com" className="text-brand-600 hover:underline">hello@summersteeze.com</a> with your order number and reason for return. We’ll send you instructions and a return address. You are responsible for return shipping unless the return is due to our error.
+              Contact us at <a href="mailto:hello@summersteez.com" className="text-brand-600 hover:underline">hello@summersteez.com</a> with your order number and reason for return. We’ll send you instructions and a return address. You are responsible for return shipping unless the return is due to our error.
             </p>
 
             <h2 className="text-xl font-semibold text-gray-900 mb-4 mt-8">Refunds</h2>
@@ -29,7 +29,7 @@ export default function ReturnsPage() {
 
             <h2 className="text-xl font-semibold text-gray-900 mb-4 mt-8">Damaged or Incorrect Items</h2>
             <p className="text-gray-600 mb-4">
-              If you received a damaged or incorrect item, contact us at hello@summersteeze.com within 48 hours of delivery with your order number and photos. We’ll arrange a replacement or full refund.
+              If you received a damaged or incorrect item, contact us at hello@summersteez.com within 48 hours of delivery with your order number and photos. We’ll arrange a replacement or full refund.
             </p>
           </div>
         </div>

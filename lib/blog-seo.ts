@@ -24,7 +24,7 @@ export function generateStructuredData(
   featuredImage?: string,
   articleImages?: string[]
 ): object {
-  const url = `https://www.summersteeze.com/blog/${slug}`;
+  const url = `https://www.summersteez.com/blog/${slug}`;
   
   // Generate ImageObject for featured image
   const imageObjects: any[] = [];
@@ -39,7 +39,7 @@ export function generateStructuredData(
       "caption": imageAlt,
       "description": imageAlt,
       "name": title,
-      "license": "https://www.summersteeze.com",
+      "license": "https://www.summersteez.com",
       "creator": {
         "@type": "Organization",
         "name": "Summer Steeze"
@@ -64,7 +64,7 @@ export function generateStructuredData(
         "caption": imageAlt,
         "description": imageAlt,
         "name": sectionTitle || `${title} - Image ${index + 1}`,
-        "license": "https://www.summersteeze.com",
+        "license": "https://www.summersteez.com",
         "creator": {
           "@type": "Organization",
           "name": "Summer Steeze"
@@ -73,7 +73,7 @@ export function generateStructuredData(
     });
   }
   
-  const baseImage = featuredImage || "https://www.summersteeze.com/STEEZ.png";
+  const baseImage = featuredImage || "https://www.summersteez.com/STEEZ.png";
   
   return {
     "@context": "https://schema.org",
@@ -86,14 +86,14 @@ export function generateStructuredData(
     "author": {
       "@type": "Organization",
       "name": "Summer Steeze",
-      "url": "https://www.summersteeze.com"
+      "url": "https://www.summersteez.com"
     },
     "publisher": {
       "@type": "Organization",
       "name": "Summer Steeze",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://www.summersteeze.com/STEEZ.png",
+        "url": "https://www.summersteez.com/STEEZ.png",
         "width": 512,
         "height": 512
       }
@@ -302,19 +302,19 @@ export function generateBreadcrumbStructuredData(slug: string, title: string): o
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https://www.summersteeze.com"
+        "item": "https://www.summersteez.com"
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": "Blog",
-        "item": "https://www.summersteeze.com/blog"
+        "item": "https://www.summersteez.com/blog"
       },
       {
         "@type": "ListItem",
         "position": 3,
         "name": title,
-        "item": `https://www.summersteeze.com/blog/${slug}`
+        "item": `https://www.summersteez.com/blog/${slug}`
       }
     ]
   };
@@ -413,9 +413,9 @@ export function generatePSEOPageBreadcrumb(type: 'compare' | 'peptides', slug: s
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.summersteeze.com" },
-      { "@type": "ListItem", "position": 2, "name": sectionName, "item": `https://www.summersteeze.com${basePath}` },
-      { "@type": "ListItem", "position": 3, "name": title, "item": `https://www.summersteeze.com${basePath}/${slug}` }
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.summersteez.com" },
+      { "@type": "ListItem", "position": 2, "name": sectionName, "item": `https://www.summersteez.com${basePath}` },
+      { "@type": "ListItem", "position": 3, "name": title, "item": `https://www.summersteez.com${basePath}/${slug}` }
     ]
   };
 }

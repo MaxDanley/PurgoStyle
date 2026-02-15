@@ -15,7 +15,7 @@ export default function DisclaimerPage() {
           <p>
             Product photos and descriptions are representative. Slight variations in color or fit may occur.
             Follow care instructions on the label to maintain quality. If you have sizing or care questions,
-            contact hello@summersteeze.com.
+            contact hello@summersteez.com.
           </p>
 
           <h2>Orders &amp; Returns</h2>
@@ -27,7 +27,7 @@ export default function DisclaimerPage() {
 
           <h2>Contact</h2>
           <p>
-            For questions about orders, sizing, or our tees, contact hello@summersteeze.com.
+            For questions about orders, sizing, or our tees, contact hello@summersteez.com.
           </p>
 
           <div className="bg-gray-50 border border-gray-200 rounded-lg p-6 mt-8">

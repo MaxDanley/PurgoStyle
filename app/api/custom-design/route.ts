@@ -40,7 +40,7 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error("Custom design inquiry error:", error);
     return NextResponse.json(
-      { error: "Something went wrong. Please try again or email us at help@summersteeze.com." },
+      { error: "Something went wrong. Please try again or email us at help@summersteez.com." },
       { status: 500 }
     );
   }
