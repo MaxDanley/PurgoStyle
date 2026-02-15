@@ -25,8 +25,7 @@ export default async function SuccessPage({
 
   if (!sessionId) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-6">
-        <div className="max-w-md text-center">
+      <div className="max-w-md text-center p-6">
           <h1 className="text-xl font-semibold text-gray-900 mb-2">Missing session</h1>
           <p className="text-gray-600 mb-6">No session was provided. Please complete checkout from the beginning.</p>
           <Link
@@ -35,7 +34,6 @@ export default async function SuccessPage({
           >
             Return to home
           </Link>
-        </div>
       </div>
     );
   }
@@ -46,8 +44,7 @@ export default async function SuccessPage({
 
     if (session.payment_status !== "paid" && session.payment_status !== "unpaid") {
       return (
-        <div className="min-h-screen flex items-center justify-center p-6">
-          <div className="max-w-md text-center">
+        <div className="max-w-md text-center p-6">
             <h1 className="text-xl font-semibold text-gray-900 mb-2">Payment verification</h1>
             <p className="text-gray-600 mb-6">
               We couldn&apos;t confirm your payment status. If you were charged, we&apos;ll process your order shortly.
@@ -58,7 +55,6 @@ export default async function SuccessPage({
             >
               Return to home
             </Link>
-          </div>
         </div>
       );
     }
@@ -81,8 +77,7 @@ export default async function SuccessPage({
   } catch (e: any) {
     console.error("success page error:", e);
     return (
-      <div className="min-h-screen flex items-center justify-center p-6">
-        <div className="max-w-md text-center">
+      <div className="max-w-md text-center p-6">
           <h1 className="text-xl font-semibold text-gray-900 mb-2">Verification issue</h1>
           <p className="text-gray-600 mb-6">
             Something went wrong. If you were charged, we&apos;ll process your order shortly.
@@ -93,7 +88,6 @@ export default async function SuccessPage({
           >
             Return to home
           </Link>
-        </div>
       </div>
     );
   }

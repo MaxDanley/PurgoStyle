@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import SessionProvider from "@/components/SessionProvider";
 import GoogleMerchantWidget from "@/components/GoogleMerchantWidget";
 
@@ -55,16 +53,7 @@ export default function RootLayout({
         <GoogleMerchantWidget />
         <SessionProvider>
           <Toaster position="top-center" />
-          <div id="page-content-wrapper" className="bg-white min-h-screen">
-            <div className="bg-black text-white text-center py-2.5 px-4 text-xs font-medium uppercase tracking-widest">
-              Free shipping on orders over $50
-            </div>
-            <Navbar />
-            <main className="min-h-screen">
-              {children}
-            </main>
-            <Footer />
-          </div>
+          {children}
         </SessionProvider>
       </body>
     </html>

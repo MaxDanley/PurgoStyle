@@ -8,8 +8,7 @@ export default async function SuccessErrorPage({
   const { reason } = await searchParams;
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white p-6">
-      <div className="max-w-md text-center">
+    <div className="max-w-md text-center p-6">
         <h1 className="text-xl font-semibold text-gray-900 mb-2">Payment verification issue</h1>
         <p className="text-gray-600 mb-6">
           {reason === "no_session"
@@ -29,7 +28,6 @@ export default async function SuccessErrorPage({
         >
           Return to home
         </Link>
-      </div>
     </div>
   );
 }

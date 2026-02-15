@@ -28,8 +28,7 @@ function PaymentRedirectContent() {
   }, [searchParams]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white">
-      <div className="flex flex-col items-center gap-4">
+    <div className="flex flex-col items-center gap-4">
         <div
           className="w-12 h-12 border-4 border-brand-500 border-t-transparent rounded-full animate-spin"
           aria-hidden
@@ -37,7 +36,6 @@ function PaymentRedirectContent() {
         <p className="text-sm text-gray-500">
           {redirecting ? "Completing payment…" : "Redirecting…"}
         </p>
-      </div>
     </div>
   );
 }
@@ -45,7 +43,7 @@ function PaymentRedirectContent() {
 export default function PaymentRedirectPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen flex items-center justify-center bg-white">
+      <div className="flex flex-col items-center gap-4">
         <div className="w-12 h-12 border-4 border-brand-500 border-t-transparent rounded-full animate-spin" aria-hidden />
       </div>
     }>

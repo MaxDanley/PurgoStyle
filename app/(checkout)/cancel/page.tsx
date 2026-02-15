@@ -4,8 +4,7 @@ import Link from "next/link";
 
 export default function CancelPage() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white p-6">
-      <div className="max-w-md text-center">
+    <div className="max-w-md text-center p-6">
         <h1 className="text-xl font-semibold text-gray-900 mb-2">Payment cancelled</h1>
         <p className="text-gray-600 mb-6">
           Your payment was cancelled. No charges were made. You can try again anytime.
@@ -16,7 +15,6 @@ export default function CancelPage() {
         >
           Return to home
         </Link>
-      </div>
     </div>
   );
 }
