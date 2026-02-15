@@ -144,7 +144,7 @@ export default function TrackOrderPage() {
                 value={orderNumber}
                 onChange={(e) => setOrderNumber(e.target.value)}
                     className="block w-full px-4 py-3.5 pl-11 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 focus:bg-white transition-all duration-200 ease-in-out placeholder-gray-400"
-                placeholder="e.g., PURGO-123456"
+                placeholder="e.g., PL-1234567890-ABCD"
                 required
               />
                   <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">

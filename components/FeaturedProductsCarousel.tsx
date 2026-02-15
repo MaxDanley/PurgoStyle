@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Product, getFeaturedImage, getSecondaryImageUrl } from "@/lib/products";
+import { Product, getFeaturedImage, getSecondaryImageUrl, sanitizeBrandText } from "@/lib/products";
 
 interface FeaturedProductsCarouselProps {
   products: Product[];
@@ -50,7 +50,7 @@ export default function FeaturedProductsCarousel({ products }: FeaturedProductsC
                     <div className="absolute inset-0 bg-gradient-to-r from-brand-500/20 to-brand-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg z-[1]" />
                     <Image
                       src={product.image || getFeaturedImage(product.slug)}
-                      alt={product.name}
+                      alt={sanitizeBrandText(product.name)}
                       fill
                       className="object-cover group-hover:scale-110 transition-all duration-500 rounded-lg group-hover:opacity-0"
                       sizes="100vw"
@@ -60,7 +60,7 @@ export default function FeaturedProductsCarousel({ products }: FeaturedProductsC
                     {getSecondaryImageUrl(product.slug) && (
                       <Image
                         src={getSecondaryImageUrl(product.slug)!}
-                        alt={`${product.name} - alternate view`}
+                        alt={`${sanitizeBrandText(product.name)} - alternate view`}
                         fill
                         className="object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-lg absolute inset-0"
                         sizes="100vw"
@@ -72,10 +72,10 @@ export default function FeaturedProductsCarousel({ products }: FeaturedProductsC
                   {/* Product Info */}
                   <div className="p-6">
                     <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-brand-600 transition-colors">
-                      {product.name}
+                      {sanitizeBrandText(product.name)}
                     </h3>
                     <p className="text-sm text-gray-600 mb-4 line-clamp-2">
-                      {product.description}
+                      {sanitizeBrandText(product.description)}
                     </p>
                     
                     <div className="flex items-center justify-between">
@@ -131,7 +131,7 @@ export default function FeaturedProductsCarousel({ products }: FeaturedProductsC
                 <div className="absolute inset-0 bg-gradient-to-r from-brand-500/20 to-brand-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg z-[1]" />
                 <Image
                   src={product.image || getFeaturedImage(product.slug)}
-                  alt={product.name}
+                  alt={sanitizeBrandText(product.name)}
                   fill
                   className="object-cover group-hover:scale-110 transition-all duration-500 rounded-lg group-hover:opacity-0"
                   sizes="(max-width: 768px) 100vw, 33vw"
@@ -141,7 +141,7 @@ export default function FeaturedProductsCarousel({ products }: FeaturedProductsC
                 {getSecondaryImageUrl(product.slug) && (
                   <Image
                     src={getSecondaryImageUrl(product.slug)!}
-                    alt={`${product.name} - alternate view`}
+                    alt={`${sanitizeBrandText(product.name)} - alternate view`}
                     fill
                     className="object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-lg absolute inset-0"
                     sizes="(max-width: 768px) 100vw, 33vw"
@@ -153,10 +153,10 @@ export default function FeaturedProductsCarousel({ products }: FeaturedProductsC
               {/* Product Info */}
               <div className="p-6">
                 <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-brand-600 transition-colors">
-                  {product.name}
+                  {sanitizeBrandText(product.name)}
                 </h3>
                 <p className="text-sm text-gray-600 mb-4 line-clamp-2">
-                  {product.description}
+                  {sanitizeBrandText(product.description)}
                 </p>
                 
                 <div className="flex items-center justify-between">

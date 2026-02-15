@@ -14,7 +14,7 @@ import { trackPageView, trackViewItem, trackAddToCart } from "@/lib/analytics";
 import { usePathname } from "next/navigation";
 import { ChevronLeftIcon, ChevronRightIcon, ExclamationTriangleIcon, StarIcon } from "@heroicons/react/24/outline";
 import { StarIcon as StarIconSolid } from "@heroicons/react/24/solid";
-import { getFeaturedImage } from "@/lib/products";
+import { getFeaturedImage, sanitizeBrandText } from "@/lib/products";
 
 const ALLOWED_SIZES = ["S", "M", "L", "SMALL", "MEDIUM", "LARGE"];
 
@@ -105,15 +105,15 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
   // Track page view and product view
   useEffect(() => {
     if (product && selectedVariant && pathname) {
-      trackPageView(window.location.href, `${product.name} - Summer Steeze`, {
+      trackPageView(window.location.href, `${displayName} - Summer Steeze`, {
         page_type: 'product',
         product_id: product.id,
-        product_name: product.name,
+        product_name: displayName,
       });
 
       trackViewItem({
         itemId: product.id,
-        itemName: product.name,
+        itemName: displayName,
         itemCategory: product.category,
         price: selectedVariant.price,
         currency: 'USD',
@@ -150,6 +150,8 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
     );
   }
 
+  const displayName = sanitizeBrandText(product.name);
+
   const handleAddToCart = (isBackorder: boolean = false) => {
     if (!selectedVariant) return;
 
@@ -181,7 +183,7 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
     addItem({
       productId: product.id,
       variantId: selectedVariant.id,
-      productName: product.name,
+      productName: displayName,
       variantSize: selectedVariant.size,
       price: finalPrice,
       image: product.image,
@@ -191,7 +193,7 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
 
     trackAddToCart({
       itemId: product.id,
-      itemName: product.name,
+      itemName: displayName,
       itemCategory: product.category,
       price: finalPrice,
       quantity: quantity,
@@ -200,7 +202,7 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
 
     const backorderText = isBackorder ? " (Backorder - ~2 week delivery)" : "";
     const bulkText = isBulkEligible ? " (44% off with bulk discount!)" : " (30% off sale!)";
-    toast.success(`Added ${quantity}x ${product.name} (${selectedVariant.size})${backorderText}${bulkText} to cart!`);
+    toast.success(`Added ${quantity}x ${displayName} (${selectedVariant.size})${backorderText}${bulkText} to cart!`);
   };
 
   const handleBuyNow = (isBackorder: boolean = false) => {
@@ -225,7 +227,7 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
               Products
             </Link>
             <span className="mx-2 text-gray-400">/</span>
-            <span className="text-gray-900 font-medium">{product.name}</span>
+            <span className="text-gray-900 font-medium">{displayName}</span>
           </div>
 
           {/* Product Detail */}
@@ -234,14 +236,16 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
             <div className="relative w-full group/main">
               {images.length > 0 && (
                 <div className="relative w-full aspect-square rounded-lg overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
+                  {/* Orange glow on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-brand-500/20 to-brand-600/20 opacity-0 group-hover/main:opacity-100 transition-opacity duration-300 rounded-lg z-10 pointer-events-none" aria-hidden />
                   {/* Main Product Image - Priority Load */}
                   {images.map((imageSrc, index) => {
                     const isFirstImage = index === 0;
                     const altText = index === 0 
-                      ? product.name 
+                      ? displayName 
                       : index === 1 
-                        ? `${product.name} - alternate view` 
-                        : `${product.name} - Product Image`;
+                        ? `${displayName} - alternate view` 
+                        : `${displayName} - Product Image`;
                     
                     return (
                       <div
@@ -264,7 +268,7 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
                             {images.length > 1 && (
                               <Image
                                 src={images[1]}
-                                alt={`${product.name} - alternate view`}
+                                alt={`${displayName} - alternate view`}
                                 fill
                                 className="object-cover rounded-lg opacity-0 group-hover/main:opacity-100 transition-opacity duration-300 absolute inset-0"
                                 sizes="(max-width: 768px) 100vw, 50vw"
@@ -348,7 +352,7 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
               {/* Title and price on one row (reference style) */}
               <div className="flex flex-wrap items-start justify-between gap-4 mb-2">
                 <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mt-2 lg:mt-0">
-                  {product.name}
+                  {displayName}
                 </h1>
                 {selectedVariant && (
                   <span className="text-2xl md:text-3xl font-bold text-gray-900">
@@ -511,7 +515,7 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
                   {selectedVariant.stockCount === 0 && (
                     <StockNotificationButton
                       variantId={selectedVariant.id}
-                      variantName={`${product.name} (${selectedVariant.size})`}
+                      variantName={`${displayName} (${selectedVariant.size})`}
                       isOutOfStock={true}
                     />
                   )}
@@ -536,14 +540,11 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
             </div>
           </div>
 
-          {/* Product Overview - professional layout: intro, description, details */}
+          {/* Product Overview - professional layout: description, details */}
           <div className="mt-16">
             <div className="prose max-w-none">
               <h2 className="text-2xl font-bold text-gray-900 mb-2">Product Overview</h2>
-              <p className="text-lg font-semibold text-gray-800 mb-6">
-                Introducing the {product.name}
-              </p>
-              {renderProductDescription(product.longDescription || product.description)}
+              {renderProductDescription(sanitizeBrandText(product.longDescription || product.description))}
 
               {/* Optional structured details: model, materials, specifications (when present in description or product) */}
               {(product as { modelInfo?: string; materials?: string; specifications?: string[] }).modelInfo && (
@@ -595,7 +596,7 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
 
             {showReviewForm && (
               <ProductReviewForm
-                productName={product.name}
+                productName={displayName}
                 slug={slug}
                 sizeOptions={productVariants.map((v: any) => normalizeSizeForDisplay(v.size))}
                 onSuccess={() => {
@@ -667,7 +668,7 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
             itemListElement: [
               { "@type": "ListItem", position: 1, name: "Home", item: "https://www.summersteez.com/" },
               { "@type": "ListItem", position: 2, name: "Products", item: "https://www.summersteez.com/products" },
-              { "@type": "ListItem", position: 3, name: product.name, item: `https://www.summersteez.com/products/${product.slug}` },
+              { "@type": "ListItem", position: 3, name: displayName, item: `https://www.summersteez.com/products/${product.slug}` },
             ],
           }}
         />
@@ -680,8 +681,8 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
             data={{
               "@context": "https://schema.org",
               "@type": "Product",
-              name: product.name,
-              description: product.description,
+              name: displayName,
+              description: sanitizeBrandText(product.description || ""),
               image: `https://www.summersteez.com${product.image}`,
               brand: {
                 "@type": "Brand",
@@ -713,7 +714,7 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
               mainEntity: [
                 {
                   "@type": "Question",
-                  name: `How should I care for ${product.name}?`,
+                  name: `How should I care for ${displayName}?`,
                   acceptedAnswer: {
                     "@type": "Answer",
                     text: `Follow the care instructions on the product label. Generally, wash in cold water and tumble dry low or hang dry to maintain quality.`,

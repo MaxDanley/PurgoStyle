@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Product, getFeaturedImage, getSecondaryImageUrl } from "@/lib/products";
+import { Product, getFeaturedImage, getSecondaryImageUrl, sanitizeBrandText } from "@/lib/products";
 
 interface ProductCardProps {
   product: Product;
@@ -45,10 +45,10 @@ export default function ProductCard({ product, showSaleBadge = false }: ProductC
         {/* Product Info */}
         <div className="p-6">
           <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-brand-600 transition-colors">
-            {product.name}
+            {sanitizeBrandText(product.name)}
           </h3>
           <p className="text-sm text-gray-600 mb-4 line-clamp-2">
-            {product.description}
+            {sanitizeBrandText(product.description)}
           </p>
           
           <div className="flex items-center justify-between">

@@ -1,5 +1,17 @@
 /** Summer Steeze: products are loaded from DB. This file provides fallbacks and helpers. */
 
+/** Remove any Purgo / Purgolabs / peptide references from displayed text. Use for all user-facing product names and descriptions. */
+export function sanitizeBrandText(text: string): string {
+  if (!text || typeof text !== "string") return text;
+  return text
+    .replace(/\bPurgo\s*Style\s*Labs\b/gi, "Summer Steeze")
+    .replace(/\bPurgolabs\b/gi, "Summer Steeze")
+    .replace(/\bPurgo\b/g, "")
+    .replace(/\bpeptides?\b/gi, "")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+}
+
 export interface ProductVariant {
   id: string;
   size: string;
@@ -31,10 +43,12 @@ export function getProductBySlug(_slug: string): Product | undefined {
 }
 
 export function getProductSeo(product: { name: string; slug: string; category: string; description: string; variants?: { size: string }[] }) {
+  const name = sanitizeBrandText(product.name);
+  const desc = sanitizeBrandText(product.description);
   const sizes = product.variants?.map((v) => v.size).filter(Boolean).slice(0, 3) || [];
   const sizePhrase = sizes.length ? ` ${sizes.join(" & ")}` : "";
-  const title = `Buy ${product.name}${sizePhrase} | Summer Steeze`;
-  const description = `${product.name} – ${product.description.slice(0, 120)}. Arizona activewear. Summer Steeze.`;
+  const title = `Buy ${name}${sizePhrase} | Summer Steeze`;
+  const description = `${name} – ${desc.slice(0, 120)}. Arizona activewear. Summer Steeze.`;
   return { title, description: description.slice(0, 160) };
 }
 

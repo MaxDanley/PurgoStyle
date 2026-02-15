@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 import FreeShippingBar from "@/components/FreeShippingBar";
 import RewardsPoints from "@/components/RewardsPoints";
 import { trackViewCart, trackRemoveFromCart } from "@/lib/analytics";
+import { sanitizeBrandText } from "@/lib/products";
 import toast from "react-hot-toast";
 
 export default function CartPage() {
@@ -222,7 +223,7 @@ export default function CartPage() {
                     <div className="relative w-20 h-20 md:w-24 md:h-24 bg-gray-50 rounded-lg overflow-hidden flex-shrink-0">
                       <Image
                         src={item.image || '/placeholder.svg'}
-                        alt={item.productName}
+                        alt={sanitizeBrandText(item.productName || "")}
                         fill
                         className="object-cover"
                         sizes="(max-width: 768px) 80px, 96px"
@@ -244,7 +245,7 @@ export default function CartPage() {
                         href={`/products/${item.productId}`}
                         className="text-base md:text-lg font-bold text-gray-900 hover:text-primary-600 block mb-1"
                       >
-                        {item.productName}
+                        {sanitizeBrandText(item.productName || "")}
                       </Link>
                       <p className="text-sm text-gray-600 mb-2">Size: {item.variantSize}</p>
                       <p className="text-lg font-semibold text-gray-900">

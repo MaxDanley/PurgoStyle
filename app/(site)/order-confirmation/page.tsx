@@ -10,6 +10,7 @@ import { TruckIcon, EnvelopeIcon, CalendarIcon, ClipboardIcon, ExclamationTriang
 import toast from "react-hot-toast";
 import { useCart } from "@/lib/store";
 import { trackPurchase, trackOrderConfirmationView, trackPageView } from "@/lib/analytics";
+import { sanitizeBrandText } from "@/lib/products";
 import { usePathname } from "next/navigation";
 
 interface OrderDetails {
@@ -200,7 +201,7 @@ function OrderConfirmationContent() {
       items: orderData.items.map((item: any) => ({
         id: item.id,
         product: {
-          name: item.product.name,
+          name: sanitizeBrandText(item.product?.name || ""),
           image: item.product.image,
         },
         variant: {
@@ -256,8 +257,8 @@ function OrderConfirmationContent() {
       trackPurchase({
         transactionId: formattedOrder.orderNumber,
         items: formattedOrder.items.map(item => ({
-          itemId: item.product.name, // Using product name as ID since we don't have product ID here
-          itemName: item.product.name,
+          itemId: item.product?.name ?? item.id, // Using product name as ID since we don't have product ID here
+          itemName: sanitizeBrandText(item.product?.name || ""),
           itemCategory: 'Apparel',
           price: typeof item.price === 'number' ? item.price : parseFloat(String(item.price)) || 0,
           quantity: item.quantity,
@@ -493,7 +494,7 @@ function OrderConfirmationContent() {
                     <div className="flex-shrink-0">
                       <Image
                         src={item.product.image}
-                        alt={item.product.name}
+                        alt={sanitizeBrandText(item.product?.name || "")}
                         width={64}
                         height={64}
                         className="h-16 w-16 object-cover rounded-lg"
@@ -501,7 +502,7 @@ function OrderConfirmationContent() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <h4 className="text-sm font-medium text-gray-900 truncate">
-                        {item.product.name}
+                        {sanitizeBrandText(item.product?.name || "")}
                       </h4>
                       <p className="text-sm text-gray-500">Size: {item.variant.size}</p>
                       <p className="text-sm text-gray-500">Qty: {item.quantity}</p>

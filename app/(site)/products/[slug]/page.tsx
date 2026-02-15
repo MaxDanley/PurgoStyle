@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
-import { getProductBySlug, getProductSeo } from "@/lib/products";
+import { getProductBySlug, getProductSeo, getSecondaryImageUrl } from "@/lib/products";
 import ProductDetailClient from "@/components/ProductDetailClient";
 import ProductComingSoon from "@/components/ProductComingSoon";
 import Link from "next/link";
@@ -145,7 +145,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
         longDescription: fallbackProduct?.longDescription ?? dbProduct.description,
         category: dbProduct.category,
         image: fallbackProduct?.image ?? dbProduct.image,
-        secondImage: fallbackProduct?.secondImage ?? null,
+        secondImage: fallbackProduct?.secondImage ?? getSecondaryImageUrl(dbProduct.slug) ?? null,
         thirdImage: fallbackProduct?.thirdImage ?? null,
         coaUrl: dbProduct.coaUrl,
         featured: dbProduct.featured,
