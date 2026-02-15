@@ -145,7 +145,7 @@ export async function POST(req: Request) {
       })),
       client_reference_id: order.id,
       metadata: { source: "website_a" },
-      success_url: `${baseUrl}/success?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${baseUrl}/api/checkout-success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${baseUrl}/cancel`,
       customer_email: customerEmail || undefined,
     });
