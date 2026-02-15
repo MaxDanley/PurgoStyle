@@ -27,7 +27,7 @@ function validateAuth(req: Request): boolean {
     authHeader?.startsWith("Bearer ") ? authHeader.slice(7).trim() : "";
   const token = tokenFromAuth || (xSecret?.trim() ?? "");
 
-  const match = token && secret === token;
+  const match = !!token && secret === token;
   if (!match) {
     console.warn("[create-checkout-session] Auth failed:", {
       hasSecret: !!secret,
