@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { trackPageView, trackViewItemList, trackEvent } from "@/lib/analytics";
 import { usePathname } from "next/navigation";
 import { Archivo_Black } from 'next/font/google';
+import { SECONDARY_PICTURES_FOR_HOME } from "@/lib/products";
 
 const archivoBlack = Archivo_Black({
   weight: '400',
@@ -235,6 +236,24 @@ export default function HomeClient({ featuredProducts: initialProducts }: HomeCl
               </p>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Triple secondary pictures - full width, 3 columns */}
+      <section className="w-full">
+        <div className="grid grid-cols-1 md:grid-cols-3">
+          {SECONDARY_PICTURES_FOR_HOME.map((src, i) => (
+            <div key={i} className="relative aspect-[4/5] md:aspect-[3/4]">
+              <Image
+                src={src}
+                alt="Summer Steeze apparel"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 33vw"
+                priority={i === 0}
+              />
+            </div>
+          ))}
         </div>
       </section>
 

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Product, getFeaturedImage } from "@/lib/products";
+import { Product, getFeaturedImage, getSecondaryImageUrl } from "@/lib/products";
 
 interface FeaturedProductsCarouselProps {
   products: Product[];
@@ -47,17 +47,26 @@ export default function FeaturedProductsCarousel({ products }: FeaturedProductsC
                 <div className="card overflow-hidden h-full hover:scale-105 transition-all duration-300">
                   {/* Product Image */}
                   <div className="relative h-72 bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden rounded-lg">
-                    <div className="absolute inset-0 bg-gradient-to-r from-brand-500/20 to-brand-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg"></div>
-                    
+                    <div className="absolute inset-0 bg-gradient-to-r from-brand-500/20 to-brand-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg z-[1]" />
                     <Image
                       src={product.image || getFeaturedImage(product.slug)}
                       alt={product.name}
                       fill
-                      className="object-cover group-hover:scale-110 transition-transform duration-500 rounded-lg"
+                      className="object-cover group-hover:scale-110 transition-all duration-500 rounded-lg group-hover:opacity-0"
                       sizes="100vw"
                       priority={index === 0}
                       quality={90}
                     />
+                    {getSecondaryImageUrl(product.slug) && (
+                      <Image
+                        src={getSecondaryImageUrl(product.slug)!}
+                        alt={`${product.name} - alternate view`}
+                        fill
+                        className="object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-lg absolute inset-0"
+                        sizes="100vw"
+                        loading="lazy"
+                      />
+                    )}
                   </div>
 
                   {/* Product Info */}
@@ -117,20 +126,28 @@ export default function FeaturedProductsCarousel({ products }: FeaturedProductsC
         {products.map((product, index) => (
           <Link key={product.id} href={`/products/${product.slug}`} className="group">
             <div className="card overflow-hidden h-full hover:scale-105 transition-all duration-300">
-              {/* Product Image */}
+              {/* Product Image - secondary on hover */}
               <div className="relative h-72 bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden rounded-lg">
-                {/* Glow effect on hover */}
-                <div className="absolute inset-0 bg-gradient-to-r from-brand-500/20 to-brand-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg"></div>
-                
+                <div className="absolute inset-0 bg-gradient-to-r from-brand-500/20 to-brand-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg z-[1]" />
                 <Image
                   src={product.image || getFeaturedImage(product.slug)}
                   alt={product.name}
                   fill
-                  className="object-cover group-hover:scale-110 transition-transform duration-500 rounded-lg"
+                  className="object-cover group-hover:scale-110 transition-all duration-500 rounded-lg group-hover:opacity-0"
                   sizes="(max-width: 768px) 100vw, 33vw"
                   priority={index < 3}
                   quality={90}
                 />
+                {getSecondaryImageUrl(product.slug) && (
+                  <Image
+                    src={getSecondaryImageUrl(product.slug)!}
+                    alt={`${product.name} - alternate view`}
+                    fill
+                    className="object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-lg absolute inset-0"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    loading="lazy"
+                  />
+                )}
               </div>
 
               {/* Product Info */}

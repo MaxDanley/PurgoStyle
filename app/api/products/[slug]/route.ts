@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { getProductBySlug } from "@/lib/products";
+import { getProductBySlug, getSecondaryImageUrl } from "@/lib/products";
 
 export async function GET(
   request: Request,
@@ -38,7 +38,7 @@ export async function GET(
       longDescription: fallbackProduct?.longDescription ?? product.description,
       category: product.category,
       image: fallbackProduct?.image ?? product.image,
-      secondImage: fallbackProduct?.secondImage ?? null,
+      secondImage: fallbackProduct?.secondImage ?? getSecondaryImageUrl(product.slug) ?? null,
       thirdImage: fallbackProduct?.thirdImage ?? null,
       coaUrl: product.coaUrl,
       featured: product.featured,

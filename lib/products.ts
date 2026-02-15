@@ -46,6 +46,30 @@ export function getFeaturedImage(_slug: string): string {
   return "/placeholder.svg";
 }
 
+/** Map product slug to secondary image (hover) from /secondary_pictures/ */
+const SECONDARY_IMAGES: Record<string, string> = {
+  "black-logo-hoodie": "/secondary_pictures/black_logo_hoodie_2.png",
+  "black-logo-tshirt": "/secondary_pictures/black_logo_tshirt_black_2.png",
+  "black-shell-jacket": "/secondary_pictures/black_shell_jacket_2.png",
+  "black-sweatpants": "/secondary_pictures/black_sweatpants_2.png",
+  "black-t-logo-font": "/secondary_pictures/black_t_logo_font_2.png",
+  "white-logo-t": "/secondary_pictures/white_logo_t_2_back.png",
+  "white-sweats": "/secondary_pictures/white_sweats_2.png",
+  "white-sweatshirt": "/secondary_pictures/white_sweatshirt_2.png",
+  "white-t-font-infinity": "/secondary_pictures/white_t_font_2_infinity.png",
+};
+
+export function getSecondaryImageUrl(slug: string): string | null {
+  return SECONDARY_IMAGES[slug] ?? null;
+}
+
+/** All secondary image paths for home page triple section */
+export const SECONDARY_PICTURES_FOR_HOME = [
+  "/secondary_pictures/white_sweatshirt_2.png",
+  "/secondary_pictures/black_logo_hoodie_2.png",
+  "/secondary_pictures/white_sweats_2.png",
+];
+
 export function getCrossedOutPrice(actualPrice: number): number {
   return Math.round((actualPrice / 0.7) * 100) / 100;
 }

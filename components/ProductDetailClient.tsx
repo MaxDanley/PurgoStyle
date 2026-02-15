@@ -231,7 +231,7 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
           {/* Product Detail */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-12">
             {/* Image Carousel */}
-            <div className="relative w-full">
+            <div className="relative w-full group/main">
               {images.length > 0 && (
                 <div className="relative w-full aspect-square rounded-lg overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
                   {/* Main Product Image - Priority Load */}
@@ -240,7 +240,7 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
                     const altText = index === 0 
                       ? product.name 
                       : index === 1 
-                        ? `${product.name} - Product Card` 
+                        ? `${product.name} - alternate view` 
                         : `${product.name} - Product Image`;
                     
                     return (
@@ -251,15 +251,27 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
                         } rounded-lg overflow-hidden`}
                       >
                         {isFirstImage ? (
-                          <Image
-                            src={imageSrc}
-                            alt={altText}
-                            fill
-                            className="object-cover rounded-lg"
-                            priority={true}
-                            sizes="(max-width: 768px) 100vw, 50vw"
-                            quality={90}
-                          />
+                          <>
+                            <Image
+                              src={imageSrc}
+                              alt={altText}
+                              fill
+                              className="object-cover rounded-lg group-hover/main:opacity-0 transition-opacity duration-300"
+                              priority={true}
+                              sizes="(max-width: 768px) 100vw, 50vw"
+                              quality={90}
+                            />
+                            {images.length > 1 && (
+                              <Image
+                                src={images[1]}
+                                alt={`${product.name} - alternate view`}
+                                fill
+                                className="object-cover rounded-lg opacity-0 group-hover/main:opacity-100 transition-opacity duration-300 absolute inset-0"
+                                sizes="(max-width: 768px) 100vw, 50vw"
+                                quality={90}
+                              />
+                            )}
+                          </>
                         ) : index === 2 ? (
                           <Image
                             src={imageSrc}
@@ -524,13 +536,43 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
             </div>
           </div>
 
-          {/* Product Overview */}
+          {/* Product Overview - professional layout: intro, description, details */}
           <div className="mt-16">
             <div className="prose max-w-none">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">Product Overview</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">Product Overview</h2>
+              <p className="text-lg font-semibold text-gray-800 mb-6">
+                Introducing the {product.name}
+              </p>
               {renderProductDescription(product.longDescription || product.description)}
 
-              <p className="mt-4 text-gray-600">
+              {/* Optional structured details: model, materials, specifications (when present in description or product) */}
+              {(product as { modelInfo?: string; materials?: string; specifications?: string[] }).modelInfo && (
+                <div className="mt-8 pt-6 border-t border-gray-200">
+                  <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide mb-2">Model</h3>
+                  <p className="text-gray-700">{(product as { modelInfo: string }).modelInfo}</p>
+                </div>
+              )}
+              {(product as { materials?: string }).materials && (
+                <div className="mt-6">
+                  <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide mb-2">Materials</h3>
+                  <p className="text-gray-700">{(product as { materials: string }).materials}</p>
+                </div>
+              )}
+              {Array.isArray((product as { specifications?: string[] }).specifications) && (product as { specifications: string[] }).specifications.length > 0 && (
+                <div className="mt-6">
+                  <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide mb-3">Specifications</h3>
+                  <ul className="list-none space-y-2 text-gray-700">
+                    {(product as { specifications: string[] }).specifications.map((spec, i) => (
+                      <li key={i} className="flex items-start gap-2">
+                        <span className="text-gray-400 mt-0.5">•</span>
+                        <span>{spec}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              <p className="mt-8 text-gray-600">
                 <Link href="/products" className="text-primary-600 hover:text-primary-700 font-medium">
                   Browse all products →
                 </Link>
