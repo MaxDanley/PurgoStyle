@@ -30,6 +30,7 @@ interface OrderDetails {
   cryptoCurrency?: string | null;
   cryptoPaymentStatus?: string | null;
   paymentStatus?: string;
+  stripeSessionId?: string | null;
   email?: string | null;
   items: Array<{
     id: string;
@@ -126,8 +127,8 @@ function OrderConfirmationContent() {
   }, [paymentIntentId, orderNumber]);
 
   useEffect(() => {
-    // Auto-copy order total to clipboard for Credit Card orders
-    if (order && order.paymentMethod === "CREDIT_CARD" && order.total > 0) {
+    // Auto-copy order total to clipboard only for legacy payment-link Credit Card orders
+    if (order && order.paymentMethod === "CREDIT_CARD" && !order.stripeSessionId && order.total > 0) {
       // Small delay to ensure interaction/focus
       const timer = setTimeout(() => {
         try {
@@ -224,6 +225,7 @@ function OrderConfirmationContent() {
         country: "",
       },
       paymentMethod: orderData.paymentMethod || "OTHER",
+      stripeSessionId: orderData.stripeSessionId ?? null,
       cryptoPaymentId: orderData.cryptoPaymentId || null,
       cryptoPaymentAddress: orderData.cryptoPaymentAddress || null,
       cryptoPaymentAmount: orderData.cryptoPaymentAmount || null,
@@ -393,7 +395,7 @@ function OrderConfirmationContent() {
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Payment Instructions - Credit Card (appears first if Credit Card payment) */}
-        {order.paymentMethod === "CREDIT_CARD" && (
+        {order.paymentMethod === "CREDIT_CARD" && order.paymentStatus !== "PAID" && !order.stripeSessionId && (
           <div className="mb-8 relative">
             {/* Glowing outline effect */}
             <div className="absolute -inset-2 rounded-lg blur-md opacity-60" style={{ backgroundColor: '#3b82f6', boxShadow: '0 0 20px rgba(59, 130, 246, 0.5)' }}></div>

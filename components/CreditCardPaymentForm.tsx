@@ -1,11 +1,7 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
+import { useState } from "react";
 import { ArrowRightIcon } from "@heroicons/react/24/solid";
-
-const STRIPE_PAYMENT_URL = "https://buy.stripe.com/28E14nbKraiRd4G9440Fi00";
 
 interface CreditCardPaymentFormProps {
   total: number;
@@ -38,35 +34,18 @@ export default function CreditCardPaymentForm({
   isCompletingOrder: _isCompletingOrder,
   setIsCompletingOrder: _setIsCompletingOrder,
 }: CreditCardPaymentFormProps) {
-  const router = useRouter();
   const [isProcessing, setIsProcessing] = useState(false);
   const [paymentError, setPaymentError] = useState<string | null>(null);
-  const hasAutoCopiedRef = useRef(false);
-
-  // Auto-copy order amount to clipboard when form is shown (once per mount/total)
-  useEffect(() => {
-    if (total <= 0 || hasAutoCopiedRef.current) return;
-    hasAutoCopiedRef.current = true;
-    const amount = total.toFixed(2);
-    navigator.clipboard.writeText(amount).then(() => {
-      toast.success("Order amount copied to clipboard");
-    }).catch(() => {});
-  }, [total]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsProcessing(true);
     setPaymentError(null);
 
-    // Single new tab to payment page, opened directly from this click
-    window.open(STRIPE_PAYMENT_URL, "_blank", "noopener,noreferrer");
-
     try {
-      const response = await fetch("/api/orders/create-card", {
+      const response = await fetch("/api/checkout/create-website-session", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           items,
           shippingInfo,
@@ -88,21 +67,15 @@ export default function CreditCardPaymentForm({
 
       const data = await response.json();
 
-      if (response.ok && data.success) {
-        // Copy amount again so they have it for the payment screen
-        navigator.clipboard.writeText((data.order.total ?? total).toFixed(2)).then(() => {
-          toast.success("Order amount copied to clipboard");
-        }).catch(() => {});
-        // Current tab goes to order confirmation (payment tab already opened on click)
-        router.push(`/order-confirmation?order=${data.order.orderNumber}`);
-        setIsProcessing(false);
-      } else {
-        setPaymentError("Something went wrong. Please try again shortly or contact support");
-        setIsProcessing(false);
+      if (response.ok && data.success && data.checkoutUrl) {
+        window.location.href = data.checkoutUrl;
+        return;
       }
+      setPaymentError(data.error || "Something went wrong. Please try again shortly or contact support");
     } catch (error: any) {
-      console.error("Credit Card order creation error:", error);
+      console.error("Checkout session error:", error);
       setPaymentError("Something went wrong. Please try again shortly or contact support");
+    } finally {
       setIsProcessing(false);
     }
   };
@@ -115,21 +88,9 @@ export default function CreditCardPaymentForm({
         </div>
       )}
 
-      {/* Payment instructions: amount to enter + auto-copy */}
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-        <p className="text-sm text-blue-800 mb-2">
-          <strong>Payment instructions:</strong> Clicking Pay Now will open our secure payment page in a new tab. Enter the exact order amount when asked. Your order will not be processed until payment is received.
-        </p>
-        <div className="flex items-center justify-between gap-3 mt-3 pt-3 border-t border-blue-200">
-          <p className="text-sm text-blue-800">
-            <strong>Order amount to enter on payment screen:</strong>
-          </p>
-          <p className="text-xl font-bold text-gray-900">
-            ${total.toFixed(2)}
-          </p>
-        </div>
-        <p className="text-xs text-blue-700 mt-1">
-          (This amount has been copied to your clipboard)
+        <p className="text-sm text-blue-800">
+          Click Pay Now to be redirected to our secure payment page. You will complete payment there and then return to your order confirmation on this site.
         </p>
       </div>
 
