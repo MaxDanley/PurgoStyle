@@ -192,7 +192,8 @@ model Order {
   cryptoPaymentStatus    String? // waiting, confirming, confirmed, sending, partially_paid, finished, failed, refunded, expired
 
   // Stripe Checkout (for Website A dynamic sessions)
-  stripeSessionId String?   @unique
+  stripeSessionId   String? @unique
+  externalReference String? // ref from launch-checkout (no origin identification)
 
   // BarterPay payment info
   barterPayTransactionIndex String?
