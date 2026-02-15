@@ -75,6 +75,9 @@ export default async function SuccessPage({
 
     redirect(`${PAYMENT_RETURN_URL}?${params.toString()}`);
   } catch (e: any) {
+    if (e?.digest?.startsWith?.("NEXT_REDIRECT")) {
+      throw e;
+    }
     console.error("success page error:", e);
     return (
       <div className="max-w-md text-center p-6">
