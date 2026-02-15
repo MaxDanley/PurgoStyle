@@ -8,11 +8,14 @@ function getStripe(): Stripe {
 }
 
 function validateAuth(req: Request): boolean {
-  const secret = process.env.STRIPE_CREATE_SESSION_SECRET;
+  const secret =
+    (process.env.STRIPE_CREATE_SESSION_SECRET || process.env.WEBSITE_B_INTERNAL_SECRET)?.trim();
   if (!secret) return false;
-  const auth = req.headers.get("Authorization");
-  if (!auth?.startsWith("Bearer ")) return false;
-  return auth.slice(7).trim() === secret;
+  const authHeader = req.headers.get("Authorization");
+  const xSecret = req.headers.get("X-Internal-Secret") || req.headers.get("X-Website-B-Secret");
+  const token =
+    authHeader?.startsWith("Bearer ") ? authHeader.slice(7).trim() : (xSecret?.trim() ?? "");
+  return !!token && secret === token;
 }
 
 /**

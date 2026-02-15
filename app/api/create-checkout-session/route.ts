@@ -15,20 +15,43 @@ function getStripe(): Stripe {
 
 /** Validate shared internal secret for Website A → Website B requests */
 function validateAuth(req: Request): boolean {
-  const secret = process.env.STRIPE_CREATE_SESSION_SECRET;
+  const secret =
+    (process.env.STRIPE_CREATE_SESSION_SECRET || process.env.WEBSITE_B_INTERNAL_SECRET)?.trim();
   if (!secret) return false;
-  const auth = req.headers.get("Authorization");
-  if (!auth?.startsWith("Bearer ")) return false;
-  const token = auth.slice(7).trim();
-  return token === secret;
+
+  // Accept Authorization: Bearer <token> or X-Internal-Secret / X-Website-B-Secret (fallback if proxy strips Authorization)
+  const authHeader = req.headers.get("Authorization");
+  const xSecret = req.headers.get("X-Internal-Secret") || req.headers.get("X-Website-B-Secret");
+
+  const tokenFromAuth =
+    authHeader?.startsWith("Bearer ") ? authHeader.slice(7).trim() : "";
+  const token = tokenFromAuth || (xSecret?.trim() ?? "");
+
+  const match = token && secret === token;
+  if (!match) {
+    console.warn("[create-checkout-session] Auth failed:", {
+      hasSecret: !!secret,
+      hasAuthHeader: !!authHeader,
+      hasXSecret: !!xSecret,
+      tokenLen: token.length,
+      secretLen: secret.length,
+    });
+  }
+  return match;
 }
 
-/** Request body from Website A */
+/** Request body - supports both formats */
 interface CreateCheckoutBody {
-  amount: number; // total in cents
-  currency?: string;
-  line_items: Array<{ name: string; quantity: number; amount: number }>; // amount per unit in cents
+  // Format A: line_items with amount in cents
+  amount?: number;
+  line_items?: Array<{ name: string; quantity: number; amount: number }>;
   customer_email?: string;
+  // Format B: Website A payload (amount in dollars, products array)
+  orderId?: string;
+  orderNumber?: string;
+  products?: Array<{ productId?: string; variantId?: string; quantity: number; unitPrice: number; name?: string }>;
+  customer?: { email?: string; name?: string; phone?: string };
+  currency?: string;
 }
 
 export async function OPTIONS() {
@@ -49,39 +72,44 @@ export async function POST(req: Request) {
     }
 
     const body: CreateCheckoutBody = await req.json();
+    const currency = (body.currency || "usd").toLowerCase();
 
-    if (
-      typeof body.amount !== "number" ||
-      body.amount < 50 ||
-      !Array.isArray(body.line_items) ||
-      body.line_items.length === 0
-    ) {
+    // Normalize to line_items (cents) and customerEmail
+    let lineItems: Array<{ name: string; quantity: number; amount: number }>;
+    let customerEmail: string | undefined;
+    let totalCents: number;
+
+    if (Array.isArray(body.line_items) && body.line_items.length > 0) {
+      lineItems = body.line_items;
+      totalCents = body.amount ?? lineItems.reduce((s, i) => s + i.quantity * i.amount, 0);
+      customerEmail = body.customer_email ?? body.customer?.email;
+    } else if (Array.isArray(body.products) && body.products.length > 0 && typeof body.amount === "number") {
+      lineItems = body.products.map((p) => ({
+        name: p.name ?? `Product ${p.productId ?? p.variantId ?? "Item"}`,
+        quantity: p.quantity || 1,
+        amount: Math.round((p.unitPrice ?? 0) * 100),
+      }));
+      totalCents = Math.round(body.amount * 100);
+      customerEmail = body.customer?.email ?? body.customer_email;
+    } else {
       return NextResponse.json(
-        { error: "Invalid request: amount (min 50 cents) and line_items required" },
+        { error: "Invalid request: provide line_items or (products + amount in dollars)" },
         { status: 400 }
       );
     }
 
-    const currency = body.currency || "usd";
-    const customerEmail = typeof body.customer_email === "string" ? body.customer_email : undefined;
-
-    // Recompute amount from line items for validation
-    const computedTotal = body.line_items.reduce(
-      (sum: number, item: { quantity: number; amount: number }) =>
-        sum + (item.quantity || 0) * (item.amount || 0),
-      0
-    );
-    if (Math.abs(computedTotal - body.amount) > 1) {
+    if (totalCents < 50) {
       return NextResponse.json(
-        { error: "Invalid request: amount must match sum of line items" },
+        { error: "Invalid request: amount must be at least 50 cents" },
         { status: 400 }
       );
     }
 
-    const orderNumber = `PL-${Date.now()}-${Math.random().toString(36).substr(2, 4).toUpperCase()}`;
-    const totalDollars = body.amount / 100;
+    const orderNumber =
+      body.orderNumber ?? `PL-${Date.now()}-${Math.random().toString(36).substr(2, 4).toUpperCase()}`;
+    const totalDollars = totalCents / 100;
     const shippingInsurance = 3.5;
-    const subtotalDollars = totalDollars - shippingInsurance;
+    const subtotalDollars = Math.max(0, totalDollars - shippingInsurance);
 
     const order = await prisma.order.create({
       data: {
@@ -107,7 +135,7 @@ export async function POST(req: Request) {
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       currency,
-      line_items: body.line_items.map((item) => ({
+      line_items: lineItems.map((item) => ({
         price_data: {
           currency,
           product_data: { name: item.name },
