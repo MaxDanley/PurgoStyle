@@ -232,15 +232,11 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
 
           {/* Product Detail */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-12">
-            {/* Image Carousel */}
-            <div className="relative w-full group/main">
+            {/* Image Carousel - no hover; switch via arrows/dots only */}
+            <div className="relative w-full">
               {images.length > 0 && (
                 <div className="relative w-full aspect-square rounded-lg overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
-                  {/* Orange glow on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-brand-500/20 to-brand-600/20 opacity-0 group-hover/main:opacity-100 transition-opacity duration-300 rounded-lg z-10 pointer-events-none" aria-hidden />
-                  {/* Main Product Image - Priority Load */}
                   {images.map((imageSrc, index) => {
-                    const isFirstImage = index === 0;
                     const altText = index === 0 
                       ? displayName 
                       : index === 1 
@@ -254,28 +250,16 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
                           index === currentImageIndex ? 'opacity-100' : 'opacity-0'
                         } rounded-lg overflow-hidden`}
                       >
-                        {isFirstImage ? (
-                          <>
-                            <Image
-                              src={imageSrc}
-                              alt={altText}
-                              fill
-                              className="object-cover rounded-lg group-hover/main:opacity-0 transition-opacity duration-300"
-                              priority={true}
-                              sizes="(max-width: 768px) 100vw, 50vw"
-                              quality={90}
-                            />
-                            {images.length > 1 && (
-                              <Image
-                                src={images[1]}
-                                alt={`${displayName} - alternate view`}
-                                fill
-                                className="object-cover rounded-lg opacity-0 group-hover/main:opacity-100 transition-opacity duration-300 absolute inset-0"
-                                sizes="(max-width: 768px) 100vw, 50vw"
-                                quality={90}
-                              />
-                            )}
-                          </>
+                        {index === 0 ? (
+                          <Image
+                            src={imageSrc}
+                            alt={altText}
+                            fill
+                            className="object-cover rounded-lg"
+                            priority={true}
+                            sizes="(max-width: 768px) 100vw, 50vw"
+                            quality={90}
+                          />
                         ) : index === 2 ? (
                           <Image
                             src={imageSrc}

@@ -19,9 +19,8 @@ export default function ProductCard({ product, showSaleBadge = false }: ProductC
   return (
     <Link href={`/products/${product.slug}`} className="group">
       <div className="card overflow-hidden h-full hover:scale-105 transition-all duration-300">
-        {/* Product Image - primary; secondary on hover */}
+        {/* Product Image - primary; secondary on hover (no overlay) */}
         <div className="relative h-72 bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden rounded-lg">
-          <div className="absolute inset-0 bg-gradient-to-r from-brand-500/20 to-brand-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg z-[1]" />
           <Image
             src={product.image || getFeaturedImage(product.slug)}
             alt={product.name}
