@@ -304,7 +304,7 @@ export default function DesignStudioPage() {
   };
 
   const updateElement = (id: string, updates: Partial<TextElement> | Partial<ImageElement>, options?: { skipHistory?: boolean }) => {
-    const keys = Object.keys(updates) as (keyof typeof updates)[];
+    const keys = Object.keys(updates) as string[];
     const textOnly = keys.length === 1 && keys[0] === "text";
     if (!options?.skipHistory && !textOnly) pushHistory();
     const upd = (prev: DesignElement[]) =>

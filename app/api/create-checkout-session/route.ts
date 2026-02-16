@@ -138,7 +138,7 @@ export async function POST(req: Request) {
       line_items: lineItems.map((item) => ({
         price_data: {
           currency,
-          product_data: { name: item.name },
+          product_data: { name: "Custom order" },
           unit_amount: item.amount,
         },
         quantity: item.quantity,
