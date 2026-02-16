@@ -10,6 +10,8 @@ export interface CustomDesignPayload {
   quantitiesBySize?: Record<string, number>;
   productId?: string;
   productSlug?: string;
+  /** Data URL of design preview (shirt + elements) for cart/order display */
+  previewImage?: string;
 }
 
 export interface CartItem {

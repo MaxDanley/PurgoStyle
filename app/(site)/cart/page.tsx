@@ -225,17 +225,25 @@ export default function CartPage() {
                   <div className="flex items-start space-x-4 md:space-x-6">
                     {/* Product Image */}
                     <div className="relative w-20 h-20 md:w-24 md:h-24 bg-gray-50 rounded-lg overflow-hidden flex-shrink-0">
-                      <Image
-                        src={item.image || '/placeholder.svg'}
-                        alt={sanitizeBrandText(item.productName || "")}
-                        fill
-                        className="object-cover"
-                        sizes="(max-width: 768px) 80px, 96px"
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          target.src = '/placeholder.svg';
-                        }}
-                      />
+                      {(item.customDesign as { previewImage?: string } | undefined)?.previewImage ? (
+                        <img
+                          src={(item.customDesign as { previewImage?: string }).previewImage}
+                          alt={sanitizeBrandText(item.productName || "")}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <Image
+                          src={item.image || '/placeholder.svg'}
+                          alt={sanitizeBrandText(item.productName || "")}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 768px) 80px, 96px"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.src = '/placeholder.svg';
+                          }}
+                        />
+                      )}
                     </div>
 
                     {/* Product Info */}

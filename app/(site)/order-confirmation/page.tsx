@@ -49,6 +49,7 @@ interface OrderDetails {
       elementsBack?: unknown[];
       shirtColor?: string;
       size?: string;
+      previewImage?: string;
     } | null;
   }>;
   shippingAddress: {
@@ -495,16 +496,27 @@ function OrderConfirmationContent() {
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">Items Ordered</h3>
               <div className="space-y-4">
-                {order.items.map((item) => (
+                {order.items.map((item) => {
+                  const itemImage = (item.customDesign as { previewImage?: string } | undefined)?.previewImage ?? item.product.image;
+                  const isDataUrl = itemImage?.startsWith("data:");
+                  return (
                   <div key={item.id} className="flex items-center space-x-4 py-3 border-b border-gray-100 last:border-b-0">
-                    <div className="flex-shrink-0">
-                      <Image
-                        src={item.product.image}
-                        alt={sanitizeBrandText(item.product?.name || "")}
-                        width={64}
-                        height={64}
-                        className="h-16 w-16 object-cover rounded-lg"
-                      />
+                    <div className="flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden bg-gray-100">
+                      {isDataUrl ? (
+                        <img
+                          src={itemImage}
+                          alt={sanitizeBrandText(item.product?.name || "")}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <Image
+                          src={itemImage}
+                          alt={sanitizeBrandText(item.product?.name || "")}
+                          width={64}
+                          height={64}
+                          className="h-16 w-16 object-cover rounded-lg"
+                        />
+                      )}
                     </div>
                     <div className="flex-1 min-w-0">
                       <h4 className="text-sm font-medium text-gray-900 truncate">
@@ -527,7 +539,7 @@ function OrderConfirmationContent() {
                       {formatCurrency(item.price * item.quantity)}
                     </div>
                   </div>
-                ))}
+                );})}
               </div>
             </div>
 

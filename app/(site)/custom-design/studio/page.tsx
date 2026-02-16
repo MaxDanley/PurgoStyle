@@ -371,6 +371,77 @@ export default function DesignStudioPage() {
       return { type: "image" as const, x: el.x, y: el.y, src: el.src, width: el.width, height: el.height };
     });
 
+  /** Capture design preview (shirt + front elements) as a data URL for cart/order */
+  const captureDesignPreview = useCallback(async (): Promise<string | null> => {
+    const container = containerRef.current;
+    if (!container) return null;
+    const w = container.offsetWidth || 320;
+    const h = container.offsetHeight || 427;
+    const canvas = document.createElement("canvas");
+    canvas.width = w;
+    canvas.height = h;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return null;
+
+    const shirtUrl = isCustomTee
+      ? `${CUSTOM_TEE_IMAGES_BASE}/${SHIRT_COLOR_TO_IMAGE[SHIRT_COLORS.find((c) => c.value === shirtColor)?.name ?? "White"] ?? "White.png"}`
+      : (() => {
+          const p = products.find((pr) => pr.id === selectedProductId);
+          return p?.image || "";
+        })();
+
+    const drawImageFit = (img: HTMLImageElement) => {
+      const iw = img.naturalWidth;
+      const ih = img.naturalHeight;
+      const scale = Math.min(w / iw, h / ih);
+      const sw = iw * scale;
+      const sh = ih * scale;
+      const x = (w - sw) / 2;
+      const y = (h - sh) / 2;
+      ctx.drawImage(img, 0, 0, iw, ih, x, y, sw, sh);
+    };
+
+    try {
+      if (shirtUrl) {
+        await new Promise<void>((resolve, reject) => {
+          const img = new window.Image();
+          img.crossOrigin = "anonymous";
+          img.onload = () => {
+            drawImageFit(img);
+            resolve();
+          };
+          img.onerror = () => resolve();
+          img.src = shirtUrl.startsWith("data:") ? shirtUrl : (shirtUrl.startsWith("/") ? window.location.origin + shirtUrl : shirtUrl);
+        });
+      } else {
+        ctx.fillStyle = "#e5e7eb";
+        ctx.fillRect(0, 0, w, h);
+      }
+
+      for (const el of elements) {
+        if (el.type === "text") {
+          ctx.font = `${el.fontWeight} ${el.fontSize}px ${el.fontFamily}`;
+          ctx.fillStyle = el.color;
+          ctx.fillText(el.text, el.x, el.y + el.fontSize);
+        } else {
+          await new Promise<void>((resolve) => {
+            const img = new window.Image();
+            img.crossOrigin = "anonymous";
+            img.onload = () => {
+              ctx.drawImage(img, el.x, el.y, el.width, el.height);
+              resolve();
+            };
+            img.onerror = () => resolve();
+            img.src = el.src;
+          });
+        }
+      }
+      return canvas.toDataURL("image/jpeg", 0.88);
+    } catch {
+      return null;
+    }
+  }, [isCustomTee, shirtColor, selectedProductId, products, elements]);
+
   const addToCart = useCart((s) => s.addItem);
 
   const buildDesign = (qty?: number, qtyBySize?: Record<string, number>) => ({
@@ -398,9 +469,12 @@ export default function DesignStudioPage() {
   };
 
   /** Add current design to cart (single line or one per size when qtyBySize provided); then optionally redirect */
-  const addDesignToCart = (opts?: { qty?: number; qtyBySize?: Record<string, number>; redirectToCart?: boolean }) => {
+  const addDesignToCart = async (opts?: { qty?: number; qtyBySize?: Record<string, number>; redirectToCart?: boolean }) => {
     const qtyBySize = opts?.qtyBySize;
-    const design = buildDesign(opts?.qty, qtyBySize);
+    let design = buildDesign(opts?.qty, qtyBySize);
+    const previewDataUrl = await captureDesignPreview();
+    if (previewDataUrl) design = { ...design, previewImage: previewDataUrl };
+    const displayImage = previewDataUrl ?? (products.find((p) => p.id === selectedProductId || p.slug === "custom-tee" || p.slug === "custom-tshirt")?.image || "/placeholder.svg");
 
     if (qtyBySize && Object.keys(qtyBySize).length > 0) {
       const total = Object.entries(qtyBySize).reduce((s, [, n]) => s + n, 0);
@@ -425,7 +499,7 @@ export default function DesignStudioPage() {
           variantSize: variant.size,
           price: variant.price + CUSTOM_DESIGN_FEE_PER_SHIRT,
           quantity: q,
-          image: product.image || "/placeholder.svg",
+          image: displayImage,
           customDesign: design,
         });
         added += q;
@@ -446,7 +520,7 @@ export default function DesignStudioPage() {
         variantSize: variant.size,
         price: variant.price + CUSTOM_DESIGN_FEE_PER_SHIRT,
         quantity: qty,
-        image: product.image || "/placeholder.svg",
+        image: displayImage,
         customDesign: design,
       });
       toast.success(`Added ${qty} item(s) to cart.`);
