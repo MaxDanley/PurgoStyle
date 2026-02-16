@@ -30,10 +30,17 @@ function SectionSeparator({ icon: Icon = HiOutlineSparkles }: { icon?: React.Com
 export default function AboutPage() {
   const [products, setProducts] = useState<{ id: string; name: string; slug: string; image: string; secondImage?: string | null }[]>([]);
 
+  const CUSTOM_TEE_SLUGS = ["custom-tee", "custom-tshirt", "custom-t-shirt"];
+
   useEffect(() => {
     fetch("/api/products")
       .then((res) => (res.ok ? res.json() : { products: [] }))
-      .then((data) => setProducts((data.products || []).slice(0, 6)))
+      .then((data) => {
+        const list = (data.products || []).filter(
+          (p: { slug?: string }) => !CUSTOM_TEE_SLUGS.includes((p.slug ?? "").toLowerCase())
+        );
+        setProducts(list.slice(0, 6));
+      })
       .catch(() => setProducts([]));
   }, []);
 

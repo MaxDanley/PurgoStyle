@@ -322,24 +322,35 @@ export default function DesignStudioPage() {
   const handlePointerDown = useCallback((id: string, e: React.PointerEvent) => {
     const el = currentElements.find((el) => el.id === id);
     if (!el) return;
+    const rect = containerRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    const layoutWidth = containerRef.current?.offsetWidth ?? rect.width;
+    const layoutHeight = containerRef.current?.offsetHeight ?? rect.height;
+    const scale = rect.width / layoutWidth;
+    const pointerLayoutX = (e.clientX - rect.left) / scale;
+    const pointerLayoutY = (e.clientY - rect.top) / scale;
     setSelectedId(id);
     setDraggingId(id);
-    setDragOffset({ x: e.clientX - el.x, y: e.clientY - el.y });
-    // Capture pointer so move/up go to container even when cursor is over image or other elements
+    setDragOffset({ x: pointerLayoutX - el.x, y: pointerLayoutY - el.y });
     containerRef.current?.setPointerCapture?.(e.pointerId);
   }, [currentElements]);
 
   const handlePointerMove = useCallback(
     (e: React.PointerEvent) => {
       if (draggingId === null) return;
+      const rect = containerRef.current?.getBoundingClientRect();
+      const layoutWidth = containerRef.current?.offsetWidth ?? rect?.width ?? 400;
+      const layoutHeight = containerRef.current?.offsetHeight ?? rect?.height ?? 533;
+      if (!rect) return;
+      const scale = rect.width / layoutWidth;
       if (!dragPushedRef.current) {
         dragPushedRef.current = true;
         pushHistory();
       }
-      const rect = containerRef.current?.getBoundingClientRect();
-      if (!rect) return;
-      const x = Math.max(0, Math.min(rect.width - 80, e.clientX - rect.left - dragOffset.x));
-      const y = Math.max(0, Math.min(rect.height - 40, e.clientY - rect.top - dragOffset.y));
+      const pointerLayoutX = (e.clientX - rect.left) / scale;
+      const pointerLayoutY = (e.clientY - rect.top) / scale;
+      const x = Math.max(0, Math.min(layoutWidth - 80, pointerLayoutX - dragOffset.x));
+      const y = Math.max(0, Math.min(layoutHeight - 40, pointerLayoutY - dragOffset.y));
       const upd = (prev: DesignElement[]) => prev.map((el) => (el.id === draggingId ? { ...el, x, y } : el));
       if (elements.some((el) => el.id === draggingId)) setElements(upd);
       else setElementsBack(upd);
@@ -687,6 +698,7 @@ export default function DesignStudioPage() {
                         color: el.color,
                         fontWeight: el.fontWeight,
                         letterSpacing: `${el.letterSpacing}px`,
+                        pointerEvents: "none",
                       }}
                       className="whitespace-nowrap px-1 bg-white/70"
                     >
@@ -705,8 +717,9 @@ export default function DesignStudioPage() {
                   )}
                   <button
                     type="button"
+                    onPointerDown={(e) => e.stopPropagation()}
                     onClick={(e) => { e.stopPropagation(); removeElement(el.id); }}
-                    className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-red-500 text-white text-sm leading-none flex items-center justify-center"
+                    className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-red-500 text-white text-sm leading-none flex items-center justify-center z-10"
                     aria-label="Remove"
                   >
                     ×

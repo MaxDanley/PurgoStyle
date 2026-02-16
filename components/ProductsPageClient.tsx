@@ -39,13 +39,18 @@ export default function ProductsPageClient({ products: initialProducts }: Produc
     }
   }, [searchParams]);
 
-  const filteredProducts = useMemo(() => {
-    if (!searchQuery.trim()) {
-      return initialProducts;
-    }
+  // Hide DB custom-tee from grid; it's shown as CustomTeeCard with icon instead
+  const CUSTOM_TEE_SLUGS = ["custom-tee", "custom-tshirt", "custom-t-shirt"];
 
+  const filteredProducts = useMemo(() => {
+    const withoutCustomTee = initialProducts.filter(
+      (p) => !CUSTOM_TEE_SLUGS.includes(p.slug?.toLowerCase() ?? "")
+    );
+    if (!searchQuery.trim()) {
+      return withoutCustomTee;
+    }
     const query = searchQuery.toLowerCase().trim();
-    return initialProducts.filter((product) => {
+    return withoutCustomTee.filter((product) => {
       const nameMatch = product.name.toLowerCase().includes(query);
       const descriptionMatch = product.description.toLowerCase().includes(query);
       const categoryMatch = product.category.toLowerCase().includes(query);
