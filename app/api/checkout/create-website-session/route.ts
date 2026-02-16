@@ -259,7 +259,6 @@ export async function POST(req: Request) {
           currency,
           product_data: {
             name: item.productName || `Product ${item.productId}`,
-            images: item.image ? [item.image.startsWith("http") ? item.image : `${baseUrl}${item.image.startsWith("/") ? "" : "/"}${item.image}`] : undefined,
           },
           unit_amount: Math.round(item.price * 100),
         },
