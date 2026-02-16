@@ -102,7 +102,10 @@ export default function CustomDesignPage() {
               Custom T-Shirts
             </h1>
             <p className="mt-4 text-lg md:text-xl text-white/95">
-              Create your own t-shirts, tanks, hoodies and more in our online design studio.
+              Create your own t-shirts in our online design studio. Choose from our color tees and add your text and artwork.
+            </p>
+            <p className="mt-2 text-sm text-white/80">
+              Crewnecks, hoodies, and more coming soon. Right now only our shirts and these color t&apos;s are available for custom design.
             </p>
             <Link
               href="/custom-design/studio"
@@ -199,7 +202,7 @@ export default function CustomDesignPage() {
                 Design t-shirts in minutes. <span className="text-brand-600">No experience needed.</span>
               </h2>
               <p className="mt-4 text-lg text-gray-700">
-                Create your own shirts and more in our online design studio.
+                Create your own shirts in our online design studio. Right now you can customize our color t-shirts; crewnecks, hoodies, and more are coming soon.
               </p>
               <ul className="mt-8 space-y-4 text-gray-700">
                 <li>

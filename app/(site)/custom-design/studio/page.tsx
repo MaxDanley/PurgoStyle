@@ -77,6 +77,22 @@ const SHIRT_COLORS = [
   { name: "Pink", value: "#db2777" },
 ];
 
+const CUSTOM_TEE_IMAGES_BASE = "/PURGO STYLE LABS (1)/custom_blank_tees";
+const SHIRT_COLOR_TO_IMAGE: Record<string, string> = {
+  White: "White.png",
+  Black: "Black.png",
+  "Heather Gray": "Gray.png",
+  Navy: "Blue.png",
+  Red: "Maroon.png",
+  Forest: "Light Green.png",
+  Maroon: "Maroon.png",
+  "Royal Blue": "Blue.png",
+  "Kelly Green": "Light Green.png",
+  Orange: "Yellow.png",
+  Yellow: "Yellow.png",
+  Pink: "Gray.png",
+};
+
 const SIZES = ["S", "M", "L", "XL", "2XL"];
 
 interface ProductVariantOption {
@@ -620,24 +636,19 @@ export default function DesignStudioPage() {
                 onPointerLeave={handlePointerUp}
                 style={{ touchAction: "none" }}
               >
-                {/* Shirt: custom tee SVG (front/back) or product image */}
+                {/* Shirt: real custom tee image by color (front/back) or product image */}
                 {isCustomTee ? (
-                  <svg
-                    className={`absolute inset-0 w-full h-full ${viewMode === "back" ? "scale-x-[-1]" : ""}`}
-                    viewBox="0 0 260 340"
-                    preserveAspectRatio="xMidYMid meet"
-                  >
-                    <defs>
-                      <filter id="studio-shirt-shadow" x="-10%" y="-10%" width="120%" height="120%">
-                        <feDropShadow dx="0" dy="3" stdDeviation="5" floodOpacity="0.18" />
-                      </filter>
-                    </defs>
-                    <path
-                      fill={shirtColor}
-                      filter="url(#studio-shirt-shadow)"
-                      d="M 30 55 L 30 95 Q 30 120 55 130 L 55 310 Q 55 325 70 325 L 190 325 Q 205 325 205 310 L 205 130 Q 230 120 230 95 L 230 55 Q 230 40 215 40 L 165 40 L 130 75 L 95 40 L 45 40 Q 30 40 30 55 Z"
+                  <div className={`absolute inset-0 ${viewMode === "back" ? "scale-x-[-1]" : ""}`}>
+                    <Image
+                      src={encodeURI(
+                        `${CUSTOM_TEE_IMAGES_BASE}/${SHIRT_COLOR_TO_IMAGE[SHIRT_COLORS.find((c) => c.value === shirtColor)?.name ?? "White"] ?? "White.png"}`
+                      )}
+                      alt="Custom tee"
+                      fill
+                      className="object-contain"
+                      sizes="(max-width: 768px) 100vw, 28rem"
                     />
-                  </svg>
+                  </div>
                 ) : (
                   <div className="absolute inset-0 flex items-center justify-center bg-gray-200">
                     {(() => {

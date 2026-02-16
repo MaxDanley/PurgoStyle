@@ -1145,13 +1145,18 @@ export default function CheckoutPage() {
               <h2 className="text-2xl font-bold text-gray-900 mb-6">Order Summary</h2>
 
               <div className="space-y-4 mb-6">
-                {items.map((item) => (
-                  <div key={`${item.productId}-${item.variantId}`} className="flex justify-between text-sm">
+                {items.map((item, index) => (
+                  <div key={item.customDesign ? `custom-${index}` : `${item.productId}-${item.variantId}`} className="flex justify-between text-sm">
                     <div className="flex-1">
                       <p className="font-medium text-gray-900">{item.productName}</p>
                       <p className="text-gray-600">
                         {item.variantSize} × {item.quantity}
                       </p>
+                      {item.customDesign && (
+                        <p className="text-xs text-brand-600 mt-1">
+                          Custom design: {[item.customDesign.elements?.length ? "front" : null, item.customDesign.elementsBack?.length ? "back" : null].filter(Boolean).join(" + ") || "your design"} • {item.customDesign.shirtColor ? "color tee" : "print"}
+                        </p>
+                      )}
                     </div>
                     <p className="font-medium">${(item.price * item.quantity).toFixed(2)}</p>
                   </div>

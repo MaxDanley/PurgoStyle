@@ -44,6 +44,12 @@ interface OrderDetails {
     };
     quantity: number;
     price: number;
+    customDesign?: {
+      elements?: unknown[];
+      elementsBack?: unknown[];
+      shirtColor?: string;
+      size?: string;
+    } | null;
   }>;
   shippingAddress: {
     name: string;
@@ -506,6 +512,16 @@ function OrderConfirmationContent() {
                       </h4>
                       <p className="text-sm text-gray-500">Size: {item.variant.size}</p>
                       <p className="text-sm text-gray-500">Qty: {item.quantity}</p>
+                      {item.customDesign && (
+                        <div className="mt-2 text-xs text-brand-600 bg-brand-50 rounded px-2 py-1">
+                          <span className="font-medium">Your custom design:</span>{" "}
+                          {[
+                            item.customDesign.elements?.length ? `${(item.customDesign.elements as unknown[]).length} element(s) on front` : null,
+                            item.customDesign.elementsBack?.length ? `${(item.customDesign.elementsBack as unknown[]).length} on back` : null,
+                          ].filter(Boolean).join(" • ") || "Front & back artwork"}
+                          {item.customDesign.shirtColor && " • Color tee"}
+                        </div>
+                      )}
                     </div>
                     <div className="text-sm font-medium text-gray-900">
                       {formatCurrency(item.price * item.quantity)}
