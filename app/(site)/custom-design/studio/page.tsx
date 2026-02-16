@@ -4,7 +4,7 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import toast from "react-hot-toast";
-import { useCart } from "@/lib/store";
+import { useCart, type CustomDesignPayload } from "@/lib/store";
 
 const MAX_HISTORY = 50;
 type ViewMode = "front" | "back";
@@ -471,7 +471,7 @@ export default function DesignStudioPage() {
   /** Add current design to cart (single line or one per size when qtyBySize provided); then optionally redirect */
   const addDesignToCart = async (opts?: { qty?: number; qtyBySize?: Record<string, number>; redirectToCart?: boolean }) => {
     const qtyBySize = opts?.qtyBySize;
-    let design = buildDesign(opts?.qty, qtyBySize);
+    let design: CustomDesignPayload & { quantity?: number } = buildDesign(opts?.qty, qtyBySize);
     const previewDataUrl = await captureDesignPreview();
     if (previewDataUrl) design = { ...design, previewImage: previewDataUrl };
     const displayImage = previewDataUrl ?? (products.find((p) => p.id === selectedProductId || p.slug === "custom-tee" || p.slug === "custom-tshirt")?.image || "/placeholder.svg");
