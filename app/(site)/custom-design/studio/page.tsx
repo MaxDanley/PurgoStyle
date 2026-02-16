@@ -301,12 +301,14 @@ export default function DesignStudioPage() {
     else setElementsBack(move);
   };
 
-  const handlePointerDown = useCallback((id: string, clientX: number, clientY: number) => {
-    const el = currentElements.find((e) => e.id === id);
+  const handlePointerDown = useCallback((id: string, e: React.PointerEvent) => {
+    const el = currentElements.find((el) => el.id === id);
     if (!el) return;
     setSelectedId(id);
     setDraggingId(id);
-    setDragOffset({ x: clientX - el.x, y: clientY - el.y });
+    setDragOffset({ x: e.clientX - el.x, y: e.clientY - el.y });
+    // Capture pointer so move/up go to container even when cursor is over image or other elements
+    containerRef.current?.setPointerCapture?.(e.pointerId);
   }, [currentElements]);
 
   const handlePointerMove = useCallback(
@@ -327,7 +329,8 @@ export default function DesignStudioPage() {
     [draggingId, dragOffset, elements, pushHistory]
   );
 
-  const handlePointerUp = useCallback(() => {
+  const handlePointerUp = useCallback((e: React.PointerEvent) => {
+    containerRef.current?.releasePointerCapture?.(e.pointerId);
     dragPushedRef.current = false;
     setDraggingId(null);
   }, []);
@@ -645,7 +648,7 @@ export default function DesignStudioPage() {
                   </div>
                 )}
                 {/* Design elements for current view (front or back) */}
-              {(viewMode === "front" ? elements : elementsBack).map((el) => (
+                {(viewMode === "front" ? elements : elementsBack).map((el) => (
                 <div
                   key={el.id}
                   className="absolute cursor-move border-2 rounded"
@@ -654,8 +657,14 @@ export default function DesignStudioPage() {
                     top: el.y,
                     zIndex: 10,
                     borderColor: selectedId === el.id ? "var(--brand-500, #f97316)" : "transparent",
+                    ...(el.type === "image" ? { width: el.width, height: el.height } : {}),
+                    pointerEvents: "auto",
                   }}
-                  onPointerDown={(e) => handlePointerDown(el.id, e.clientX, e.clientY)}
+                  onPointerDown={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    handlePointerDown(el.id, e);
+                  }}
                 >
                   {el.type === "text" ? (
                     <span
@@ -676,8 +685,9 @@ export default function DesignStudioPage() {
                       alt=""
                       width={el.width}
                       height={el.height}
-                      className="object-contain pointer-events-none"
+                      className="object-contain pointer-events-none select-none"
                       draggable={false}
+                      style={{ display: "block" }}
                     />
                   )}
                   <button
