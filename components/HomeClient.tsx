@@ -257,6 +257,29 @@ export default function HomeClient({ featuredProducts: initialProducts }: HomeCl
         </div>
       </section>
 
+      {/* Custom T-Shirt Designs */}
+      <section className="py-20 scroll-animate opacity-0 bg-gray-50" data-direction="zoom-in">
+        <div className="container-custom">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Custom T-Shirt Designs
+            </h2>
+            <p className="text-xl text-gray-700 mb-6">
+              Design your own t-shirts, hoodies, and more in our online design studio. Add your text, upload your logo, and order with no minimums. Perfect for events, teams, and small runs.
+            </p>
+            <Link
+              href="/custom-design"
+              className="inline-flex items-center gap-2 rounded-xl bg-brand-500 px-8 py-4 text-lg font-semibold text-white hover:bg-brand-600 transition-colors"
+            >
+              Create Your Shirt
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* About Section */}
       <section className="py-20 scroll-animate opacity-0" data-direction="zoom-in">
         <div className="container-custom">
