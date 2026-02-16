@@ -38,25 +38,40 @@ export async function POST(req: Request) {
     const quantity = Math.min(99, Math.max(1, Number(design.quantity)));
     const size = design.size || "M";
 
-    let product = await prisma.product.findFirst({
-      where: { slug: { in: CUSTOM_PRODUCT_SLUGS }, active: true },
-      include: { variants: { where: { active: true }, orderBy: { price: "asc" }, take: 1 } },
-    });
-
-    if (!product || product.variants.length === 0) {
-      product = await prisma.product.findFirst({
+    const productWithVariants = await (async () => {
+      if (design.productId) {
+        const p = await prisma.product.findFirst({
+          where: { id: design.productId, active: true },
+          include: { variants: { where: { active: true }, orderBy: { price: "asc" }, take: 1 } },
+        });
+        if (p?.variants?.length) return p;
+      }
+      if (design.productSlug) {
+        const p = await prisma.product.findFirst({
+          where: { slug: design.productSlug, active: true },
+          include: { variants: { where: { active: true }, orderBy: { price: "asc" }, take: 1 } },
+        });
+        if (p?.variants?.length) return p;
+      }
+      const p = await prisma.product.findFirst({
+        where: { slug: { in: CUSTOM_PRODUCT_SLUGS }, active: true },
+        include: { variants: { where: { active: true }, orderBy: { price: "asc" }, take: 1 } },
+      });
+      if (p?.variants?.length) return p;
+      return await prisma.product.findFirst({
         where: { active: true },
         include: { variants: { where: { active: true }, orderBy: { price: "asc" }, take: 1 } },
       });
-    }
+    })();
 
-    if (!product || product.variants.length === 0) {
+    if (!productWithVariants || productWithVariants.variants.length === 0) {
       return NextResponse.json(
         { error: "No product available for custom orders. Please add a product (e.g. slug custom-tee) with at least one variant." },
         { status: 503 }
       );
     }
 
+    const product = productWithVariants;
     const variant = product.variants[0];
     const unitPrice = variant.price ?? FALLBACK_PRICE;
     const subtotal = unitPrice * quantity;

@@ -13,7 +13,7 @@ import toast from "react-hot-toast";
 
 export default function CartPage() {
   const router = useRouter();
-  const { items, removeItem, updateQuantity, updateItemPrice, getTotalPrice } = useCart();
+  const { items, removeItem, removeItemAt, updateQuantity, updateQuantityAt, updateItemPrice, getTotalPrice } = useCart();
   const [variantStocks, setVariantStocks] = useState<Record<string, number>>({});
   const [pricesSynced, setPricesSynced] = useState(false);
   const subtotal = getTotalPrice();
@@ -214,10 +214,10 @@ export default function CartPage() {
             />
             
             <div className="space-y-4">
-              {items.map((item) => {
-                console.log('Cart item:', item);
+              {items.map((item, index) => {
+                const isCustomDesign = !!item.customDesign;
                 return (
-                <div key={`${item.productId}-${item.variantId}`} className="card p-4 md:p-6">
+                <div key={isCustomDesign ? `custom-${index}` : `${item.productId}-${item.variantId}`} className="card p-4 md:p-6">
                   <div className="flex items-start space-x-4 md:space-x-6">
                     {/* Product Image */}
                     <div className="relative w-20 h-20 md:w-24 md:h-24 bg-gray-50 rounded-lg overflow-hidden flex-shrink-0">
@@ -228,13 +228,8 @@ export default function CartPage() {
                         className="object-cover"
                         sizes="(max-width: 768px) 80px, 96px"
                         onError={(e) => {
-                          console.error('Image failed to load:', item.image, e);
-                          // Set fallback image
                           const target = e.target as HTMLImageElement;
                           target.src = '/placeholder.svg';
-                        }}
-                        onLoad={() => {
-                          console.log('Image loaded successfully:', item.image);
                         }}
                       />
                     </div>
@@ -242,11 +237,14 @@ export default function CartPage() {
                     {/* Product Info */}
                     <div className="flex-grow min-w-0">
                       <Link
-                        href={`/products/${item.productId}`}
+                        href={isCustomDesign ? "/custom-design/studio" : `/products/${item.productId}`}
                         className="text-base md:text-lg font-bold text-gray-900 hover:text-primary-600 block mb-1"
                       >
                         {sanitizeBrandText(item.productName || "")}
                       </Link>
+                      {isCustomDesign && (
+                        <span className="inline-block text-xs font-medium text-brand-600 bg-brand-50 px-2 py-0.5 rounded mb-1">Custom design</span>
+                      )}
                       <p className="text-sm text-gray-600 mb-2">Size: {item.variantSize}</p>
                       <p className="text-lg font-semibold text-gray-900">
                         ${item.price.toFixed(2)}
@@ -259,7 +257,9 @@ export default function CartPage() {
                       <div className="flex items-center space-x-2">
                         <button
                           onClick={() =>
-                            updateQuantity(item.productId, item.variantId, item.quantity - 1)
+                            isCustomDesign
+                              ? updateQuantityAt(index, item.quantity - 1)
+                              : updateQuantity(item.productId, item.variantId, item.quantity - 1)
                           }
                           className="w-8 h-8 md:w-9 md:h-9 border border-gray-300 rounded-lg hover:bg-gray-50 flex items-center justify-center text-gray-600 hover:text-gray-800 transition-colors"
                         >
@@ -270,25 +270,24 @@ export default function CartPage() {
                         <span className="w-8 text-center font-semibold text-gray-900">{item.quantity}</span>
                         <button
                           onClick={async () => {
+                            if (isCustomDesign) {
+                              updateQuantityAt(index, item.quantity + 1);
+                              return;
+                            }
                             // Skip validation for backordered items
                             if (item.isBackorder) {
                               updateQuantity(item.productId, item.variantId, item.quantity + 1);
                               return;
                             }
-                            
-                            // Fetch current stock
                             const currentStock = variantStocks[item.variantId] ?? 0;
-                            
                             if (currentStock === 0) {
                               toast.error("This item is out of stock. Please remove it or order as backorder.");
                               return;
                             }
-                            
                             if (item.quantity + 1 > currentStock) {
                               toast.error(`Only ${currentStock} available in stock.`);
                               return;
                             }
-                            
                             updateQuantity(item.productId, item.variantId, item.quantity + 1);
                           }}
                           className="w-8 h-8 md:w-9 md:h-9 border border-gray-300 rounded-lg hover:bg-gray-50 flex items-center justify-center text-gray-600 hover:text-gray-800 transition-colors"
@@ -310,7 +309,8 @@ export default function CartPage() {
                             quantity: item.quantity,
                             currency: 'USD',
                           });
-                          removeItem(item.productId, item.variantId);
+                          if (isCustomDesign) removeItemAt(index);
+                          else removeItem(item.productId, item.variantId);
                         }}
                         className="text-red-500 hover:text-red-700 p-1 rounded-lg hover:bg-red-50 transition-colors"
                         title="Remove item"

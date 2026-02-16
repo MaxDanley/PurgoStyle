@@ -226,6 +226,7 @@ export async function POST(req: Request) {
             quantity: item.quantity,
             price: item.price,
             isBackorder: item.isBackorder || false,
+            customDesign: item.customDesign ?? undefined,
           },
         });
       } catch (error) {

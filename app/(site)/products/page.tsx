@@ -4,6 +4,7 @@ import PageViewTracker from "@/components/PageViewTracker";
 import DiscountPopup from "@/components/DiscountPopup";
 import ProductsPageClient from "@/components/ProductsPageClient";
 import ProductsPageSEO from "@/components/ProductsPageSEO";
+import ProductsPageHeader from "@/components/ProductsPageHeader";
 
 import { Metadata } from "next";
 
@@ -70,15 +71,7 @@ export default async function ProductsPage() {
       <DiscountPopup />
       <div className="py-12">
         <div className="container-custom">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Products
-          </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Arizona activewear, premium tees, and apparel. Quality you can feel.
-          </p>
-        </div>
+        <ProductsPageHeader />
 
         {/* Product Search and Grid */}
         <Suspense fallback={<div className="text-center py-12">Loading products...</div>}>

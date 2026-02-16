@@ -3,6 +3,7 @@
 import { useState, useMemo, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import ProductCard from "@/components/ProductCard";
+import CustomTeeCard from "@/components/CustomTeeCard";
 
 interface Product {
   id: string;
@@ -110,20 +111,18 @@ export default function ProductsPageClient({ products: initialProducts }: Produc
         </div>
       </div>
 
-      {/* Product Grid */}
-      {filteredProducts.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-          {filteredProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
-      ) : (
-        <div className="text-center py-12">
-          <p className="text-gray-600">
-            {searchQuery ? "No products found matching your search." : "No products available at the moment."}
-          </p>
-        </div>
-      )}
+      {/* Product Grid: Custom T-Shirt card first, then products */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        <CustomTeeCard />
+        {filteredProducts.map((product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
+        {filteredProducts.length === 0 && (
+          <div className="md:col-span-2 lg:col-span-3 xl:col-span-3 flex items-center justify-center py-12 text-gray-600">
+            {searchQuery ? "No other products match your search." : "No other products at the moment."}
+          </div>
+        )}
+      </div>
     </>
   );
 }

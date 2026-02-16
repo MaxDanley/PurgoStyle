@@ -8,14 +8,33 @@ import StructuredData from "@/components/StructuredData";
 import { useEffect, useState } from "react";
 import { trackPageView, trackViewItemList, trackEvent } from "@/lib/analytics";
 import { usePathname } from "next/navigation";
-import { Archivo_Black } from 'next/font/google';
+import { Archivo_Black } from "next/font/google";
 import { SECONDARY_PICTURES_FOR_HOME } from "@/lib/products";
+import {
+  FaTruck,
+  FaShieldAlt,
+  FaCheckCircle,
+  FaTshirt,
+  FaPalette,
+  FaLeaf,
+} from "react-icons/fa";
+import { HiPencilAlt, HiOutlineSparkles } from "react-icons/hi";
 
 const archivoBlack = Archivo_Black({
-  weight: '400',
-  subsets: ['latin'],
-  display: 'swap',
+  weight: "400",
+  subsets: ["latin"],
+  display: "swap",
 });
+
+function SectionSeparator({ icon: Icon = HiOutlineSparkles }: { icon?: React.ComponentType<{ className?: string }> }) {
+  return (
+    <div className="flex items-center justify-center gap-4 py-6 md:py-8">
+      <span className="h-px flex-1 max-w-24 bg-gradient-to-r from-transparent to-brand-300" />
+      {Icon && <Icon className="w-5 h-5 text-brand-500" />}
+      <span className="h-px flex-1 max-w-24 bg-gradient-to-l from-transparent to-brand-300" />
+    </div>
+  );
+}
 
 interface HomeClientProps {
   featuredProducts: any[];
@@ -151,6 +170,37 @@ export default function HomeClient({ featuredProducts: initialProducts }: HomeCl
         </div>
       </section>
 
+      {/* Trust strip - UberPrints style */}
+      <section className="border-y border-gray-200 bg-white">
+        <div className="container-custom py-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-3">
+              <FaTruck className="w-8 h-8 text-brand-500 flex-shrink-0" />
+              <div>
+                <p className="font-semibold text-gray-900">Free Shipping</p>
+                <p className="text-sm text-gray-600">On orders over $100</p>
+              </div>
+            </div>
+            <div className="flex flex-col md:flex-row items-center justify-center gap-3 border-t md:border-t-0 md:border-x border-gray-200 md:px-8 pt-6 md:pt-0">
+              <FaCheckCircle className="w-8 h-8 text-brand-500 flex-shrink-0" />
+              <div>
+                <p className="font-semibold text-gray-900">No Minimums</p>
+                <p className="text-sm text-gray-600">Custom tees from 1 piece</p>
+              </div>
+            </div>
+            <div className="flex flex-col md:flex-row items-center justify-center gap-3 border-t md:border-t-0 pt-6 md:pt-0">
+              <FaShieldAlt className="w-8 h-8 text-brand-500 flex-shrink-0" />
+              <div>
+                <p className="font-semibold text-gray-900">Quality Guaranteed</p>
+                <p className="text-sm text-gray-600">We stand behind every order</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <SectionSeparator />
+
       {/* Featured Products */}
       <section className="pt-4 md:pt-20 pb-20 relative scroll-animate opacity-0" data-direction="fade-in">
         {/* Subtle background pattern */}
@@ -162,7 +212,10 @@ export default function HomeClient({ featuredProducts: initialProducts }: HomeCl
         </div>
         <div className="container-custom relative z-10">
           <div className="text-center mb-16">
-            <span className="text-brand-600 font-semibold text-sm uppercase tracking-wider">Premium Quality</span>
+            <div className="inline-flex items-center gap-2 rounded-full bg-brand-100 px-4 py-2 text-sm font-medium text-brand-700 mb-4">
+              <FaLeaf className="w-4 h-4" />
+              Premium Quality
+            </div>
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mt-4 mb-6">
               Featured Products
             </h2>
@@ -190,15 +243,15 @@ export default function HomeClient({ featuredProducts: initialProducts }: HomeCl
         </div>
       </section>
 
+      <SectionSeparator icon={FaTshirt} />
+
       {/* Trust Section */}
       <section className="py-20 bg-gray-50 scroll-animate opacity-0" data-direction="slide-up">
         <div className="container-custom">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
             <div className="text-center group scroll-animate opacity-0" data-direction="slide-left">
               <div className="w-20 h-20 bg-gradient-to-br from-brand-500 to-brand-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-brand-500/50">
-                <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
+                <FaCheckCircle className="w-10 h-10 text-white" />
               </div>
               <h3 className="text-2xl font-bold text-gray-900 mb-3">
                 Premium Quality
@@ -210,9 +263,7 @@ export default function HomeClient({ featuredProducts: initialProducts }: HomeCl
 
             <div className="text-center group scroll-animate opacity-0" data-direction="zoom-in">
               <div className="w-20 h-20 bg-gradient-to-br from-brand-500 to-brand-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-brand-500/50">
-                <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
+                <FaTruck className="w-10 h-10 text-white" />
               </div>
               <h3 className="text-2xl font-bold text-gray-900 mb-3">
                 Fast Shipping
@@ -224,9 +275,7 @@ export default function HomeClient({ featuredProducts: initialProducts }: HomeCl
 
             <div className="text-center group scroll-animate opacity-0" data-direction="slide-right">
               <div className="w-20 h-20 bg-gradient-to-br from-brand-500 to-brand-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-brand-500/50">
-                <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                </svg>
+                <FaShieldAlt className="w-10 h-10 text-white" />
               </div>
               <h3 className="text-2xl font-bold text-gray-900 mb-3">
                 Secure Payments
@@ -257,20 +306,28 @@ export default function HomeClient({ featuredProducts: initialProducts }: HomeCl
         </div>
       </section>
 
+      <SectionSeparator icon={FaPalette} />
+
       {/* Custom T-Shirt Designs */}
       <section className="py-20 scroll-animate opacity-0 bg-gray-50" data-direction="zoom-in">
         <div className="container-custom">
           <div className="max-w-3xl mx-auto text-center">
+            <div className="inline-flex items-center gap-2 rounded-full bg-brand-100 px-4 py-2 text-sm font-medium text-brand-700 mb-4">
+              <FaTshirt className="w-4 h-4" />
+              Design Studio
+            </div>
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               Custom T-Shirt Designs
             </h2>
-            <p className="text-xl text-gray-700 mb-6">
+            <p className="text-xl text-gray-700 mb-8">
               Design your own t-shirts, hoodies, and more in our online design studio. Add your text, upload your logo, and order with no minimums. Perfect for events, teams, and small runs.
             </p>
             <Link
               href="/custom-design"
-              className="inline-flex items-center gap-2 rounded-xl bg-brand-500 px-8 py-4 text-lg font-semibold text-white hover:bg-brand-600 transition-colors"
+              onClick={() => trackEvent("cta_click", { cta_text: "Create Your Shirt", cta_location: "custom_design_section", page_type: "home" })}
+              className="inline-flex items-center gap-2 rounded-xl bg-brand-500 px-8 py-4 text-lg font-semibold text-white hover:bg-brand-600 transition-colors shadow-lg shadow-brand-500/30 hover:shadow-brand-500/40"
             >
+              <HiPencilAlt className="w-5 h-5" />
               Create Your Shirt
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
@@ -280,11 +337,17 @@ export default function HomeClient({ featuredProducts: initialProducts }: HomeCl
         </div>
       </section>
 
+      <SectionSeparator icon={HiOutlineSparkles} />
+
       {/* About Section */}
       <section className="py-20 scroll-animate opacity-0" data-direction="zoom-in">
         <div className="container-custom">
-          <div className="glass rounded-3xl p-12 md:p-16">
+          <div className="glass rounded-3xl p-12 md:p-16 border border-gray-200/50">
             <div className="max-w-3xl mx-auto text-center">
+              <div className="inline-flex items-center gap-2 rounded-full bg-brand-100 px-4 py-2 text-sm font-medium text-brand-700 mb-6">
+                <FaLeaf className="w-4 h-4" />
+                Our Story
+              </div>
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
                 Welcome to <span className="gradient-text">Summer Steeze</span>
               </h2>
@@ -306,6 +369,8 @@ export default function HomeClient({ featuredProducts: initialProducts }: HomeCl
           </div>
         </div>
       </section>
+
+      <SectionSeparator />
 
       {/* SEO Content Sections - Expandable */}
       <section className="py-20 bg-gray-50">
