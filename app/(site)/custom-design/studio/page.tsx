@@ -48,6 +48,9 @@ type TextElement = {
   color: string;
   fontWeight: "normal" | "bold";
   letterSpacing: number;
+  /** Optional box size for resizable text; when set, text can wrap */
+  width?: number;
+  height?: number;
 };
 
 type ImageElement = {
@@ -131,6 +134,9 @@ export default function DesignStudioPage() {
   const [newLetterSpacing, setNewLetterSpacing] = useState(0);
   const [draggingId, setDraggingId] = useState<string | null>(null);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
+  const [editingTextId, setEditingTextId] = useState<string | null>(null);
+  const [resizingId, setResizingId] = useState<string | null>(null);
+  const [resizeStart, setResizeStart] = useState({ x: 0, y: 0, width: 0, height: 0 });
   const [showQuoteModal, setShowQuoteModal] = useState(false);
   const [quantitiesBySize, setQuantitiesBySize] = useState<Record<string, number>>({ S: 0, M: 0, L: 0, XL: 0, "2XL": 0 });
   const [calculatedPrice, setCalculatedPrice] = useState<number | null>(null);
@@ -138,6 +144,7 @@ export default function DesignStudioPage() {
   const containerRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const dragPushedRef = useRef(false);
+  const editingInputRef = useRef<HTMLInputElement | null>(null);
 
   const currentElements = viewMode === "front" ? elements : elementsBack;
   const selectedElement = selectedId ? currentElements.find((e) => e.id === selectedId) : null;
@@ -204,6 +211,14 @@ export default function DesignStudioPage() {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [undo, redo]);
+
+  useEffect(() => {
+    if (editingTextId) editingInputRef.current?.focus?.();
+  }, [editingTextId]);
+
+  useEffect(() => {
+    if (editingTextId && selectedId !== editingTextId) setEditingTextId(null);
+  }, [selectedId, editingTextId]);
 
   useEffect(() => {
     fetch("/api/products")
@@ -288,8 +303,10 @@ export default function DesignStudioPage() {
     e.target.value = "";
   };
 
-  const updateElement = (id: string, updates: Partial<TextElement> | Partial<ImageElement>) => {
-    pushHistory();
+  const updateElement = (id: string, updates: Partial<TextElement> | Partial<ImageElement>, options?: { skipHistory?: boolean }) => {
+    const keys = Object.keys(updates) as (keyof typeof updates)[];
+    const textOnly = keys.length === 1 && keys[0] === "text";
+    if (!options?.skipHistory && !textOnly) pushHistory();
     const upd = (prev: DesignElement[]) =>
       prev.map((el) => (el.id === id ? ({ ...el, ...updates } as DesignElement) : el));
     if (elements.some((e) => e.id === id)) setElements(upd);
@@ -320,6 +337,9 @@ export default function DesignStudioPage() {
   };
 
   const handlePointerDown = useCallback((id: string, e: React.PointerEvent) => {
+    const target = e.target as HTMLElement;
+    if (target.closest?.("[data-resize-handle]")) return;
+    if (target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement || target.isContentEditable) return;
     const el = currentElements.find((el) => el.id === id);
     if (!el) return;
     const rect = containerRef.current?.getBoundingClientRect();
@@ -335,39 +355,78 @@ export default function DesignStudioPage() {
     containerRef.current?.setPointerCapture?.(e.pointerId);
   }, [currentElements]);
 
+  const handleResizePointerDown = useCallback((id: string, ev: React.PointerEvent) => {
+    ev.stopPropagation();
+    ev.preventDefault();
+    const el = currentElements.find((e) => e.id === id);
+    if (!el || el.type !== "text") return;
+    const rect = containerRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    const layoutWidth = containerRef.current?.offsetWidth ?? rect.width;
+    const scale = rect.width / layoutWidth;
+    const w = el.width ?? 80;
+    const h = el.height ?? el.fontSize + 8;
+    setResizingId(id);
+    setResizeStart({
+      x: (ev.clientX - rect.left) / scale,
+      y: (ev.clientY - rect.top) / scale,
+      width: w,
+      height: h,
+    });
+    containerRef.current?.setPointerCapture?.(ev.pointerId);
+  }, [currentElements]);
+
   const handlePointerMove = useCallback(
     (e: React.PointerEvent) => {
-      if (draggingId === null) return;
       const rect = containerRef.current?.getBoundingClientRect();
       const layoutWidth = containerRef.current?.offsetWidth ?? rect?.width ?? 400;
       const layoutHeight = containerRef.current?.offsetHeight ?? rect?.height ?? 533;
       if (!rect) return;
       const scale = rect.width / layoutWidth;
+      const pointerLayoutX = (e.clientX - rect.left) / scale;
+      const pointerLayoutY = (e.clientY - rect.top) / scale;
+
+      if (resizingId !== null) {
+        if (!dragPushedRef.current) {
+          dragPushedRef.current = true;
+          pushHistory();
+        }
+        const dx = pointerLayoutX - resizeStart.x;
+        const dy = pointerLayoutY - resizeStart.y;
+        const newWidth = Math.max(40, Math.min(layoutWidth - 20, resizeStart.width + dx));
+        const newHeight = Math.max(20, Math.min(layoutHeight - 20, resizeStart.height + dy));
+        const upd = (prev: DesignElement[]) =>
+          prev.map((el) => (el.id === resizingId && el.type === "text" ? { ...el, width: newWidth, height: newHeight } : el));
+        if (elements.some((el) => el.id === resizingId)) setElements(upd);
+        else setElementsBack(upd);
+        return;
+      }
+
+      if (draggingId === null) return;
       if (!dragPushedRef.current) {
         dragPushedRef.current = true;
         pushHistory();
       }
-      const pointerLayoutX = (e.clientX - rect.left) / scale;
-      const pointerLayoutY = (e.clientY - rect.top) / scale;
       const x = Math.max(0, Math.min(layoutWidth - 80, pointerLayoutX - dragOffset.x));
       const y = Math.max(0, Math.min(layoutHeight - 40, pointerLayoutY - dragOffset.y));
       const upd = (prev: DesignElement[]) => prev.map((el) => (el.id === draggingId ? { ...el, x, y } : el));
       if (elements.some((el) => el.id === draggingId)) setElements(upd);
       else setElementsBack(upd);
     },
-    [draggingId, dragOffset, elements, pushHistory]
+    [draggingId, dragOffset, elements, pushHistory, resizingId, resizeStart]
   );
 
   const handlePointerUp = useCallback((e: React.PointerEvent) => {
     containerRef.current?.releasePointerCapture?.(e.pointerId);
     dragPushedRef.current = false;
     setDraggingId(null);
+    setResizingId(null);
   }, []);
 
   const serializeElements = (els: DesignElement[]) =>
     els.map((el) => {
       if (el.type === "text")
-        return { type: "text" as const, x: el.x, y: el.y, text: el.text, fontSize: el.fontSize, fontFamily: el.fontFamily, color: el.color, fontWeight: el.fontWeight, letterSpacing: el.letterSpacing };
+        return { type: "text" as const, x: el.x, y: el.y, text: el.text, fontSize: el.fontSize, fontFamily: el.fontFamily, color: el.color, fontWeight: el.fontWeight, letterSpacing: el.letterSpacing, width: el.width, height: el.height };
       return { type: "image" as const, x: el.x, y: el.y, src: el.src, width: el.width, height: el.height };
     });
 
@@ -756,6 +815,7 @@ export default function DesignStudioPage() {
                     zIndex: 10,
                     borderColor: selectedId === el.id ? "var(--brand-500, #f97316)" : "transparent",
                     ...(el.type === "image" ? { width: el.width, height: el.height } : {}),
+                    ...(el.type === "text" ? { minWidth: el.width ?? 24, minHeight: el.height ?? 20, ...(el.width != null ? { width: el.width } : {}), ...(el.height != null ? { height: el.height } : {}) } : {}),
                     pointerEvents: "auto",
                   }}
                   onPointerDown={(e) => {
@@ -763,21 +823,64 @@ export default function DesignStudioPage() {
                     e.stopPropagation();
                     handlePointerDown(el.id, e);
                   }}
+                  onDoubleClick={(e) => {
+                    if (el.type === "text") {
+                      e.stopPropagation();
+                      setEditingTextId(el.id);
+                      setTimeout(() => editingInputRef.current?.focus?.(), 0);
+                    }
+                  }}
                 >
                   {el.type === "text" ? (
-                    <span
-                      style={{
-                        fontSize: el.fontSize,
-                        fontFamily: el.fontFamily,
-                        color: el.color,
-                        fontWeight: el.fontWeight,
-                        letterSpacing: `${el.letterSpacing}px`,
-                        pointerEvents: "none",
-                      }}
-                      className="whitespace-nowrap px-1 bg-white/70"
-                    >
-                      {el.text}
-                    </span>
+                    editingTextId === el.id ? (
+                      <input
+                        ref={(r) => { editingInputRef.current = r; }}
+                        type="text"
+                        value={el.text}
+                        onChange={(e) => updateElement(el.id, { text: e.target.value })}
+                        onBlur={() => setEditingTextId(null)}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            e.currentTarget.blur();
+                            setEditingTextId(null);
+                          }
+                          e.stopPropagation();
+                        }}
+                        style={{
+                          fontSize: el.fontSize,
+                          fontFamily: el.fontFamily,
+                          color: el.color,
+                          fontWeight: el.fontWeight,
+                          letterSpacing: `${el.letterSpacing}px`,
+                          width: (el.width ?? 120) - 8,
+                          minWidth: 32,
+                          height: (el.height ?? el.fontSize + 8) - 4,
+                          background: "rgba(255,255,255,0.9)",
+                          border: "1px solid var(--brand-500)",
+                          outline: "none",
+                          padding: "2px 4px",
+                          margin: 0,
+                        }}
+                        className="rounded"
+                        onClick={(e) => e.stopPropagation()}
+                      />
+                    ) : (
+                      <span
+                        style={{
+                          fontSize: el.fontSize,
+                          fontFamily: el.fontFamily,
+                          color: el.color,
+                          fontWeight: el.fontWeight,
+                          letterSpacing: `${el.letterSpacing}px`,
+                          pointerEvents: "none",
+                          ...(el.width != null ? { display: "block", width: el.width - 8, minWidth: 16, wordBreak: "break-word" as const, whiteSpace: "pre-wrap" as const } : { whiteSpace: "nowrap" as const }),
+                          ...(el.height != null ? { minHeight: el.height - 4 } : {}),
+                        }}
+                        className="px-1 bg-white/70"
+                      >
+                        {el.text || " "}
+                      </span>
+                    )
                   ) : (
                     <img
                       src={el.src}
@@ -787,6 +890,17 @@ export default function DesignStudioPage() {
                       className="object-contain pointer-events-none select-none"
                       draggable={false}
                       style={{ display: "block" }}
+                    />
+                  )}
+                  {el.type === "text" && selectedId === el.id && editingTextId !== el.id && (
+                    <div
+                      data-resize-handle
+                      role="button"
+                      tabIndex={-1}
+                      onPointerDown={(e) => handleResizePointerDown(el.id, e)}
+                      className="absolute bottom-0 right-0 w-4 h-4 cursor-se-resize border-t-2 border-l-2 border-brand-500 rounded-tl"
+                      style={{ zIndex: 11 }}
+                      aria-label="Resize text box"
                     />
                   )}
                   <button
@@ -803,7 +917,7 @@ export default function DesignStudioPage() {
             </div>
             </div>
             <p className="mt-4 text-sm text-gray-500 text-center">
-              Drag to move. Select an element to edit font, color, and layers below.
+              Drag to move. Double-click text to edit. Resize from the corner when selected. Change font & color in the panel.
             </p>
           </div>
 
@@ -851,6 +965,16 @@ export default function DesignStudioPage() {
                 <h2 className="font-bold text-gray-900 mb-4">Edit selected</h2>
                 {selectedElement.type === "text" ? (
                   <div className="space-y-3">
+                    <div>
+                      <label className="text-sm text-gray-600">Text</label>
+                      <input
+                        type="text"
+                        value={selectedElement.text}
+                        onChange={(e) => updateElement(selectedElement.id, { text: e.target.value })}
+                        className="input-field w-full text-sm mt-1"
+                        placeholder="Your text"
+                      />
+                    </div>
                     <div>
                       <label className="text-sm text-gray-600">Font</label>
                       <select
