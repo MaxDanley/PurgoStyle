@@ -4,6 +4,8 @@ import { prisma } from "@/lib/prisma";
 
 const CUSTOM_PRODUCT_SLUGS = ["custom-tee", "custom-tshirt", "custom-t-shirt"];
 const FALLBACK_PRICE = 29.99;
+/** Per-shirt fee on top of product price for custom design */
+const CUSTOM_DESIGN_FEE_PER_SHIRT = 15;
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://summersteez.com";
 
 function getStripe(): Stripe {
@@ -73,7 +75,8 @@ export async function POST(req: Request) {
 
     const product = productWithVariants;
     const variant = product.variants[0];
-    const unitPrice = variant.price ?? FALLBACK_PRICE;
+    const basePrice = variant.price ?? FALLBACK_PRICE;
+    const unitPrice = basePrice + CUSTOM_DESIGN_FEE_PER_SHIRT;
     const subtotal = unitPrice * quantity;
     const shippingInsurance = 3.5;
     const total = subtotal + shippingInsurance;

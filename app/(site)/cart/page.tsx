@@ -77,6 +77,8 @@ export default function CartPage() {
               // Find the cart item
               const cartItem = items.find(item => item.variantId === variantId);
               if (cartItem) {
+                // Don't overwrite price for custom design items (shirt + $15 fee is set in studio)
+                if (cartItem.customDesign) continue;
                 // Check if bulk discount applies (Reta or Trizep with 10+ quantity)
                 const isBulkEligible = (variant.productSlug === "glp-3-rt" || variant.productSlug === "glp-2-trz") && cartItem.quantity >= 10;
                 const finalPrice = isBulkEligible ? variant.price * 0.8 : variant.price;
@@ -121,6 +123,8 @@ export default function CartPage() {
           })));
 
           items.forEach(item => {
+            // Don't overwrite price for custom design items (shirt + $15 fee)
+            if (item.customDesign) return;
             const variant = allVariants.find((v: any) => v.id === item.variantId);
             if (variant) {
               // Check if bulk discount applies (Reta or Trizep with 10+ quantity)

@@ -94,6 +94,8 @@ const SHIRT_COLOR_TO_IMAGE: Record<string, string> = {
 };
 
 const SIZES = ["S", "M", "L", "XL", "2XL"];
+/** Per-shirt fee added on top of the product price when adding a custom design */
+const CUSTOM_DESIGN_FEE_PER_SHIRT = 15;
 
 interface ProductVariantOption {
   id: string;
@@ -410,7 +412,7 @@ export default function DesignStudioPage() {
           variantId: variant.id,
           productName: product.name + " (custom design)",
           variantSize: variant.size,
-          price: variant.price,
+          price: variant.price + CUSTOM_DESIGN_FEE_PER_SHIRT,
           quantity: q,
           image: product.image || "/placeholder.svg",
           customDesign: design,
@@ -431,7 +433,7 @@ export default function DesignStudioPage() {
         variantId: variant.id,
         productName: product.name + " (custom design)",
         variantSize: variant.size,
-        price: variant.price,
+        price: variant.price + CUSTOM_DESIGN_FEE_PER_SHIRT,
         quantity: qty,
         image: product.image || "/placeholder.svg",
         customDesign: design,
