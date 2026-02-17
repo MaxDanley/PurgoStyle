@@ -51,6 +51,8 @@ type TextElement = {
   /** Optional box size for resizable text; when set, text can wrap */
   width?: number;
   height?: number;
+  /** Text box background: "transparent" (default) or solid hex color */
+  textBoxBackground?: "transparent" | string;
 };
 
 type ImageElement = {
@@ -132,6 +134,8 @@ export default function DesignStudioPage() {
   const [newTextColor, setNewTextColor] = useState("#000000");
   const [newTextBold, setNewTextBold] = useState(false);
   const [newLetterSpacing, setNewLetterSpacing] = useState(0);
+  const [newTextBoxBackground, setNewTextBoxBackground] = useState<"transparent" | "solid">("transparent");
+  const [newTextBoxBackgroundColor, setNewTextBoxBackgroundColor] = useState("#ffffff");
   const [draggingId, setDraggingId] = useState<string | null>(null);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const [editingTextId, setEditingTextId] = useState<string | null>(null);
@@ -272,6 +276,7 @@ export default function DesignStudioPage() {
       color: newTextColor,
       fontWeight: newTextBold ? "bold" : "normal",
       letterSpacing: newLetterSpacing,
+      textBoxBackground: newTextBoxBackground === "transparent" ? "transparent" : newTextBoxBackgroundColor,
     };
     if (viewMode === "front") setElements((prev) => [...prev, el]);
     else setElementsBack((prev) => [...prev, el]);
@@ -426,7 +431,7 @@ export default function DesignStudioPage() {
   const serializeElements = (els: DesignElement[]) =>
     els.map((el) => {
       if (el.type === "text")
-        return { type: "text" as const, x: el.x, y: el.y, text: el.text, fontSize: el.fontSize, fontFamily: el.fontFamily, color: el.color, fontWeight: el.fontWeight, letterSpacing: el.letterSpacing, width: el.width, height: el.height };
+        return { type: "text" as const, x: el.x, y: el.y, text: el.text, fontSize: el.fontSize, fontFamily: el.fontFamily, color: el.color, fontWeight: el.fontWeight, letterSpacing: el.letterSpacing, width: el.width, height: el.height, textBoxBackground: el.textBoxBackground };
       return { type: "image" as const, x: el.x, y: el.y, src: el.src, width: el.width, height: el.height };
     });
 
@@ -479,6 +484,32 @@ export default function DesignStudioPage() {
 
       for (const el of elements) {
         if (el.type === "text") {
+          const bg = el.textBoxBackground ?? "transparent";
+          if (bg !== "transparent") {
+            ctx.font = `${el.fontWeight} ${el.fontSize}px ${el.fontFamily}`;
+            const pad = 4;
+            let boxW: number;
+            let boxH: number;
+            let x: number;
+            let y: number;
+            if (el.width != null && el.height != null) {
+              boxW = el.width;
+              boxH = el.height;
+              x = el.x;
+              y = el.y;
+            } else {
+              const metrics = ctx.measureText(el.text);
+              boxW = Math.max(metrics.width + pad * 2, 24);
+              boxH = el.fontSize + pad * 2;
+              x = el.x - pad;
+              y = el.y;
+            }
+            ctx.fillStyle = bg;
+            ctx.beginPath();
+            const r = 4;
+            ctx.roundRect(x, y, boxW, boxH, r);
+            ctx.fill();
+          }
           ctx.font = `${el.fontWeight} ${el.fontSize}px ${el.fontFamily}`;
           ctx.fillStyle = el.color;
           ctx.fillText(el.text, el.x, el.y + el.fontSize);
@@ -702,6 +733,46 @@ export default function DesignStudioPage() {
                   />
                   <span className="text-sm text-gray-500 w-6">{newLetterSpacing}px</span>
                 </div>
+                <div>
+                  <label className="text-sm text-gray-600 block mb-1">Text box background</label>
+                  <div className="flex flex-wrap gap-2 items-center">
+                    <button
+                      type="button"
+                      onClick={() => setNewTextBoxBackground("transparent")}
+                      className={`px-3 py-1.5 rounded text-sm border-2 ${newTextBoxBackground === "transparent" ? "border-gray-900 bg-gray-100" : "border-gray-300"}`}
+                    >
+                      Transparent
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setNewTextBoxBackground("solid")}
+                      className={`px-3 py-1.5 rounded text-sm border-2 ${newTextBoxBackground === "solid" ? "border-gray-900 bg-gray-100" : "border-gray-300"}`}
+                    >
+                      Solid color
+                    </button>
+                    {newTextBoxBackground === "solid" && (
+                      <div className="flex items-center gap-1">
+                        {TEXT_COLORS.map((c) => (
+                          <button
+                            key={c}
+                            type="button"
+                            onClick={() => setNewTextBoxBackgroundColor(c)}
+                            className={`w-6 h-6 rounded border-2 ${newTextBoxBackgroundColor === c ? "border-gray-900 scale-110" : "border-gray-300"}`}
+                            style={{ backgroundColor: c }}
+                            title={c}
+                          />
+                        ))}
+                        <input
+                          type="color"
+                          value={newTextBoxBackgroundColor}
+                          onChange={(e) => setNewTextBoxBackgroundColor(e.target.value)}
+                          className="w-8 h-6 cursor-pointer rounded border border-gray-300"
+                          title="Pick color"
+                        />
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
               <button type="button" onClick={addText} className="btn-secondary w-full">
                 Add text to design
@@ -873,10 +944,11 @@ export default function DesignStudioPage() {
                           fontWeight: el.fontWeight,
                           letterSpacing: `${el.letterSpacing}px`,
                           pointerEvents: "none",
+                          backgroundColor: (el.textBoxBackground ?? "transparent") === "transparent" ? "transparent" : el.textBoxBackground,
                           ...(el.width != null ? { display: "block", width: el.width - 8, minWidth: 16, wordBreak: "break-word" as const, whiteSpace: "pre-wrap" as const } : { whiteSpace: "nowrap" as const }),
                           ...(el.height != null ? { minHeight: el.height - 4 } : {}),
                         }}
-                        className="px-1 bg-white/70"
+                        className="px-1"
                       >
                         {el.text || " "}
                       </span>
@@ -1033,6 +1105,45 @@ export default function DesignStudioPage() {
                         onChange={(e) => updateElement(selectedElement.id, { letterSpacing: Number(e.target.value) })}
                         className="w-full mt-1"
                       />
+                    </div>
+                    <div>
+                      <label className="text-sm text-gray-600 block mb-1">Text box background</label>
+                      <div className="flex flex-wrap gap-2 items-center">
+                        <button
+                          type="button"
+                          onClick={() => updateElement(selectedElement.id, { textBoxBackground: "transparent" })}
+                          className={`px-3 py-1 rounded text-sm border-2 ${(selectedElement.textBoxBackground ?? "transparent") === "transparent" ? "border-gray-900 bg-gray-100" : "border-gray-300"}`}
+                        >
+                          Transparent
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => updateElement(selectedElement.id, { textBoxBackground: "#ffffff" })}
+                          className={`px-3 py-1 rounded text-sm border-2 ${(selectedElement.textBoxBackground ?? "transparent") !== "transparent" ? "border-gray-900 bg-gray-100" : "border-gray-300"}`}
+                        >
+                          Solid color
+                        </button>
+                        {(selectedElement.textBoxBackground ?? "transparent") !== "transparent" && (
+                          <div className="flex flex-wrap gap-1">
+                            {TEXT_COLORS.map((c) => (
+                              <button
+                                key={c}
+                                type="button"
+                                onClick={() => updateElement(selectedElement.id, { textBoxBackground: c })}
+                                className={`w-6 h-6 rounded border-2 ${selectedElement.textBoxBackground === c ? "border-gray-900 scale-110" : "border-gray-300"}`}
+                                style={{ backgroundColor: c }}
+                              />
+                            ))}
+                            <input
+                              type="color"
+                              value={typeof selectedElement.textBoxBackground === "string" && selectedElement.textBoxBackground !== "transparent" ? selectedElement.textBoxBackground : "#ffffff"}
+                              onChange={(e) => updateElement(selectedElement.id, { textBoxBackground: e.target.value })}
+                              className="w-8 h-6 cursor-pointer rounded border border-gray-300"
+                              title="Pick color"
+                            />
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
                 ) : (
