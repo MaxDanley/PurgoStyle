@@ -90,7 +90,7 @@ export async function GET(req: Request) {
       client_reference_id: order.id,
       customer_email: email,
       success_url: `${baseUrl}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: "https://www.purgolabs.com/checkout",
+      cancel_url: `${baseUrl}/checkout/cancel`,
     });
 
     await prisma.order.update({

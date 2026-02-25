@@ -145,7 +145,7 @@ export async function POST(req: Request) {
       })),
       client_reference_id: order.id,
       success_url: `${baseUrl}/api/checkout-success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: "https://www.purgolabs.com/checkout",
+      cancel_url: `${baseUrl}/checkout/cancel`,
       customer_email: customerEmail || undefined,
     });
 
