@@ -4,6 +4,7 @@ import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import SessionProvider from "@/components/SessionProvider";
 import GoogleMerchantWidget from "@/components/GoogleMerchantWidget";
+import PromoCountdownBanner from "@/components/PromoCountdownBanner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -51,6 +52,7 @@ export default function RootLayout({
       <head />
       <body className={inter.className}>
         <GoogleMerchantWidget />
+        <PromoCountdownBanner />
         <SessionProvider>
           <Toaster position="top-center" />
           {children}
