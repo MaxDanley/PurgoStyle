@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
-
-const WEBSITE_A_RETURN = "https://www.purgolabs.com/payment-return";
+import { buildWebsiteAPaymentReturnUrl } from "@/lib/website-a-payment-return";
 const ERROR_PAGE = "/success-error";
 
 function getStripe(): Stripe {
@@ -35,15 +34,12 @@ export async function GET(req: Request) {
       return NextResponse.redirect(errorUrl);
     }
 
-    const params = new URLSearchParams({
-      session_id: sessionId,
-      payment_status: status,
+    const url = buildWebsiteAPaymentReturnUrl({
+      sessionId,
+      clientReferenceId: session.client_reference_id ?? "",
+      paymentStatus: status,
     });
-    if (session.client_reference_id) {
-      params.set("client_reference_id", session.client_reference_id);
-    }
-
-    return NextResponse.redirect(`${WEBSITE_A_RETURN}?${params.toString()}`);
+    return NextResponse.redirect(url);
   } catch (e: any) {
     console.error("checkout-success error:", e);
     const errorUrl = new URL(ERROR_PAGE, req.url);

@@ -1,17 +1,11 @@
 import { NextResponse } from "next/server";
-import Stripe from "stripe";
 import { prisma } from "@/lib/prisma";
+import { paypalCreateOrder } from "@/lib/paypal";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://summersteez.com";
-
-function getStripe(): Stripe {
-  const key = process.env.STRIPE_SECRET_KEY;
-  if (!key) throw new Error("STRIPE_SECRET_KEY is not configured");
-  return new Stripe(key);
-}
 
 /** Validate shared internal secret for Website A → Website B requests */
 function validateAuth(req: Request): boolean {
@@ -19,7 +13,6 @@ function validateAuth(req: Request): boolean {
     (process.env.STRIPE_CREATE_SESSION_SECRET || process.env.WEBSITE_B_INTERNAL_SECRET)?.trim();
   if (!secret) return false;
 
-  // Accept Authorization: Bearer <token> or X-Internal-Secret / X-Website-B-Secret (fallback if proxy strips Authorization)
   const authHeader = req.headers.get("Authorization");
   const xSecret = req.headers.get("X-Internal-Secret") || req.headers.get("X-Website-B-Secret");
 
@@ -42,11 +35,9 @@ function validateAuth(req: Request): boolean {
 
 /** Request body - supports both formats */
 interface CreateCheckoutBody {
-  // Format A: line_items with amount in cents
   amount?: number;
   line_items?: Array<{ name: string; quantity: number; amount: number }>;
   customer_email?: string;
-  // Format B: Website A payload (amount in dollars, products array)
   orderId?: string;
   orderNumber?: string;
   products?: Array<{ productId?: string; variantId?: string; quantity: number; unitPrice: number; name?: string }>;
@@ -72,9 +63,8 @@ export async function POST(req: Request) {
     }
 
     const body: CreateCheckoutBody = await req.json();
-    const currency = (body.currency || "usd").toLowerCase();
+    const currency = (body.currency || "usd").toUpperCase();
 
-    // Normalize to line_items (cents) and customerEmail
     let lineItems: Array<{ name: string; quantity: number; amount: number }>;
     let customerEmail: string | undefined;
     let totalCents: number;
@@ -119,48 +109,32 @@ export async function POST(req: Request) {
         shippingInsurance,
         shippingCost: 0,
         total: totalDollars,
-        paymentMethod: "CREDIT_CARD",
+        paymentMethod: "PAYPAL",
         paymentStatus: "PENDING",
+        paymentCurrency: currency,
         email: customerEmail ?? undefined,
         statusHistory: {
           create: {
             status: "PENDING",
-            note: "Order created via Website A dynamic checkout. Awaiting Stripe payment.",
+            note: "Order created via Website A dynamic checkout. Awaiting PayPal payment.",
           },
         },
       },
     });
 
-    const stripe = getStripe();
-    const session = await stripe.checkout.sessions.create({
-      mode: "payment",
-      currency,
-      line_items: lineItems.map((item) => ({
-        price_data: {
-          currency,
-          product_data: { name: "Custom order" },
-          unit_amount: item.amount,
-        },
-        quantity: item.quantity,
-      })),
-      client_reference_id: order.id,
-      success_url: `${baseUrl}/api/checkout-success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${baseUrl}/checkout/cancel`,
-      customer_email: customerEmail || undefined,
+    const paypalOrder = await paypalCreateOrder({
+      value: totalDollars.toFixed(2),
+      currencyCode: currency,
+      customId: order.id,
+      description: "Custom order",
     });
 
     await prisma.order.update({
       where: { id: order.id },
-      data: { stripeSessionId: session.id },
+      data: { paypalOrderId: paypalOrder.id },
     });
 
-    const checkoutUrl = session.url;
-    if (!checkoutUrl) {
-      return NextResponse.json(
-        { error: "Failed to create checkout session" },
-        { status: 500 }
-      );
-    }
+    const checkoutUrl = `${baseUrl}/checkout/paypal?orderId=${encodeURIComponent(order.id)}`;
 
     return NextResponse.json({
       checkoutUrl,
@@ -170,11 +144,9 @@ export async function POST(req: Request) {
         status: order.status,
       },
     });
-  } catch (e: any) {
+  } catch (e: unknown) {
+    const message = e instanceof Error ? e.message : "Internal server error";
     console.error("create-checkout-session error:", e);
-    return NextResponse.json(
-      { error: e?.message || "Internal server error" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

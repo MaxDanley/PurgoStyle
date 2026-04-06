@@ -191,8 +191,12 @@ model Order {
   cryptoPaymentExpiresAt DateTime?
   cryptoPaymentStatus    String? // waiting, confirming, confirmed, sending, partially_paid, finished, failed, refunded, expired
 
-  // Stripe Checkout (for Website A dynamic sessions)
+  // Stripe Checkout (legacy / other flows)
   stripeSessionId   String? @unique
+  // PayPal Orders v2 (Website A → Summer Steeze checkout)
+  paypalOrderId     String? @unique
+  paymentCurrency   String? @default("USD") // ISO code for PayPal (Website A / launch flows)
+
   externalReference String? // ref from launch-checkout (no origin identification)
 
   // BarterPay payment info
@@ -272,6 +276,7 @@ enum PaymentMethod {
   BARTERPAY
   EDEBIT
   CREDIT_CARD
+  PAYPAL
   OTHER
 }
 

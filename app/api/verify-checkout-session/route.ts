@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
+import { paypalGetOrder, paypalOrderToPaymentStatus } from "@/lib/paypal";
 
 function getStripe(): Stripe {
   const key = process.env.STRIPE_SECRET_KEY;
@@ -19,8 +20,9 @@ function validateAuth(req: Request): boolean {
 }
 
 /**
- * Verify a Stripe Checkout session (server-to-server, for Website A proxy).
- * Requires Bearer token. Does NOT update DB.
+ * Verify payment for Website A (server-to-server).
+ * - `session_id` starting with `cs_` → Stripe Checkout session.
+ * - Otherwise → PayPal order ID (Orders v2).
  */
 export async function GET(req: Request) {
   const ts = new Date().toISOString();
@@ -52,30 +54,53 @@ export async function GET(req: Request) {
       return NextResponse.json({ error: "session_id required" }, { status: 400 });
     }
 
-    const stripe = getStripe();
-    const session = await stripe.checkout.sessions.retrieve(sessionId);
+    if (sessionId.startsWith("cs_")) {
+      const stripe = getStripe();
+      const session = await stripe.checkout.sessions.retrieve(sessionId);
 
-    log("success", {
+      log("success_stripe", {
+        session_id: sessionId,
+        ref: ref ?? null,
+        payment_status: session.payment_status,
+        client_reference_id: session.client_reference_id ?? null,
+        httpStatus: 200,
+      });
+
+      return NextResponse.json({
+        payment_status: session.payment_status,
+        id: session.id,
+        client_reference_id: session.client_reference_id,
+      });
+    }
+
+    const paypalOrder = await paypalGetOrder(sessionId);
+    const payStatus = paypalOrderToPaymentStatus(paypalOrder);
+    const stripeLikeStatus =
+      payStatus === "paid" ? "paid" : payStatus === "pending" ? "unpaid" : "unpaid";
+    const clientRef = paypalOrder.purchase_units?.[0]?.custom_id ?? null;
+
+    log("success_paypal", {
       session_id: sessionId,
       ref: ref ?? null,
-      payment_status: session.payment_status,
-      client_reference_id: session.client_reference_id ?? null,
+      payment_status: stripeLikeStatus,
+      paypal_status: paypalOrder.status,
+      client_reference_id: clientRef,
       httpStatus: 200,
     });
 
     return NextResponse.json({
-      payment_status: session.payment_status,
-      id: session.id,
-      client_reference_id: session.client_reference_id,
+      payment_status: stripeLikeStatus,
+      id: sessionId,
+      client_reference_id: clientRef,
     });
-  } catch (e: any) {
-    const message = e?.message || "Failed to verify session";
+  } catch (e: unknown) {
+    const message = e instanceof Error ? e.message : "Failed to verify session";
     log("error", {
       session_id: sessionId ?? null,
       ref: ref ?? null,
       httpStatus: 500,
       error: message,
-      errorType: e?.name ?? "Error",
+      errorType: e instanceof Error ? e.name : "Error",
     });
     console.error("verify-checkout-session error:", e);
     return NextResponse.json({ error: message }, { status: 500 });
