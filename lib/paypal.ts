@@ -3,18 +3,25 @@
  */
 
 export function getPayPalApiBase(): string {
-  return process.env.PAYPAL_MODE === "live"
+  const mode = (process.env.PAYPAL_MODE ?? "").trim().toLowerCase();
+  return mode === "live"
     ? "https://api-m.paypal.com"
     : "https://api-m.sandbox.paypal.com";
 }
 
+/** True when calling PayPal production API (live credentials required). */
+export function isPayPalLiveMode(): boolean {
+  return (process.env.PAYPAL_MODE ?? "").trim().toLowerCase() === "live";
+}
+
 export async function paypalAccessToken(): Promise<string> {
-  const id = process.env.PAYPAL_CLIENT_ID;
-  const secret = process.env.PAYPAL_CLIENT_SECRET;
+  const id = process.env.PAYPAL_CLIENT_ID?.trim();
+  const secret = process.env.PAYPAL_CLIENT_SECRET?.trim();
   if (!id || !secret) {
     throw new Error("PAYPAL_CLIENT_ID and PAYPAL_CLIENT_SECRET are required");
   }
   const base = getPayPalApiBase();
+  const live = isPayPalLiveMode();
   const auth = Buffer.from(`${id}:${secret}`).toString("base64");
   const res = await fetch(`${base}/v1/oauth2/token`, {
     method: "POST",
@@ -25,7 +32,12 @@ export async function paypalAccessToken(): Promise<string> {
     body: "grant_type=client_credentials",
   });
   if (!res.ok) {
-    throw new Error(`PayPal OAuth failed: ${res.status} ${await res.text()}`);
+    const body = await res.text();
+    const hint =
+      res.status === 401
+        ? ` If using Live app credentials, set PAYPAL_MODE=live in env. If using Sandbox credentials, set PAYPAL_MODE=sandbox (or omit). Mismatch causes invalid_client. Also confirm Client ID + Secret are from the same PayPal REST app and have no extra spaces.`
+        : "";
+    throw new Error(`PayPal OAuth failed: ${res.status} ${body}${hint}`);
   }
   const json = (await res.json()) as { access_token: string };
   return json.access_token;
