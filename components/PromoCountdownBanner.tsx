@@ -6,14 +6,14 @@ import toast from "react-hot-toast";
 const PHOENIX_TZ = "America/Phoenix";
 const PROMO_CODE = "SAVE15";
 
-/** Midnight Arizona time, 7 calendar days after "today" in Phoenix. */
+/** Midnight Arizona time, 14 calendar days after "today" in Phoenix (extended +1 week). */
 function getPromotionEndMs(): number {
   const todayPhoenix = new Date().toLocaleDateString("en-CA", {
     timeZone: PHOENIX_TZ,
   });
   const [y, m, d] = todayPhoenix.split("-").map(Number);
   // Phoenix is always UTC-7 (no DST): local midnight = 07:00 UTC that calendar day
-  return Date.UTC(y, m - 1, d + 7, 7, 0, 0, 0);
+  return Date.UTC(y, m - 1, d + 14, 7, 0, 0, 0);
 }
 
 function formatRemaining(ms: number): {
@@ -62,9 +62,9 @@ export default function PromoCountdownBanner() {
     >
       <div className="container-custom flex flex-col sm:flex-row sm:items-center sm:justify-center gap-2 sm:gap-6 py-2.5 px-4 text-center text-sm sm:text-base font-medium">
         <p className="leading-snug">
-          <span className="font-bold">15% off sitewide</span>
+          <span className="font-bold">15% off EXTENDED</span>
           <span className="mx-1.5 opacity-90">·</span>
-          <span className="opacity-95">Ends midnight Arizona</span>
+          <span className="opacity-95">Sitewide · ends midnight Arizona</span>
         </p>
         <div
           className="flex flex-wrap items-center justify-center gap-2 tabular-nums tracking-tight"
