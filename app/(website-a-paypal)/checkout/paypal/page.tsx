@@ -44,7 +44,7 @@ export default async function WebsiteAPayPalCheckoutPage({
   const clientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID;
   if (!clientId) {
     return (
-      <div className="min-h-[50vh] flex items-center justify-center p-8 text-center text-red-600">
+      <div className="min-h-screen flex items-center justify-center p-8 text-center text-red-600">
         PayPal is not configured (NEXT_PUBLIC_PAYPAL_CLIENT_ID).
       </div>
     );
@@ -53,14 +53,10 @@ export default async function WebsiteAPayPalCheckoutPage({
   const currency = (order.paymentCurrency ?? "USD").toUpperCase();
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4">
-      <div className="max-w-lg mx-auto">
-        <h1 className="text-2xl font-bold text-gray-900 text-center mb-2">Complete payment</h1>
-        <p className="text-center text-gray-600 text-sm mb-8">
-          Pay with PayPal, Venmo, Pay Later, or card. Order total:{" "}
-          <strong>
-            {currency} {order.total.toFixed(2)}
-          </strong>
+    <div className="min-h-screen flex flex-col items-center justify-center px-4 py-12">
+      <div className="w-full max-w-md">
+        <p className="text-center text-sm text-gray-500 mb-8">
+          {currency} {order.total.toFixed(2)}
         </p>
         <PaypalWebsiteACheckout
           paypalClientId={clientId}

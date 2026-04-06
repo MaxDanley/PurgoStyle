@@ -93,7 +93,7 @@ export default function PaypalWebsiteACheckout({
         className="min-h-[120px] flex flex-col items-center justify-center"
       />
       {!sdkReady && (
-        <p className="text-center text-sm text-gray-500 mt-4">Loading PayPal…</p>
+        <p className="text-center text-sm text-gray-400 mt-4">Loading…</p>
       )}
     </>
   );

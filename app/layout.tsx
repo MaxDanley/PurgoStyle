@@ -3,8 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import SessionProvider from "@/components/SessionProvider";
-import GoogleMerchantWidget from "@/components/GoogleMerchantWidget";
-import PromoCountdownBanner from "@/components/PromoCountdownBanner";
+import ConditionalRootOverlays from "@/components/ConditionalRootOverlays";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -51,8 +50,7 @@ export default function RootLayout({
     <html lang="en">
       <head />
       <body className={inter.className}>
-        <GoogleMerchantWidget />
-        <PromoCountdownBanner />
+        <ConditionalRootOverlays />
         <SessionProvider>
           <Toaster position="top-center" />
           {children}
