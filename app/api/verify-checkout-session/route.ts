@@ -1,6 +1,34 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
+import { prisma } from "@/lib/prisma";
 import { paypalGetOrder, paypalOrderToPaymentStatus } from "@/lib/paypal";
+
+export const runtime = "nodejs";
+
+/** Website A compatibility: camelCase + explicit orderId / orderNumber for order resolution. */
+async function verifyResponseBody(params: {
+  payment_status: string;
+  id: string;
+  client_reference_id: string | null;
+}) {
+  const clientRef = params.client_reference_id;
+  let orderNumber: string | null = null;
+  if (clientRef) {
+    const order = await prisma.order.findUnique({
+      where: { id: clientRef },
+      select: { orderNumber: true },
+    });
+    orderNumber = order?.orderNumber ?? null;
+  }
+  return {
+    payment_status: params.payment_status,
+    paymentStatus: params.payment_status,
+    id: params.id,
+    client_reference_id: clientRef,
+    orderId: clientRef,
+    orderNumber,
+  };
+}
 
 function getStripe(): Stripe {
   const key = process.env.STRIPE_SECRET_KEY;
@@ -66,11 +94,12 @@ export async function GET(req: Request) {
         httpStatus: 200,
       });
 
-      return NextResponse.json({
+      const body = await verifyResponseBody({
         payment_status: session.payment_status,
         id: session.id,
         client_reference_id: session.client_reference_id,
       });
+      return NextResponse.json(body);
     }
 
     const paypalOrder = await paypalGetOrder(sessionId);
@@ -88,11 +117,12 @@ export async function GET(req: Request) {
       httpStatus: 200,
     });
 
-    return NextResponse.json({
+    const body = await verifyResponseBody({
       payment_status: stripeLikeStatus,
       id: sessionId,
       client_reference_id: clientRef,
     });
+    return NextResponse.json(body);
   } catch (e: unknown) {
     const message = e instanceof Error ? e.message : "Failed to verify session";
     log("error", {
