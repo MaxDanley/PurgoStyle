@@ -58,12 +58,6 @@ export async function GET(
       dateStyle: "medium",
       timeStyle: "short",
     });
-    const generatedAt = new Date().toLocaleString("en-US", {
-      timeZone: "America/Phoenix",
-      dateStyle: "medium",
-      timeStyle: "short",
-    });
-
     const addr = order.shippingAddress;
 
     const discountLabel = order.discountCode
@@ -107,7 +101,6 @@ export async function GET(
       discountAmount: Number(order.discountAmount) || 0,
       discountLabel,
       total: Number(order.total) || 0,
-      generatedAtLabel: `${generatedAt} (Arizona)`,
     });
 
     const safeFile = order.orderNumber.replace(/[^a-zA-Z0-9-_]/g, "_");

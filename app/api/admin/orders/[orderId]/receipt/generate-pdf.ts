@@ -39,7 +39,6 @@ export type SalesReceiptInput = {
   discountAmount: number;
   discountLabel: string;
   total: number;
-  generatedAtLabel: string;
 };
 
 const INK = "#0f172a";
@@ -47,7 +46,6 @@ const MUTED = "#64748b";
 const BORDER = "#e2e8f0";
 const GREEN = "#15803d";
 const BLUE = "#1d4ed8";
-const BOX_BG = "#f8fafc";
 const SUMMARY_BG = "#f1f5f9";
 
 function safeStr(v: unknown): string {
@@ -121,15 +119,6 @@ export async function buildSalesReceiptPdfBuffer(data: SalesReceiptInput): Promi
     doc.x = margin;
     doc.fillColor(INK);
 
-    const boxY = doc.y;
-    const boxH = 36;
-    doc.fillColor(BOX_BG).rect(margin, boxY, contentW, boxH).fill();
-    doc.strokeColor(BORDER).rect(margin, boxY, contentW, boxH).stroke();
-    doc.fillColor(MUTED).fontSize(7).font("Helvetica").text("Payment Descriptor", margin + 10, boxY + 8);
-    doc.fillColor(INK).fontSize(11).font("Helvetica-Bold").text("PURGO L", margin + 10, boxY + 18);
-    doc.y = boxY + boxH + 14;
-    doc.x = margin;
-
     const colGap = 16;
     const colW = (contentW - colGap) / 2;
     const c2 = margin + colW + colGap;
@@ -148,10 +137,6 @@ export async function buildSalesReceiptPdfBuffer(data: SalesReceiptInput): Promi
     doc.fillColor(MUTED).fontSize(7).text("RECEIPT DOCUMENT ID", c2, yR, { width: colW });
     yR = doc.y;
     doc.fillColor(INK).fontSize(9).text(docId, c2, yR, { width: colW });
-    yR = doc.y + 4;
-    doc.fillColor(MUTED).fontSize(7).text("GENERATED", c2, yR, { width: colW });
-    yR = doc.y;
-    doc.fillColor(INK).fontSize(9).text(safeStr(data.generatedAtLabel), c2, yR, { width: colW });
     doc.y = Math.max(leftBottom, doc.y) + 12;
     doc.x = margin;
 
