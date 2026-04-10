@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // pdfkit uses Node streams; keep it external for serverless traces.
+  serverExternalPackages: ['pdfkit'],
   images: {
     remotePatterns: [
       {

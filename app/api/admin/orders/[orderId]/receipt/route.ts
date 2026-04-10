@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { buildSalesReceiptPdfBuffer } from "@/lib/admin/sales-receipt-pdf";
+import { buildSalesReceiptPdfBuffer, RECEIPT_PDF_ENGINE } from "./generate-pdf";
 
 export const runtime = "nodejs";
 
@@ -117,6 +117,7 @@ export async function GET(
         "Content-Type": "application/pdf",
         "Content-Disposition": `attachment; filename="sales-receipt-${safeFile}.pdf"`,
         "Cache-Control": "no-store",
+        "X-Receipt-Generator": RECEIPT_PDF_ENGINE,
       },
     });
   } catch (e) {

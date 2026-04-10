@@ -1,4 +1,8 @@
-import PDFDocument from "pdfkit";
+/**
+ * Admin sales receipt — PDFKit only. Do not import React or @react-pdf/* here.
+ * Colocated with the route so production bundles cannot resolve a stale lib path.
+ * pdfkit is loaded via dynamic import() to isolate the dependency graph.
+ */
 
 export type ReceiptLineItem = {
   productName: string;
@@ -51,10 +55,11 @@ function safeStr(v: unknown): string {
   return String(v);
 }
 
-/**
- * PDF receipt via PDFKit only (no React / @react-pdf reconciler — avoids React #31 on Vercel).
- */
-export function buildSalesReceiptPdfBuffer(data: SalesReceiptInput): Promise<Buffer> {
+export const RECEIPT_PDF_ENGINE = "pdfkit-dynamic-v2";
+
+export async function buildSalesReceiptPdfBuffer(data: SalesReceiptInput): Promise<Buffer> {
+  const { default: PDFDocument } = await import("pdfkit");
+
   return new Promise((resolve, reject) => {
     const chunks: Buffer[] = [];
     const doc = new PDFDocument({
@@ -85,7 +90,6 @@ export function buildSalesReceiptPdfBuffer(data: SalesReceiptInput): Promise<Buf
       }
     }
 
-    // ----- Header -----
     const headerTop = doc.y;
     doc.fillColor(INK).fontSize(20).font("Helvetica-Bold").text("SUMMER STEEZE", margin, headerTop, {
       width: contentW * 0.58,
@@ -112,7 +116,6 @@ export function buildSalesReceiptPdfBuffer(data: SalesReceiptInput): Promise<Buf
     doc.strokeColor(BORDER).lineWidth(1).moveTo(margin, doc.y).lineTo(rightX, doc.y).stroke();
     doc.moveDown(0.5);
 
-    // ORDER CONFIRMED
     const bandY = doc.y;
     doc.rect(margin, bandY, 220, 22).fill(GREEN);
     doc.fillColor("#ffffff").fontSize(10).font("Helvetica-Bold").text("ORDER CONFIRMED", margin + 10, bandY + 6);
@@ -120,7 +123,6 @@ export function buildSalesReceiptPdfBuffer(data: SalesReceiptInput): Promise<Buf
     doc.x = margin;
     doc.fillColor(INK);
 
-    // Payment description box
     const boxY = doc.y;
     const boxH = 54;
     doc.fillColor(BOX_BG).rect(margin, boxY, contentW, boxH).fill();
@@ -132,7 +134,6 @@ export function buildSalesReceiptPdfBuffer(data: SalesReceiptInput): Promise<Buf
     doc.y = boxY + boxH + 14;
     doc.x = margin;
 
-    // Order meta (two columns, explicit Y)
     const colGap = 16;
     const colW = (contentW - colGap) / 2;
     const c2 = margin + colW + colGap;
@@ -158,7 +159,6 @@ export function buildSalesReceiptPdfBuffer(data: SalesReceiptInput): Promise<Buf
     doc.y = Math.max(leftBottom, doc.y) + 12;
     doc.x = margin;
 
-    // Bill to / Ship to
     newPageIfNeeded(120);
     const addrTop = doc.y;
     let yB = addrTop;
@@ -196,7 +196,6 @@ export function buildSalesReceiptPdfBuffer(data: SalesReceiptInput): Promise<Buf
     doc.y = Math.max(billBottom, yS) + 12;
     doc.x = margin;
 
-    // Payment summary band
     newPageIfNeeded(48);
     const sumY = doc.y;
     const sumH =
@@ -223,7 +222,6 @@ export function buildSalesReceiptPdfBuffer(data: SalesReceiptInput): Promise<Buf
     doc.y = sumY + sumH + 12;
     doc.x = margin;
 
-    // Line items (flowing blocks — avoids column / y bugs with wrapped titles)
     newPageIfNeeded(60);
     doc.fillColor(MUTED).fontSize(8).font("Helvetica-Bold").text("Items", margin, doc.y, { width: contentW });
     doc.moveDown(0.2);
@@ -246,7 +244,6 @@ export function buildSalesReceiptPdfBuffer(data: SalesReceiptInput): Promise<Buf
       doc.moveDown(0.25);
     }
 
-    // Totals
     newPageIfNeeded(100);
     doc.moveDown(0.3);
     const totalsX = margin + contentW - 220;
@@ -277,7 +274,6 @@ export function buildSalesReceiptPdfBuffer(data: SalesReceiptInput): Promise<Buf
     doc.y = ty + 24;
     doc.x = margin;
 
-    // Footer at bottom of current page
     const footerReserve = 58;
     if (doc.y > doc.page.height - margin - footerReserve - 40) {
       doc.addPage();
