@@ -67,7 +67,7 @@ export async function buildSalesReceiptPdfBuffer(data: SalesReceiptInput): Promi
       margin: 44,
       info: {
         Title: `Sales receipt ${data.orderNumber}`,
-        Author: "Summer Steeze",
+        Author: "SummerSteez",
       },
     });
 
@@ -91,7 +91,7 @@ export async function buildSalesReceiptPdfBuffer(data: SalesReceiptInput): Promi
     }
 
     const headerTop = doc.y;
-    doc.fillColor(INK).fontSize(20).font("Helvetica-Bold").text("SUMMER STEEZE", margin, headerTop, {
+    doc.fillColor(INK).fontSize(20).font("Helvetica-Bold").text("SummerSteez", margin, headerTop, {
       width: contentW * 0.58,
     });
     const afterLeft = doc.y;
@@ -106,8 +106,6 @@ export async function buildSalesReceiptPdfBuffer(data: SalesReceiptInput): Promi
     doc.y = Math.max(afterLeft, headerTop + 36);
     doc.x = margin;
 
-    doc.fillColor(MUTED).fontSize(9).font("Helvetica-Bold").text("SummerSteeze");
-    doc.moveDown(0.15);
     doc.fillColor(INK).font("Helvetica").fontSize(9).text("Men's and Boys' Clothing");
     doc.moveDown(0.12);
     doc.fillColor(MUTED).fontSize(8).text("NAICS 458110 · Retail apparel, footwear and accessories");
@@ -279,7 +277,7 @@ export async function buildSalesReceiptPdfBuffer(data: SalesReceiptInput): Promi
     const fy = doc.page.height - margin - footerReserve;
     doc.strokeColor(BORDER).lineWidth(1).moveTo(margin, fy).lineTo(rightX, fy).stroke();
     let fyy = fy + 8;
-    doc.fillColor(INK).fontSize(8).font("Helvetica-Bold").text("Summer Steeze · SummerSteez.com", margin, fyy, {
+    doc.fillColor(INK).fontSize(8).font("Helvetica-Bold").text("SummerSteez · SummerSteez.com", margin, fyy, {
       width: contentW,
     });
     fyy = doc.y + 4;
@@ -291,7 +289,7 @@ export async function buildSalesReceiptPdfBuffer(data: SalesReceiptInput): Promi
       { width: contentW }
     );
     fyy = doc.y + 4;
-    doc.text("Thank you for supporting Summer Steeze.", margin, fyy, { width: contentW });
+    doc.text("Thank you for supporting SummerSteez.", margin, fyy, { width: contentW });
 
     doc.end();
   });
