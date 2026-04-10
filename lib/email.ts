@@ -138,10 +138,10 @@ function renderFinancialSummary(orderDetails: any) {
       <tr>
         <td style="padding: 8px 0; font-size: 14px; color: #666666;">
           Shipping
-          ${shipping === 0 ? '<br><span style="font-size: 12px; color: #16a34a;">🎉 FREE SHIPPING</span>' : ''}
+          ${shipping === 0 ? '<br><span style="font-size: 12px; color: #666666;">Standard (no extra charge on this order)</span>' : ''}
         </td>
         <td style="padding: 8px 0; font-size: 14px; color: #333333; text-align: right;">
-          ${shipping === 0 ? '<span style="color: #16a34a;">Free</span>' : `$${shipping.toFixed(2)}`}
+          ${shipping === 0 ? '<span style="color: #333333;">$0.00</span>' : `$${shipping.toFixed(2)}`}
         </td>
       </tr>
       <tr>
@@ -151,10 +151,10 @@ function renderFinancialSummary(orderDetails: any) {
         <td style="padding: 8px 0; font-size: 18px; font-weight: 600; color: #333333;">Total</td>
         <td style="padding: 8px 0; font-size: 18px; font-weight: 600; color: #333333; text-align: right;">$${orderDetails.total.toFixed(2)} USD</td>
       </tr>
-      ${discountAmount > 0 || shipping === 0 ? `
+      ${discountAmount > 0 ? `
       <tr>
         <td colspan="2" style="text-align: right; padding-top: 4px;">
-          <span style="font-size: 13px; color: #16a34a;">You saved $${(discountAmount + (shipping === 0 ? 10 : 0)).toFixed(2)}</span>
+          <span style="font-size: 13px; color: #16a34a;">You saved $${discountAmount.toFixed(2)}</span>
         </td>
       </tr>
       ` : ''}

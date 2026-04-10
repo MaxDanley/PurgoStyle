@@ -39,7 +39,7 @@ export default function FacebookAdBanner() {
           </div>
           <div className="flex-1">
             <p className="text-sm font-semibold">
-              🎉 Special Offer: 30% OFF + FREE Shipping for Facebook/Instagram visitors!
+              🎉 Special Offer: 30% OFF for Facebook/Instagram visitors!
             </p>
             <p className="text-xs opacity-90 mt-0.5">
               Your discount will be automatically applied at checkout

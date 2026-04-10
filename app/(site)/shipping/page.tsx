@@ -17,18 +17,20 @@ export default function ShippingPage() {
               We offer flat-rate shipping via USPS. All shipping rates are the same regardless of your delivery address:
             </p>
             <ul className="list-disc list-inside text-gray-600 mb-4">
-              <li>Free shipping on orders over $200</li>
-              <li>Standard Ground shipping: FREE (USPS Priority Mail)</li>
+              <li>Standard Ground (USPS Priority Mail): no extra shipping charge on the order</li>
               <li>Priority shipping: $15.00 (USPS Priority Mail)</li>
               <li>Overnight shipping: $50.00 (USPS Priority Mail Express Overnight)</li>
               <li>Shipping insurance: $3.50 (required on all orders)</li>
             </ul>
             
             <h2 className="text-xl font-semibold text-gray-900 mb-4">Delivery Times</h2>
+            <p className="text-gray-600 mb-4">
+              Times below are typical business days in transit after your order ships (US addresses). Processing is usually 1–2 business days before shipment.
+            </p>
             <ul className="list-disc list-inside text-gray-600 mb-4">
-              <li>Standard Ground shipping: 5 business days</li>
-              <li>Priority shipping: 2-3 business days</li>
-              <li>Overnight shipping: 1-2 business days</li>
+              <li>Standard Ground shipping: typically 5–10 business days</li>
+              <li>Priority shipping: 2–3 business days</li>
+              <li>Overnight shipping: 1–2 business days</li>
             </ul>
             
             <h2 className="text-xl font-semibold text-gray-900 mb-4">Tracking</h2>

@@ -1,7 +1,7 @@
 -- Summer Steeze: 10 products with S/M/L variants.
 -- Prices: T-Shirts $100, Hoodies $250, Sweatpants $125, Shell Jacket $350.
--- Run after Prisma migrations. Uses fixed product IDs for reproducibility.
--- PostgreSQL: run with psql or your DB client. For SQLite, adjust syntax if needed.
+-- Run after Prisma migrations. PostgreSQL.
+-- Descriptions: plain-tee positioning, oversized / overfit sizing notes (no infinity/wordmark copy).
 
 -- 1. Black Shell Jacket ($350) - featured
 INSERT INTO "Product" (id, name, slug, description, category, image, "coaUrl", active, featured, "createdAt", "updatedAt")
@@ -9,11 +9,15 @@ VALUES (
   'psl-shell-black',
   'Black Shell Jacket',
   'black-shell-jacket',
-  'Introducing the Summer Steeze Shell Jacket in Black. Crafted from lightweight shell fabric, this jacket features a full zip closure with an elasticated hem for a clean, contemporary silhouette. The chest displays the Summer Steeze wordmark in a subtle tonal print, with additional branding to the left cuff. The jacket delivers a relaxed, oversized fit with a stand collar and side pockets.
+  $d$A lightweight black shell layer built for wind and light weather. Clean, minimal face—no chest graphics or loud branding in the product story: it reads as a simple technical jacket. Full zip, stand collar, elasticated hem, and side pockets.
 
-Summer Steeze Shell Jacket
-Black | Oversized Fit | Full Zip Closure | Elasticated Hem | Summer Steeze Chest Branding | Cuff Branding Detail
-Composition: 100% Nylon',
+Silhouette is relaxed with extra room through the chest and body—closer to streetwear / overfit than a slim athletic cut. Size down if you want less volume.
+
+Jacket body runs generous; sleeve and torso length are tuned for layering over hoodies or tees.
+
+• Full zip / stand collar
+• Elasticated hem, side pockets
+• Composition: 100% nylon$d$,
   'Jackets',
   '/PURGO STYLE LABS (1)/black_shell_cover_longsleave.png',
   NULL,
@@ -35,7 +39,15 @@ VALUES (
   'psl-sweat-black',
   'Black Sweatpants',
   'black-sweatpants',
-  'Introducing the Summer Steeze Essential Sweatpants in Black. Built from heavyweight brushed fleece, these sweatpants feature an elasticated waistband with contrast white drawcords and elasticated cuffs at the ankle. A small woven label sits at the left hip. Designed for everyday comfort with a wide, straight leg silhouette. Composition: 100% Cotton',
+  $d$Essential black sweatpants in heavyweight brushed fleece. Elastic waist with contrast drawcords, elastic cuffs, and a straight relaxed leg—plain construction focused on comfort and daily wear.
+
+Fit is relaxed through the seat and thigh with a fuller leg and ankle stack—size down if you want a trimmer sweatpant.
+
+Choose size for how much stack you want at the ankle and how relaxed you like the seat and thigh.
+
+• Heavyweight fleece
+• Elasticated waist & cuffs
+• Composition: 100% cotton$d$,
   'Sweatpants',
   '/PURGO STYLE LABS (1)/black_sweatpants_plain.png',
   NULL,
@@ -51,13 +63,21 @@ FROM "Product" p, (SELECT unnest(ARRAY['S','M','L']) AS s) sizes
 WHERE p.slug = 'black-sweatpants'
   AND NOT EXISTS (SELECT 1 FROM "ProductVariant" pv WHERE pv."productId" = p.id AND pv.size = sizes.s);
 
--- 3. Black Logo Hoodie ($250) - featured
+-- 3. Black Oversized Hoodie ($250) - featured
 INSERT INTO "Product" (id, name, slug, description, category, image, "coaUrl", active, featured, "createdAt", "updatedAt")
 VALUES (
   'psl-hoodie-black',
-  'Black Logo Hoodie',
+  'Black Oversized Hoodie',
   'black-logo-hoodie',
-  'Introducing the Summer Steeze Logo Hoodie in Black. Constructed from premium heavyweight fleece, this hoodie features a boxy, cropped oversized silhouette with a kangaroo pocket and the Summer Steeze wordmark printed across the chest. Additional branding sits on the hood and at the lower left cuff. Composition: 100% Cotton',
+  $d$Heavyweight black fleece hoodie with a cropped, boxy body and kangaroo pocket. Treated as a plain wardrobe hoodie in the catalog copy: emphasis is on fabric weight, silhouette, and everyday layering—not on graphics.
+
+Silhouette is relaxed with extra room through the chest and body—closer to streetwear / overfit than a slim athletic cut. Size down if you want less volume.
+
+Hoodie is intentionally voluminous; size down if you want less width through the body.
+
+• Heavyweight fleece
+• Kangaroo pocket
+• Composition: 100% cotton$d$,
   'Hoodies',
   '/PURGO STYLE LABS (1)/black_sweatshirt_logo.png',
   NULL,
@@ -73,18 +93,139 @@ FROM "Product" p, (SELECT unnest(ARRAY['S','M','L']) AS s) sizes
 WHERE p.slug = 'black-logo-hoodie'
   AND NOT EXISTS (SELECT 1 FROM "ProductVariant" pv WHERE pv."productId" = p.id AND pv.size = sizes.s);
 
--- 4–10: Remaining products (abbreviated descriptions in SQL for length)
+-- 4–10: tees, sweats, hoodies
 INSERT INTO "Product" (id, name, slug, description, category, image, "coaUrl", active, featured, "createdAt", "updatedAt") VALUES
-('psl-tshirt-black-back', 'Black Logo T-Shirt (Back)', 'black-logo-tshirt-back', 'Summer Steeze Logo T-Shirt in Washed Black — back view. Sky blue wordmark and infinity symbol on upper back. Oversized, boxy fit. Composition: 100% Cotton', 'T-Shirts', '/PURGO STYLE LABS (1)/black_tshirt_logo_back.png', NULL, true, false, NOW(), NOW()),
-('psl-tshirt-black-front', 'Black Logo T-Shirt (Front)', 'black-logo-tshirt-front', 'Summer Steeze Logo T-Shirt in Black — front view. Wordmark and infinity symbol left chest in sky blue. Oversized, boxy fit. Composition: 100% Cotton', 'T-Shirts', '/PURGO STYLE LABS (1)/black_tshirt_logo_front.png', NULL, true, false, NOW(), NOW()),
-('psl-tshirt-white-infinity', 'White T-Shirt — Infinity Logo', 'white-tshirt-infinity-logo', 'Summer Steeze Essentials T-Shirt in White. Infinity symbol in sky blue on right chest. Oversized boxy fit. Composition: 100% Cotton', 'T-Shirts', '/PURGO STYLE LABS (1)/Plain_white_tshirt_purgo_blue.png', NULL, true, true, NOW(), NOW()),
-('psl-tshirt-tan-front', 'Tan Logo T-Shirt (Front)', 'tan-logo-tshirt-front', 'Summer Steeze Logo T-Shirt in Sand. Wordmark and infinity symbol centered on chest in sky blue. Composition: 100% Cotton', 'T-Shirts', '/PURGO STYLE LABS (1)/tan_tshirt_logo_front.png', NULL, true, false, NOW(), NOW()),
-('psl-sweat-white', 'White Sweatpants', 'white-sweatpants', 'Summer Steeze Essential Sweatpants in Oatmeal Marl. Heavyweight brushed fleece, elasticated waist and cuffs. Composition: 100% Cotton', 'Sweatpants', '/PURGO STYLE LABS (1)/white_sweatpants_plain.png', NULL, true, false, NOW(), NOW()),
-('psl-hoodie-white', 'White Logo Hoodie', 'white-logo-hoodie', 'Summer Steeze Logo Hoodie in Oatmeal Marl. Wordmark with infinity symbol in sky blue across chest. Composition: 100% Cotton', 'Hoodies', '/PURGO STYLE LABS (1)/white_sweatshirt_plain.png', NULL, true, false, NOW(), NOW()),
-('psl-tshirt-white-back', 'White Logo T-Shirt (Back)', 'white-logo-tshirt-back', 'Summer Steeze Logo T-Shirt in White — back view. Wordmark and infinity symbol on upper back in sky blue. Composition: 100% Cotton', 'T-Shirts', '/PURGO STYLE LABS (1)/white_tshirt_logo_back.png', NULL, true, false, NOW(), NOW())
+(
+  'psl-tshirt-black-back',
+  'Black Plain T-Shirt (Back)',
+  'black-logo-tshirt-back',
+  $d$Washed black plain tee in heavyweight cotton with a vintage wash. Catalog listing describes a clean, minimal shirt—no chest or back graphic story in the product copy. Ribbed crew neck, substantial hand feel.
+
+Fit is intentionally oversized / overfit: dropped shoulder, wider body, and extra length compared to a classic retail tee. If you prefer a closer, standard tee silhouette, order one size down. S, M, and L are offered; when in doubt, compare to a tee you already own and size for the amount of drape you want.
+
+• Vintage wash finish
+• Ribbed crew neck
+• Composition: 100% cotton$d$,
+  'T-Shirts',
+  '/PURGO STYLE LABS (1)/black_tshirt_logo_back.png',
+  NULL,
+  true,
+  false,
+  NOW(),
+  NOW()
+),
+(
+  'psl-tshirt-black-front',
+  'Black Plain T-Shirt (Front)',
+  'black-logo-tshirt-front',
+  $d$Black plain tee cut from heavyweight cotton. Listing focuses on a simple, blank-forward tee: roomy through the chest and shoulder for an intentional overfit look.
+
+Fit is intentionally oversized / overfit: dropped shoulder, wider body, and extra length compared to a classic retail tee. If you prefer a closer, standard tee silhouette, order one size down. S, M, and L are offered; when in doubt, compare to a tee you already own and size for the amount of drape you want.
+
+• Ribbed crew neck
+• Woven label at hem (can be removed if you want a fully blank look)
+• Composition: 100% cotton$d$,
+  'T-Shirts',
+  '/PURGO STYLE LABS (1)/black_tshirt_logo_front.png',
+  NULL,
+  true,
+  false,
+  NOW(),
+  NOW()
+),
+(
+  'psl-tshirt-white-infinity',
+  'White Plain T-Shirt',
+  'white-tshirt-infinity-logo',
+  $d$White heavyweight cotton tee with a ribbed crew neck. Sold and described as a plain essential—oversized block fit for an easy, relaxed drape.
+
+Fit is intentionally oversized / overfit: dropped shoulder, wider body, and extra length compared to a classic retail tee. If you prefer a closer, standard tee silhouette, order one size down. S, M, and L are offered; when in doubt, compare to a tee you already own and size for the amount of drape you want.
+
+• Plain essential—simple wardrobe tee
+• Woven label at hem
+• Composition: 100% cotton$d$,
+  'T-Shirts',
+  '/PURGO STYLE LABS (1)/Plain_white_tshirt_purgo_blue.png',
+  NULL,
+  true,
+  true,
+  NOW(),
+  NOW()
+),
+(
+  'psl-tshirt-tan-front',
+  'Sand Plain T-Shirt (Front)',
+  'tan-logo-tshirt-front',
+  $d$Sand / tan plain tee in premium heavyweight cotton. Designed as an oversized everyday shirt with extra body width and a relaxed shoulder line.
+
+Fit is intentionally oversized / overfit: dropped shoulder, wider body, and extra length compared to a classic retail tee. If you prefer a closer, standard tee silhouette, order one size down. S, M, and L are offered; when in doubt, compare to a tee you already own and size for the amount of drape you want.
+
+• Ribbed crew neck
+• Composition: 100% cotton$d$,
+  'T-Shirts',
+  '/PURGO STYLE LABS (1)/tan_tshirt_logo_front.png',
+  NULL,
+  true,
+  false,
+  NOW(),
+  NOW()
+),
+(
+  'psl-sweat-white',
+  'White Sweatpants',
+  'white-sweatpants',
+  $d$Oatmeal marl sweatpants in brushed heavyweight fleece. Tonal drawcords, elastic waist and cuffs, and a wide relaxed leg—plain, staple sweatpants.
+
+Fit is relaxed through the seat and thigh with a fuller leg and ankle stack—size down if you want a trimmer sweatpant.
+
+• Heavyweight fleece
+• Elasticated waist & cuffs
+• Composition: 100% cotton$d$,
+  'Sweatpants',
+  '/PURGO STYLE LABS (1)/white_sweatpants_plain.png',
+  NULL,
+  true,
+  false,
+  NOW(),
+  NOW()
+),
+(
+  'psl-hoodie-white',
+  'Oatmeal Oversized Hoodie',
+  'white-logo-hoodie',
+  $d$Oatmeal marl heavyweight fleece hoodie with a cropped, boxy silhouette and kangaroo pocket. Positioned in copy as a plain, tonal hoodie—priority on fleece hand-feel and oversized proportion.
+
+Silhouette is relaxed with extra room through the chest and body—closer to streetwear / overfit than a slim athletic cut. Size down if you want less volume.
+
+• Metal eyelets at hood
+• Composition: 100% cotton$d$,
+  'Hoodies',
+  '/PURGO STYLE LABS (1)/white_sweatshirt_plain.png',
+  NULL,
+  true,
+  false,
+  NOW(),
+  NOW()
+),
+(
+  'psl-tshirt-white-back',
+  'White Plain T-Shirt (Back)',
+  'white-logo-tshirt-back',
+  $d$White heavyweight cotton tee—plain catalog description with an oversized / overfit block. Ribbed crew neck; generous width and length for a relaxed streetwear proportion.
+
+Fit is intentionally oversized / overfit: dropped shoulder, wider body, and extra length compared to a classic retail tee. If you prefer a closer, standard tee silhouette, order one size down. S, M, and L are offered; when in doubt, compare to a tee you already own and size for the amount of drape you want.
+
+• Composition: 100% cotton$d$,
+  'T-Shirts',
+  '/PURGO STYLE LABS (1)/white_tshirt_logo_back.png',
+  NULL,
+  true,
+  false,
+  NOW(),
+  NOW()
+)
 ON CONFLICT (slug) DO UPDATE SET name = EXCLUDED.name, description = EXCLUDED.description, image = EXCLUDED.image, featured = EXCLUDED.featured, "updatedAt" = NOW();
 
--- Variants for products 4–10 (T-Shirts $100, Sweatpants $125, Hoodie $250)
 INSERT INTO "ProductVariant" (id, "productId", size, price, "stockCount", sku, active, "createdAt", "updatedAt")
 SELECT gen_random_uuid()::text, p.id, s, CASE p.slug
   WHEN 'white-sweatpants' THEN 125

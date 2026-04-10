@@ -1,7 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { FaTshirt } from "react-icons/fa";
 import { HiOutlineSparkles } from "react-icons/hi";
+import { SHIPPING_ESTIMATE_SNIPPET } from "@/lib/shipping";
 
 export default function ProductsPageHeader() {
   return (
@@ -16,6 +18,12 @@ export default function ProductsPageHeader() {
         </h1>
         <p className="text-lg text-gray-600 max-w-2xl mx-auto">
           Arizona activewear, premium tees, and apparel. Start with a ready-made style or design your own in our studio.
+        </p>
+        <p className="text-sm text-gray-600 max-w-2xl mx-auto mt-4 leading-relaxed">
+          {SHIPPING_ESTIMATE_SNIPPET}{" "}
+          <Link href="/shipping" className="text-brand-600 font-medium hover:underline underline-offset-2">
+            Shipping details
+          </Link>
         </p>
       </div>
       <div className="flex items-center justify-center gap-4 mb-8">

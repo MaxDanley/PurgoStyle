@@ -116,7 +116,7 @@ export default function CustomDesignPage() {
             </Link>
             <ul className="mt-8 flex flex-wrap gap-6 text-white">
               <li className="flex items-center gap-2">
-                <span className="text-brand-400">✓</span> Free shipping on orders over $100
+                <span className="text-brand-400">✓</span> Clear delivery estimates at checkout
               </li>
               <li className="flex items-center gap-2">
                 <span className="text-brand-400">✓</span> No minimums

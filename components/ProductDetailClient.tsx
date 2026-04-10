@@ -15,6 +15,7 @@ import { usePathname } from "next/navigation";
 import { ChevronLeftIcon, ChevronRightIcon, ExclamationTriangleIcon, StarIcon } from "@heroicons/react/24/outline";
 import { StarIcon as StarIconSolid } from "@heroicons/react/24/solid";
 import { getFeaturedImage, sanitizeBrandText } from "@/lib/products";
+import { US_STANDARD_TRANSIT_DAYS_MAX, US_STANDARD_TRANSIT_DAYS_MIN } from "@/lib/shipping";
 
 const ALLOWED_SIZES = ["S", "M", "L", "SMALL", "MEDIUM", "LARGE"];
 
@@ -387,6 +388,13 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
                 </div>
               </div>
 
+              {selectedVariant?.sku && (
+                <p className="text-sm text-gray-600 mb-4">
+                  <span className="font-semibold text-gray-900">SKU</span>{" "}
+                  <span className="font-mono text-gray-800 tracking-tight">{selectedVariant.sku}</span>
+                </p>
+              )}
+
               {/* Quantity */}
               <div className="mb-6">
                 <label className="block text-sm font-semibold text-gray-900 mb-3">
@@ -506,20 +514,30 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
                 </>
               )}
 
-              {/* Shipping: Ships by Today / date + Ships to [location] */}
-              <div className="flex flex-wrap items-center justify-between gap-2 py-3 px-4 mt-4 rounded-lg bg-gray-100">
-                <div className="flex items-center gap-2 text-sm text-gray-700">
-                  <span className="w-2 h-2 rounded-full bg-green-500 flex-shrink-0" />
-                  Ships by{" "}
-                  {shipsBy.isToday ? (
-                    <strong className="font-bold text-gray-900">Today</strong>
-                  ) : (
-                    <strong className="font-bold text-gray-900">{shipsBy.text}</strong>
-                  )}
+              {/* Shipping: ship-by + delivery estimate + destination */}
+              <div className="space-y-2 py-3 px-4 mt-4 rounded-lg bg-gray-100">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <div className="flex items-center gap-2 text-sm text-gray-700">
+                    <span className="w-2 h-2 rounded-full bg-green-500 flex-shrink-0" />
+                    Ships by{" "}
+                    {shipsBy.isToday ? (
+                      <strong className="font-bold text-gray-900">Today</strong>
+                    ) : (
+                      <strong className="font-bold text-gray-900">{shipsBy.text}</strong>
+                    )}
+                  </div>
+                  <div className="text-sm text-gray-600">
+                    Ships to <span className="font-medium text-gray-800">{shippingLocation ?? "your state (US)"}</span>
+                  </div>
                 </div>
-                <div className="text-sm text-gray-600">
-                  <span className="text-brand-400 font-semibold">FREE</span> shipping to {shippingLocation ?? "your state"}
-                </div>
+                <p className="text-sm text-gray-700 leading-snug">
+                  <span className="font-semibold text-gray-900">Estimated delivery (US):</span> typically{" "}
+                  {US_STANDARD_TRANSIT_DAYS_MIN}–{US_STANDARD_TRANSIT_DAYS_MAX} business days in transit after your order ships
+                  with Standard Ground.{" "}
+                  <Link href="/shipping" className="text-primary-600 hover:text-primary-700 font-medium underline underline-offset-2">
+                    Rates & faster options
+                  </Link>
+                </p>
               </div>
             </div>
           </div>

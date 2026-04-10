@@ -3,6 +3,8 @@
  * Prices: T-Shirts $100, Hoodies $250, Sweatpants $125, Shell Jacket $350.
  * Run: npx ts-node --compiler-options '{"module":"CommonJS"}' prisma/seed-purgo-products.ts
  * Or: npx tsx prisma/seed-purgo-products.ts
+ *
+ * Uses upsert so re-running updates names and descriptions (SKUs preserved on variant update).
  */
 
 import { PrismaClient } from "@prisma/client";
@@ -11,6 +13,15 @@ const prisma = new PrismaClient();
 
 const IMAGE_BASE = "/PURGO STYLE LABS (1)";
 
+const OVERSIZED_TEES =
+  "Fit is intentionally oversized / overfit: dropped shoulder, wider body, and extra length compared to a classic retail tee. If you prefer a closer, standard tee silhouette, order one size down. S, M, and L are offered; when in doubt, compare to a tee you already own and size for the amount of drape you want.";
+
+const OVERSIZED_TOPS =
+  "Silhouette is relaxed with extra room through the chest and body—closer to streetwear / overfit than a slim athletic cut. Size down if you want less volume.";
+
+const OVERSIZED_BOTTOMS =
+  "Fit is relaxed through the seat and thigh with a fuller leg and ankle stack—size down if you want a trimmer sweatpant.";
+
 const PRODUCTS = [
   {
     name: "Black Shell Jacket",
@@ -18,17 +29,15 @@ const PRODUCTS = [
     category: "Jackets",
     price: 350,
     image: `${IMAGE_BASE}/black_shell_cover_longsleave.png`,
-    description: `Introducing the Summer Steeze Shell Jacket in Black. Crafted from lightweight shell fabric, this jacket features a full zip closure with an elasticated hem for a clean, contemporary silhouette. The chest displays the Summer Steeze wordmark in a subtle tonal print, with additional branding to the left cuff. The jacket delivers a relaxed, oversized fit with a stand collar and side pockets.
+    description: `A lightweight black shell layer built for wind and light weather. Clean, minimal face—no chest graphics or loud branding in the product story: it reads as a simple technical jacket. Full zip, stand collar, elasticated hem, and side pockets.
 
-Summer Steeze Shell Jacket
-Black
-Oversized Fit
-Full Zip Closure
-Elasticated Hem
-Summer Steeze Chest Branding
-Cuff Branding Detail
+${OVERSIZED_TOPS}
 
-Composition: 100% Nylon`,
+Jacket body runs generous; sleeve and torso length are tuned for layering over hoodies or tees.
+
+• Full zip / stand collar
+• Elasticated hem, side pockets
+• Composition: 100% nylon`,
     featured: true,
   },
   {
@@ -37,109 +46,91 @@ Composition: 100% Nylon`,
     category: "Sweatpants",
     price: 125,
     image: `${IMAGE_BASE}/black_sweatpants_plain.png`,
-    description: `Introducing the Summer Steeze Essential Sweatpants in Black. Built from heavyweight brushed fleece, these sweatpants feature an elasticated waistband with contrast white drawcords and elasticated cuffs at the ankle for a relaxed yet structured look. A small woven label sits at the left hip. Designed for everyday comfort with a wide, straight leg silhouette.
+    description: `Essential black sweatpants in heavyweight brushed fleece. Elastic waist with contrast drawcords, elastic cuffs, and a straight relaxed leg—plain construction focused on comfort and daily wear.
 
-Summer Steeze Essential Sweatpants
-Black
-Relaxed Fit
-Heavyweight Fleece
-Contrast White Drawcords
-Elasticated Waist & Cuffs
-Woven Label Detail
+${OVERSIZED_BOTTOMS}
 
-Composition: 100% Cotton`,
+Choose size for how much stack you want at the ankle and how relaxed you like the seat and thigh.
+
+• Heavyweight fleece
+• Elasticated waist & cuffs
+• Composition: 100% cotton`,
     featured: false,
   },
   {
-    name: "Black Logo Hoodie",
+    name: "Black Oversized Hoodie",
     slug: "black-logo-hoodie",
     category: "Hoodies",
     price: 250,
     image: `${IMAGE_BASE}/black_sweatshirt_logo.png`,
-    description: `Introducing the Summer Steeze Logo Hoodie in Black. Constructed from premium heavyweight fleece, this hoodie features a boxy, cropped oversized silhouette with a kangaroo pocket and the Summer Steeze wordmark printed across the chest. Additional branding sits on the hood and at the lower left cuff. Finished with a woven tab on the pocket and metal eyelets at the hood.
+    description: `Heavyweight black fleece hoodie with a cropped, boxy body and kangaroo pocket. Treated as a plain wardrobe hoodie in the catalog copy: emphasis is on fabric weight, silhouette, and everyday layering—not on graphics.
 
-Summer Steeze Logo Hoodie
-Black
-Oversized Cropped Fit
-Heavyweight Fleece
-Kangaroo Pocket
-Hood & Chest Branding
-Woven Tab Detail
+${OVERSIZED_TOPS}
 
-Composition: 100% Cotton`,
+Hoodie is intentionally voluminous; size down if you want less width through the body.
+
+• Heavyweight fleece
+• Kangaroo pocket
+• Composition: 100% cotton`,
     featured: true,
   },
   {
-    name: "Black Logo T-Shirt (Back)",
+    name: "Black Plain T-Shirt (Back)",
     slug: "black-logo-tshirt-back",
     category: "T-Shirts",
     price: 100,
     image: `${IMAGE_BASE}/black_tshirt_logo_back.png`,
-    description: `Introducing the Summer Steeze Logo T-Shirt in Washed Black — back view. Cut from premium heavyweight cotton with a vintage washed finish, this t-shirt features the Summer Steeze wordmark and infinity symbol on the upper back in a sky blue print. The oversized, boxy fit drops at the shoulder for a relaxed silhouette.
+    description: `Washed black plain tee in heavyweight cotton with a vintage wash. Catalog listing describes a clean, minimal shirt—no chest or back graphic story in the product copy. Ribbed crew neck, substantial hand feel.
 
-Summer Steeze Logo T-Shirt
-Washed Black
-Oversized Fit
-Sky Blue Back Print
-Infinity Symbol Graphic
-Vintage Wash Finish
+${OVERSIZED_TEES}
 
-Composition: 100% Cotton`,
+• Vintage wash finish
+• Ribbed crew neck
+• Composition: 100% cotton`,
     featured: false,
   },
   {
-    name: "Black Logo T-Shirt (Front)",
+    name: "Black Plain T-Shirt (Front)",
     slug: "black-logo-tshirt-front",
     category: "T-Shirts",
     price: 100,
     image: `${IMAGE_BASE}/black_tshirt_logo_front.png`,
-    description: `Introducing the Summer Steeze Logo T-Shirt in Black — front view. Crafted from premium heavyweight cotton, this t-shirt showcases the Summer Steeze wordmark and infinity symbol to the left chest in sky blue. The oversized, boxy fit features a ribbed crew neck and a woven label at the hem. A small branded tag sits at the left sleeve.
+    description: `Black plain tee cut from heavyweight cotton. Listing focuses on a simple, blank-forward tee: roomy through the chest and shoulder for an intentional overfit look.
 
-Summer Steeze Logo T-Shirt
-Black
-Oversized Fit
-Sky Blue Chest Print
-Infinity Symbol Graphic
-Woven Hem Label
-Sleeve Tag Detail
+${OVERSIZED_TEES}
 
-Composition: 100% Cotton`,
+• Ribbed crew neck
+• Subtle woven label at hem (trim if you want a fully blank look)
+• Composition: 100% cotton`,
     featured: false,
   },
   {
-    name: "White T-Shirt — Infinity Logo",
+    name: "White Plain T-Shirt",
     slug: "white-tshirt-infinity-logo",
     category: "T-Shirts",
     price: 100,
     image: `${IMAGE_BASE}/Plain_white_tshirt_purgo_blue.png`,
-    description: `Introducing the Summer Steeze Essentials T-Shirt in White. Made from premium heavyweight cotton, this minimal t-shirt features the Summer Steeze infinity symbol in sky blue on the right chest for a clean, understated look. The oversized boxy fit sits with a ribbed crew neck and a woven label at the lower hem.
+    description: `White heavyweight cotton tee with a ribbed crew neck. Sold and described as a plain essential—oversized block fit for an easy, relaxed drape.
 
-Summer Steeze Essentials T-Shirt
-White
-Oversized Fit
-Sky Blue Infinity Symbol
-Minimal Branding
-Woven Hem Label
+${OVERSIZED_TEES}
 
-Composition: 100% Cotton`,
+• Plain essential—simple wardrobe tee
+• Woven label at hem
+• Composition: 100% cotton`,
     featured: true,
   },
   {
-    name: "Tan Logo T-Shirt (Front)",
+    name: "Sand Plain T-Shirt (Front)",
     slug: "tan-logo-tshirt-front",
     category: "T-Shirts",
     price: 100,
     image: `${IMAGE_BASE}/tan_tshirt_logo_front.png`,
-    description: `Introducing the Summer Steeze Logo T-Shirt in Sand. Cut from premium heavyweight cotton, this t-shirt features the Summer Steeze wordmark and infinity symbol centered on the chest in sky blue. The relaxed, boxy oversized fit includes a ribbed crew neck, a branded tag at the left sleeve, and a woven label at the hem.
+    description: `Sand / tan plain tee in premium heavyweight cotton. Designed as an oversized everyday shirt with extra body width and a relaxed shoulder line.
 
-Summer Steeze Logo T-Shirt
-Sand
-Oversized Fit
-Sky Blue Chest Print
-Infinity Symbol Graphic
-Sleeve Tag & Hem Label
+${OVERSIZED_TEES}
 
-Composition: 100% Cotton`,
+• Ribbed crew neck
+• Composition: 100% cotton`,
     featured: false,
   },
   {
@@ -148,53 +139,40 @@ Composition: 100% Cotton`,
     category: "Sweatpants",
     price: 125,
     image: `${IMAGE_BASE}/white_sweatpants_plain.png`,
-    description: `Introducing the Summer Steeze Essential Sweatpants in Oatmeal Marl. Built from heavyweight brushed fleece, these sweatpants feature an elasticated waistband with tonal drawcords and elasticated cuffs at the ankle. A small woven label sits at the left hip. Designed with a wide, relaxed leg for effortless everyday wear.
+    description: `Oatmeal marl sweatpants in brushed heavyweight fleece. Tonal drawcords, elastic waist and cuffs, and a wide relaxed leg—plain, staple sweatpants.
 
-Summer Steeze Essential Sweatpants
-Oatmeal Marl
-Relaxed Fit
-Heavyweight Fleece
-Tonal Drawcords
-Elasticated Waist & Cuffs
-Woven Label Detail
+${OVERSIZED_BOTTOMS}
 
-Composition: 100% Cotton`,
+• Heavyweight fleece
+• Elasticated waist & cuffs
+• Composition: 100% cotton`,
     featured: false,
   },
   {
-    name: "White Logo Hoodie",
+    name: "Oatmeal Oversized Hoodie",
     slug: "white-logo-hoodie",
     category: "Hoodies",
     price: 250,
     image: `${IMAGE_BASE}/white_sweatshirt_plain.png`,
-    description: `Introducing the Summer Steeze Logo Hoodie in Oatmeal Marl. Constructed from premium heavyweight fleece, this hoodie features a boxy, cropped oversized silhouette with a kangaroo pocket and the Summer Steeze wordmark with infinity symbol in sky blue across the chest. Finished with metal eyelets at the hood and a woven tab on the pocket.
+    description: `Oatmeal marl heavyweight fleece hoodie with a cropped, boxy silhouette and kangaroo pocket. Positioned in copy as a plain, tonal hoodie—priority on fleece hand-feel and oversized proportion.
 
-Summer Steeze Logo Hoodie
-Oatmeal Marl
-Oversized Cropped Fit
-Heavyweight Fleece
-Sky Blue Chest Print
-Kangaroo Pocket
-Woven Tab Detail
+${OVERSIZED_TOPS}
 
-Composition: 100% Cotton`,
+• Metal eyelets at hood
+• Composition: 100% cotton`,
     featured: false,
   },
   {
-    name: "White Logo T-Shirt (Back)",
+    name: "White Plain T-Shirt (Back)",
     slug: "white-logo-tshirt-back",
     category: "T-Shirts",
     price: 100,
     image: `${IMAGE_BASE}/white_tshirt_logo_back.png`,
-    description: `Introducing the Summer Steeze Logo T-Shirt in White — back view. Crafted from premium heavyweight cotton, this t-shirt features the Summer Steeze wordmark and infinity symbol centered on the upper back in sky blue. The oversized, boxy fit delivers a relaxed, contemporary silhouette.
+    description: `White heavyweight cotton tee—plain catalog description with an oversized / overfit block. Ribbed crew neck; generous width and length for a relaxed streetwear proportion.
 
-Summer Steeze Logo T-Shirt
-White
-Oversized Fit
-Sky Blue Back Print
-Infinity Symbol Graphic
+${OVERSIZED_TEES}
 
-Composition: 100% Cotton`,
+• Composition: 100% cotton`,
     featured: false,
   },
 ];
@@ -202,17 +180,12 @@ Composition: 100% Cotton`,
 const SIZES = ["S", "M", "L"];
 
 async function main() {
-  console.log("Seeding 10 Summer Steeze products with S/M/L variants...\n");
+  console.log("Upserting 10 Summer Steeze products with S/M/L variants...\n");
 
   for (const p of PRODUCTS) {
-    const existing = await prisma.product.findUnique({ where: { slug: p.slug } });
-    if (existing) {
-      console.log(`Product "${p.name}" (${p.slug}) already exists, skipping.`);
-      continue;
-    }
-
-    const product = await prisma.product.create({
-      data: {
+    const product = await prisma.product.upsert({
+      where: { slug: p.slug },
+      create: {
         name: p.name,
         slug: p.slug,
         description: p.description,
@@ -221,12 +194,21 @@ async function main() {
         active: true,
         featured: p.featured,
       },
+      update: {
+        name: p.name,
+        description: p.description,
+        category: p.category,
+        image: p.image,
+        featured: p.featured,
+        active: true,
+      },
     });
 
     for (const size of SIZES) {
       const sku = `PSL-${p.slug}-${size}`;
-      await prisma.productVariant.create({
-        data: {
+      await prisma.productVariant.upsert({
+        where: { sku },
+        create: {
           productId: product.id,
           size,
           price: p.price,
@@ -234,10 +216,16 @@ async function main() {
           sku,
           active: true,
         },
+        update: {
+          productId: product.id,
+          size,
+          price: p.price,
+          active: true,
+        },
       });
     }
 
-    console.log(`Created: ${p.name} (${p.slug}) @ $${p.price} with S, M, L`);
+    console.log(`Upserted: ${p.name} (${p.slug}) @ $${p.price} with S, M, L`);
   }
 
   console.log("\nDone.");

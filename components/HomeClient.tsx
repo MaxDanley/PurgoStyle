@@ -177,8 +177,8 @@ export default function HomeClient({ featuredProducts: initialProducts }: HomeCl
             <div className="flex flex-col md:flex-row items-center justify-center gap-3">
               <FaTruck className="w-8 h-8 text-brand-500 flex-shrink-0" />
               <div>
-                <p className="font-semibold text-gray-900">Free Shipping</p>
-                <p className="text-sm text-gray-600">On orders over $100</p>
+                <p className="font-semibold text-gray-900">Nationwide shipping</p>
+                <p className="text-sm text-gray-600">Usually 5–10 business days after your order ships (US, standard)</p>
               </div>
             </div>
             <div className="flex flex-col md:flex-row items-center justify-center gap-3 border-t md:border-t-0 md:border-x border-gray-200 md:px-8 pt-6 md:pt-0">

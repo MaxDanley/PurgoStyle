@@ -7,6 +7,17 @@ interface ProductCardProps {
   showSaleBadge?: boolean;
 }
 
+function variantsSortedBySize(variants: Product["variants"]) {
+  const rank = (s: string) => {
+    const u = s.toUpperCase();
+    if (u === "S" || u === "SMALL") return 0;
+    if (u === "M" || u === "MEDIUM") return 1;
+    if (u === "L" || u === "LARGE") return 2;
+    return 50;
+  };
+  return [...variants].sort((a, b) => rank(a.size) - rank(b.size));
+}
+
 export default function ProductCard({ product, showSaleBadge = false }: ProductCardProps) {
   // Show actual database prices
   const minPrice = Math.min(...product.variants.map((v) => v.price));
@@ -15,6 +26,13 @@ export default function ProductCard({ product, showSaleBadge = false }: ProductC
   const priceDisplay = minPrice === maxPrice 
     ? `$${minPrice.toFixed(2)}`
     : `$${minPrice.toFixed(2)} - $${maxPrice.toFixed(2)}`;
+
+  const skuLine =
+    product.variants.length > 0
+      ? variantsSortedBySize(product.variants)
+          .map((v) => v.sku)
+          .join(" · ")
+      : "";
 
   return (
     <Link href={`/products/${product.slug}`} className="group">
@@ -49,6 +67,11 @@ export default function ProductCard({ product, showSaleBadge = false }: ProductC
           <p className="text-sm text-gray-600 mb-4 line-clamp-2">
             {sanitizeBrandText(product.description)}
           </p>
+          {skuLine ? (
+            <p className="text-xs text-gray-500 font-mono mb-3 break-all" title={skuLine}>
+              SKUs: {skuLine}
+            </p>
+          ) : null}
           
           <div className="flex items-center justify-between">
             <div>

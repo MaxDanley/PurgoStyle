@@ -23,8 +23,16 @@ export interface ShippingCalculation {
   remainingForFreeShipping: number;
 }
 
-// Free shipping threshold
+/** Legacy field for cart/checkout calculations; not shown as an order-minimum promo. */
 export const FREE_SHIPPING_THRESHOLD = 200;
+
+/** In-transit estimate for Standard Ground (US), after the order ships. */
+export const US_STANDARD_TRANSIT_DAYS_MIN = 5;
+export const US_STANDARD_TRANSIT_DAYS_MAX = 10;
+
+/** Short site-wide copy for layout, product pages, and listings. */
+export const SHIPPING_ESTIMATE_SNIPPET =
+  `US delivery is typically ${US_STANDARD_TRANSIT_DAYS_MIN}–${US_STANDARD_TRANSIT_DAYS_MAX} business days after your order ships (Standard Ground). Priority (2–3 days) and overnight (1–2 days) are available at checkout.`;
 
 export function calculateShipping(
   address: ShippingAddress,
@@ -34,8 +42,8 @@ export function calculateShipping(
     id: 'ground',
     name: 'Standard Ground Shipping',
     description: 'USPS Priority Mail',
-    price: 0, // Free shipping site-wide
-    estimatedDays: '5 business days',
+    price: 0,
+    estimatedDays: `${US_STANDARD_TRANSIT_DAYS_MIN}–${US_STANDARD_TRANSIT_DAYS_MAX} business days`,
     isFree: true
   };
 

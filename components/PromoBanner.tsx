@@ -1,7 +1,8 @@
 "use client";
 
 export default function PromoBanner() {
-  const message = "FREE SHIPPING SITE-WIDE";
+  const message =
+    "US ORDERS — TYPICALLY 5–10 BUSINESS DAYS AFTER SHIPMENT (STANDARD) — PRIORITY & OVERNIGHT AT CHECKOUT";
   
   return (
     <div className="bg-[#3aaff9] text-white py-2 overflow-hidden whitespace-nowrap">
