@@ -104,9 +104,7 @@ export async function buildSalesReceiptPdfBuffer(data: SalesReceiptInput): Promi
     doc.y = Math.max(afterLeft, headerTop + 36);
     doc.x = margin;
 
-    doc.fillColor(INK).font("Helvetica").fontSize(9).text("Men's and Boys' Clothing");
-    doc.moveDown(0.12);
-    doc.fillColor(MUTED).fontSize(8).text("NAICS 458110 · Retail apparel, footwear and accessories");
+    doc.fillColor(INK).font("Helvetica").fontSize(9).text("Men and Women's Activewear, Custom Clothing");
     doc.moveDown(0.6);
 
     doc.strokeColor(BORDER).lineWidth(1).moveTo(margin, doc.y).lineTo(rightX, doc.y).stroke();
