@@ -2328,7 +2328,7 @@ export default function AdminDashboard() {
                     rel="noopener noreferrer"
                     className="text-sm font-medium text-blue-600 hover:text-blue-800 underline"
                   >
-                    Download sales receipt
+                    Download sales receipt (PDF)
                   </a>
                 <button
                   onClick={() => {
