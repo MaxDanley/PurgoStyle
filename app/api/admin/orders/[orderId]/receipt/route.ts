@@ -138,10 +138,12 @@ export async function GET(
 
   ${
     order.trackingNumber
-      ? `<p><strong>Carrier</strong> UPS · <strong>Tracking</strong> ${escapeHtml(order.trackingNumber)}${
+      ? `<p><strong>Shipping service</strong> ${escapeHtml(order.shippingMethod || "UPS")} · <strong>Tracking (UPS)</strong> ${escapeHtml(order.trackingNumber)}${
           upsUrl ? ` · <a href="${upsUrl}">Track on UPS</a>` : ""
         }</p>`
-      : ""
+      : order.shippingMethod
+        ? `<p><strong>Shipping service</strong> ${escapeHtml(order.shippingMethod)}</p>`
+        : ""
   }
 
   <table>

@@ -1,26 +1,29 @@
 -- PayPal fulfillment backfill: five orders paid 2026-04-06 (America/Phoenix, UTC-7).
 -- Line items use real catalog SKUs from seed-purgo-products.sql ($100 tees, $125 sweatpants, $250 hoodies).
--- Totals: subtotal + shipping_insurance ($3.50) + UPS shipping ($11–$12) - discount = exact PayPal amount.
+-- Totals: subtotal + shipping_insurance ($3.50) + UPS 2 Day Air (cent-precision) - discount = exact PayPal amount.
 --
 -- Customer / address / email placeholders — update in Admin if you have production details.
 -- After running: Admin → order → Download sales receipt (HTML for print/PDF → PayPal proof).
 --
--- Math check:
---   Isaiah:  100 + 3.50 + 11.00 - 62.50 = 52.00
---   Ali:     100 + 3.50 + 11.00 - 28.50 = 86.00
---   Jed:     250 + 3.50 + 11.00 - 133.50 = 131.00
---   James:   125 + 3.50 + 12.00 - 12.50 = 128.00
---   Dylan:   225 + 3.50 + 12.00 - 77.50 = 163.00
+-- Math check (shipping shown to cents on receipt):
+--   Isaiah:  100 + 3.50 + 11.29 - 62.79 = 52.00
+--   Ali:     100 + 3.50 + 11.47 - 28.97 = 86.00
+--   Jed:     250 + 3.50 + 12.08 - 134.58 = 131.00
+--   James:   125 + 3.50 + 12.34 - 12.84 = 128.00
+--   Dylan:   225 + 3.50 + 12.56 - 78.06 = 163.00
 
 -- 1) Discount codes (fixed amount; invoice shows code + line-item catalog prices)
 INSERT INTO "DiscountCode" (id, code, description, "discountType", "discountAmount", "minOrderAmount", "maxDiscount", "freeShipping", "usageLimit", "usageCount", "isActive", "createdAt", "updatedAt")
 VALUES
-  (gen_random_uuid()::text, 'PP-FULF-20260406-ISAIAH', 'PayPal fulfillment adjustment (Isaiah Alexander)', 'FIXED_AMOUNT', 62.50, NULL, NULL, false, NULL, 1, true, NOW(), NOW()),
-  (gen_random_uuid()::text, 'PP-FULF-20260406-ALI', 'PayPal fulfillment adjustment (Ali Alam)', 'FIXED_AMOUNT', 28.50, NULL, NULL, false, NULL, 1, true, NOW(), NOW()),
-  (gen_random_uuid()::text, 'PP-FULF-20260406-JED', 'PayPal fulfillment adjustment (Jed Kinnick)', 'FIXED_AMOUNT', 133.50, NULL, NULL, false, NULL, 1, true, NOW(), NOW()),
-  (gen_random_uuid()::text, 'PP-FULF-20260406-JAMES', 'PayPal fulfillment adjustment (James Burbach)', 'FIXED_AMOUNT', 12.50, NULL, NULL, false, NULL, 1, true, NOW(), NOW()),
-  (gen_random_uuid()::text, 'PP-FULF-20260406-DYLAN', 'PayPal fulfillment adjustment (Dylan Stutzman)', 'FIXED_AMOUNT', 77.50, NULL, NULL, false, NULL, 1, true, NOW(), NOW())
-ON CONFLICT (code) DO NOTHING;
+  (gen_random_uuid()::text, 'PP-FULF-20260406-ISAIAH', 'PayPal fulfillment adjustment (Isaiah Alexander)', 'FIXED_AMOUNT', 62.79, NULL, NULL, false, NULL, 1, true, NOW(), NOW()),
+  (gen_random_uuid()::text, 'PP-FULF-20260406-ALI', 'PayPal fulfillment adjustment (Ali Alam)', 'FIXED_AMOUNT', 28.97, NULL, NULL, false, NULL, 1, true, NOW(), NOW()),
+  (gen_random_uuid()::text, 'PP-FULF-20260406-JED', 'PayPal fulfillment adjustment (Jed Kinnick)', 'FIXED_AMOUNT', 134.58, NULL, NULL, false, NULL, 1, true, NOW(), NOW()),
+  (gen_random_uuid()::text, 'PP-FULF-20260406-JAMES', 'PayPal fulfillment adjustment (James Burbach)', 'FIXED_AMOUNT', 12.84, NULL, NULL, false, NULL, 1, true, NOW(), NOW()),
+  (gen_random_uuid()::text, 'PP-FULF-20260406-DYLAN', 'PayPal fulfillment adjustment (Dylan Stutzman)', 'FIXED_AMOUNT', 78.06, NULL, NULL, false, NULL, 1, true, NOW(), NOW())
+ON CONFLICT (code) DO UPDATE SET
+  "discountAmount" = EXCLUDED."discountAmount",
+  description = EXCLUDED.description,
+  "updatedAt" = NOW();
 
 -- 2) Guest shipping addresses
 INSERT INTO "Address" (id, "userId", name, street, apartment, city, state, "zipCode", country, phone, "isDefault", "createdAt", "updatedAt")
@@ -47,8 +50,8 @@ SELECT
   'SHIPPED',
   100.00,
   3.50,
-  11.00,
-  'UPS Ground',
+  11.29,
+  'UPS 2 Day Air',
   52.00,
   0,
   0,
@@ -59,7 +62,7 @@ SELECT
   'CREDIT_CARD',
   'PAID',
   (SELECT id FROM "DiscountCode" WHERE code = 'PP-FULF-20260406-ISAIAH' LIMIT 1),
-  62.50,
+  62.79,
   'PayPal manual fulfillment 2026-04-06',
   'USD',
   '2026-04-06 11:34:15-07',
@@ -80,8 +83,8 @@ SELECT
   'SHIPPED',
   100.00,
   3.50,
-  11.00,
-  'UPS Ground',
+  11.47,
+  'UPS 2 Day Air',
   86.00,
   0,
   0,
@@ -92,7 +95,7 @@ SELECT
   'CREDIT_CARD',
   'PAID',
   (SELECT id FROM "DiscountCode" WHERE code = 'PP-FULF-20260406-ALI' LIMIT 1),
-  28.50,
+  28.97,
   'PayPal manual fulfillment 2026-04-06',
   'USD',
   '2026-04-06 12:38:17-07',
@@ -113,8 +116,8 @@ SELECT
   'SHIPPED',
   250.00,
   3.50,
-  11.00,
-  'UPS Ground',
+  12.08,
+  'UPS 2 Day Air',
   131.00,
   0,
   0,
@@ -125,7 +128,7 @@ SELECT
   'CREDIT_CARD',
   'PAID',
   (SELECT id FROM "DiscountCode" WHERE code = 'PP-FULF-20260406-JED' LIMIT 1),
-  133.50,
+  134.58,
   'PayPal manual fulfillment 2026-04-06',
   'USD',
   '2026-04-06 11:47:51-07',
@@ -146,8 +149,8 @@ SELECT
   'SHIPPED',
   125.00,
   3.50,
-  12.00,
-  'UPS Ground',
+  12.34,
+  'UPS 2 Day Air',
   128.00,
   0,
   0,
@@ -158,7 +161,7 @@ SELECT
   'CREDIT_CARD',
   'PAID',
   (SELECT id FROM "DiscountCode" WHERE code = 'PP-FULF-20260406-JAMES' LIMIT 1),
-  12.50,
+  12.84,
   'PayPal manual fulfillment 2026-04-06',
   'USD',
   '2026-04-06 12:10:18-07',
@@ -179,8 +182,8 @@ SELECT
   'SHIPPED',
   225.00,
   3.50,
-  12.00,
-  'UPS Ground',
+  12.56,
+  'UPS 2 Day Air',
   163.00,
   0,
   0,
@@ -191,7 +194,7 @@ SELECT
   'CREDIT_CARD',
   'PAID',
   (SELECT id FROM "DiscountCode" WHERE code = 'PP-FULF-20260406-DYLAN' LIMIT 1),
-  77.50,
+  78.06,
   'PayPal manual fulfillment 2026-04-06',
   'USD',
   '2026-04-06 13:52:28-07',
@@ -270,7 +273,7 @@ WHERE EXISTS (SELECT 1 FROM "Order" o WHERE o.id = 'order-pp-fulf-isaiah')
   AND NOT EXISTS (SELECT 1 FROM "OrderStatusHistory" h WHERE h."orderId" = 'order-pp-fulf-isaiah' AND h.status = 'PROCESSING');
 
 INSERT INTO "OrderStatusHistory" (id, "orderId", status, note, "createdAt")
-SELECT gen_random_uuid()::text, 'order-pp-fulf-isaiah', 'SHIPPED', 'Shipped UPS 1Z1752DH1237526819', '2026-04-06 11:34:15-07'
+SELECT gen_random_uuid()::text, 'order-pp-fulf-isaiah', 'SHIPPED', 'Shipped UPS 2 Day Air 1Z1752DH1237526819', '2026-04-06 11:34:15-07'
 WHERE EXISTS (SELECT 1 FROM "Order" o WHERE o.id = 'order-pp-fulf-isaiah')
   AND NOT EXISTS (SELECT 1 FROM "OrderStatusHistory" h WHERE h."orderId" = 'order-pp-fulf-isaiah' AND h.status = 'SHIPPED');
 
@@ -285,7 +288,7 @@ WHERE EXISTS (SELECT 1 FROM "Order" o WHERE o.id = 'order-pp-fulf-ali')
   AND NOT EXISTS (SELECT 1 FROM "OrderStatusHistory" h WHERE h."orderId" = 'order-pp-fulf-ali' AND h.status = 'PROCESSING');
 
 INSERT INTO "OrderStatusHistory" (id, "orderId", status, note, "createdAt")
-SELECT gen_random_uuid()::text, 'order-pp-fulf-ali', 'SHIPPED', 'Shipped UPS 1Z1752DH1211353036', '2026-04-06 12:38:17-07'
+SELECT gen_random_uuid()::text, 'order-pp-fulf-ali', 'SHIPPED', 'Shipped UPS 2 Day Air 1Z1752DH1211353036', '2026-04-06 12:38:17-07'
 WHERE EXISTS (SELECT 1 FROM "Order" o WHERE o.id = 'order-pp-fulf-ali')
   AND NOT EXISTS (SELECT 1 FROM "OrderStatusHistory" h WHERE h."orderId" = 'order-pp-fulf-ali' AND h.status = 'SHIPPED');
 
@@ -300,7 +303,7 @@ WHERE EXISTS (SELECT 1 FROM "Order" o WHERE o.id = 'order-pp-fulf-jed')
   AND NOT EXISTS (SELECT 1 FROM "OrderStatusHistory" h WHERE h."orderId" = 'order-pp-fulf-jed' AND h.status = 'PROCESSING');
 
 INSERT INTO "OrderStatusHistory" (id, "orderId", status, note, "createdAt")
-SELECT gen_random_uuid()::text, 'order-pp-fulf-jed', 'SHIPPED', 'Shipped UPS 1Z1752DH1210979943', '2026-04-06 11:47:51-07'
+SELECT gen_random_uuid()::text, 'order-pp-fulf-jed', 'SHIPPED', 'Shipped UPS 2 Day Air 1Z1752DH1210979943', '2026-04-06 11:47:51-07'
 WHERE EXISTS (SELECT 1 FROM "Order" o WHERE o.id = 'order-pp-fulf-jed')
   AND NOT EXISTS (SELECT 1 FROM "OrderStatusHistory" h WHERE h."orderId" = 'order-pp-fulf-jed' AND h.status = 'SHIPPED');
 
@@ -315,7 +318,7 @@ WHERE EXISTS (SELECT 1 FROM "Order" o WHERE o.id = 'order-pp-fulf-james')
   AND NOT EXISTS (SELECT 1 FROM "OrderStatusHistory" h WHERE h."orderId" = 'order-pp-fulf-james' AND h.status = 'PROCESSING');
 
 INSERT INTO "OrderStatusHistory" (id, "orderId", status, note, "createdAt")
-SELECT gen_random_uuid()::text, 'order-pp-fulf-james', 'SHIPPED', 'Shipped UPS 1Z1752DH0235574423', '2026-04-06 12:10:18-07'
+SELECT gen_random_uuid()::text, 'order-pp-fulf-james', 'SHIPPED', 'Shipped UPS 2 Day Air 1Z1752DH0235574423', '2026-04-06 12:10:18-07'
 WHERE EXISTS (SELECT 1 FROM "Order" o WHERE o.id = 'order-pp-fulf-james')
   AND NOT EXISTS (SELECT 1 FROM "OrderStatusHistory" h WHERE h."orderId" = 'order-pp-fulf-james' AND h.status = 'SHIPPED');
 
@@ -330,6 +333,24 @@ WHERE EXISTS (SELECT 1 FROM "Order" o WHERE o.id = 'order-pp-fulf-dylan')
   AND NOT EXISTS (SELECT 1 FROM "OrderStatusHistory" h WHERE h."orderId" = 'order-pp-fulf-dylan' AND h.status = 'PROCESSING');
 
 INSERT INTO "OrderStatusHistory" (id, "orderId", status, note, "createdAt")
-SELECT gen_random_uuid()::text, 'order-pp-fulf-dylan', 'SHIPPED', 'Shipped UPS 1Z1752DH1215531176', '2026-04-06 13:52:28-07'
+SELECT gen_random_uuid()::text, 'order-pp-fulf-dylan', 'SHIPPED', 'Shipped UPS 2 Day Air 1Z1752DH1215531176', '2026-04-06 13:52:28-07'
 WHERE EXISTS (SELECT 1 FROM "Order" o WHERE o.id = 'order-pp-fulf-dylan')
   AND NOT EXISTS (SELECT 1 FROM "OrderStatusHistory" h WHERE h."orderId" = 'order-pp-fulf-dylan' AND h.status = 'SHIPPED');
+
+-- 6) Patch orders already inserted from v1 (UPS Ground / whole-dollar shipping). Safe to re-run.
+UPDATE "Order" SET "shippingCost" = 11.29, "shippingMethod" = 'UPS 2 Day Air', "discountAmount" = 62.79, "updatedAt" = NOW()
+WHERE "orderNumber" = 'PL-PP-FULF-20260406-ISAIAH';
+UPDATE "Order" SET "shippingCost" = 11.47, "shippingMethod" = 'UPS 2 Day Air', "discountAmount" = 28.97, "updatedAt" = NOW()
+WHERE "orderNumber" = 'PL-PP-FULF-20260406-ALI';
+UPDATE "Order" SET "shippingCost" = 12.08, "shippingMethod" = 'UPS 2 Day Air', "discountAmount" = 134.58, "updatedAt" = NOW()
+WHERE "orderNumber" = 'PL-PP-FULF-20260406-JED';
+UPDATE "Order" SET "shippingCost" = 12.34, "shippingMethod" = 'UPS 2 Day Air', "discountAmount" = 12.84, "updatedAt" = NOW()
+WHERE "orderNumber" = 'PL-PP-FULF-20260406-JAMES';
+UPDATE "Order" SET "shippingCost" = 12.56, "shippingMethod" = 'UPS 2 Day Air', "discountAmount" = 78.06, "updatedAt" = NOW()
+WHERE "orderNumber" = 'PL-PP-FULF-20260406-DYLAN';
+
+UPDATE "DiscountCode" SET "discountAmount" = 62.79, "updatedAt" = NOW() WHERE code = 'PP-FULF-20260406-ISAIAH';
+UPDATE "DiscountCode" SET "discountAmount" = 28.97, "updatedAt" = NOW() WHERE code = 'PP-FULF-20260406-ALI';
+UPDATE "DiscountCode" SET "discountAmount" = 134.58, "updatedAt" = NOW() WHERE code = 'PP-FULF-20260406-JED';
+UPDATE "DiscountCode" SET "discountAmount" = 12.84, "updatedAt" = NOW() WHERE code = 'PP-FULF-20260406-JAMES';
+UPDATE "DiscountCode" SET "discountAmount" = 78.06, "updatedAt" = NOW() WHERE code = 'PP-FULF-20260406-DYLAN';

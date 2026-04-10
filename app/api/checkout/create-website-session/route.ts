@@ -1,20 +1,16 @@
 import { NextResponse } from "next/server";
-import Stripe from "stripe";
 import { prisma } from "@/lib/prisma";
 import { calculatePointsEarned } from "@/lib/rewards";
 import { sendOrderNotificationToSupport } from "@/lib/email";
 import { validateGuestOrderInfo } from "@/lib/validation";
 import { handleCheckoutSubscription } from "@/lib/subscriber-helpers";
 import { cookies } from "next/headers";
+import { paypalCreateOrder } from "@/lib/paypal";
+
+export const runtime = "nodejs";
 
 const CANONICAL_SOURCE = "https://summersteez.com";
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://summersteez.com";
-
-function getStripe(): Stripe {
-  const key = process.env.STRIPE_SECRET_KEY;
-  if (!key) throw new Error("STRIPE_SECRET_KEY is not configured");
-  return new Stripe(key);
-}
+const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL || "https://summersteez.com").replace(/\/$/, "");
 
 function normalizeAttribution(attribution: any, initialReferrer: string | undefined) {
   const isOurDomain = (v: string | undefined) =>
@@ -27,18 +23,12 @@ function normalizeAttribution(attribution: any, initialReferrer: string | undefi
 }
 
 /**
- * Create order + Stripe Checkout Session for website checkout.
- * Success/cancel URLs point to our site only (no external redirects).
- * Does not send payment-link email; webhook handles payment confirmation.
+ * Create order + PayPal checkout (same flow as Website A → B: redirect to /checkout/paypal).
+ * After payment, /api/paypal/capture sends customers to /order-confirmation (see SS_STORE_CHECKOUT).
  */
 export async function POST(req: Request) {
   try {
-    const {
-      items,
-      shippingInfo,
-      billingInfo,
-      metadata,
-    } = await req.json();
+    const { items, shippingInfo, metadata } = await req.json();
 
     if (!items?.length) {
       return NextResponse.json(
@@ -189,8 +179,10 @@ export async function POST(req: Request) {
         total,
         shippingAddressId: shippingAddress.id,
         phone: shippingInfo.phone?.trim() || shippingAddress.phone || undefined,
-        paymentMethod: "CREDIT_CARD",
+        paymentMethod: "PAYPAL",
         paymentStatus: "PENDING",
+        paymentCurrency: "USD",
+        externalReference: "SS_STORE_CHECKOUT",
         shippingMethod: (metadata.shippingMethod as string) || "ground",
         affiliateId,
         attributionSource: normalized.source ?? attributionData.source,
@@ -203,7 +195,7 @@ export async function POST(req: Request) {
         statusHistory: {
           create: {
             status: "PENDING",
-            note: "Order created via website Stripe Checkout. Awaiting payment.",
+            note: "Order created via store checkout. Awaiting PayPal payment.",
           },
         },
       },
@@ -252,61 +244,19 @@ export async function POST(req: Request) {
       );
     }
 
-    const currency = "usd";
-    const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [
-      ...items.map((item: any) => ({
-        price_data: {
-          currency,
-          product_data: {
-            name: item.productName || `Product ${item.productId}`,
-          },
-          unit_amount: Math.round(item.price * 100),
-        },
-        quantity: item.quantity,
-      })),
-      {
-        price_data: {
-          currency,
-          product_data: { name: "Shipping & insurance" },
-          unit_amount: Math.round((shippingInsurance + shippingCost) * 100),
-        },
-        quantity: 1,
-      },
-    ];
-    if (discountAmount > 0) {
-      lineItems.push({
-        price_data: {
-          currency,
-          product_data: { name: "Discount" },
-          unit_amount: -Math.round(discountAmount * 100),
-        },
-        quantity: 1,
-      });
-    }
-
-    const stripe = getStripe();
-    const session = await stripe.checkout.sessions.create({
-      mode: "payment",
-      currency,
-      line_items: lineItems,
-      client_reference_id: order.id,
-      customer_email: validatedInfo.email || undefined,
-      success_url: `${baseUrl}/order-success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${baseUrl}/checkout`,
+    const paypalOrder = await paypalCreateOrder({
+      value: total.toFixed(2),
+      currencyCode: "USD",
+      customId: order.id,
+      description: "Summer Steeze order",
     });
 
     await prisma.order.update({
       where: { id: order.id },
-      data: { stripeSessionId: session.id },
+      data: { paypalOrderId: paypalOrder.id },
     });
 
-    const checkoutUrl = session.url;
-    if (!checkoutUrl) {
-      return NextResponse.json(
-        { error: "Failed to create checkout session" },
-        { status: 500 }
-      );
-    }
+    const checkoutUrl = `${baseUrl}/checkout/paypal?orderId=${encodeURIComponent(order.id)}`;
 
     if (orderWithItems && orderWithItems.shippingAddress) {
       try {
@@ -314,7 +264,7 @@ export async function POST(req: Request) {
           customerName: shippingInfo.name,
           customerEmail: validatedInfo.email,
           customerPhone: shippingInfo.phone,
-          paymentMethod: "CREDIT_CARD",
+          paymentMethod: "PAYPAL",
           paymentStatus: "PENDING",
           subtotal,
           shippingInsurance,

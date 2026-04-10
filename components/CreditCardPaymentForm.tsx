@@ -90,7 +90,7 @@ export default function CreditCardPaymentForm({
 
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
         <p className="text-sm text-blue-800">
-          Click Pay Now to be redirected to our secure payment page. You will complete payment there and then return to your order confirmation on this site.
+          Click Pay Now to open our secure PayPal checkout (PayPal balance, or debit/credit card). After payment you will return to your order confirmation on this site.
         </p>
       </div>
 
