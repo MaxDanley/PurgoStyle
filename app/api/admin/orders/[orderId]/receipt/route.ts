@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { buildSalesReceiptPdfBuffer } from "@/lib/admin/sales-receipt-pdf";
 
 export const runtime = "nodejs";
 
@@ -70,6 +69,8 @@ export async function GET(
       ? `Discount (${order.discountCode.code})`
       : "Discount";
 
+    const { buildSalesReceiptPdfBuffer } = await import("@/lib/admin/sales-receipt-pdf");
+
     const buffer = await buildSalesReceiptPdfBuffer({
       orderNumber: order.orderNumber,
       orderId: order.id,
@@ -90,19 +91,23 @@ export async function GET(
       orderStatus: order.status,
       shippingMethod: order.shippingMethod || "Standard",
       trackingNumber: order.trackingNumber,
-      items: order.items.map((item) => ({
-        productName: item.product.name,
-        size: item.variant.size,
-        quantity: item.quantity,
-        unitPrice: item.price,
-        lineTotal: item.price * item.quantity,
-      })),
-      subtotal: order.subtotal,
-      shippingInsurance: order.shippingInsurance,
-      shippingCost: order.shippingCost,
-      discountAmount: order.discountAmount,
+      items: order.items.map((item) => {
+        const qty = Number(item.quantity) || 0;
+        const unit = Number(item.price) || 0;
+        return {
+          productName: item.product?.name?.trim() || "Item",
+          size: item.variant?.size?.trim() || "—",
+          quantity: qty,
+          unitPrice: unit,
+          lineTotal: unit * qty,
+        };
+      }),
+      subtotal: Number(order.subtotal) || 0,
+      shippingInsurance: Number(order.shippingInsurance) || 0,
+      shippingCost: Number(order.shippingCost) || 0,
+      discountAmount: Number(order.discountAmount) || 0,
       discountLabel,
-      total: order.total,
+      total: Number(order.total) || 0,
       generatedAtLabel: `${generatedAt} (Arizona)`,
     });
 
@@ -116,7 +121,15 @@ export async function GET(
       },
     });
   } catch (e) {
-    console.error("[admin receipt]", e);
-    return NextResponse.json({ error: "Failed to build receipt" }, { status: 500 });
+    const msg = e instanceof Error ? e.message : String(e);
+    const stack = e instanceof Error ? e.stack : undefined;
+    console.error("[admin receipt]", msg, stack ?? e);
+    return NextResponse.json(
+      {
+        error: "Failed to build receipt",
+        ...(process.env.NODE_ENV === "development" ? { details: msg } : {}),
+      },
+      { status: 500 }
+    );
   }
 }

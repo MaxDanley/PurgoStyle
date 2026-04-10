@@ -141,7 +141,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#f1f5f9",
     padding: 10,
     marginTop: 8,
-    borderRadius: 2,
   },
   paymentLine: { fontSize: 9, marginBottom: 3 },
 });
