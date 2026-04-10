@@ -124,13 +124,11 @@ export async function buildSalesReceiptPdfBuffer(data: SalesReceiptInput): Promi
     doc.fillColor(INK);
 
     const boxY = doc.y;
-    const boxH = 54;
+    const boxH = 36;
     doc.fillColor(BOX_BG).rect(margin, boxY, contentW, boxH).fill();
     doc.strokeColor(BORDER).rect(margin, boxY, contentW, boxH).stroke();
-    doc.fillColor(MUTED).fontSize(7).font("Helvetica").text("PAYMENT DESCRIPTION (SHORT)", margin + 10, boxY + 8);
-    doc.fillColor(INK).fontSize(11).font("Helvetica-Bold").text("PURGO L", margin + 10, boxY + 16);
-    doc.fillColor(MUTED).fontSize(7).font("Helvetica").text("PAYMENT DESCRIPTION (LONG)", margin + 10, boxY + 30);
-    doc.fillColor(INK).fontSize(9).font("Helvetica-Bold").text("PURGO L SMRSTZ", margin + 10, boxY + 38);
+    doc.fillColor(MUTED).fontSize(7).font("Helvetica").text("Payment Descriptor", margin + 10, boxY + 8);
+    doc.fillColor(INK).fontSize(11).font("Helvetica-Bold").text("PURGO L", margin + 10, boxY + 18);
     doc.y = boxY + boxH + 14;
     doc.x = margin;
 
