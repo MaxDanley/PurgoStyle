@@ -1,7 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Keep react-pdf on Node's resolver; bundling it breaks renderToBuffer (web vs server build).
-  serverExternalPackages: ['@react-pdf/renderer'],
   images: {
     remotePatterns: [
       {

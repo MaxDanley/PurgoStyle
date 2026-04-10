@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { buildSalesReceiptPdfBuffer } from "@/lib/admin/sales-receipt-pdf";
 
 export const runtime = "nodejs";
 
@@ -68,8 +69,6 @@ export async function GET(
     const discountLabel = order.discountCode
       ? `Discount (${order.discountCode.code})`
       : "Discount";
-
-    const { buildSalesReceiptPdfBuffer } = await import("@/lib/admin/sales-receipt-pdf");
 
     const buffer = await buildSalesReceiptPdfBuffer({
       orderNumber: order.orderNumber,

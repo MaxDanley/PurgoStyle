@@ -25,7 +25,6 @@
     "@heroicons/react": "^2.2.0",
     "@prisma/client": "^6.18.0",
     "@react-email/render": "^2.0.1",
-    "@react-pdf/renderer": "^4.4.0",
     "@types/node": "^24.9.1",
     "@types/qrcode": "^1.5.6",
     "@vercel/blob": "^0.22.3",
@@ -35,6 +34,7 @@
     "next-auth": "^5.0.0-beta.25",
     "nodemailer": "^6.9.15",
     "openai": "^6.16.0",
+    "pdfkit": "^0.18.0",
     "qrcode": "^1.5.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -50,6 +50,7 @@
   },
   "devDependencies": {
     "@types/nodemailer": "^7.0.2",
+    "@types/pdfkit": "^0.17.5",
     "@types/react": "^18.3.27",
     "@types/react-dom": "^18.3.7",
     "autoprefixer": "^10.4.21",
