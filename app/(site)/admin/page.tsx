@@ -2314,13 +2314,22 @@ export default function AdminDashboard() {
             setSelectedOrder(null);
           }}>
             <div className="bg-white rounded-lg p-4 sm:p-6 w-full max-w-4xl max-h-[90vh] overflow-auto" onClick={(e) => e.stopPropagation()}>
-              <div className="flex justify-between items-start mb-6">
+              <div className="flex justify-between items-start mb-6 gap-4">
                 <div>
                   <h3 className="text-2xl font-bold text-gray-900">Order #{selectedOrder.orderNumber}</h3>
                   <p className="text-sm text-gray-500 mt-1">
                     Placed on {new Date(selectedOrder.createdAt).toLocaleDateString()}
                   </p>
                 </div>
+                <div className="flex items-center gap-3 shrink-0">
+                  <a
+                    href={`/api/admin/orders/${selectedOrder.id}/receipt`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm font-medium text-blue-600 hover:text-blue-800 underline"
+                  >
+                    Download sales receipt
+                  </a>
                 <button
                   onClick={() => {
                     setShowOrderDetailsModal(false);
@@ -2332,6 +2341,7 @@ export default function AdminDashboard() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </button>
+                </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
