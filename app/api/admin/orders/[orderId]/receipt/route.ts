@@ -53,10 +53,9 @@ export async function GET(
     const customerName =
       order.user?.name || order.shippingAddress?.name || "Guest";
     const customerEmail = order.user?.email || order.email || "—";
-    const placedAt = new Date(order.createdAt).toLocaleString("en-US", {
+    const placedAt = new Date(order.createdAt).toLocaleDateString("en-US", {
       timeZone: "America/Phoenix",
       dateStyle: "medium",
-      timeStyle: "short",
     });
     const addr = order.shippingAddress;
 
@@ -67,7 +66,7 @@ export async function GET(
     const buffer = await buildSalesReceiptPdfBuffer({
       orderNumber: order.orderNumber,
       orderId: order.id,
-      createdAtLabel: `${placedAt} (Arizona)`,
+      createdAtLabel: placedAt,
       customerName,
       customerEmail,
       customerPhone: order.phone,
