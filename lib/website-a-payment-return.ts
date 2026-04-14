@@ -20,3 +20,14 @@ export function buildWebsiteAPaymentReturnUrl(params: {
   });
   return `${base}?${u.toString()}`;
 }
+
+/** Where "Back to Purgo Labs" sends users (Website A / Purgo Labs). */
+export function getWebsiteACheckoutBackUrl(): string {
+  const explicit = process.env.WEBSITE_A_CHECKOUT_BACK_URL?.trim().replace(/\/$/, "");
+  if (explicit) return explicit;
+  try {
+    return new URL(getWebsiteAPaymentReturnBase()).origin;
+  } catch {
+    return "https://www.purgolabs.com";
+  }
+}
