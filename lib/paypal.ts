@@ -67,26 +67,49 @@ export async function paypalCreateOrder(params: {
   currencyCode: string;
   customId: string;
   description?: string;
+  /**
+   * Website A / PayPal JS: prefer guest (pay with card without PayPal login) when the
+   * merchant has PayPal Account Optional enabled. Maps to Orders v2
+   * `payment_source.paypal.experience_context.landing_page` = GUEST_CHECKOUT (REST successor
+   * to legacy SetExpressCheckout SOLUTIONTYPE=Sole + billing landing).
+   */
+  guestCheckoutPreferred?: boolean;
 }): Promise<{ id: string }> {
   const token = await paypalAccessToken();
   const base = getPayPalApiBase();
-  const body = {
-    intent: "CAPTURE",
-    purchase_units: [
-      {
-        amount: {
-          currency_code: params.currencyCode.toUpperCase(),
-          value: params.value,
-        },
-        custom_id: params.customId,
-        description: params.description ?? "Order payment",
+
+  const purchaseUnits = [
+    {
+      amount: {
+        currency_code: params.currencyCode.toUpperCase(),
+        value: params.value,
       },
-    ],
-    application_context: {
+      custom_id: params.customId,
+      description: params.description ?? "Order payment",
+    },
+  ];
+
+  const body: Record<string, unknown> = {
+    intent: "CAPTURE",
+    purchase_units: purchaseUnits,
+  };
+
+  if (params.guestCheckoutPreferred) {
+    body.payment_source = {
+      paypal: {
+        experience_context: {
+          landing_page: "GUEST_CHECKOUT",
+          shipping_preference: "NO_SHIPPING",
+          user_action: "PAY_NOW",
+        },
+      },
+    };
+  } else {
+    body.application_context = {
       shipping_preference: "NO_SHIPPING",
       user_action: "PAY_NOW",
-    },
-  };
+    };
+  }
   const res = await fetch(`${base}/v2/checkout/orders`, {
     method: "POST",
     headers: {

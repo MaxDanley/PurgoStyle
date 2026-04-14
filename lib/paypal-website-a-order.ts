@@ -34,6 +34,7 @@ export async function ensureWebsiteAPayPalOrder(order: {
     currencyCode: currency,
     customId: order.id,
     description: "Order payment",
+    guestCheckoutPreferred: true,
   });
 
   await prisma.order.update({
