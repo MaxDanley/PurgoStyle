@@ -106,7 +106,7 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
   // Track page view and product view
   useEffect(() => {
     if (product && selectedVariant && pathname) {
-      trackPageView(window.location.href, `${displayName} - Summer Steeze`, {
+      trackPageView(window.location.href, `${displayName} - PurgoLabs SummerSteeze`, {
         page_type: 'product',
         product_id: product.id,
         product_name: displayName,
@@ -688,7 +688,7 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
               image: `https://www.summersteez.com${product.image}`,
               brand: {
                 "@type": "Brand",
-                name: "Summer Steeze",
+                name: "PurgoLabs SummerSteeze",
               },
               sku: selectedVariant.sku,
               mpn: selectedVariant.sku,
@@ -704,7 +704,7 @@ export default function ProductDetailClient({ product, slug }: ProductDetailClie
                 itemCondition: "https://schema.org/NewCondition",
                 seller: {
                   "@type": "Organization",
-                  name: "Summer Steeze",
+                  name: "PurgoLabs SummerSteeze",
                 },
               },
             }}

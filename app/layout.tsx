@@ -10,14 +10,14 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.summersteez.com"),
   title: {
-    default: "Summer Steeze | Arizona Activewear & Premium Tees",
-    template: "%s | Summer Steeze"
+    default: "PurgoLabs SummerSteeze | Arizona Activewear & Premium Tees",
+    template: "%s | PurgoLabs SummerSteeze"
   },
-  description: "Summer Steeze is an Arizona-based activewear and tee brand. Premium tees, sweatshirts, and apparel. Quality you can feel.",
-  keywords: "Summer Steeze, Arizona activewear, t-shirts, sweatshirts, apparel",
-  authors: [{ name: "Summer Steeze" }],
-  creator: "Summer Steeze",
-  publisher: "Summer Steeze",
+  description: "PurgoLabs SummerSteeze is an Arizona-based activewear and tee brand. Premium tees, sweatshirts, and apparel. Quality you can feel.",
+  keywords: "PurgoLabs SummerSteeze, Arizona activewear, t-shirts, sweatshirts, apparel",
+  authors: [{ name: "PurgoLabs SummerSteeze" }],
+  creator: "PurgoLabs SummerSteeze",
+  publisher: "PurgoLabs SummerSteeze",
   robots: { index: true, follow: true },
   verification: {
     google: "rZpt5wvHCgLFnHfK_DW3fo5_wo7OOSkZjn8rc9v3XcE",
@@ -27,14 +27,14 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: 'https://www.summersteez.com',
-    siteName: 'Summer Steeze',
-    title: "Summer Steeze - Arizona Activewear & Tees",
+    siteName: 'PurgoLabs SummerSteeze',
+    title: "PurgoLabs SummerSteeze - Arizona Activewear & Tees",
     description: "Premium tees and activewear from Arizona.",
-    images: [{ url: '/STEEZ.png', width: 1200, height: 630, alt: 'Summer Steeze' }],
+    images: [{ url: '/STEEZ.png', width: 1200, height: 630, alt: 'PurgoLabs SummerSteeze' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Summer Steeze - Arizona Activewear & Tees',
+    title: 'PurgoLabs SummerSteeze - Arizona Activewear & Tees',
     description: 'Premium tees and activewear from Arizona.',
     images: ['/STEEZ.png'],
   },

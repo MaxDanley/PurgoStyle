@@ -64,7 +64,7 @@ export default function ForgotPasswordPage() {
         <div className="text-center mb-8">
           <Image
             src="/STEEZ.png"
-            alt="Summer Steeze"
+            alt="PurgoLabs SummerSteeze"
             width={80}
             height={80}
             className="mx-auto mb-4"

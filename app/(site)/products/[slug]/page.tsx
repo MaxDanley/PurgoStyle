@@ -41,11 +41,11 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
           .replace(/Iii/g, 'III');
         
         return {
-          title: `${productName} - Coming Soon | Summer Steeze`,
-          description: `${productName} is coming soon to Summer Steeze. Explore our current selection of products.`,
+          title: `${productName} - Coming Soon | PurgoLabs SummerSteeze`,
+          description: `${productName} is coming soon to PurgoLabs SummerSteeze. Explore our current selection of products.`,
           openGraph: {
-            title: `${productName} - Coming Soon | Summer Steeze`,
-            description: `${productName} is coming soon to Summer Steeze. Explore our current selection of products.`,
+            title: `${productName} - Coming Soon | PurgoLabs SummerSteeze`,
+            description: `${productName} is coming soon to PurgoLabs SummerSteeze. Explore our current selection of products.`,
             type: "website",
             url: `https://www.summersteez.com/products/${slug}`,
           },
@@ -56,7 +56,7 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
       }
       
       return {
-        title: "Product Not Found - Summer Steeze",
+        title: "Product Not Found - PurgoLabs SummerSteeze",
       };
     }
 
@@ -93,7 +93,7 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   } catch (error) {
     console.error("Error generating metadata:", error);
     return {
-      title: "Product - Summer Steeze",
+      title: "Product - PurgoLabs SummerSteeze",
     };
   }
 }

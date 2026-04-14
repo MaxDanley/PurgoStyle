@@ -32,7 +32,7 @@ export default function ProductComingSoon({ productName, slug: _slug }: ProductC
             
             <p className="text-xl text-slate-700 mb-8 leading-relaxed">
               We're currently working on adding <strong>{productName}</strong> to our catalog. 
-              It will be available soon with the same quality standards you expect from Summer Steeze.
+              It will be available soon with the same quality standards you expect from PurgoLabs SummerSteeze.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

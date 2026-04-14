@@ -60,7 +60,7 @@ export default function HomeClient({ featuredProducts: initialProducts }: HomeCl
   // Track page view
   useEffect(() => {
     if (pathname) {
-      trackPageView(window.location.href, 'Home - Summer Steeze', {
+      trackPageView(window.location.href, 'Home - PurgoLabs SummerSteeze', {
         page_type: 'home',
         page_section: 'landing',
       });
@@ -111,7 +111,7 @@ export default function HomeClient({ featuredProducts: initialProducts }: HomeCl
         <div className="absolute inset-0 z-0">
           <Image
             src="/hero_image.png"
-            alt="Summer Steeze"
+            alt="PurgoLabs SummerSteeze"
             fill
             className="object-cover"
             priority
@@ -139,7 +139,7 @@ export default function HomeClient({ featuredProducts: initialProducts }: HomeCl
               textShadow: "0 2px 24px rgba(0,0,0,0.4), 0 0 48px rgba(0,0,0,0.2)",
             }}
           >
-            Summer Steeze
+            PurgoLabs SummerSteeze
           </h1>
           <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mt-8">
             <Link
@@ -295,7 +295,7 @@ export default function HomeClient({ featuredProducts: initialProducts }: HomeCl
             <div key={i} className="relative aspect-[4/5] md:aspect-[3/4]">
               <Image
                 src={src}
-                alt="Summer Steeze apparel"
+                alt="PurgoLabs SummerSteeze apparel"
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 33vw"
@@ -349,7 +349,7 @@ export default function HomeClient({ featuredProducts: initialProducts }: HomeCl
                 Our Story
               </div>
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-                Welcome to <span className="gradient-text">Summer Steeze</span>
+                Welcome to <span className="gradient-text">PurgoLabs SummerSteeze</span>
               </h2>
               <p className="text-xl text-gray-700 mb-6">
                 Your trusted source for <span className="text-brand-600 font-semibold">Arizona activewear & premium tees</span>
@@ -375,10 +375,10 @@ export default function HomeClient({ featuredProducts: initialProducts }: HomeCl
       {/* SEO Content Sections - Expandable */}
       <section className="py-20 bg-gray-50">
         <div className="container-custom max-w-4xl">
-          <Accordion title="Learn More About Summer Steeze">
+          <Accordion title="Learn More About PurgoLabs SummerSteeze">
             <div className="prose prose-lg max-w-none text-gray-700">
               <p className="mb-4">
-                Summer Steeze is an Arizona-based activewear and apparel brand. We focus on quality you can feel in every tee, sweatshirt, and piece of activewear we make.
+                PurgoLabs SummerSteeze is an Arizona-based activewear and apparel brand. We focus on quality you can feel in every tee, sweatshirt, and piece of activewear we make.
               </p>
               <p className="mb-4">
                 We believe in simple, well-made clothing that holds up to your lifestyle. Every product is designed with attention to fit, fabric, and durability so you get pieces you’ll actually want to wear again and again.
@@ -412,11 +412,11 @@ export default function HomeClient({ featuredProducts: initialProducts }: HomeCl
         data={{
           "@context": "https://schema.org",
           "@type": "Organization",
-          name: "Summer Steeze",
-          legalName: "Summer Steeze",
+          name: "PurgoLabs SummerSteeze",
+          legalName: "PurgoLabs SummerSteeze",
           url: "https://www.summersteez.com",
           logo: "https://www.summersteez.com/STEEZ.png",
-          description: "Summer Steeze – Arizona activewear and premium tees. Quality you can feel.",
+          description: "PurgoLabs SummerSteeze – Arizona activewear and premium tees. Quality you can feel.",
           contactPoint: {
             "@type": "ContactPoint",
             contactType: "Customer Service",
@@ -443,8 +443,8 @@ export default function HomeClient({ featuredProducts: initialProducts }: HomeCl
           "@context": "https://schema.org",
           "@type": "LocalBusiness",
           "@id": "https://www.summersteez.com",
-          name: "Summer Steeze",
-          legalName: "Summer Steeze",
+          name: "PurgoLabs SummerSteeze",
+          legalName: "PurgoLabs SummerSteeze",
           image: "https://www.summersteez.com/STEEZ.png",
           url: "https://www.summersteez.com",
           email: "hello@summersteez.com",
@@ -467,7 +467,7 @@ export default function HomeClient({ featuredProducts: initialProducts }: HomeCl
         data={{
           "@context": "https://schema.org",
           "@type": "WebSite",
-          name: "Summer Steeze",
+          name: "PurgoLabs SummerSteeze",
           url: "https://www.summersteez.com",
           potentialAction: {
             "@type": "SearchAction",

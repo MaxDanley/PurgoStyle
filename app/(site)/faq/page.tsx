@@ -32,7 +32,7 @@ const faqData: { question: string; answer: string }[] = [
     answer: "Machine wash cold with like colors. Tumble dry low or hang dry. Avoid bleach to preserve print and color."
   },
   {
-    question: "Where is Summer Steeze based?",
+    question: "Where is PurgoLabs SummerSteeze based?",
     answer: "We're an Arizona-based activewear and tee brand. We keep our designs and quality straightforward and clean."
   }
 ];

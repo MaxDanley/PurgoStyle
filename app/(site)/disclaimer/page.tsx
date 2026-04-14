@@ -7,7 +7,7 @@ export default function DisclaimerPage() {
         <div className="prose prose-lg max-w-none">
           <h2>About Our Products</h2>
           <p>
-            Summer Steeze sells Arizona activewear, premium tees, sweatshirts, and apparel. Our products
+            PurgoLabs SummerSteeze sells Arizona activewear, premium tees, sweatshirts, and apparel. Our products
             are intended for personal wear and gifting. We focus on quality fabrics and construction.
           </p>
 
@@ -32,7 +32,7 @@ export default function DisclaimerPage() {
 
           <div className="bg-gray-50 border border-gray-200 rounded-lg p-6 mt-8">
             <p className="text-gray-800 font-semibold">
-              By purchasing from Summer Steeze, you agree to our Terms of Service and this disclaimer.
+              By purchasing from PurgoLabs SummerSteeze, you agree to our Terms of Service and this disclaimer.
             </p>
           </div>
 

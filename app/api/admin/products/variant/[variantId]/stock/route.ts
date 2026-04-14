@@ -88,18 +88,18 @@ async function sendStockNotificationEmails(variantId: string) {
     for (const notification of notifications) {
       try {
         await sendEmail({
-          from: "Summer Steeze <noreply@summersteez.com>",
+          from: "PurgoLabs SummerSteeze <noreply@summersteez.com>",
           to: notification.email,
           subject: `${productName} is back in stock!`,
           html: `
             <h1>Great news! ${productName} is back in stock</h1>
             <p>Hi there,</p>
-            <p>We wanted to let you know that <strong>${productName}</strong> is now available again at Summer Steeze!</p>
+            <p>We wanted to let you know that <strong>${productName}</strong> is now available again at PurgoLabs SummerSteeze!</p>
             <p>Hurry - limited stock available!</p>
             <a href="https://www.summersteez.com/products/${variant.product.slug}" style="background: #2563eb; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block; margin: 20px 0;">
               Shop Now
             </a>
-            <p>Best regards,<br>The Summer Steeze Team</p>
+            <p>Best regards,<br>The PurgoLabs SummerSteeze Team</p>
           `,
         });
 

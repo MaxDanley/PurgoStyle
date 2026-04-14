@@ -1,4 +1,4 @@
--- Summer Steeze: 10 products with S/M/L variants.
+-- PurgoLabs SummerSteeze: 10 products with S/M/L variants.
 -- Prices: T-Shirts $100, Hoodies $250, Sweatpants $125, Shell Jacket $350.
 -- Run after Prisma migrations. PostgreSQL.
 -- Descriptions: plain-tee positioning, oversized / overfit sizing notes (no infinity/wordmark copy).

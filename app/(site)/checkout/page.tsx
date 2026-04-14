@@ -191,7 +191,7 @@ export default function CheckoutPage() {
   // Track page view and begin checkout
   useEffect(() => {
     if (pathname && items.length > 0) {
-      trackPageView(window.location.href, 'Checkout - Summer Steeze', {
+      trackPageView(window.location.href, 'Checkout - PurgoLabs SummerSteeze', {
         page_type: 'checkout',
       });
 
@@ -941,7 +941,7 @@ export default function CheckoutPage() {
                       className="h-3.5 w-3.5 text-brand-600 focus:ring-brand-500 border-gray-300 rounded"
                     />
                     <label htmlFor="subscribe-sms" className="text-xs text-gray-500">
-                      Text me offers and sales from Summer Steeze (optional)
+                      Text me offers and sales from PurgoLabs SummerSteeze (optional)
                     </label>
                   </div>
 

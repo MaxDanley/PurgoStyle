@@ -1,5 +1,5 @@
 /**
- * Redirect target after Website A checkout completes on Summer Steeze (PayPal / legacy Stripe).
+ * Redirect target after Website A checkout completes on PurgoLabs SummerSteeze (PayPal / legacy Stripe).
  */
 const DEFAULT_RETURN = "https://www.purgolabs.com/payment-return";
 

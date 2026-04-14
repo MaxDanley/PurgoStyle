@@ -68,7 +68,7 @@ export default function ContactPage() {
           <div className="grid gap-10 lg:grid-cols-[1.1fr_minmax(0,_0.9fr)] items-center">
             <div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 leading-tight">
-                Contact <span className="gradient-text">Summer Steeze</span>
+                Contact <span className="gradient-text">PurgoLabs SummerSteeze</span>
               </h1>
               <p className="mt-4 text-lg text-slate-700 max-w-xl">
                 Have a question about an order, sizing, or our tees? Our support team is here to help
@@ -118,7 +118,7 @@ export default function ContactPage() {
                     </div>
                     <Image
                       src="/STEEZ.png"
-                      alt="Summer Steeze"
+                      alt="PurgoLabs SummerSteeze"
                       width={40}
                       height={40}
                       className="rounded-full border border-brand-100 bg-white shadow-md"
@@ -150,7 +150,7 @@ export default function ContactPage() {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 text-brand-600 hover:text-brand-700 font-medium"
-                        aria-label="Follow Summer Steeze on Facebook"
+                        aria-label="Follow PurgoLabs SummerSteeze on Facebook"
                       >
                         <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                           <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />

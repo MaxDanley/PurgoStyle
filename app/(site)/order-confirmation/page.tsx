@@ -80,7 +80,7 @@ function OrderConfirmationContent() {
   // Track page view
   useEffect(() => {
     if (pathname) {
-      trackPageView(window.location.href, 'Order Confirmation - Summer Steeze', {
+      trackPageView(window.location.href, 'Order Confirmation - PurgoLabs SummerSteeze', {
         page_type: 'order_confirmation',
       });
     }

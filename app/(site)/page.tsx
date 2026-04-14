@@ -5,11 +5,11 @@ import HomeClient from "@/components/HomeClient";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Summer Steeze | Arizona Activewear & Premium Tees",
-  description: "Summer Steeze – Arizona-based activewear and tees. Premium tees and hoodies. Shop now.",
-  keywords: "Summer Steeze, Arizona activewear, t-shirts, hoodies, apparel",
+  title: "PurgoLabs SummerSteeze | Arizona Activewear & Premium Tees",
+  description: "PurgoLabs SummerSteeze – Arizona-based activewear and tees. Premium tees and hoodies. Shop now.",
+  keywords: "PurgoLabs SummerSteeze, Arizona activewear, t-shirts, hoodies, apparel",
   openGraph: {
-    title: "Summer Steeze - Arizona Activewear & Tees",
+    title: "PurgoLabs SummerSteeze - Arizona Activewear & Tees",
     description: "Premium tees and activewear from Arizona.",
     type: "website",
     url: "https://www.summersteez.com",

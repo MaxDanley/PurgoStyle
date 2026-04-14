@@ -22,7 +22,7 @@ export default function SignInPage() {
   // Track page view
   useEffect(() => {
     if (pathname) {
-      trackPageView(window.location.href, 'Sign In - Summer Steeze', {
+      trackPageView(window.location.href, 'Sign In - PurgoLabs SummerSteeze', {
         page_type: 'signin',
       });
     }
@@ -85,7 +85,7 @@ export default function SignInPage() {
           <Link href="/" className="inline-block">
             <Image
               src="/STEEZ.png"
-              alt="Summer Steeze"
+              alt="PurgoLabs SummerSteeze"
               width={80}
               height={80}
               className="mx-auto mb-6 drop-shadow-2xl hover:scale-110 transition-transform duration-300"

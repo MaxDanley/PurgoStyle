@@ -193,7 +193,7 @@ model Order {
 
   // Stripe Checkout (legacy / other flows)
   stripeSessionId   String? @unique
-  // PayPal Orders v2 (Website A → Summer Steeze checkout)
+  // PayPal Orders v2 (Website A → PurgoLabs SummerSteeze checkout)
   paypalOrderId     String? @unique
   paymentCurrency   String? @default("USD") // ISO code for PayPal (Website A / launch flows)
 

@@ -109,7 +109,7 @@ export default function CommunityFeed({ productKeywords }: CommunityFeedProps) {
         </svg>
         <h3 className="text-xl font-semibold text-gray-900 mb-2">No Posts Found</h3>
         <p className="text-gray-600 mb-6">
-          We're gathering the latest community discussions about Summer Steeze and our tees.
+          We're gathering the latest community discussions about PurgoLabs SummerSteeze and our tees.
         </p>
         <Link
           href="/products"
@@ -272,7 +272,7 @@ export default function CommunityFeed({ productKeywords }: CommunityFeedProps) {
           Shop our tees &amp; activewear
         </h3>
         <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-          Join customers who trust Summer Steeze for quality activewear and apparel. 
+          Join customers who trust PurgoLabs SummerSteeze for quality activewear and apparel. 
           Browse our complete catalog of premium research-grade compounds.
         </p>
         <div className="flex flex-wrap justify-center gap-4">

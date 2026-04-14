@@ -53,7 +53,7 @@ async function sendTestEmail() {
     const result = await resend.emails.send({
       from: fromEmail,
       to: "hello@summersteez.com",
-      subject: "Test Email - Summer Steeze Template",
+      subject: "Test Email - PurgoLabs SummerSteeze Template",
       html: htmlContent,
     });
 

@@ -7,8 +7,8 @@ export default function PrivacyPage() {
 
         <div className="prose prose-lg max-w-none text-gray-700">
           <p>
-            Summer Steeze (&ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;) operates the website summersteez.com
-            and the Summer Steeze brand. We are committed to protecting your privacy. This Privacy Policy describes
+            PurgoLabs SummerSteeze (&ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;) operates the website summersteez.com
+            and the PurgoLabs SummerSteeze brand. We are committed to protecting your privacy. This Privacy Policy describes
             how we collect, use, and disclose your information when you use our website and related services. It also
             describes your rights regarding that information.
           </p>
@@ -25,8 +25,8 @@ export default function PrivacyPage() {
               using the website.
             </li>
             <li>
-              <span className="font-semibold text-gray-900">Company</span> means Summer Steeze, operating
-              the Summer Steeze brand and the website summersteez.com.
+              <span className="font-semibold text-gray-900">Company</span> means PurgoLabs SummerSteeze, operating
+              the PurgoLabs SummerSteeze brand and the website summersteez.com.
             </li>
             <li>
               <span className="font-semibold text-gray-900">Website</span> means{" "}
@@ -168,7 +168,7 @@ export default function PrivacyPage() {
           <p>If you have questions about this Privacy Policy or your personal data, you can contact us:</p>
           <ul>
             <li>By email: <a href="mailto:help@summersteez.com">help@summersteez.com</a></li>
-            <li>By mail: Summer Steeze, Attn: Privacy, Scottsdale, AZ 85260</li>
+            <li>By mail: PurgoLabs SummerSteeze, Attn: Privacy, Scottsdale, AZ 85260</li>
             <li>Through our <a href="/contact">Contact</a> page</li>
           </ul>
 

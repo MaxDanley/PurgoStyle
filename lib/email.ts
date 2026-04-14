@@ -27,7 +27,7 @@ function getEmailWrapper(content: string, orderNumber?: string) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Summer Steeze</title>
+  <title>PurgoLabs SummerSteeze</title>
 </head>
 <body style="margin: 0; padding: 0; background-color: #f4f4f4; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
   <table role="presentation" style="width: 100%; border-collapse: collapse;">
@@ -40,7 +40,7 @@ function getEmailWrapper(content: string, orderNumber?: string) {
               <table role="presentation" style="width: 100%;">
                 <tr>
                   <td style="font-size: 24px; font-weight: 400; color: #333333;">
-                    Summer Steeze
+                    PurgoLabs SummerSteeze
                   </td>
                   ${orderNumber ? `
                   <td style="text-align: right; font-size: 14px; color: #999999;">
@@ -221,17 +221,17 @@ export async function sendPasswordResetEmail(email: string, resetUrl: string) {
   try {
     await sendEmail({
       to: email,
-      subject: "Reset Your Password - Summer Steeze",
+      subject: "Reset Your Password - PurgoLabs SummerSteeze",
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #f27e56;">Reset Your Password</h2>
-          <p>You requested to reset your password for your Summer Steeze account.</p>
+          <p>You requested to reset your password for your PurgoLabs SummerSteeze account.</p>
           <p>Click the button below to reset your password:</p>
           <a href="${resetUrl}" style="display: inline-block; padding: 12px 24px; background-color: #f27e56; color: white; text-decoration: none; border-radius: 6px; margin: 20px 0;">Reset Password</a>
           <p>If you didn't request this, you can safely ignore this email.</p>
           <p>This link will expire in 1 hour.</p>
           <hr style="margin: 30px 0; border: none; border-top: 1px solid #eee;">
-          <p style="color: #666; font-size: 12px;">Summer Steeze</p>
+          <p style="color: #666; font-size: 12px;">PurgoLabs SummerSteeze</p>
         </div>
       `,
     });
@@ -304,7 +304,7 @@ export async function sendOrderConfirmationEmail(
   try {
     await sendEmail({
       to: email,
-      subject: `Order #${orderNumber} confirmed - Summer Steeze`,
+      subject: `Order #${orderNumber} confirmed - PurgoLabs SummerSteeze`,
       html: getEmailWrapper(content, `#${orderNumber}`),
     });
   } catch (error) {
@@ -366,7 +366,7 @@ export async function sendShippingNotificationEmail(
   try {
     await sendEmail({
       to: email,
-      subject: `Your order #${orderNumber} has shipped - Summer Steeze`,
+      subject: `Your order #${orderNumber} has shipped - PurgoLabs SummerSteeze`,
       html: getEmailWrapper(content, `#${orderNumber}`),
     });
   } catch (error) {
@@ -531,7 +531,7 @@ export async function sendOrderStatusChangeEmail(
   try {
     await sendEmail({
       to: email,
-      subject: `Order #${orderNumber} - ${status.title} - Summer Steeze`,
+      subject: `Order #${orderNumber} - ${status.title} - PurgoLabs SummerSteeze`,
       html: getEmailWrapper(content, `#${orderNumber}`),
     });
   } catch (error) {
@@ -621,7 +621,7 @@ export async function sendPaymentConfirmationEmail(
   try {
     await sendEmail({
       to: email,
-      subject: `Payment received for order #${orderNumber} - Summer Steeze`,
+      subject: `Payment received for order #${orderNumber} - PurgoLabs SummerSteeze`,
       html: getEmailWrapper(content, `#${orderNumber}`),
     });
   } catch (error) {
@@ -700,7 +700,7 @@ export async function sendTrackingUpdateEmail(
   try {
     await sendEmail({
       to: email,
-      subject: `${statusInfo.icon} ${statusInfo.title} - Order #${orderNumber} - Summer Steeze`,
+      subject: `${statusInfo.icon} ${statusInfo.title} - Order #${orderNumber} - PurgoLabs SummerSteeze`,
       html: getEmailWrapper(content, `#${orderNumber}`),
     });
   } catch (error) {
@@ -745,7 +745,7 @@ export async function sendTrackingNumberUpdateEmail(
   try {
     await sendEmail({
       to: email,
-      subject: `Tracking updated for order #${orderNumber} - Summer Steeze`,
+      subject: `Tracking updated for order #${orderNumber} - PurgoLabs SummerSteeze`,
       html: getEmailWrapper(content, `#${orderNumber}`),
     });
   } catch (error) {
@@ -932,7 +932,7 @@ export async function sendDiscountCodeRequestNotification(email: string) {
             </p>
 
             <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb; color: #9ca3af; font-size: 12px;">
-              <p style="margin: 0;">This is an automated notification from the Summer Steeze website.</p>
+              <p style="margin: 0;">This is an automated notification from the PurgoLabs SummerSteeze website.</p>
             </div>
           </div>
         </div>
@@ -985,7 +985,7 @@ export async function sendAccountCreationNotification(
             </p>
 
             <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb; color: #9ca3af; font-size: 12px;">
-              <p style="margin: 0;">This is an automated notification from the Summer Steeze website.</p>
+              <p style="margin: 0;">This is an automated notification from the PurgoLabs SummerSteeze website.</p>
             </div>
           </div>
         </div>
@@ -1050,7 +1050,7 @@ export async function sendDiscountCodeRetargetingEmail(email: string, discountCo
             </p>
 
             <p style="color: #9ca3af; font-size: 12px; margin-top: 30px; text-align: center;">
-              Summer Steeze<br>
+              PurgoLabs SummerSteeze<br>
               <a href="https://www.summersteez.com/unsubscribe?email=${encodeURIComponent(email)}" 
                  style="color: #f27e56; text-decoration: underline;">
                 Manage your email preferences</a>
@@ -1149,7 +1149,7 @@ export async function sendZellePaymentInstructions(
   try {
     await sendEmail({
       to: email,
-      subject: `Complete your payment - Order #${orderNumber} - Summer Steeze`,
+      subject: `Complete your payment - Order #${orderNumber} - PurgoLabs SummerSteeze`,
       html: getEmailWrapper(content, `#${orderNumber}`),
     });
   } catch (error) {
@@ -1250,7 +1250,7 @@ export async function sendVenmoPaymentInstructions(
   try {
     await sendEmail({
       to: email,
-      subject: `Complete your payment - Order #${orderNumber} - Summer Steeze`,
+      subject: `Complete your payment - Order #${orderNumber} - PurgoLabs SummerSteeze`,
       html: getEmailWrapper(content, `#${orderNumber}`),
     });
   } catch (error) {
@@ -1349,7 +1349,7 @@ export async function sendCreditCardPaymentInstructions(
   try {
     await sendEmail({
       to: email,
-      subject: `Complete your payment - Order #${orderNumber} - Summer Steeze`,
+      subject: `Complete your payment - Order #${orderNumber} - PurgoLabs SummerSteeze`,
       html: getEmailWrapper(content, `#${orderNumber}`),
     });
   } catch (error) {
@@ -1443,7 +1443,7 @@ export async function sendCryptoPaymentInstructions(
   try {
     await sendEmail({
       to: email,
-      subject: `Complete your payment - Order #${orderNumber} - Summer Steeze`,
+      subject: `Complete your payment - Order #${orderNumber} - PurgoLabs SummerSteeze`,
       html: getEmailWrapper(content, `#${orderNumber}`),
     });
   } catch (error) {
@@ -1493,7 +1493,7 @@ export async function sendPaymentReminderEmail(
   try {
     await sendEmail({
       to: email,
-      subject: `⏰ Reminder: Complete Your Payment - Order #${orderNumber} - Summer Steeze`,
+      subject: `⏰ Reminder: Complete Your Payment - Order #${orderNumber} - PurgoLabs SummerSteeze`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #f59e0b;">Payment Reminder</h2>
@@ -1534,7 +1534,7 @@ export async function sendPaymentReminderEmail(
           </div>
 
           <hr style="margin: 30px 0; border: none; border-top: 1px solid #eee;">
-          <p style="color: #666; font-size: 12px;">Summer Steeze</p>
+          <p style="color: #666; font-size: 12px;">PurgoLabs SummerSteeze</p>
         </div>
       `,
     });
@@ -1554,7 +1554,7 @@ export async function sendAffiliateInviteEmail(email: string, inviteUrl: string)
       You're Invited!
     </h1>
     <p style="margin: 0 0 24px 0; font-size: 16px; color: #666666; line-height: 1.6;">
-      We'd like to invite you to join the Summer Steeze Affiliate Program. Earn commissions on every sale you refer!
+      We'd like to invite you to join the PurgoLabs SummerSteeze Affiliate Program. Earn commissions on every sale you refer!
     </p>
     
     <!-- Highlight Box -->
@@ -1666,7 +1666,7 @@ export async function sendAffiliateInviteEmail(email: string, inviteUrl: string)
   try {
     await sendEmail({
       to: email,
-      subject: "You're Invited to Join the Summer Steeze Affiliate Program",
+      subject: "You're Invited to Join the PurgoLabs SummerSteeze Affiliate Program",
       html: getEmailWrapper(content),
     });
   } catch (error) {
@@ -1691,12 +1691,12 @@ export async function sendCustomDesignInquiryEmails(data: CustomDesignInquiryDat
   const customerContent = `
     <p style="margin: 0 0 16px 0; font-size: 16px; color: #333333;">Hi ${data.name},</p>
     <p style="margin: 0 0 16px 0; font-size: 15px; color: #555555; line-height: 1.6;">
-      Thank you for your interest in Summer Steeze Custom Design Services. We've received your request and will get back to you within 1–2 business days to discuss how we can help bring your vision to life.
+      Thank you for your interest in PurgoLabs SummerSteeze Custom Design Services. We've received your request and will get back to you within 1–2 business days to discuss how we can help bring your vision to life.
     </p>
     <p style="margin: 0 0 16px 0; font-size: 15px; color: #555555; line-height: 1.6;">
       In the meantime, if you have any questions, reply to this email or contact us at <a href="mailto:help@summersteez.com" style="color: #f27e56;">help@summersteez.com</a>.
     </p>
-    <p style="margin: 0; font-size: 15px; color: #555555;">Best,<br>The Summer Steeze Team</p>
+    <p style="margin: 0; font-size: 15px; color: #555555;">Best,<br>The PurgoLabs SummerSteeze Team</p>
   `;
 
   const internalContent = `
@@ -1718,7 +1718,7 @@ export async function sendCustomDesignInquiryEmails(data: CustomDesignInquiryDat
 
   await sendEmail({
     to: data.email,
-    subject: "We received your Custom Design request – Summer Steeze",
+    subject: "We received your Custom Design request – PurgoLabs SummerSteeze",
     html: getEmailWrapper(customerContent),
   });
 

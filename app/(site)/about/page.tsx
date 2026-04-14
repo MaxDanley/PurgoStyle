@@ -58,7 +58,7 @@ export default function AboutPage() {
               Arizona-based
             </div>
             <h1 className="text-4xl md:text-6xl font-bold text-slate-900 leading-tight">
-              Arizona activewear. <span className="text-brand-600">Summer Steeze</span>.
+              Arizona activewear. <span className="text-brand-600">PurgoLabs SummerSteeze</span>.
             </h1>
             <p className="mt-6 text-lg md:text-xl text-slate-700 leading-relaxed">
               We're an Arizona-based brand built on simple, honest gear you can rely on.
@@ -66,7 +66,7 @@ export default function AboutPage() {
             </p>
             <p className="mt-4 text-lg text-slate-700">
               From the Sonoran sun to the trail, our pieces are made to move with you.
-              Quality fabrics, straightforward design, no fluff. That's Summer Steeze.
+              Quality fabrics, straightforward design, no fluff. That's PurgoLabs SummerSteeze.
             </p>
             <div className="mt-10 flex flex-wrap gap-4">
               <Link
@@ -103,7 +103,7 @@ export default function AboutPage() {
             <div key={i} className="relative aspect-[3/4] rounded-xl overflow-hidden shadow-lg ring-1 ring-slate-200/50">
               <Image
                 src={src}
-                alt="Summer Steeze"
+                alt="PurgoLabs SummerSteeze"
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 50vw, 33vw"
@@ -115,11 +115,11 @@ export default function AboutPage() {
 
       <SectionSeparator icon={FaLeaf} />
 
-      {/* Why Summer Steeze - with icons */}
+      {/* Why PurgoLabs SummerSteeze - with icons */}
       <section className="py-16 lg:py-20 bg-slate-50">
         <div className="container-custom">
           <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4 text-center">
-            Why Summer Steeze
+            Why PurgoLabs SummerSteeze
           </h2>
           <p className="text-slate-600 text-center max-w-xl mx-auto mb-12">
             Built for heat, comfort, and real use—no clutter, no gimmicks.
@@ -259,7 +259,7 @@ export default function AboutPage() {
             Built for the Desert
           </h2>
           <p className="text-slate-700 text-lg leading-relaxed mb-6">
-            Summer Steeze started with a simple idea: create apparel that holds up to Arizona's heat, fits your life, and looks good doing it. We focus on breathable fabrics, relaxed fits, and designs that work from morning runs to weekend hangouts.
+            PurgoLabs SummerSteeze started with a simple idea: create apparel that holds up to Arizona's heat, fits your life, and looks good doing it. We focus on breathable fabrics, relaxed fits, and designs that work from morning runs to weekend hangouts.
           </p>
           <p className="text-slate-700 text-lg leading-relaxed">
             Every piece is chosen and designed with the same standard—quality you can feel. No excess, no compromise. Just gear that earns its place in your rotation.

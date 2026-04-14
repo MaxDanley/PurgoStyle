@@ -248,7 +248,7 @@ export async function POST(req: Request) {
       value: total.toFixed(2),
       currencyCode: "USD",
       customId: order.id,
-      description: "Summer Steeze order",
+      description: "PurgoLabs SummerSteeze order",
     });
 
     await prisma.order.update({

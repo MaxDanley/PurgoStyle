@@ -42,7 +42,7 @@ export function generateStructuredData(
       "license": "https://www.summersteez.com",
       "creator": {
         "@type": "Organization",
-        "name": "Summer Steeze"
+        "name": "PurgoLabs SummerSteeze"
       }
     });
   }
@@ -67,7 +67,7 @@ export function generateStructuredData(
         "license": "https://www.summersteez.com",
         "creator": {
           "@type": "Organization",
-          "name": "Summer Steeze"
+          "name": "PurgoLabs SummerSteeze"
         }
       });
     });
@@ -85,12 +85,12 @@ export function generateStructuredData(
     "dateModified": publishedAt.toISOString(),
     "author": {
       "@type": "Organization",
-      "name": "Summer Steeze",
+      "name": "PurgoLabs SummerSteeze",
       "url": "https://www.summersteez.com"
     },
     "publisher": {
       "@type": "Organization",
-      "name": "Summer Steeze",
+      "name": "PurgoLabs SummerSteeze",
       "logo": {
         "@type": "ImageObject",
         "url": "https://www.summersteez.com/STEEZ.png",
@@ -130,7 +130,7 @@ export function generateImageAltText(title: string, content: string): string {
   }
   
   // Add context
-  altText += " - Summer Steeze";
+  altText += " - PurgoLabs SummerSteeze";
   
   return altText;
 }

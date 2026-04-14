@@ -251,7 +251,7 @@ export default function DesignStudioPage() {
     const url = typeof window !== "undefined" ? window.location.href : "";
     if (navigator.share) {
       navigator.share({
-        title: "My design – Summer Steeze",
+        title: "My design – PurgoLabs SummerSteeze",
         text: "Check out my custom design",
         url,
       }).then(() => toast.success("Shared")).catch(() => {

@@ -182,7 +182,7 @@ export default function Navbar() {
             <Link href="/" className="flex items-center">
               <Image
                 src="/STEEZ.png"
-                alt="Summer Steeze"
+                alt="PurgoLabs SummerSteeze"
                 width={60}
                 height={60}
                 className="w-16 h-16"

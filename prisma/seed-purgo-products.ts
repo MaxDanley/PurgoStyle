@@ -1,5 +1,5 @@
 /**
- * Seed script: 10 Summer Steeze products with S/M/L variants.
+ * Seed script: 10 PurgoLabs SummerSteeze products with S/M/L variants.
  * Prices: T-Shirts $100, Hoodies $250, Sweatpants $125, Shell Jacket $350.
  * Run: npx ts-node --compiler-options '{"module":"CommonJS"}' prisma/seed-purgo-products.ts
  * Or: npx tsx prisma/seed-purgo-products.ts
@@ -180,7 +180,7 @@ ${OVERSIZED_TEES}
 const SIZES = ["S", "M", "L"];
 
 async function main() {
-  console.log("Upserting 10 Summer Steeze products with S/M/L variants...\n");
+  console.log("Upserting 10 PurgoLabs SummerSteeze products with S/M/L variants...\n");
 
   for (const p of PRODUCTS) {
     const product = await prisma.product.upsert({

@@ -9,8 +9,8 @@ import ProductsPageHeader from "@/components/ProductsPageHeader";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Products | Summer Steeze",
-  description: "Shop Summer Steeze. Arizona activewear, premium tees, and apparel. Quality you can feel.",
+  title: "Products | PurgoLabs SummerSteeze",
+  description: "Shop PurgoLabs SummerSteeze. Arizona activewear, premium tees, and apparel. Quality you can feel.",
   alternates: {
     canonical: "https://www.summersteez.com/products",
   },
@@ -67,7 +67,7 @@ export default async function ProductsPage() {
 
   return (
     <>
-      <PageViewTracker pageTitle="Products - Summer Steeze" pageType="products" />
+      <PageViewTracker pageTitle="Products - PurgoLabs SummerSteeze" pageType="products" />
       <DiscountPopup />
       <div className="py-12">
         <div className="container-custom">

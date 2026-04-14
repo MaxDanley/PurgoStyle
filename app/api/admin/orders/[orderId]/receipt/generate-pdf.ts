@@ -65,7 +65,7 @@ export async function buildSalesReceiptPdfBuffer(data: SalesReceiptInput): Promi
       margin: 44,
       info: {
         Title: `Sales receipt ${data.orderNumber}`,
-        Author: "SummerSteez",
+        Author: "PurgoLabs SummerSteeze",
       },
     });
 
@@ -89,11 +89,11 @@ export async function buildSalesReceiptPdfBuffer(data: SalesReceiptInput): Promi
     }
 
     const headerTop = doc.y;
-    doc.fillColor(INK).fontSize(20).font("Helvetica-Bold").text("SummerSteez", margin, headerTop, {
+    doc.fillColor(INK).fontSize(20).font("Helvetica-Bold").text("PurgoLabs SummerSteeze", margin, headerTop, {
       width: contentW * 0.58,
     });
     const afterLeft = doc.y;
-    doc.fillColor(BLUE).fontSize(10).font("Helvetica-Bold").text("SummerSteez.com", margin + contentW * 0.42, headerTop, {
+    doc.fillColor(BLUE).fontSize(10).font("Helvetica-Bold").text("www.summersteez.com", margin + contentW * 0.42, headerTop, {
       width: contentW * 0.58,
       align: "right",
     });
@@ -260,19 +260,19 @@ export async function buildSalesReceiptPdfBuffer(data: SalesReceiptInput): Promi
     const fy = doc.page.height - margin - footerReserve;
     doc.strokeColor(BORDER).lineWidth(1).moveTo(margin, fy).lineTo(rightX, fy).stroke();
     let fyy = fy + 8;
-    doc.fillColor(INK).fontSize(8).font("Helvetica-Bold").text("SummerSteez · SummerSteez.com", margin, fyy, {
+    doc.fillColor(INK).fontSize(8).font("Helvetica-Bold").text("PurgoLabs SummerSteeze · www.summersteez.com", margin, fyy, {
       width: contentW,
     });
     fyy = doc.y + 4;
     doc.font("Helvetica").fontSize(7).fillColor(MUTED).text(
       "Sales channel: E-commerce · Register ref. SS-WEB-88421 · MCC 5691 (Family clothing) · This document is your record of sale. " +
-        "For order support, contact us through SummerSteez.com with your order number.",
+        "For order support, contact us through www.summersteez.com with your order number.",
       margin,
       fyy,
       { width: contentW }
     );
     fyy = doc.y + 4;
-    doc.text("Thank you for supporting SummerSteez.", margin, fyy, { width: contentW });
+    doc.text("Thank you for supporting PurgoLabs SummerSteeze.", margin, fyy, { width: contentW });
 
     doc.end();
   });

@@ -1,4 +1,4 @@
-# Summer Steeze
+# PurgoLabs SummerSteeze
 
 Arizona activewear and premium tees. Built with Next.js.
 
