@@ -5,7 +5,7 @@ import { notFound, redirect } from "next/navigation";
 import { ensureWebsiteAPayPalOrder } from "@/lib/paypal-website-a-order";
 import {
   buildWebsiteAPaymentReturnUrl,
-  getWebsiteACheckoutBackUrl,
+  getWebsiteAPaymentCancelUrl,
 } from "@/lib/website-a-payment-return";
 import PaypalWebsiteACheckout from "./PaypalWebsiteACheckout";
 
@@ -56,14 +56,14 @@ export default async function WebsiteAPayPalCheckoutPage({
   }
 
   const currency = (order.paymentCurrency ?? "USD").toUpperCase();
-  const backUrl = getWebsiteACheckoutBackUrl();
+  const cancelUrl = getWebsiteAPaymentCancelUrl();
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50 text-gray-900">
       <header className="border-b border-gray-200 bg-white shadow-sm">
         <div className="relative max-w-2xl mx-auto px-4 sm:px-6 py-4 sm:py-5">
           <a
-            href={backUrl}
+            href={cancelUrl}
             rel="noopener noreferrer"
             className="absolute left-3 sm:left-4 top-1/2 z-10 -translate-y-1/2 inline-flex items-center gap-1.5 text-xs sm:text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors max-w-[42%] sm:max-w-none"
           >
@@ -71,16 +71,14 @@ export default async function WebsiteAPayPalCheckoutPage({
             <span className="leading-tight hidden sm:inline">Back to Purgo Labs</span>
             <span className="leading-tight sm:hidden">Back</span>
           </a>
-          <div className="flex flex-col items-center text-center px-10 sm:px-16">
-            <p className="text-sm sm:text-base font-semibold text-gray-800 tracking-tight">
-              Secure Checkout With Purgo Labs
-            </p>
+          <div className="flex flex-col items-center text-center px-10 sm:px-20">
+            <p className="text-lg sm:text-xl font-bold text-gray-900 tracking-tight">Purgo Labs</p>
             <Image
               src="/3A42A6FB.png"
               alt="Purgo Labs"
-              width={220}
-              height={88}
-              className="mt-2 h-12 sm:h-14 w-auto max-w-[min(220px,65vw)] object-contain object-center"
+              width={360}
+              height={144}
+              className="mt-3 h-20 sm:h-28 md:h-32 w-auto max-w-[min(360px,78vw)] object-contain object-center"
               priority
             />
           </div>
@@ -97,6 +95,7 @@ export default async function WebsiteAPayPalCheckoutPage({
             paypalOrderId={paypalOrderId}
             internalOrderId={order.id}
             currency={currency}
+            websiteACancelUrl={cancelUrl}
           />
         </div>
       </main>

@@ -21,7 +21,7 @@ export function buildWebsiteAPaymentReturnUrl(params: {
   return `${base}?${u.toString()}`;
 }
 
-/** Where "Back to Purgo Labs" sends users (Website A / Purgo Labs). */
+/** Where "Back to Purgo Labs" sends users if no dedicated cancel URL is set. */
 export function getWebsiteACheckoutBackUrl(): string {
   const explicit = process.env.WEBSITE_A_CHECKOUT_BACK_URL?.trim().replace(/\/$/, "");
   if (explicit) return explicit;
@@ -30,4 +30,11 @@ export function getWebsiteACheckoutBackUrl(): string {
   } catch {
     return "https://www.purgolabs.com";
   }
+}
+
+/** Website A payment cancel / abandon checkout (back button + PayPal onCancel). */
+export function getWebsiteAPaymentCancelUrl(): string {
+  const explicit = process.env.WEBSITE_A_PAYMENT_CANCEL_URL?.trim().replace(/\/$/, "");
+  if (explicit) return explicit;
+  return getWebsiteACheckoutBackUrl();
 }

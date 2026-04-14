@@ -24,6 +24,8 @@ interface Props {
   paypalOrderId: string;
   internalOrderId: string;
   currency: string;
+  /** Website A URL when user cancels PayPal (matches WEBSITE_A_PAYMENT_CANCEL_URL). */
+  websiteACancelUrl: string;
 }
 
 export default function PaypalWebsiteACheckout({
@@ -31,6 +33,7 @@ export default function PaypalWebsiteACheckout({
   paypalOrderId,
   internalOrderId,
   currency,
+  websiteACancelUrl,
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const renderedRef = useRef(false);
@@ -79,11 +82,11 @@ export default function PaypalWebsiteACheckout({
           alert("Payment could not be completed. Please try again.");
         },
         onCancel: () => {
-          window.location.href = "/checkout/cancel";
+          window.location.href = websiteACancelUrl;
         },
       })
       .render(containerRef.current);
-  }, [sdkReady, paypalOrderId, internalOrderId]);
+  }, [sdkReady, paypalOrderId, internalOrderId, websiteACancelUrl]);
 
   return (
     <>
