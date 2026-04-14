@@ -39,9 +39,14 @@ export default function PaypalWebsiteACheckout({
   const renderedRef = useRef(false);
   const [sdkReady, setSdkReady] = useState(false);
 
+  // No enable-funding: PayPal picks eligible methods. disable-funding hides Venmo, Pay Later, and PayPal Credit.
+  // Buyers still see PayPal wallet + "Debit or Credit Card" when offered for your account/region (PayPal controls this).
+  // Card-only (hide PayPal wallet too) needs a different product path (e.g. standalone CARD button / card fields) — ask PayPal support.
   const sdkSrc = `https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(
     paypalClientId
-  )}&currency=${encodeURIComponent(currency)}&intent=capture&components=buttons&enable-funding=venmo,paylater,card`;
+  )}&currency=${encodeURIComponent(
+    currency
+  )}&intent=capture&components=buttons&disable-funding=venmo,paylater,credit`;
 
   useEffect(() => {
     renderedRef.current = false;
