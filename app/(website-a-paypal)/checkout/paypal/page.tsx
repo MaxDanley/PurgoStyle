@@ -71,14 +71,13 @@ export default async function WebsiteAPayPalCheckoutPage({
             <span className="leading-tight hidden sm:inline">Back to Purgo Labs</span>
             <span className="leading-tight sm:hidden">Back</span>
           </a>
-          <div className="flex flex-col items-center text-center px-10 sm:px-20">
-            <p className="text-lg sm:text-xl font-bold text-gray-900 tracking-tight">Purgo Labs</p>
+          <div className="flex flex-col items-center justify-center text-center px-10 sm:px-20 py-1">
             <Image
               src="/3A42A6FB.png"
               alt="Purgo Labs"
               width={360}
               height={144}
-              className="mt-3 h-20 sm:h-28 md:h-32 w-auto max-w-[min(360px,78vw)] object-contain object-center"
+              className="h-20 sm:h-28 md:h-32 w-auto max-w-[min(360px,78vw)] object-contain object-center"
               priority
             />
           </div>
