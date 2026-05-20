@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { prisma } from "@/lib/prisma";
 import { notFound, redirect } from "next/navigation";
+import { isPayPalLiveMode } from "@/lib/paypal";
 import { ensureWebsiteAPayPalOrder } from "@/lib/paypal-website-a-order";
 import {
   buildWebsiteAPaymentReturnUrl,
@@ -84,6 +85,8 @@ export default async function WebsiteAPayPalCheckoutPage({
             paypalOrderId={paypalOrderId}
             internalOrderId={order.id}
             currency={currency}
+            amount={order.total.toFixed(2)}
+            googlePayEnvironment={isPayPalLiveMode() ? "PRODUCTION" : "TEST"}
             websiteACancelUrl={cancelUrl}
           />
         </div>
