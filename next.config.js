@@ -20,24 +20,12 @@ const nextConfig = {
   async headers() {
     return [
       {
+        // PayPal / Apple Pay domain verification (no file extension; binary body).
         source: '/.well-known/apple-developer-merchantid-domain-association',
         headers: [
           {
             key: 'Content-Type',
-            value: 'text/plain',
-          },
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
-          },
-        ],
-      },
-      {
-        source: '/.well-known/apple-developer-merchantid-domain-association.txt',
-        headers: [
-          {
-            key: 'Content-Type',
-            value: 'text/plain',
+            value: 'application/octet-stream',
           },
           {
             key: 'Cache-Control',

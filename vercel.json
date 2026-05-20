@@ -1,7 +1,4 @@
 {
   "framework": "nextjs",
-  "buildCommand": "npm run build",
-  "rewrites": [
-    {"source": "/.well-known/apple-developer-merchantid-domain-association", "destination": "/.well-known/apple-developer-merchantid-domain-association.txt"}
-  ]
+  "buildCommand": "npm run build"
 }
