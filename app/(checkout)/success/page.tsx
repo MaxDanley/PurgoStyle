@@ -3,7 +3,7 @@ import Link from "next/link";
 import Stripe from "stripe";
 import { prisma } from "@/lib/prisma";
 
-const PAYMENT_RETURN_URL = "https://www.purgolabs.com/payment-return";
+const PAYMENT_RETURN_URL = "https://www.purgolabs.is/payment-return";
 
 function getStripe(): Stripe {
   const key = process.env.STRIPE_SECRET_KEY;
