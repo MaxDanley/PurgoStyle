@@ -1,7 +1,7 @@
 /**
  * Redirect target after Website A checkout completes on PurgoLabs SummerSteeze (PayPal / legacy Stripe).
  */
-const DEFAULT_RETURN = "https://www.purgolabs.is/payment-return";
+const DEFAULT_RETURN = "https://www.purgolabs.com/payment-return";
 
 export function getWebsiteAPaymentReturnBase(): string {
   return (process.env.WEBSITE_A_PAYMENT_RETURN_URL ?? DEFAULT_RETURN).replace(/\/$/, "");
@@ -28,7 +28,7 @@ export function getWebsiteACheckoutBackUrl(): string {
   try {
     return new URL(getWebsiteAPaymentReturnBase()).origin;
   } catch {
-    return "https://www.purgolabs.is";
+    return "https://www.purgolabs.com";
   }
 }
 

@@ -3,7 +3,7 @@
 import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
-const DESTINATION_BASE = "https://www.purgolabs.is/payment-stripe-success";
+const DESTINATION_BASE = "https://www.purgolabs.com/payment-stripe-success";
 
 function PaymentRedirectContent() {
   const searchParams = useSearchParams();

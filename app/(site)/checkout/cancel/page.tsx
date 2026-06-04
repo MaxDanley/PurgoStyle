@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 
-const CANCEL_REDIRECT = "https://www.purgolabs.is/checkout";
+const CANCEL_REDIRECT = "https://www.purgolabs.com/checkout";
 
 /**
  * PayPal / legacy flows: user cancelled checkout here before completing payment.
